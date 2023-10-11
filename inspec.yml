@@ -1,12 +1,8 @@
-name: RHEL_9_STIG
-title: null
-maintainer: null
-copyright: null
-copyright_email: null
-license: null
-summary: null
-description: null
-version: 1.0.0
-supports: []
-depends: []
-inspec_version: null
+name: redhat-enterprise-linux-9-stig-baseline
+title: redhat-enterprise-linux-9-stig-baseline
+maintainer: MITRE SAF Team
+copyright: MITRE
+license: Apache-2.0
+summary: "InSpec profile aligned to DISA STIG for RHEL9"
+version: 0.0.1
+inspec_version: ">= 4.0"
