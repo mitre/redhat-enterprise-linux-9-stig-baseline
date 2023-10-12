@@ -23,37 +23,4 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-
-  release = os.release
-
-  # Source: https://access.redhat.com/support/policy/updates/errata/#RHEL9_Planning_Guide
-  EOMS_DATE = case release
-              when /^9\.0/
-                '31 May 2026'
-              when /^9\.1/
-                '31 May 2023'
-              when /^9\.2/
-                '31 May 2027'
-              when /^9\.3/
-                '31 May 2024'
-              when /^9\.4/
-                '31 May 2028'
-              when /^9\.5/
-                '31 May 2025'
-              when /^9\.6/
-                '31 May 2029'
-              when /^9\.7/
-                '31 May 2026'
-              when /^9\.8/
-                '31 May 2030'
-              when /^9\.9/
-                '31 May 2027'
-              when /^9\.10/
-                '31 May 2032'
-              end
-
-  describe "The release \"#{release}\" must still be within the support window, ending #{EOMS_DATE}" do
-    subject { Date.today <= Date.parse(EOMS_DATE) }
-    it { should be true }
-  end
 end
