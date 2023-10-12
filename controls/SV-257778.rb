@@ -9,12 +9,12 @@ Check that the available package security updates have been installed on the sys
 
 $ dnf history list | more
 
-    ID | Command line | Date and time | Action(s) | Altered    
--------------------------------------------------------------------------------    
-   70 | install aide | 2023-03-05 10:58 | Install | 1    
-   69 | update -y | 2023-03-04 14:34 | Update | 18 EE    
-   68 | install vlc | 2023-02-21 17:12 | Install | 21   
-   67 | update -y | 2023-02-21 17:04 | Update | 7 EE 
+    ID | Command line | Date and time | Action(s) | Altered
+-------------------------------------------------------------------------------
+   70 | install aide | 2023-03-05 10:58 | Install | 1
+   69 | update -y | 2023-03-04 14:34 | Update | 18 EE
+   68 | install vlc | 2023-02-21 17:12 | Install | 21
+   67 | update -y | 2023-02-21 17:04 | Update | 7 EE
 
 Typical update frequency may be overridden by Information Assurance Vulnerability Alert (IAVA) notifications from CYBERCOM.
 
@@ -34,4 +34,9 @@ $ sudo dnf update'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe command('yum --security check-update -q') do
+    its('exit_status') { should be 0 }
+    its('stdout') { should be_empty }
+  end
 end
