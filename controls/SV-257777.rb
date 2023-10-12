@@ -5,7 +5,7 @@ control 'SV-257777' do
 Red Hat offers the Extended Update Support (EUS) add-on to a Red Hat Enterprise Linux subscription, for a fee, for those customers who wish to standardize on a specific minor release for an extended period.'
   desc 'check', 'Verify that the version or RHEL 9 is vendor supported with the following command:
 
-$ cat /etc/redhat-release
+$ cat /etc/redhat-release 
 
 Red Hat Enterprise Linux release 9.2 (Plow)
 
