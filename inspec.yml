@@ -6,3 +6,7 @@ license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
 version: 0.0.1
 inspec_version: ">= 4.0"
+
+supports:
+- platform-family: redhat
+  release: 9.*
