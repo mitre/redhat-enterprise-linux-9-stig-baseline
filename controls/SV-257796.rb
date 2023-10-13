@@ -11,11 +11,11 @@ Check that the current GRUB 2 configuration enabled auditing:
 
 $ sudo grubby --info=ALL | grep audit
 
-args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on 
+args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on
 
 If "audit" is not set to "1" or is missing, this is a finding.
 
-Check that auditing is enabled by default to persist in kernel updates: 
+Check that auditing is enabled by default to persist in kernel updates:
 
 $ sudo grep audit /etc/default/grub
 
@@ -38,8 +38,23 @@ GRUB_CMDLINE_LINUX="audit=1"'
   tag stig_id: 'RHEL-09-212055'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag fix_id: 'F-61461r925374_fix'
-  tag satisfies: ['SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218', 'SRG-OS-000254-GPOS-00095']
+  tag satisfies: %w(SRG-OS-000037-GPOS-00015 SRG-OS-000042-GPOS-00020 SRG-OS-000062-GPOS-00031 SRG-OS-000392-GPOS-00172 SRG-OS-000462-GPOS-00206 SRG-OS-000471-GPOS-00215 SRG-OS-000473-GPOS-00218 SRG-OS-000254-GPOS-00095)
   tag 'documentable'
-  tag cci: ['CCI-000130', 'CCI-000135', 'CCI-000169', 'CCI-000172', 'CCI-001464', 'CCI-002884']
+  tag cci: %w(CCI-000130 CCI-000135 CCI-000169 CCI-000172 CCI-001464 CCI-002884)
   tag nist: ['AU-3 a', 'AU-3 (1)', 'AU-12 a', 'AU-12 c', 'AU-14 (1)', 'MA-4 (1) (a)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe parse_config(command('grub2-editenv - list').stdout) do
+      its('kernelopts') { should match /audit=1/ }
+    end
+
+    describe parse_config_file('/etc/default/grub') do
+      its('GRUB_CMDLINE_LINUX') { should match /audit=1/ }
+    end
+  end
 end
