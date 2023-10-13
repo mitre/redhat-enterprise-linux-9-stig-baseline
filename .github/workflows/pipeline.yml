@@ -1,9 +1,6 @@
+---
 - name: Kitchen Dokken
-  # You may pin to the exact commit or the version.
-  # uses: actionshub/kitchen-dokken@b942ad4fbc14d193747574c03015603a7958125e
   uses: actionshub/kitchen-dokken@v1.0.0
-  with:
-    # Which suite to run
-    suite: 
-    # Operating System to run tests on
+  with: sd
+    suite: default
     os: rhel9
