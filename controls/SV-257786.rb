@@ -29,4 +29,21 @@ $ sudo systemctl mask --now debug-shell.target'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-002235']
   tag nist: ['CM-6 b', 'AC-6 (10)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    d = systemd_service('debug-shell.service')
+    describe.one do
+      describe d do
+        its('params.LoadState') { should eq 'masked' }
+      end
+      describe d do
+        its('params.LoadState') { should eq 'not-found' }
+      end
+    end
+  end
 end
