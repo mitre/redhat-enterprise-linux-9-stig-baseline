@@ -1,0 +1,6 @@
+.kitchen/
+.kitchen.local.yml
+Policyfile.lock.json
+test/fixtures
+.DS_Store
+reports/**

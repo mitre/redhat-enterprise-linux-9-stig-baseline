@@ -93,6 +93,40 @@ Example Inputs
   TODO
 ```
 
+# Running the Benchmark
+
+## Install Chef
+
+```
+chef gem install kitchen-docker
+kitchen init -D docker
+```
+
+## Install Docker
+
+```
+brew install --cask docker
+
+docker pull dokken/oraclelinux-9
+
+docker image ls
+REPOSITORY             TAG       IMAGE ID       CREATED       SIZE
+dokken/oraclelinux-9   la
+
+docker run --rm -it --entrypoint /bin/bash dokken/oraclelinux-9
+```
+
+## Run Kitchen
+
+```
+mkdir -p test/fixtures
+wget https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V1R11_STIG_Chef.zip -O ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip
+unzip ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip -d ./test/fixtures/
+unzip ./test/fixtures/rhel8STIG-chef -d ./test/fixtures/rhel8STIG-chef
+sh -c 'cd test/fixtures/rhel8STIG-chef && bash install.sh'
+```
+
+
 # Running the Profile
 
 ## (connected) Running the Profile Directly

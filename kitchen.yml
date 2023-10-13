@@ -1,0 +1,89 @@
+# source: https://github.com/test-kitchen/kitchen-dokken
+---
+platforms:
+- name: rhel9
+  provisioner:
+    name: dokken
+  transport:
+    name: dokken
+  driver:
+    name: dokken
+    chef_version: latest # or 16 or 16.0 or 16.0.300 or current
+    image: dokken/oraclelinux-9
+
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:reports/raw/%{suite}/%{platform}.json
+  inspec_tests:
+    - name: RedHat Enterprise Linux 9 STIG
+      path: .
+  load_plugins: true
+
+suites:
+  - name: default
+    includes:
+    - rhel9
+    lifecycle:
+      pre_create: docker pull dokken/oraclelinux-9
+      pre_converge: |
+        #mkdir -p test/fixtures
+        #wget https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V1R11_STIG_Chef.zip -O ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip
+        #unzip ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip -d ./test/fixtures/
+        #unzip ./test/fixtures/rhel8STIG-chef -d ./test/fixtures/rhel8STIG-chef
+        #sh -c 'cd test/fixtures/rhel8STIG-chef && bash install.sh'
+
+# ---
+# provisioner:
+#   name: dummy
+
+# platforms:
+#   - name: rhel9-ec2
+#     driver:
+#       name: ec2
+#       aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
+#       user_data: ./user_data.sh
+#       tags: 
+#         POC: <%= ENV['POC_TAG'] %>
+#       security_group_ids: <%= ENV['SECURITY_GROUP_IDS'] %>
+#       region: <%= ENV['AWS_REGION'] %>
+#       subnet_id: <%= ENV['SUBNET_ID'] %>
+#       instance_type: t2.large
+#       associate_public_ip: true
+#     transport:
+#       username: ec2-user
+#       ssh_key: ./ssh_key
+#       connection_timeout: 10
+#       connection_retries: 5
+
+#   - name: rhel9-ubi
+#     driver:
+#       name: dokken
+#       pull_platform_image: false
+#     transport:
+#       name: dokken
+
+# verifier:
+#   name: inspec
+#   sudo: true
+#   reporter:
+#     - cli
+#     - json:reports/raw/%{suite}/%{platform}.json
+#   inspec_tests:
+#     - name: RedHat Enterprise Linux 9 STIG
+#       path: .
+#   load_plugins: true
+
+# suites:
+#   - name: vanilla
+#     driver:
+#       image_id: <%= ENV['VANILLA_AMI_ID'] %>
+#       image: <%= ENV['VANILLA_CONTAINER_IMAGE'] %>
+
+#   - name: hardened
+#     driver:
+#       image_id: <%= ENV['HARDENED_AMI_ID'] %>
+#       image: <%= ENV['HARDENED_CONTAINER_IMAGE'] %>
+
