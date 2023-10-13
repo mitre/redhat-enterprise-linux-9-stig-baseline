@@ -23,7 +23,7 @@ verifier:
   load_plugins: true
 
 lifecycle:
-  pre_converge: 
+  pre_converge:
     local: |
       mkdir -p test/fixtures/rhel8STIG
       if [[ ! -f test/fixtures/rhel8STIG/U_RHEL_8_V1R11_STIG_Chef.zip ]]; then
@@ -35,7 +35,7 @@ lifecycle:
     remote: |
       # Prereqs for rhel8STIG
       touch /etc/selinux/config
-    
+
 suites:
   - name: default
 
@@ -49,7 +49,7 @@ suites:
 #       name: ec2
 #       aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
 #       user_data: ./user_data.sh
-#       tags: 
+#       tags:
 #         POC: <%= ENV['POC_TAG'] %>
 #       security_group_ids: <%= ENV['SECURITY_GROUP_IDS'] %>
 #       region: <%= ENV['AWS_REGION'] %>

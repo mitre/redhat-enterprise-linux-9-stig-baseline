@@ -25,8 +25,25 @@ $ sudo systemctl mask --now ctrl-alt-del.target'
   tag stig_id: 'RHEL-09-211050'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag fix_id: 'F-61450r925341_fix'
-  tag satisfies: ['SRG-OS-000324-GPOS-00125', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000324-GPOS-00125 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-002235']
+  tag cci: %w(CCI-000366 CCI-002235)
   tag nist: ['CM-6 b', 'AC-6 (10)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe.one do
+      c = systemd_service('ctrl-alt-del.target')
+      describe c do
+        its('params.LoadState') { should eq 'masked' }
+      end
+      describe c do
+        its('params.LoadState') { should eq 'not-found' }
+      end
+    end
+  end
 end
