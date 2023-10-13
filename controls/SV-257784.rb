@@ -30,4 +30,15 @@ $ sudo systemctl daemon-reload'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-002235']
   tag nist: ['CM-6 b', 'AC-6 (10)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    describe parse_config_file('/etc/systemd/system.conf') do
+      its('Manager') { should include('CtrlAltDelBurstAction' => 'none') }
+    end
+  end
 end
