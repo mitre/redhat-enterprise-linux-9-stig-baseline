@@ -254,7 +254,8 @@ Target:  docker://49fd5f5a565e697b51098622b21ede3359211359243c6754efe49480d0c94a
 
 Profile Summary: 1 successful control, 0 control failures, 0 controls skipped
 Test Summary: 1 successful, 0 failures, 0 skipped
-       Finished verifying <default-rhel9> (0
+       Finished verifying <default-rhel9> (0m3.75s).
+-----> Test Kitchen is finished. (0m4.70s)
 ```
 
 
