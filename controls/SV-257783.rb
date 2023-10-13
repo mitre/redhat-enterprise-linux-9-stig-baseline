@@ -24,10 +24,10 @@ $ sudo systemctl enable --now systemd-journald'
   tag cci: ['CCI-001665']
   tag nist: ['SC-24']
 
-  describe package("systemd-journal-remote") do
+  describe package('systemd-journal-remote') do
     it { should be_installed }
   end
-  describe service("systemd-journal-upload") do
+  describe service('systemd-journal-upload') do
     it { should be_enabled }
   end
 end
