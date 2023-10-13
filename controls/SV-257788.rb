@@ -25,6 +25,6 @@ $ sudo grubby --update-kernel=ALL --remove-args="systemd.confirm_spawn"'
   tag nist: ['CM-6 b']
 
   describe command("grubby --info=ALL | grep args | grep 'systemd.confirm_spawn'") do
-    its('stdout'){ should be_empty }
+    its('stdout') { should be_empty }
   end
 end
