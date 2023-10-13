@@ -93,6 +93,172 @@ Example Inputs
   TODO
 ```
 
+# Running the Benchmark
+
+## Install Chef
+
+```
+chef gem install kitchen-docker
+kitchen init -D docker
+```
+
+## Install Docker
+
+```
+brew install --cask docker
+
+docker pull dokken/oraclelinux-9
+
+docker image ls
+REPOSITORY             TAG       IMAGE ID       CREATED       SIZE
+dokken/oraclelinux-9   la
+
+docker run --rm -it --entrypoint /bin/bash dokken/oraclelinux-9
+```
+
+## Run Kitchen
+
+```
+kitchen create
+
+-----> Starting Test Kitchen (v3.2.2)
+       Using default tag: latest
+       latest: Pulling from dokken/oraclelinux-9
+       f318dcad289f: Pulling fs layer
+       898f35b1b3a1: Pulling fs layer
+       898f35b1b3a1: Download complete
+       f318dcad289f: Verifying Checksum
+       f318dcad289f: Download complete
+       f318dcad289f: Pull complete
+       898f35b1b3a1: Pull complete
+       Digest: sha256:ada81a2a275cbbd6be00439e69cf7e1b4a67aa78953e0971f690e85bedab8e5f
+       Status: Downloaded newer image for dokken/oraclelinux-9:latest
+       docker.io/dokken/oraclelinux-9:latest
+-----> Creating <default-rhel9>...
+/opt/chef-workstation/embedded/lib/ruby/gems/3.0.0/gems/lockfile-2.1.3/lib/lockfile.rb:308: warning: finalizer references object to be finalized
+/opt/chef-workstation/embedded/lib/ruby/gems/3.0.0/gems/lockfile-2.1.3/lib/lockfile.rb:308: warning: finalizer references object to be finalized
+       Creating container chef-latest
+       Creating kitchen sandbox at /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
+       Creating verifier sandbox at /Users/jon/.dokken/verifier_sandbox/1e7b21fccd-default-rhel9
+       Building work image..
+       Creating container 1e7b21fccd-default-rhel9
+       Finished creating <default-rhel9> (0m5.55s).
+-----> Test Kitchen is finished. (0m16.40s)
+
+kitchen converge
+
+-----> Starting Test Kitchen (v3.2.2)
+-----> Converging <default-rhel9>...
+       Creating kitchen sandbox in /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
+       Installing cookbooks for Policyfile /Users/jon/Documents/_Scripts/redhat-enterprise-linux-9-stig-baseline/Policyfile.rb using `/usr/local/bin/chef-cli install`
+       Installing cookbooks from lock
+       Using      example_cookbook 0.1.0
+       Updating policy lock using `/usr/local/bin/chef-cli update`
+       Building policy redhat-enterprise-linux-9-stig-baseline
+       Expanded run list: recipe[example_cookbook::default]
+       Caching Cookbooks...
+       Using      example_cookbook 0.1.0
+       
+       Lockfile written to /Users/jon/Documents/_Scripts/redhat-enterprise-linux-9-stig-baseline/Policyfile.lock.json
+       Policy revision id: 4f2cc30d4540e43e4045cab573595905828c826982003a1cf94405f1028537d4
+       Preparing dna.json
+       Exporting cookbook dependencies from Policyfile /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9 using `/usr/local/bin/chef-cli export`...
+       Exported policy 'redhat-enterprise-linux-9-stig-baseline' to /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
+       
+       To converge this system with the exported policy, run:
+         cd /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
+         chef-client -z
+       Removing non-cookbook files before transfer
+       Preparing validation.pem
+       Preparing client.rb
+       +---------------------------------------------+
+       ✔ 2 product licenses accepted.
+       +---------------------------------------------+
+       Chef Infra Client, version 18.3.0
+       Patents: https://www.chef.io/patents
+       Infra Phase starting
+       [2023-10-13T05:33:59+00:00] ERROR: shard_seed: Failed to get dmi property serial_number: is dmidecode installed?
+       Creating a new client identity for default-rhel9 using the validator key.
+       Using Policyfile 'redhat-enterprise-linux-9-stig-baseline' at revision '4f2cc30d4540e43e4045cab573595905828c826982003a1cf94405f1028537d4'
+       Resolving cookbooks for run list: ["example_cookbook::default@0.1.0 (2a9362d)"]
+       Synchronizing cookbooks:
+         - example_cookbook (0.1.0)
+       Installing cookbook gem dependencies:
+       Compiling cookbooks...
+       Loading Chef InSpec profile files:
+       Loading Chef InSpec input files:
+       Loading Chef InSpec waiver files:
+       Converging 1 resources
+       Recipe: example_cookbook::default
+         * cookbook_file[/etc/motd] action create
+           - update content in file /etc/motd from e3b0c4 to 76d6ae
+           --- /etc/motd        2020-06-23 06:11:43.000000000 +0000
+           +++ /etc/.chef-motd20231013-31-ulyrep        2023-10-13 05:33:59.635910013 +0000
+           @@ -1,33 +1,66 @@
+           +
+           +                    YES  ===================================   NO
+           +             +-----------|| Did you edit attributes.json? ||-------+
+           +             |           ===================================       |
+           +             V                                                     V
+           +        +----------+     +---------+                       +------------+
+           +        |   Don't  |  NO |   Does  |       +-------+  NO   | Did you do |
+           +        |   mess   | +---|  anyone |<------|  YOU  |<------| it on      |
+           +        | with it! | |   |  know?  |       | MORON |       | purpose?   | 
+           +        +----------+ |   +---------+       +-------+       +------------+
+           +             |       V        | YES                                |  YES
+           +             |    +------+    +-----------+                        |
+           +             |    | HIDE |                V                        V
+           +             |    |  IT  |            +--------+             +-----------+
+           +             |    +------+            |  YOU   |        YES  | WILL THEY |
+           +             |       |       +------->|  POOR  |<------------| CATCH YOU?|
+           +             |       |       |        |BASTARD!|             +-----------+
+           +             |       |       |        |________|                   |  NO
+           +             |       |       |             |                       |
+           +             |       |       |             V                       V
+           +             |       |       |      +---------------+        +-----------+
+           +             |       |       |  NO  | CAN YOU BLAME |        |DESTROY THE|
+           +             |       |       +------| SOMEONE ELSE? |        |  EVIDENCE |
+           +             |       |              +---------------+        +-----------+
+           +             |       |                     |  YES                  |
+           +             |       |                     v                       |
+           +             |       |      ============================           |
+           +             |       +---->||           N O            ||<---------+
+           +             +------------>||      P R O B L E M       ||
+           +                            ============================
+           +
+           +Please follow the diagram above and make the proper adjustments.
+           +
+       
+       Running handlers:
+       Running handlers complete
+       Infra Phase complete, 1/1 resources updated in 01 seconds
+       Finished converging <default-rhel9> (0m6.38s).
+-----> Test Kitchen is finished. (0m7.43s)
+
+kitchen verify
+
+-----> Starting Test Kitchen (v3.2.2)
+-----> Setting up <default-rhel9>...
+       Finished setting up <default-rhel9> (0m0.00s).
+-----> Verifying <default-rhel9>...
+WARNING: Nokogiri was built against libxml version 2.9.4, but has dynamically loaded 2.9.13
+       Loaded redhat-enterprise-linux-9-stig-baseline 
+
+Profile: redhat-enterprise-linux-9-stig-baseline (redhat-enterprise-linux-9-stig-baseline)
+Version: 0.0.1
+Target:  docker://49fd5f5a565e697b51098622b21ede3359211359243c6754efe49480d0c94a07
+
+  ✔  SV-257777: RHEL 9 must be a vendor-supported release.
+     ✔  The release "9.2" must still be within the support window, ending 31 May 2027 is expected to equal true
+
+
+Profile Summary: 1 successful control, 0 control failures, 0 controls skipped
+Test Summary: 1 successful, 0 failures, 0 skipped
+       Finished verifying <default-rhel9> (0m3.75s).
+-----> Test Kitchen is finished. (0m4.70s)
+```
+
+
 # Running the Profile
 
 ## (connected) Running the Profile Directly
