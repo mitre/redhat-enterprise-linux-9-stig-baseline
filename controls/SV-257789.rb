@@ -3,15 +3,15 @@ control 'SV-257789' do
   desc 'Having a nondefault grub superuser username makes password-guessing attacks less effective.'
   desc 'check', 'Verify the boot loader superuser account has been set with the following command:
 
-$ sudo grep -A1 "superusers" /etc/grub2.cfg 
+$ sudo grep -A1 "superusers" /etc/grub2.cfg
 
  set superusers="<superusers-account>"
 export superusers
- 
+
 The <superusers-account> is the actual account name different from common names like root, admin, or administrator.
 
 If superusers contains easily guessable usernames, this is a finding.'
-  desc 'fix', %q(Configure RHEL 9 to have a unique username for the grub superuser account.
+  desc 'fix', %q('Configure RHEL 9 to have a unique username for the grub superuser account.
 
 Edit the "/etc/grub.d/01_users" file and add or modify the following lines in the "### BEGIN /etc/grub.d/01_users ###" section:
 
@@ -33,4 +33,20 @@ $ sudo grubby --update-kernel=ALL')
   tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    describe parse_config_file(input('grub_uefi_main_cfg')) do
+      its('set superusers') { should cmp '"root"' }
+    end
+  else
+    impact 0.0
+    describe 'System running BIOS' do
+      skip 'The System is running BIOS, this control is Not Applicable.'
+    end
+  end
 end
