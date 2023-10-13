@@ -1,5 +1,4 @@
-.kitchen/
-.kitchen.local.yml
+.kitchen/**
 Policyfile.lock.json
 test/fixtures
 .DS_Store

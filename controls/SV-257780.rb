@@ -29,4 +29,19 @@ If the daemon is not running, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    describe package('mcafeetp') do
+      it { should be_installed }
+    end
+
+    describe processes('mfetpd') do
+      it { should exist }
+    end
+  end
 end
