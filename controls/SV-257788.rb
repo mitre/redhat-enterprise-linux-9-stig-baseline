@@ -23,4 +23,8 @@ $ sudo grubby --update-kernel=ALL --remove-args="systemd.confirm_spawn"'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe command("grubby --info=ALL | grep args | grep 'systemd.confirm_spawn'") do
+    its('stdout'){ should be_empty }
+  end
 end
