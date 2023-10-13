@@ -58,4 +58,29 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag 'documentable'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
   tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 3']
+
+  banner_message_text_cli = input('banner_message_text_cli')
+
+  clean_banner = banner_message_text_cli.gsub(/[\r\n\s]/, '')
+  banner_file = file('/etc/issue')
+  banner_missing = !banner_file.exist?
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    describe 'The banner text is not set because /etc/issue does not exist' do
+        subject { banner_missing }
+        it { should be false }
+      end if banner_missing
+
+      banner_message = banner_file.content.gsub(/[\r\n\s]/, '')
+
+      describe 'The banner text should match the standard banner' do
+        subject { banner_message }
+        it { should cmp clean_banner }
+      end unless banner_missing
+  end
 end
