@@ -107,6 +107,7 @@ kitchen init -D docker
 ```
 brew install --cask docker
 
+(optional)
 docker pull dokken/oraclelinux-9
 
 docker image ls

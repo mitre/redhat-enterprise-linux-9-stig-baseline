@@ -22,18 +22,21 @@ verifier:
       path: .
   load_plugins: true
 
+lifecycle:
+  pre_converge: |
+    mkdir -p test/fixtures/rhel8STIG
+    if [[ ! -f test/fixtures/rhel8STIG/U_RHEL_8_V1R11_STIG_Chef.zip ]]; then
+      wget https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V1R11_STIG_Chef.zip -O ./test/fixtures/rhel8STIG/U_RHEL_8_V1R11_STIG_Chef.zip
+      unzip ./test/fixtures/rhel8STIG/U_RHEL_8_V1R11_STIG_Chef.zip -d ./test/fixtures/rhel8STIG
+      unzip ./test/fixtures/rhel8STIG/rhel8STIG-chef -d ./test/fixtures/rhel8STIG/rhel8STIG-chef
+      sh -c 'cd test/fixtures/rhel8STIG/rhel8STIG-chef && bash install.sh'
+    fi
+
+    # Prereqs for rhel8STIG
+    touch /etc/selinux/config
+    
 suites:
   - name: default
-    includes:
-    - rhel9
-    lifecycle:
-      pre_create: docker pull dokken/oraclelinux-9
-      pre_converge: |
-        #mkdir -p test/fixtures
-        #wget https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V1R11_STIG_Chef.zip -O ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip
-        #unzip ./test/fixtures/U_RHEL_8_V1R11_STIG_Chef.zip -d ./test/fixtures/
-        #unzip ./test/fixtures/rhel8STIG-chef -d ./test/fixtures/rhel8STIG-chef
-        #sh -c 'cd test/fixtures/rhel8STIG-chef && bash install.sh'
 
 # ---
 # provisioner:

@@ -10,9 +10,9 @@ name 'redhat-enterprise-linux-9-stig-baseline'
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
-run_list 'example_cookbook::default'
-#run_list 'dokken_test::default'
-#run_list 'rhel8STIG::default'
+# TODO: rhel9STIG when released
+run_list 'rhel8STIG::default'
 
 # Specify a custom source for a single cookbook:
-#cookbook 'rhel8STIG', path: 'test/fixtures/rhel8STIG-chef/cookbooks/rhel8STIG'
+cookbook 'rhel8STIG', path: 'test/fixtures/rhel8STIG/rhel8STIG-chef/cookbooks/rhel8STIG'
+cookbook 'puppet_compat', path: 'test/fixtures/rhel8STIG/rhel8STIG-chef/cookbooks/puppet_compat'
