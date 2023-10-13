@@ -1,4 +1,4 @@
-.kitchen/
+.kitchen/**
 .kitchen.local.yml
 Policyfile.lock.json
 test/fixtures
