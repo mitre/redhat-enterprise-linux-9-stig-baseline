@@ -54,33 +54,27 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag stig_id: 'RHEL-09-211020'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag fix_id: 'F-61444r925323_fix'
-  tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
+  tag satisfies: %w(SRG-OS-000023-GPOS-00006 SRG-OS-000228-GPOS-00088)
   tag 'documentable'
-  tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
+  tag cci: %w(CCI-000048 CCI-001384 CCI-001385 CCI-001386 CCI-001387 CCI-001388)
   tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 3']
 
-  banner_message_text_cli = input('banner_message_text_cli')
-
-  clean_banner = banner_message_text_cli.gsub(/[\r\n\s]/, '')
   banner_file = file('/etc/issue')
-  banner_missing = !banner_file.exist?
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif banner_file.exist?
+    describe 'The banner text should match the standard banner' do
+      subject { banner_file.content.gsub(/[\r\n\s]/, '') }
+      it { should cmp input('banner_message_text_cli').gsub(/[\r\n\s]/, '') }
     end
   else
     describe 'The banner text is not set because /etc/issue does not exist' do
-        subject { banner_missing }
-        it { should be false }
-      end if banner_missing
-
-      banner_message = banner_file.content.gsub(/[\r\n\s]/, '')
-
-      describe 'The banner text should match the standard banner' do
-        subject { banner_message }
-        it { should cmp clean_banner }
-      end unless banner_missing
+      subject { !banner_file.exist? }
+      it { should be false }
+    end
   end
 end
