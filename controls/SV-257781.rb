@@ -23,4 +23,20 @@ $ sudo systemctl set-default multi-user.target'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe command('systemctl get-default') do
+    its('stdout.strip') { should eq 'multi-user.target' }
+  end
+  describe package('xorg-x11-server-common') do
+    it { should_not be_installed }
+  end
+  describe package('xorg-x11-server-Xorg') do
+    it { should_not be_installed }
+  end
+  describe package('xorg-x11-server-utils') do
+    it { should_not be_installed }
+  end
+  describe package('xorg-x11-server-Xwayland') do
+    it { should_not be_installed }
+  end
 end
