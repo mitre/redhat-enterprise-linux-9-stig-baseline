@@ -1,0 +1,6 @@
+---
+- name: Kitchen Dokken
+  uses: actionshub/kitchen-dokken@v1.0.0
+  with: sd
+    suite: default
+    os: rhel9
