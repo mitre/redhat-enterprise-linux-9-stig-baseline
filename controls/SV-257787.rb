@@ -39,10 +39,10 @@ Confirm password:'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-  describe file("/boot/grub2/user.cfg") do
-    its("content") { should match(/^\s*GRUB2_PASSWORD=grub.pbkdf2.sha512.\s*.+$/) }
+  describe file('/boot/grub2/user.cfg') do
+    its('content') { should match(/^\s*GRUB2_PASSWORD=grub.pbkdf2.sha512.\s*.+$/) }
   end
-  describe file("/etc/grub2.cfg") do
-    its("content") { should match(/^password_pbkdf2\s*superusers-account\s*\$\{GRUB2_PASSWORD\}$/) }
+  describe file('/etc/grub2.cfg') do
+    its('content') { should match(/^password_pbkdf2\s*superusers-account\s*\$\{GRUB2_PASSWORD\}$/) }
   end
 end
