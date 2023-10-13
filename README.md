@@ -158,13 +158,13 @@ kitchen converge
        Expanded run list: recipe[example_cookbook::default]
        Caching Cookbooks...
        Using      example_cookbook 0.1.0
-       
+
        Lockfile written to /Users/jon/Documents/_Scripts/redhat-enterprise-linux-9-stig-baseline/Policyfile.lock.json
        Policy revision id: 4f2cc30d4540e43e4045cab573595905828c826982003a1cf94405f1028537d4
        Preparing dna.json
        Exporting cookbook dependencies from Policyfile /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9 using `/usr/local/bin/chef-cli export`...
        Exported policy 'redhat-enterprise-linux-9-stig-baseline' to /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
-       
+
        To converge this system with the exported policy, run:
          cd /Users/jon/.dokken/kitchen_sandbox/1e7b21fccd-default-rhel9
          chef-client -z
@@ -203,7 +203,7 @@ kitchen converge
            +        +----------+     +---------+                       +------------+
            +        |   Don't  |  NO |   Does  |       +-------+  NO   | Did you do |
            +        |   mess   | +---|  anyone |<------|  YOU  |<------| it on      |
-           +        | with it! | |   |  know?  |       | MORON |       | purpose?   | 
+           +        | with it! | |   |  know?  |       | MORON |       | purpose?   |
            +        +----------+ |   +---------+       +-------+       +------------+
            +             |       V        | YES                                |  YES
            +             |    +------+    +-----------+                        |
@@ -228,7 +228,7 @@ kitchen converge
            +
            +Please follow the diagram above and make the proper adjustments.
            +
-       
+
        Running handlers:
        Running handlers complete
        Infra Phase complete, 1/1 resources updated in 01 seconds
@@ -242,7 +242,7 @@ kitchen verify
        Finished setting up <default-rhel9> (0m0.00s).
 -----> Verifying <default-rhel9>...
 WARNING: Nokogiri was built against libxml version 2.9.4, but has dynamically loaded 2.9.13
-       Loaded redhat-enterprise-linux-9-stig-baseline 
+       Loaded redhat-enterprise-linux-9-stig-baseline
 
 Profile: redhat-enterprise-linux-9-stig-baseline (redhat-enterprise-linux-9-stig-baseline)
 Version: 0.0.1
