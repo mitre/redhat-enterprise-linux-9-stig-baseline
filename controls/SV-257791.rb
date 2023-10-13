@@ -3,9 +3,9 @@ control 'SV-257791' do
   desc 'The " /boot/grub2/grub.cfg" file stores sensitive system configuration. Protection of this file is critical for system security.'
   desc 'check', 'Verify the ownership of the "/boot/grub2/grub.cfg" file with the following command:
 
-$ sudo stat -c "%U %n" /boot/grub2/grub.cfg 
+$ sudo stat -c "%U %n" /boot/grub2/grub.cfg
 
-root /boot/grub2/grub.cfg 
+root /boot/grub2/grub.cfg
 
 If "/boot/grub2/grub.cfg" file does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the file /boot/grub2/grub.cfg to root by running the following command:
@@ -23,4 +23,8 @@ $ sudo chown root /boot/grub2/grub.cfg'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe file('/boot/grub2/grub.cfg') do
+    its('owner') { should eq 'root' }
+  end
 end
