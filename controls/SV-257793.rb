@@ -11,7 +11,7 @@ $ sudo grubby --info=ALL | grep args | grep -v 'page_poison=1'
 
 If any output is returned, this is a finding.
 
-Check that page poisoning is enabled by default to persist in kernel updates with the following command: 
+Check that page poisoning is enabled by default to persist in kernel updates with the following command:
 
 $ sudo grep page_poison /etc/default/grub
 
@@ -34,8 +34,23 @@ GRUB_CMDLINE_LINUX="page_poison=1"'
   tag stig_id: 'RHEL-09-212040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61458r925365_fix'
-  tag satisfies: ['SRG-OS-000480-GPOS-00227', 'SRG-OS-000134-GPOS-00068']
+  tag satisfies: %w(SRG-OS-000480-GPOS-00227 SRG-OS-000134-GPOS-00068)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001084']
+  tag cci: %w(CCI-000366 CCI-001084)
   tag nist: ['CM-6 b', 'SC-3']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe parse_config(command('grub2-editenv - list').stdout) do
+      its('kernelopts') { should match /page_poison=1/ }
+    end
+
+    describe parse_config_file('/etc/default/grub') do
+      its('GRUB_CMDLINE_LINUX') { should match /page_poison=1/ }
+    end
+  end
 end
