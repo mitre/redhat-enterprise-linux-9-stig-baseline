@@ -7,11 +7,11 @@ control 'SV-257795' do
 
 $ sudo grubby --info=ALL | grep pti
 
-args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on 
+args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on
 
 If the "pti" entry does not equal "on", or is missing, this is a finding.
 
-Check that kernel page-table isolation is enabled by default to persist in kernel updates: 
+Check that kernel page-table isolation is enabled by default to persist in kernel updates:
 
 $ sudo grep pti /etc/default/grub
 
@@ -34,8 +34,23 @@ GRUB_CMDLINE_LINUX="pti=on"'
   tag stig_id: 'RHEL-09-212050'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag fix_id: 'F-61460r925371_fix'
-  tag satisfies: ['SRG-OS-000433-GPOS-00193', 'SRG-OS-000095-GPOS-00049']
+  tag satisfies: %w(SRG-OS-000433-GPOS-00193 SRG-OS-000095-GPOS-00049)
   tag 'documentable'
-  tag cci: ['CCI-000381', 'CCI-002824']
+  tag cci: %w(CCI-000381 CCI-002824)
   tag nist: ['CM-7 a', 'SI-16']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe parse_config(command('grub2-editenv - list').stdout) do
+      its('kernelopts') { should match /pti=on/ }
+    end
+
+    describe parse_config_file('/etc/default/grub') do
+      its('GRUB_CMDLINE_LINUX') { should match  /pti=on/ }
+    end
+  end
 end
