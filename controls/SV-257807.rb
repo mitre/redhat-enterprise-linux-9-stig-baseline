@@ -14,7 +14,7 @@ blacklist sctp
 If the command does not return any output, or the line is commented out, and use of sctp is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'To configure the system to prevent the sctp kernel module from being loaded, add the following line to the file  /etc/modprobe.d/sctp.conf (or create sctp.conf if it does not exist):
 
-install sctp/bin/false
+install sctp /bin/false
 blacklist sctp'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

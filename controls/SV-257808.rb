@@ -7,7 +7,7 @@ Failing to disconnect unused protocols can result in a system compromise.
 The Transparent Inter Process Communication (TIPC) is a protocol that is specially designed for intra-cluster communication. It can be configured to transmit messages either on UDP or directly across Ethernet. Message delivery is sequence guaranteed, loss free and flow controlled. Disabling TIPC protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the tipc kernel module with the following command:
 
-$ sudo grep -r tipc /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r tipc /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist tipc
 
@@ -28,4 +28,16 @@ blacklist tipc'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    describe kernel_module('TIPC') do
+      it { should be_enabled }
+      it { should be_blacklisted }
+    end
+  end
 end
