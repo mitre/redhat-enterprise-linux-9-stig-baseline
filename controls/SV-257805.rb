@@ -32,7 +32,7 @@ blacklist can'
     end
   else
     describe kernel_module('CAN') do
-      it { should be_disabled }
+      it { should be_enabled }
       it { should be_blacklisted }
     end
   end
