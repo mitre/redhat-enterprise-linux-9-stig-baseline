@@ -33,8 +33,19 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213070'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag fix_id: 'F-61474r925413_fix'
-  tag satisfies: ['SRG-OS-000433-GPOS-00193', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000433-GPOS-00193 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-002824']
+  tag cci: %w(CCI-000366 CCI-002824)
   tag nist: ['CM-6 b', 'SI-16']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.randomize_va_space') do
+      its('value') { should eq 2 }
+    end
+  end
 end
