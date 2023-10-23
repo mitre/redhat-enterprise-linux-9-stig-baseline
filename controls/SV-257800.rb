@@ -36,4 +36,15 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: %w(CCI-000366 CCI-001082 CCI-002824)
   tag nist: ['CM-6 b', 'SC-2', 'SI-16']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.kptr_restrict') do
+      its('value') { should eq 1 }
+    end
+  end
 end
