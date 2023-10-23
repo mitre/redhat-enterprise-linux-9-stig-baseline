@@ -38,8 +38,23 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213030'
   tag gtitle: 'SRG-OS-000312-GPOS-00123'
   tag fix_id: 'F-61466r925389_fix'
-  tag satisfies: ['SRG-OS-000312-GPOS-00123', 'SRG-OS-000324-GPOS-00125']
+  tag satisfies: %w(SRG-OS-000312-GPOS-00123 SRG-OS-000324-GPOS-00125)
   tag 'documentable'
-  tag cci: ['CCI-002165', 'CCI-002235']
+  tag cci: %w(CCI-002165 CCI-002235)
   tag nist: ['AC-3 (4)', 'AC-6 (10)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('fs.protected_hardlinks') do
+      its('value') { should eq 1 }
+    end
+
+    describe command('grep -r ^fs.protected_hardlinks /etc/sysctl.conf /etc/sysctl.d/*.conf') do
+      its('stdout') { should match /fs.protected_hardlinks=1$/ }
+    end
+  end
 end
