@@ -3,7 +3,7 @@ control 'SV-257806' do
   desc 'Disabling firewire protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the firewire-core kernel module with the following command:
 
-$ sudo grep -r firewire-core /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r firewire-core /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist firewire-core
 
@@ -24,4 +24,16 @@ blacklist firewire-core'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_module('firewire_core') do
+      it { should be_disabled }
+      it { should be_blacklisted }
+    end
+  end
 end
