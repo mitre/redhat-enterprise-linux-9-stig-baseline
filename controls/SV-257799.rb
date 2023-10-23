@@ -38,8 +38,23 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213020'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61464r925383_fix'
-  tag satisfies: ['SRG-OS-000480-GPOS-00227', 'SRG-OS-000366-GPOS-00153']
+  tag satisfies: %w(SRG-OS-000480-GPOS-00227 SRG-OS-000366-GPOS-00153)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001749']
+  tag cci: %w(CCI-000366 CCI-001749)
   tag nist: ['CM-6 b', 'CM-5 (3)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.kexec_load_disabled') do
+      its('value') { should eq 1 }
+    end
+
+    describe command('grep -r ^kernel.kexec_load_disabled /etc/sysctl.conf /etc/sysctl.d/*.conf') do
+      its('stdout') { should match /kernel.kexec_load_disabled=1$/ }
+    end
+  end
 end
