@@ -48,4 +48,19 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-001082', 'CCI-001090']
   tag nist: ['SC-2', 'SC-4']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable within a container" do
+      skip "Control not applicable within a container"
+    end
+  else
+    describe kernel_parameter('kernel.dmesg_restrict') do
+      its('value') { should eq 1 }
+    end
+
+    describe parse_config(command('grep -rh ^kernel.dmesg_restrict /etc/sysctl.conf /etc/sysctl.d/*.conf').stdout.strip) do
+      its(['kernel.dmesg_restrict']) { should cmp 1 }
+    end
+  end
 end
