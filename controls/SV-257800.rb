@@ -5,7 +5,7 @@ control 'SV-257800' do
 '
   desc 'check', %q(Verify the runtime status of the kernel.kptr_restrict kernel parameter with the following command:
 
-$ sysctl kernel.kptr_restrict 
+$ sysctl kernel.kptr_restrict
 
 kernel.kptr_restrict = 1
 
@@ -32,8 +32,19 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213025'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61465r925386_fix'
-  tag satisfies: ['SRG-OS-000132-GPOS-00067', 'SRG-OS-000433-GPOS-00192', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000132-GPOS-00067 SRG-OS-000433-GPOS-00192 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001082', 'CCI-002824']
+  tag cci: %w(CCI-000366 CCI-001082 CCI-002824)
   tag nist: ['CM-6 b', 'SC-2', 'SI-16']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.kptr_restrict') do
+      its('value') { should eq 1 }
+    end
+  end
 end
