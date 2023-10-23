@@ -43,8 +43,23 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213015'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61463r925380_fix'
-  tag satisfies: ['SRG-OS-000132-GPOS-00067', 'SRG-OS-000138-GPOS-00069']
+  tag satisfies: %w(SRG-OS-000132-GPOS-00067 SRG-OS-000138-GPOS-00069)
   tag 'documentable'
-  tag cci: ['CCI-001082', 'CCI-001090']
-  tag nist: ['SC-2', 'SC-4']
+  tag cci: %w(CCI-001082 CCI-001090)
+  tag nist: %w(SC-2 SC-4)
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.perf_event_paranoid') do
+      its('value') { should eq 2 }
+    end
+
+    describe parse_config(command('grep -rh ^kernel.perf_event_paranoid /etc/sysctl.conf /etc/sysctl.d/*.conf').stdout.strip) do
+      its(['kernel.perf_event_paranoid']) { should cmp 2 }
+    end
+  end
 end
