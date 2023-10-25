@@ -25,4 +25,8 @@ Storage=none'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe parse_config_file('/etc/systemd/coredump.conf') do
+    its('Coredump.Storage') { should cmp 'none' }
+  end
 end
