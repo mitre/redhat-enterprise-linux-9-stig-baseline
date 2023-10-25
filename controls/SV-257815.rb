@@ -31,4 +31,21 @@ $ sudo systemctl daemon-reload'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    s = systemd_service('systemd-coredump.socket')
+    describe.one do
+      describe s do
+        its('params.LoadState') { should eq 'masked' }
+      end
+      describe s do
+        its('params.LoadState') { should eq 'not-found' }
+      end
+    end
+  end
 end
