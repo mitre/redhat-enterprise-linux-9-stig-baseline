@@ -11,7 +11,7 @@ nss-tools.x86_64          3.71.0-7.el9
 
 If the "nss-tools" package is not installed, this is a finding.'
   desc 'fix', 'The nss-tools package can be installed with the following command:
- 
+
 $ sudo dnf install nss-tools'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
@@ -25,4 +25,8 @@ $ sudo dnf install nss-tools'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe package('nss-tools') do
+    it { should_not be_installed }
+  end
 end
