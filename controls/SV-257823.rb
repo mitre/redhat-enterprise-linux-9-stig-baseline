@@ -34,7 +34,7 @@ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
   describe package('gzip') do
     it{ should be_installed }
   end
-  describe command('rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'").stdout do
+  describe command("rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'").stdout do
     it { stdout }{ should be_empty }
   end
 end
