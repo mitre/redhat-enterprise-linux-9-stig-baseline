@@ -27,6 +27,6 @@ $ sudo dnf install gnutls-utils'
   tag nist: ['CM-6 b']
 
   describe package('gnutls-utils') do
-    it { should_not be_installed }
+    it { should be_installed }
   end
 end
