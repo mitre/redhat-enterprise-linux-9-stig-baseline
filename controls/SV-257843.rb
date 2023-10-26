@@ -22,16 +22,18 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
+  mount_path = '/home'
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   else
-    describe mount('/home') do
+    describe mount(mount_path) do
       it { should be_mounted }
     end
-    describe etc_fstab.where { mount_point == '/home' } do
+    describe etc_fstab.where { mount_point == mount_path } do
       it { should exist }
     end
   end

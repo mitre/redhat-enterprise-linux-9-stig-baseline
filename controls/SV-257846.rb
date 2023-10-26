@@ -22,16 +22,18 @@ If a separate entry for "/var/log" is not in use, this is a finding.'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-    if virtualization.system.eql?('docker')
+  mount_path = '/var/log'
+
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
-    describe mount('/var/log') do
+    describe mount(mount_path) do
       it { should be_mounted }
     end
-    describe etc_fstab.where { mount_point == '/var/log' } do
+    describe etc_fstab.where { mount_point == mount_path } do
       it { should exist }
     end
   end
