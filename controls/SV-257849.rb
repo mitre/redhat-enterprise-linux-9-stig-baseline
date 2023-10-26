@@ -28,4 +28,22 @@ $ sudo systemctl mask --now autofs.service'
   tag 'documentable'
   tag cci: %w(CCI-000366 CCI-000778 CCI-001958)
   tag nist: ['CM-6 b', 'IA-3', 'IA-3']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('autofs').installed?
+    describe systemd_service('autofs.service') do
+      it { should_not be_running }
+      it { should_not be_enabled }
+      it { should_not be_installed }
+    end
+  else
+    impact 0.0
+    describe 'The autofs service is not installed' do
+      skip 'The autofs service is not installed, this control is Not Applicable.'
+    end
+  end
 end
