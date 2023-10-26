@@ -35,6 +35,6 @@ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
     it{ should be_installed }
   end
   describe command("rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'") do
-    its{ stdout }{ should be_empty }
+    its{ 'stdout' }{ should be_empty }
   end
 end
