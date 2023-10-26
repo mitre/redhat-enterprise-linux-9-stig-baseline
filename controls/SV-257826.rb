@@ -28,6 +28,6 @@ $ sudo dnf remove vsftpd'
   tag nist: ['IA-5 (1) (c)', 'CM-6 b', 'CM-7 a']
 
   describe package('ftp') do
-    it(should_not(be_installed))
+    it { should_not be_installed }
   end
 end
