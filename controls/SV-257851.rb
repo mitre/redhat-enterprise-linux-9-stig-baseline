@@ -27,6 +27,8 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
   tag cci: %w(CCI-000366 CCI-001764)
   tag nist: ['CM-6 b', 'CM-7 (2)']
 
+  mount_option = 'nosuid'
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
@@ -46,7 +48,7 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
       end
       describe etc_fstab.where { mount_point == home_dir } do
         it { should be_configured }
-        its('mount_options.first') { should include 'nosuid' }
+        its('mount_options.first') { should include mount_option }
       end
     end
   end
