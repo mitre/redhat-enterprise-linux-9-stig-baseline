@@ -28,7 +28,7 @@ If the "/home" file system is mounted without the "nodev" option, this is a find
 
   mount_option = 'nodev'
 
-   if virtualization.system.eql?('docker')
+  if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
