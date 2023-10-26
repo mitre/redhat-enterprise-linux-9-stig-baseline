@@ -26,8 +26,12 @@ $ sudo dnf remove tuned'
   tag stig_id: 'RHEL-09-215055'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61499r925488_fix'
-  tag satisfies: ['SRG-OS-000095-GPOS-00049', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000095-GPOS-00049 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-000381']
+  tag cci: %w(CCI-000366 CCI-000381)
   tag nist: ['CM-6 b', 'CM-7 a']
+
+  describe package('tuned') do
+    it { should_not be_installed }
+  end
 end
