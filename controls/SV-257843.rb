@@ -28,6 +28,9 @@ If a separate entry for "/home" is not in use, this is a finding.'
       skip 'Control not applicable within a container'
     end
   else
+    describe mount('/home') do
+      it { should be_mounted }
+    end
     describe etc_fstab.where { mount_point == '/home' } do
       it { should exist }
     end

@@ -3,7 +3,7 @@ control 'SV-257844' do
   desc 'The "/tmp" partition is used as temporary storage by many programs. Placing "/tmp" in its own partition enables the setting of more restrictive mount options, which can help protect programs that use it.'
   desc 'check', 'Verify that a separate file system/partition has been created for "/tmp" with the following command:
 
-$ mount | grep /tmp 
+$ mount | grep /tmp
 
 tmpfs /tmp tmpfs noatime,mode=1777 0 0
 
@@ -21,4 +21,18 @@ If a separate entry for "/tmp" is not in use, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe mount('/tmp') do
+      it { should be_mounted }
+    end
+    describe etc_fstab.where { mount_point == '/tmp' } do
+      it { should exist }
+    end
+  end
 end
