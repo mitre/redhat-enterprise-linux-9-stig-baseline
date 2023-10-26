@@ -27,4 +27,8 @@ $ sudo dnf remove telnet-server'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  describe package('telnet-server') do
+    it { should_not be_installed }
+  end
 end
