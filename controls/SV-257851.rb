@@ -35,7 +35,9 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
   else
     home_dirs = []
     passwd.where { uid.to_i >= 1000 && shell !~ /nologin/ }.entries.each do |ie|
-      home_dirs.append(ie.home[0..ie.home.length - (ie.user.length + 2)])
+      username_size = ie.user.length
+      home_size = ie.home.length
+      home_dirs.append(ie.home[0..home_size - (username_size + 2)])
     end
     home_dirs.uniq.each do |home_dir|
       describe 'User home directories should not be mounted under root' do
