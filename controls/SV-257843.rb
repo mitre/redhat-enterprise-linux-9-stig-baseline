@@ -21,4 +21,15 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe etc_fstab.where { mount_point == '/home' } do
+      it { should exist }
+    end
+  end
 end
