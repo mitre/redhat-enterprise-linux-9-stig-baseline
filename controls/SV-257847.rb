@@ -7,9 +7,9 @@ control 'SV-257847' do
 
 Note: /var/log/audit is used as the example as it is a common location.
 
-$ mount | grep /var/log/audit 
+$ mount | grep /var/log/audit
 
-UUID=2efb2979-45ac-82d7-0ae632d11f51 on /var/log/home type xfs  (rw,realtime,seclabel,attr2,inode64)
+UUID=2efb2979-45ac-82d7-0ae632d11f51 on /var/log/audit type xfs  (rw,realtime,seclabel,attr2,inode64)
 
 If no line is returned, this is a finding.'
   desc 'fix', 'Migrate the system audit data path onto a separate file system.'
@@ -26,4 +26,20 @@ If no line is returned, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001849']
   tag nist: ['CM-6 b', 'AU-4']
+
+  mount_path = '/var/log/audit'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe mount(mount_path) do
+      it { should be_mounted }
+    end
+    describe etc_fstab.where { mount_point == mount_path } do
+      it { should exist }
+    end
+  end
 end

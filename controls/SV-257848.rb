@@ -5,7 +5,7 @@ control 'SV-257848' do
 
 $ mount | grep /var/tmp
 
-UUID=c274f65f-c5b5-4379-b017-bee96feb7a34 /var/log xfs noatime 1 2
+UUID=c274f65f-c5b5-4379-b017-bee96feb7a34 /var/tmp xfs noatime 1 2
 
 If a separate entry for "/var/tmp" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var/tmp" path onto a separate file system.'
@@ -21,4 +21,20 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  mount_path = '/var/tmp'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe mount(mount_path) do
+      it { should be_mounted }
+    end
+    describe etc_fstab.where { mount_point == mount_path } do
+      it { should exist }
+    end
+  end
 end
