@@ -23,4 +23,28 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    home_dirs = []
+    passwd.where { uid.to_i >= 1000 && shell !~ /nologin/ }.entries.each do |ie|
+      username_size = ie.user.length
+      home_size = ie.home.length
+      home_dirs.append(ie.home[0..home_size - (username_size + 2)])
+    end
+    home_dirs.uniq.each do |home_dir|
+      describe 'User home directories should not be mounted under root' do
+        subject { home_dir }
+        it { should_not eq '/' }
+      end
+      describe etc_fstab.where { mount_point == home_dir } do
+        it { should be_configured }
+        its('mount_options.first') { should include 'noexec' }
+      end
+    end
+  end
 end
