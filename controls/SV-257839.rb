@@ -11,7 +11,7 @@ gnutls-utils.x86_64          3.7.3-9.el9
 
 If the "gnutls-utils" package is not installed, this is a finding.'
   desc 'fix', 'The gnutls-utils package can be installed with the following command:
- 
+
 $ sudo dnf install gnutls-utils'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
@@ -25,4 +25,8 @@ $ sudo dnf install gnutls-utils'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe package('gnutls-utils') do
+    it { should_not be_installed }
+  end
 end
