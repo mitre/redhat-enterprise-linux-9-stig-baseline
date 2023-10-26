@@ -5,7 +5,7 @@ control 'SV-257835' do
 If TFTP is required for operational support (such as transmission of router configurations), its use must be documented with the information systems security manager (ISSM), restricted to only authorized personnel, and have access control rules established.'
   desc 'check', 'Verify that RHEL 9 does not have a tftp server package installed with the following command:
 
-$ sudo dnf list --installed | grep tftp 
+$ sudo dnf list --installed | grep tftp
 
 If the "tftp" package is installed, this is a finding.'
   desc 'fix', 'The tftp package can be removed with the following command:
@@ -23,4 +23,8 @@ $ sudo dnf remove tftp'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe package('tftp') do
+    it { should_not be_installed }
+  end
 end
