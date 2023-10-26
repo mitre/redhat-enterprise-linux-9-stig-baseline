@@ -27,6 +27,6 @@ $ sudo dnf install nss-tools'
   tag nist: ['CM-6 b']
 
   describe package('nss-tools') do
-    it { should_not be_installed }
+    it { should be_installed }
   end
 end
