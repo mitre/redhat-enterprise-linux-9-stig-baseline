@@ -26,7 +26,14 @@ $ sudo dnf install rng-tools'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe package('rng-tools') do
-    it { should_not be_installed }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe package('rng-tools') do
+      it { should be_installed }
+    end
   end
 end
