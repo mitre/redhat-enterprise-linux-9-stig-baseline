@@ -27,4 +27,11 @@ $ sudo sed -i 's/gpgcheck\s*=.*/gpgcheck=1/g' /etc/yum.repos.d/*)
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+
+  command('ls /etc/yum.repos.d/*.repo').stdout.split("\n").each do |gpgcheck_entry|
+    describe "Repo file #{gpgcheck_entry}" do
+      subject { file(gpgcheck_entry) }
+      its('content') { should match /gpgcheck\s*=\s*1/ }
+    end
+  end
 end
