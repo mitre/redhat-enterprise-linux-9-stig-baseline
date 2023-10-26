@@ -32,9 +32,9 @@ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
   tag nist: ['CM-6 b']
 
   describe package('gzip') do
-    it{ should be_installed }
+    it { should be_installed }
   end
   describe command("rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'") do
-    its{ 'stdout' }{ should be_empty }
+    its('stdout') { should be_empty }
   end
 end
