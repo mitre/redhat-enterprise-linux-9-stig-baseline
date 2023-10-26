@@ -22,9 +22,9 @@ If no line is returned, this is a finding.'
   tag stig_id: 'RHEL-09-231030'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag fix_id: 'F-61512r925527_fix'
-  tag satisfies: ['SRG-OS-000341-GPOS-00132', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000341-GPOS-00132 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001849']
+  tag cci: %w(CCI-000366 CCI-001849)
   tag nist: ['CM-6 b', 'AU-4']
 
   mount_path = '/var/log/audit'
