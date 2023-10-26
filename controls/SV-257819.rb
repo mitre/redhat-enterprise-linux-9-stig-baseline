@@ -39,11 +39,11 @@ Insert RHEL 9 installation disc or attach RHEL 9 installation image to the syste
 Assuming the mounted location is "/media/cdrom", use the following command to copy Red Hat GPG key file onto the system:
 
 $ sudo cp /media/cdrom/RPM-GPG-KEY-redhat-release /etc/pki/rpm-gpg/
-	 
+
 Import Red Hat GPG keys from key file into system keyring:
 
 $ sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-	 
+
 Using the steps listed in the Check Text, confirm the newly imported keys show as installed on the system and verify their fingerprints match vendor values.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
@@ -57,4 +57,8 @@ Using the steps listed in the Check Text, confirm the newly imported keys show a
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+
+  describe file('/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release') do
+    it { should exist }
+  end
 end
