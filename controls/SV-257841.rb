@@ -11,7 +11,7 @@ rng-tools.x86_64          6.14-2.git.b2b7934e.el9
 
 If the "rng-tools" package is not installed, this is a finding.'
   desc 'fix', 'The rng-tools package can be installed with the following command:
- 
+
 $ sudo dnf install rng-tools'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
@@ -25,4 +25,8 @@ $ sudo dnf install rng-tools'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe package('rng-tools') do
+    it { should_not be_installed }
+  end
 end
