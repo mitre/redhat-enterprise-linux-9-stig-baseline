@@ -22,8 +22,30 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
   tag stig_id: 'RHEL-09-231050'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61516r925539_fix'
-  tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000368-GPOS-00154 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001764']
+  tag cci: %w(CCI-000366 CCI-001764)
   tag nist: ['CM-6 b', 'CM-7 (2)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    home_dirs = []
+    passwd.where { uid.to_i >= 1000 && shell !~ /nologin/ }.entries.each do |ie|
+      home_dirs.append(ie.home[0..ie.home.length - (ie.user.length + 2)])
+    end
+    home_dirs.uniq.each do |home_dir|
+      describe 'User home directories should not be mounted under root' do
+        subject { home_dir }
+        it { should_not eq '/' }
+      end
+      describe etc_fstab.where { mount_point == home_dir } do
+        it { should be_configured }
+        its('mount_options.first') { should include 'nosuid' }
+      end
+    end
+  end
 end
