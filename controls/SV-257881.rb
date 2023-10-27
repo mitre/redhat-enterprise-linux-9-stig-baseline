@@ -21,4 +21,9 @@ If any output is produced, this is a finding.)
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe "List of devices mounted without 'nodev' option outside root /dev directory" do
+    subject { command("mount \| grep '^/dev\\S* on /\\S' \| grep --invert-match 'nodev'").stdout }
+    it { should be_empty }
+  end
 end

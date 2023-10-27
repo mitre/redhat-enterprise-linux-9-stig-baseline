@@ -27,4 +27,8 @@ ProcessSizeMax=0'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe parse_config_file('/etc/systemd/coredump.conf') do
+    its('Coredump.ProcessSizeMax') { should cmp '0' }
+  end
 end

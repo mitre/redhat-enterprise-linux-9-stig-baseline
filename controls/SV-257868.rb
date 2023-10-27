@@ -21,4 +21,18 @@ If the "/tmp" file system is mounted without the "nosuid" option, this is a find
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  option = 'nosuid'
+  home_dir = '/tmp'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe etc_fstab.where { mount_point == option } do
+      its('mount_options.flatten') { should include home_dir }
+    end
+  end
 end

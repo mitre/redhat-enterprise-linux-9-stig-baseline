@@ -3,9 +3,9 @@ control 'SV-257898' do
   desc 'The "/etc/group" file contains information regarding groups that are configured on the system. Protection of this file is important for system security.'
   desc 'check', 'Verify the ownership of the "/etc/group" file with the following command:
 
-$ sudo stat -c "%U %n" /etc/group 
+$ sudo stat -c "%U %n" /etc/group
 
-root /etc/group 
+root /etc/group
 
 If "/etc/group" file does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the file /etc/group to root by running the following command:
@@ -23,4 +23,8 @@ $ sudo chown root /etc/group'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe file('/etc/group') do
+    it { should be_owned_by 'root' }
+  end
 end

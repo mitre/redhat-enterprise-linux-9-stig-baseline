@@ -27,4 +27,25 @@ $ sudo chmod 0750 /home/wadea)
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  uid_min = if uid_mind.nil?
+              1000
+            else
+              login_defs.read_params['UID_MIN'].to_i
+            end
+
+  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !input('exempt_home_users').include?(user) }
+
+  if !iuser_entries.users.nil? && !iuser_entries.users.empty?
+    iuser_entries.homes.each do |home_dir|
+      describe file(home_dir) do
+        it { should_not be_more_permissive_than('0750') }
+      end
+    end
+  else
+    describe 'No non-exempt interactive user accounts were detected on the system' do
+      subject { true }
+      it { should be true }
+    end
+  end
 end

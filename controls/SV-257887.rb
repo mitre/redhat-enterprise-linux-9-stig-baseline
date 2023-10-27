@@ -35,4 +35,27 @@ Replace "[audit_tool]" with each audit tool that has a more permissive mode than
   tag 'documentable'
   tag cci: ['CCI-001493']
   tag nist: ['AU-9 a']
+
+  files = %w(
+   /sbin/auditctl
+   /sbin/aureport
+   /sbin/ausearch
+   /sbin/autrace
+   /sbin/auditd
+   /sbin/rsyslogd
+   /sbin/augenrules
+  )
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    files.each do |f|
+      describe file(f) do
+        it { should_not be_more_permissive_than('0755') }
+      end
+    end
+  end
 end

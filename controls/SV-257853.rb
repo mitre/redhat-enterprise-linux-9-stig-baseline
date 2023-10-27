@@ -10,7 +10,7 @@ $ cat /etc/fstab | grep nfs
 192.168.22.2:/mnt/export /data nfs4 rw,nosuid,nodev,noexec,sync,soft,sec=krb5p:krb5i:krb5
 
 If the system is mounting file systems via NFS and has the sec option without the "krb5:krb5i:krb5p" settings, the "sec" option has the "sys" setting, or the "sec" option is missing, this is a finding.'
-  desc 'fix', 'Update the "/etc/fstab" file so the option "sec" is defined for each NFS mounted file system and the "sec" option does not have the "sys" setting. 
+  desc 'fix', 'Update the "/etc/fstab" file so the option "sec" is defined for each NFS mounted file system and the "sec" option does not have the "sys" setting.
 
 Ensure the "sec" option is defined as "krb5p:krb5i:krb5".'
   impact 0.5
@@ -25,4 +25,21 @@ Ensure the "sec" option is defined as "krb5p:krb5i:krb5".'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  option = 'sec'
+  nfs_systems = etc_fstab.nfs_file_systems.entries
+
+  if !nfs_systems.nil? && !nfs_systems.empty?
+    nfs_systems.each do |nfs_system|
+      describe "Network File System mounted on #{nfs_system['mount_point']}" do
+        subject { nfs_system }
+        its('mount_options') { should include option }
+      end
+    end
+  else
+    describe 'No NFS file systems were found' do
+      subject { nfs_systems.nil? || nfs_systems.empty? }
+      it { should eq true }
+    end
+  end
 end

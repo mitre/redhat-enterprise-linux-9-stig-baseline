@@ -24,8 +24,26 @@ $ sudo systemctl mask --now autofs.service'
   tag stig_id: 'RHEL-09-231040'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61514r925533_fix'
-  tag satisfies: ['SRG-OS-000114-GPOS-00059', 'SRG-OS-000378-GPOS-00163', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000114-GPOS-00059 SRG-OS-000378-GPOS-00163 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-000778', 'CCI-001958']
+  tag cci: %w(CCI-000366 CCI-000778 CCI-001958)
   tag nist: ['CM-6 b', 'IA-3', 'IA-3']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif package('autofs').installed?
+    describe systemd_service('autofs.service') do
+      it { should_not be_running }
+      it { should_not be_enabled }
+      it { should_not be_installed }
+    end
+  else
+    impact 0.0
+    describe 'The autofs service is not installed' do
+      skip 'The autofs service is not installed, this control is Not Applicable.'
+    end
+  end
 end

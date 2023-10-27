@@ -11,7 +11,7 @@ subscription-manager.x86_64          1.29.26-3.el9_0
 
 If the "subscription-manager" package is not installed, this is a finding.'
   desc 'fix', 'The  subscription-manager package can be installed with the following command:
- 
+
 $ sudo dnf install subscription-manager'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
@@ -25,4 +25,8 @@ $ sudo dnf install subscription-manager'
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+
+  describe package('subscription-manager') do
+    it { should be_installed }
+  end
 end

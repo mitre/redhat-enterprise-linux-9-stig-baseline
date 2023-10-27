@@ -23,4 +23,11 @@ If the /dev/shm file system is mounted without the "nodev" option, this is a fin
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  option = 'nodev'
+  home_dir = '/dev/shm'
+
+  describe etc_fstab.where { mount_point == home_dir } do
+    its('mount_options.flatten') { should include option }
+  end
 end

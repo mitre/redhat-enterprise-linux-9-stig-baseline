@@ -4,7 +4,7 @@ control 'SV-257860' do
   desc 'check', %q(Verify that the "/boot" mount point has the "nodev" option is with the following command:
 
 Note: This control is not applicable to RHEL 9 system booted UEFI.
-  
+
 $ sudo mount | grep '\s/boot\s'
 
 /dev/sda1 on /boot type xfs (rw,nodev,relatime,seclabel,attr2)
@@ -23,4 +23,24 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  option = 'nodev'
+  home_dir = '/boot'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    impact 0.0
+    describe 'System running UEFI' do
+      skip 'The System is running UEFI, this control is Not Applicable.'
+    end
+  else
+    describe mount(home_dir) do
+      it { should be_mounted }
+      its('options') { should include option }
+    end
+  end
 end

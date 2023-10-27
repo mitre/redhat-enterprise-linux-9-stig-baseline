@@ -27,4 +27,25 @@ Add the following line to the top of the /etc/security/limits.conf or in a singl
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  limits_files = command('find /etc/security/limits.d/ -name *.conf').stdout.strip.split
+  limits_files.append('/etc/security/limits.conf')
+  describe.one do
+    limits_files.each do |lf|
+      describe limits_conf(lf) do
+        its('*') { should include %w(hard core 0) }
+      end
+    end
+  end
+  limits_files.each do |lf|
+    lines = limits_conf(lf).read_params.values.flatten(1)
+    lines.each do |line|
+      l = { type: line[0], item: line[1], value: line[2] }
+      next unless l[:item].eql?('core')
+      describe "#{lf} entries" do
+        subject { l }
+        its([:value]) { should cmp 0 }
+      end
+    end
+  end
 end

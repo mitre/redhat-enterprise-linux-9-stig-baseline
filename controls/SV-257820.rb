@@ -31,4 +31,8 @@ gpgcheck=1'
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+
+  describe ini('/etc/dnf/dnf.conf') do
+    its('main.gpgcheck') { should cmp 1 }
+  end
 end

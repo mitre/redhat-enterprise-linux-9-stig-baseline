@@ -25,4 +25,8 @@ $ sudo dnf remove quagga'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe package('quagga') do
+    it { should_not be_installed }
+  end
 end

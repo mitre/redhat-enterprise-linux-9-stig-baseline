@@ -37,4 +37,15 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.core_pattern') do
+      its('value') { should eq '|/bin/false' }
+    end
+  end
 end

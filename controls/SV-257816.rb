@@ -19,7 +19,7 @@ user.max_user_namespaces = 0
 If the network parameter "user.max_user_namespaces" is not equal to "0", or nothing is returned, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to disable the use of user namespaces by adding the following line to a file, in the "/etc/sysctl.d" directory:
 
-Note: User namespaces are used primarily for Linux containers. If containers are in use, this requirement is Not Applicable. 
+Note: User namespaces are used primarily for Linux containers. If containers are in use, this requirement is Not Applicable.
 
 user.max_user_namespaces = 0
 
@@ -38,4 +38,20 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif input('container_host')
+    impact 0.0
+    describe true do
+      skip 'Profile running on a container host -- User namespaces are used primarily for Linux containers.; this control is Not Applicable'
+    end
+  else
+    describe kernel_parameter('user.max_user_namespaces') do
+      its('value') { should eq 0 }
+    end
+  end
 end

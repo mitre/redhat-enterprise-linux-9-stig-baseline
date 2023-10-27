@@ -22,8 +22,12 @@ $ sudo dnf remove sendmail'
   tag stig_id: 'RHEL-09-215020'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61492r925467_fix'
-  tag satisfies: ['SRG-OS-000480-GPOS-00227', 'SRG-OS-000095-GPOS-00049']
+  tag satisfies: %w(SRG-OS-000480-GPOS-00227 SRG-OS-000095-GPOS-00049)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-000381']
+  tag cci: %w(CCI-000366 CCI-000381)
   tag nist: ['CM-6 b', 'CM-7 a']
+
+  describe package('sendmail') do
+    it { should_not be_installed }
+  end
 end

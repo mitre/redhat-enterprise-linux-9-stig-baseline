@@ -3,9 +3,9 @@ control 'SV-257824' do
   desc 'Previous versions of software components that are not removed from the information system after updates have been installed may be exploited by some adversaries.'
   desc 'check', 'Verify RHEL 9 removes all software components after updated versions have been installed with the following command:
 
-$ grep clean /etc/dnf/dnf.conf 
+$ grep clean /etc/dnf/dnf.conf
 
-clean_requirements_on_remove=1 
+clean_requirements_on_remove=1
 
 If "clean_requirements_on_remove" is not set to "1", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to remove all software components after updated versions have been installed.
@@ -25,4 +25,8 @@ Edit the file /etc/dnf/dnf.conf by adding or editing the following line:
   tag 'documentable'
   tag cci: ['CCI-002617']
   tag nist: ['SI-2 (6)']
+
+  describe parse_config_file('/etc/dnf/dnf.conf') do
+    its('main.clean_requirements_on_remove') { should match /1|True|yes/i }
+  end
 end

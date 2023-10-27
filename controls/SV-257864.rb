@@ -21,4 +21,11 @@ If the /dev/shm file system is mounted without the "noexec" option, this is a fi
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  option = 'noexec'
+  home_dir = '/dev/shm'
+
+  describe etc_fstab.where { mount_point == home_dir } do
+    its('mount_options.flatten') { should include option }
+  end
 end

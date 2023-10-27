@@ -25,4 +25,8 @@ $ sudo chmod 0640 /var/log/messages'
   tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+
+  describe directory('/var/log/messages') do
+    it { should_not be_more_permissive_than('0640') }
+  end
 end

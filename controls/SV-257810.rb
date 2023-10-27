@@ -33,8 +33,19 @@ $ sudo sysctl --system'
   tag stig_id: 'RHEL-09-213075'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61475r925416_fix'
-  tag satisfies: ['SRG-OS-000132-GPOS-00067', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000132-GPOS-00067 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001082']
+  tag cci: %w(CCI-000366 CCI-001082)
   tag nist: ['CM-6 b', 'SC-2']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_parameter('kernel.unprivileged_bpf_disabled') do
+      its('value') { should eq 1 }
+    end
+  end
 end
