@@ -7,7 +7,7 @@ Removing support for unneeded filesystem types reduces the local attack surface 
 Compressed ROM/RAM file system (or cramfs) is a read-only file system designed for simplicity and space-efficiency. It is mainly used in embedded and small-footprint systems.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the cramfs kernel module with the following command:
 
-$ sudo grep -r cramfs /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r cramfs /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist cramfs
 
@@ -28,4 +28,16 @@ blacklist cramfs'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe kernel_module('cramfs') do
+      it { should be_disabled }
+      it { should be_blacklisted }
+    end
+  end
 end
