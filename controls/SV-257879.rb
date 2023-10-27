@@ -5,7 +5,7 @@ control 'SV-257879' do
 Selection of a cryptographic mechanism is based on the need to protect the integrity of organizational information. The strength of the mechanism is commensurate with the security category and/or classification of the information. Organizations have the flexibility to either encrypt all information on storage devices (i.e., full disk encryption) or encrypt specific data structures (e.g., files, records, or fields).
 
 '
-  desc 'check', 'Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption. 
+  desc 'check', 'Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption.
 
 Note: If there is a documented and approved reason for not having data-at-rest encryption, this requirement is Not Applicable.
 
@@ -30,8 +30,27 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   tag stig_id: 'RHEL-09-231190'
   tag gtitle: 'SRG-OS-000405-GPOS-00184'
   tag fix_id: 'F-61544r925623_fix'
-  tag satisfies: ['SRG-OS-000405-GPOS-00184', 'SRG-OS-000185-GPOS-00079', 'SRG-OS-000404-GPOS-00183']
+  tag satisfies: %w(SRG-OS-000405-GPOS-00184 SRG-OS-000185-GPOS-00079 SRG-OS-000404-GPOS-00183)
   tag 'documentable'
-  tag cci: ['CCI-001199', 'CCI-002475', 'CCI-002476']
+  tag cci: %w(CCI-001199 CCI-002475 CCI-002476)
   tag nist: ['SC-28', 'SC-28 (1)', 'SC-28 (1)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    if all_args.empty?
+      describe 'Command blkid did not return and non-psuedo block devices.' do
+        skip
+      end
+    end
+
+    all_args.each do |args|
+      describe args do
+        it { should match /\bcrypto_LUKS\b/ }
+      end
+    end
+  end
 end
