@@ -3,7 +3,7 @@ control 'SV-257899' do
   desc 'The "/etc/group" file contains information regarding groups that are configured on the system. Protection of this file is important for system security.'
   desc 'check', 'Verify the group ownership of the "/etc/group" file with the following command:
 
-$ sudo stat -c "%G %n" /etc/group 
+$ sudo stat -c "%G %n" /etc/group
 
 root /etc/group
 
@@ -23,4 +23,8 @@ $ sudo chgrp root /etc/group'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe file('/etc/group') do
+    its('group') { should eq 'root' }
+  end
 end
