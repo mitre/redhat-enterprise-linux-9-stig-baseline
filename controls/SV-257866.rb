@@ -24,7 +24,14 @@ If the "/tmp" file system is mounted without the "nodev" option, this is a findi
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  describe etc_fstab.where { mount_point == '/tmp' } do
-    its('mount_options.flatten') { should include 'nodev' }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe etc_fstab.where { mount_point == '/tmp' } do
+      its('mount_options.flatten') { should include 'nodev' }
+    end
   end
 end
