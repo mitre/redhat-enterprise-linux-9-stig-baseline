@@ -24,7 +24,7 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  mount_point = 'nosuid'
+  mount_point = 'nodev'
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
