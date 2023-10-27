@@ -23,4 +23,15 @@ If the "/var/log/audit" file system is mounted without the "nodev" option, this 
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe etc_fstab.where { mount_point == '/var/log/audit' } do
+      its('mount_options.flatten') { should include 'nodev' }
+    end
+  end
 end
