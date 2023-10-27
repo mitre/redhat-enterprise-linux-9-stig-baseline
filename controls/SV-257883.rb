@@ -26,7 +26,7 @@ $ sudo chmod 755 [DIRECTORY]'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
 
-  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 -perm /0022 -type f -exec ls -d {} \\;').stdout.split("\n")
+  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 -perm /0022 -type d -exec ls -d {} \\;').stdout.split("\n")
 
   if files.empty?
     describe 'List of system-wide shared library files found to be group-writable or world-writable' do

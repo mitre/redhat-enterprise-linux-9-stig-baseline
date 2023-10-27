@@ -23,4 +23,19 @@ $ sudo chmod 755 [FILE]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+
+  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 -perm /0022 -type f -exec ls -d {} \\;').stdout.split("\n")
+
+  if files.empty?
+    describe 'List of system-wide shared library files found to be group-writable or world-writable' do
+      subject { files }
+      it { should be_empty }
+    end
+  else
+    files.each do |file|
+      describe file(file) do
+        it { should_not be_more_permissive_than('0755') }
+      end
+    end
+  end
 end
