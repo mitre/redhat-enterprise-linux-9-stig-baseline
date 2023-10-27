@@ -32,25 +32,26 @@ $ sudo grubby --update-kernel=ALL --remove-args=noexec'
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable within a container" do
-      skip "Control not applicable within a container"
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
     end
   else
-  describe.one do
     describe.one do
-      describe command('dmesg | grep DX') do
-        it('stdout') { should match (/.+(DX \(Execute Disable\) protection: active)/) }
+      describe.one do
+        describe command('dmesg | grep DX') do
+          it('stdout') { should match(/.+(DX \(Execute Disable\) protection: active)/) }
+        end
+        describe parse_config_file('/proc/cpuinfo', options) do
+          its('flags.split') { should include 'dx' }
+        end
       end
-      describe parse_config_file('/proc/cpuinfo', options) do
-        its('flags.split') { should include 'dx' }
-      end
-    end
-    describe.one do
-      describe command('dmesg | grep NX') do
-        it('stdout') { should match (/.+(NX \(Execute Disable\) protection: active)/) }
-      end
-      describe parse_config_file('/proc/cpuinfo', options) do
-        its('flags.split') { should include 'dx' }
+      describe.one do
+        describe command('dmesg | grep NX') do
+          it('stdout') { should match(/.+(NX \(Execute Disable\) protection: active)/) }
+        end
+        describe parse_config_file('/proc/cpuinfo', options) do
+          its('flags.split') { should include 'dx' }
+        end
       end
     end
   end

@@ -14,7 +14,7 @@ blacklist cramfs
 If the command does not return any output, or the line is commented out, and use of cramfs is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'To configure the system to prevent the cramfs kernel module from being loaded, add the following line to the file /etc/modprobe.d/blacklist.conf (or create blacklist.conf if it does not exist):
 
-install tipc /bin/false
+install cramfs /bin/false
 blacklist cramfs'
   impact 0.3
   ref 'DPMS Target Red Hat Enterprise Linux 9'
