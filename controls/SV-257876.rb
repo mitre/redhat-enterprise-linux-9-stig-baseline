@@ -23,4 +23,18 @@ If the "/var/tmp" file system is mounted without the "nodev" option, this is a f
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  option = 'nodev'
+  home_dir = '/var/tmp'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    describe etc_fstab.where { mount_point == home_dir } do
+      its('mount_options.flatten') { should include option }
+    end
+  end
 end
