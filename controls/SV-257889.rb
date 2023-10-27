@@ -29,4 +29,11 @@ $ sudo chmod 0740 /home/wadea/.<INIT_FILE>'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  users.where { !shell.match(input('non_interactive_shells').join('|')) && (uid >= 1000 || uid == 0) }.entries.each do |user_info|
+    (findings ||= Set[]) << command("find #{user_info.home} -xdev -maxdepth 1 -name '.*' -type f -perm /037").stdout.split("\n")
+  end
+  describe findings do
+    it { should be_empty }
+  end
 end
