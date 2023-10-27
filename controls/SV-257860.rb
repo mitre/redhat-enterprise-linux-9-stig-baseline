@@ -23,4 +23,22 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  mount_point = 'nosuid'
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    impact 0.0
+    describe 'System running UEFI' do
+      skip 'The System is running UEFI, this control is Not Applicable.'
+    end
+  else
+    describe mount('/boot') do
+      it { should be_mounted }
+      its('options') { should include mount_point }
+    end
+  end
 end
