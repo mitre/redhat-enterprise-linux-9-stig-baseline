@@ -25,4 +25,21 @@ Ensure the "sec" option is defined as "krb5p:krb5i:krb5".'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  mount_point = 'sec'
+  nfs_systems = etc_fstab.nfs_file_systems.entries
+
+  if !nfs_systems.nil? && !nfs_systems.empty?
+    nfs_systems.each do |nfs_system|
+      describe "Network File System mounted on #{nfs_system['mount_point']}" do
+        subject { nfs_system }
+        its('mount_options') { should include mount_point }
+      end
+    end
+  else
+    describe 'No NFS file systems were found' do
+      subject { nfs_systems.nil? || nfs_systems.empty? }
+      it { should eq true }
+    end
+  end
 end
