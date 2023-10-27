@@ -8,7 +8,7 @@ This requirement applies to RHEL 9 with software libraries that are accessible a
 $ sudo find -L /lib /lib64 /usr/lib /usr/lib64 -perm /022 -type d -exec ls -l {} \\;
 
 If any system-wide shared library file is found to be group-writable or world-writable, this is a finding.'
-  desc 'fix', 'Configure the system-wide shared library directories (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access. 
+  desc 'fix', 'Configure the system-wide shared library directories (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access.
 
 Run the following command, replacing "[DIRECTORY]" with any library directory with a mode more permissive than 755.
 
@@ -25,4 +25,18 @@ $ sudo chmod 755 [DIRECTORY]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+
+  files = command('find -L /lib /lib64 /usr/lib /usr/lib64 -perm /0022 -type f -exec ls -d {} \\;').stdout.split("\n")
+
+  if files.empty?
+    describe 'List of system-wide shared library files found to be group-writable or world-writable' do
+      subject { files }
+      it { should be_empty }
+    end
+  else
+    files.each do |file|
+      describe file(file) do
+        it { should_not be_more_permissive_than('0755') }
+      end
+    end
 end
