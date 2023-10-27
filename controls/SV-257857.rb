@@ -22,7 +22,7 @@ If a file system found in "/etc/fstab" refers to removable media and it does not
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  mount_point = 'noexec'
+  option = 'noexec'
   non_removable_media_fs = input('non_removable_media_fs')
 
   file_systems = etc_fstab.params
@@ -31,7 +31,7 @@ If a file system found in "/etc/fstab" refers to removable media and it does not
       if !non_removable_media_fs.include?(file_sys_line['mount_point'])
         describe "The mount point #{file_sys_line['mount_point']}" do
           subject { file_sys_line['mount_options'] }
-          it { should include mount_point }
+          it { should include option }
         end
       else
         describe "File system \"#{file_sys_line['mount_point']}\" does not correspond to removable media." do

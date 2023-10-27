@@ -24,7 +24,7 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  mount_option = 'noexec'
+  option = 'noexec'
 
   if virtualization.system.eql?('docker')
     impact 0.0
@@ -45,7 +45,7 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
       end
       describe etc_fstab.where { mount_point == home_dir } do
         it { should be_configured }
-        its('mount_options.first') { should include mount_option }
+        its('mount_options.first') { should include option }
       end
     end
   end

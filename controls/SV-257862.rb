@@ -27,16 +27,18 @@ If the /boot/efi file system does not have the "nosuid" option set, this is a fi
   tag cci: %w(CCI-000366 CCI-001764)
   tag nist: ['CM-6 b', 'CM-7 (2)']
 
-  mount_point = 'nosuid'
+  option = 'nosuid'
+  home_dir = '/boot/efi'
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   elsif file('/sys/firmware/efi').exist?
-    describe mount('/boot/efi') do
+    describe mount(home_dir) do
       it { should be_mounted }
-      its('options') { should include mount_point }
+      its('options') { should include option }
     end
   else
     impact 0.0

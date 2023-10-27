@@ -26,7 +26,7 @@ If the "/home" file system is mounted without the "nodev" option, this is a find
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  mount_option = 'nodev'
+  option = 'nodev'
 
   if virtualization.system.eql?('docker')
     impact 0.0
@@ -47,7 +47,7 @@ If the "/home" file system is mounted without the "nodev" option, this is a find
       end
       describe etc_fstab.where { mount_point == home_dir } do
         it { should be_configured }
-        its('mount_options.first') { should include mount_option }
+        its('mount_options.first') { should include option }
       end
     end
   end

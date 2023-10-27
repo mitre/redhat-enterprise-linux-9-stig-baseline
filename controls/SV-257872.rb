@@ -22,14 +22,17 @@ If the "/var/log" file system is mounted without the "nosuid" option, this is a 
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
+  option = 'nosuid'
+  home_dir = '/var/log'
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
       skip 'Control not applicable within a container'
     end
   else
-    describe etc_fstab.where { mount_point == '/var/log' } do
-      its('mount_options.flatten') { should include 'nosuid' }
+    describe etc_fstab.where { mount_point == home_dir } do
+      its('mount_options.flatten') { should include option }
     end
   end
 end

@@ -24,14 +24,14 @@ If the system is mounting file systems via NFS and the "nodev" option is missing
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  mount_point = 'nodev'
+  option = 'nodev'
   nfs_systems = etc_fstab.nfs_file_systems.entries
 
   if !nfs_systems.nil? && !nfs_systems.empty?
     nfs_systems.each do |nfs_system|
       describe "Network File System mounted on #{nfs_system['mount_point']}" do
         subject { nfs_system }
-        its('mount_options') { should include mount_point }
+        its('mount_options') { should include option }
       end
     end
   else

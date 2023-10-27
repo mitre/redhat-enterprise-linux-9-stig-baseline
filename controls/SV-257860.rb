@@ -24,7 +24,9 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
 
-  mount_point = 'nodev'
+  option = 'nodev'
+  home_dir = '/boot'
+
   if virtualization.system.eql?('docker')
     impact 0.0
     describe 'Control not applicable within a container' do
@@ -36,9 +38,9 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
       skip 'The System is running UEFI, this control is Not Applicable.'
     end
   else
-    describe mount('/boot') do
+    describe mount(home_dir) do
       it { should be_mounted }
-      its('options') { should include mount_point }
+      its('options') { should include option }
     end
   end
 end
