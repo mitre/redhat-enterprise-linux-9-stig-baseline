@@ -39,4 +39,5 @@ $ sudo chmod 755 [DIRECTORY]'
         it { should_not be_more_permissive_than('0755') }
       end
     end
+  end
 end
