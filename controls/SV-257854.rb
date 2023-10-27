@@ -24,7 +24,7 @@ If the system is mounting file systems via NFS and the "nodev" option is missing
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  mount_point = 'dev'
+  mount_point = 'nodev'
   nfs_systems = etc_fstab.nfs_file_systems.entries
 
   if !nfs_systems.nil? && !nfs_systems.empty?
