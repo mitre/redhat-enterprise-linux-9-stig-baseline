@@ -27,4 +27,17 @@ chmod 0700 [cron configuration directory]'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+    command('find /etc/cron* -type d').stdout.split('\n').each do |d|
+      describe directory(d) do
+        it { should_not be_more_permissive_than('0755') }
+      end
+    end
+  end
 end
