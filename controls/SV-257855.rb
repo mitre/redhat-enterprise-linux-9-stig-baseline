@@ -23,4 +23,21 @@ If the system is mounting file systems via NFS and the "noexec" option is missin
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  mount_point = 'noexec'
+  nfs_systems = etc_fstab.nfs_file_systems.entries
+
+  if !nfs_systems.nil? && !nfs_systems.empty?
+    nfs_systems.each do |nfs_system|
+      describe "Network File System mounted on #{nfs_system['mount_point']}" do
+        subject { nfs_system }
+        its('mount_options') { should include mount_point }
+      end
+    end
+  else
+    describe 'No NFS file systems were found' do
+      subject { nfs_systems.nil? || nfs_systems.empty? }
+      it { should eq true }
+    end
+  end
 end
