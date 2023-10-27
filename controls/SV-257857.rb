@@ -22,8 +22,8 @@ If a file system found in "/etc/fstab" refers to removable media and it does not
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  non_removable_media_fs = input('non_removable_media_fs')
   mount_point = 'noexec'
+  non_removable_media_fs = input('non_removable_media_fs')
 
   file_systems = etc_fstab.params
   if !file_systems.nil? && !file_systems.empty?
