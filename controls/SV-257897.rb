@@ -23,4 +23,8 @@ $ sudo chmod 0000 /etc/shadow-'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe file('/etc/shadow-') do
+    it { should_not be_more_permissive_than('0000') }
+  end
 end
