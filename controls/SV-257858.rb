@@ -21,4 +21,29 @@ If a file system found in "/etc/fstab" refers to removable media and it does not
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  non_removable_media_fs = input('non_removable_media_fs')
+  mount_point = 'nodev'
+
+  file_systems = etc_fstab.params
+  if !file_systems.nil? && !file_systems.empty?
+    file_systems.each do |file_sys_line|
+      if !non_removable_media_fs.include?(file_sys_line['mount_point'])
+        describe "The mount point #{file_sys_line['mount_point']}" do
+          subject { file_sys_line['mount_options'] }
+          it { should include mount_point }
+        end
+      else
+        describe "File system \"#{file_sys_line['mount_point']}\" does not correspond to removable media." do
+          subject { non_removable_media_fs.include?(file_sys_line['mount_point']) }
+          it { should eq true }
+        end
+      end
+    end
+  else
+    describe 'No file systems were found.' do
+      subject { file_systems.nil? }
+      it { should eq true }
+    end
+  end
 end
