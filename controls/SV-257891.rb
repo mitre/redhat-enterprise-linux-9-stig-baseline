@@ -23,4 +23,8 @@ $ sudo chmod 0644 /etc/group'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe file('/etc/group') do
+    it { should_not be_more_permissive_than('0644') }
+  end
 end
