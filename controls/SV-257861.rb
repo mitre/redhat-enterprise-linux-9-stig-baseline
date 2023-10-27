@@ -22,8 +22,26 @@ If the /boot file system does not have the "nosuid" option set, this is a findin
   tag stig_id: 'RHEL-09-231100'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61526r925569_fix'
-  tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000480-GPOS-00227']
+  tag satisfies: %w(SRG-OS-000368-GPOS-00154 SRG-OS-000480-GPOS-00227)
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001764']
+  tag cci: %w(CCI-000366 CCI-001764)
   tag nist: ['CM-6 b', 'CM-7 (2)']
+
+  mount_point = 'nosuid'
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  elsif file('/sys/firmware/efi').exist?
+    impact 0.0
+    describe 'System running UEFI' do
+      skip 'The System is running UEFI, this control is Not Applicable.'
+    end
+  else
+    describe mount('/boot') do
+      it { should be_mounted }
+      its('options') { should include mount_point }
+    end
+  end
 end
