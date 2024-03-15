@@ -1,0 +1,12 @@
+roles:
+  - name: rhel9STIG
+    src: https://github.com/ansible-lockdown/RHEL9-STIG
+    version: 1.0.0
+
+collections:
+  - name: community.general
+    source: https://galaxy.ansible.com
+  - name: community.crypto
+    source: https://galaxy.ansible.com
+  - name: ansible.posix
+    source: https://galaxy.ansible.com

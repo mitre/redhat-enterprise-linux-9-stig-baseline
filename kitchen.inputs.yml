@@ -1,0 +1,15 @@
+---
+disable_slow_controls: false
+disconnected_system: false
+data_at_rest_exempt: false
+skip_mount_tmp:
+  nodev: true
+  nosuid: true
+  noexec: true
+skip_password_privilege_escalation: false
+skip_endpoint_security_tool: false
+network_router: false
+use_fapolicyd: true
+smart_card_enabled: false
+external_firewall: false
+allow_container_openssh_server: false

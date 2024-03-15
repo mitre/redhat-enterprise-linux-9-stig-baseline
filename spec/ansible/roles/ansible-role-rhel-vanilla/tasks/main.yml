@@ -1,0 +1,8 @@
+---
+- name: Include sub-tasks
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_first_found:
+    - files:
+        - _packages.yml
+        - _config.yml
+      skip: true

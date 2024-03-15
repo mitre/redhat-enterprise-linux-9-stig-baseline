@@ -4,5 +4,5 @@ maintainer: MITRE SAF Team
 copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
-version: 0.0.1
-inspec_version: ">= 4.0"
+version: 1.2.0
+inspec_version: ">= 6.0"

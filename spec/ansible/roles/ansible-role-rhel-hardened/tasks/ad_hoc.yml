@@ -1,0 +1,29 @@
+---
+# Use this file for simple hardening tasks to support the full STIG hardening role
+
+# make sure all executables have restricted perms
+# NOTE: the role we use for STIG hardening does the same thing in task RHEL-08-010300, but allows root-owned
+# executables to have perms greater than 755
+# the STIG does not allow perms over 755 regardless of whether they are root-owned, so
+# we will fix it here
+- name: Find files with permissions set too high
+  ansible.builtin.shell: "find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /0022"
+  changed_when: false
+  failed_when: false
+  register: files_with_too_high_perms
+
+
+- name: Fix files with permissions set too high
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "{{ rhel8stig_sys_commands_perm }}"
+    force: true
+  with_items:
+      - "{{ files_with_too_high_perms.stdout_lines }}"
+
+- name: fix busted symlink to /usr/bin/miniterm-3.6.py in /bin
+  ansible.builtin.file:
+    path: /bin/miniterm-3.6.py
+    state: absent

@@ -1,0 +1,30 @@
+---
+# see: https://kitchen.ci/docs/drivers/dokken/
+
+provisioner:
+  name: dummy
+
+driver:
+  name: dokken
+  pull_platform_image: false
+
+transport:
+  name: dokken
+
+platforms:
+  - name: ubi9
+
+suites:
+  - name: vanilla
+    driver:
+      image: <%= ENV['VANILLA_CONTAINER_IMAGE'] || "registry.access.redhat.com/ubi9/ubi:9.3-1610" %>
+    verifier:
+      input_files:
+        - container.vanilla.inputs.yml
+  - name: hardened
+    driver:
+      image: <%= ENV['HARDENED_CONTAINER_IMAGE'] || "registry1.dso.mil/ironbank/redhat/ubi/ubi9" %>
+    verifier:
+      input_files:
+        - container.hardened.inputs.yml
+      # creds_file: './creds.json'

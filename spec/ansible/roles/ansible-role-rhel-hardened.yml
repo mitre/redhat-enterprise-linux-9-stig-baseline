@@ -1,0 +1,11 @@
+---
+- hosts:
+    - localhost
+  roles:
+    - roles/ansible-role-rhel-vanilla
+    - roles/ansible-role-rhel-hardened
+    - roles/rhel9STIG
+  serial: 50
+  become: yes
+  vars:
+    rhel9stig_bootloader_password_hash: "changethispassword"
