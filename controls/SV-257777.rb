@@ -23,4 +23,28 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  release = os.release
+
+  # Note that versions 9.0 and 9.2 of RHEL9 are within the EUS window at
+  # time of writing.
+  
+  # 9.1 is not a EUS-supported release and is no longer officially supported 
+  # by Red Hat. The date given for the expiration for 9.1 is based on the 
+  # RHEL9 Planning Guide diagram found on Red Hat's Life Cycle page:
+  # https://access.redhat.com/support/policy/updates/errata/#Life_Cycle_Dates
+
+  EOMS_DATE = {
+    /^9\.0/ => '31 May 2024',
+    /^9\.1/ => 'April 1, 2023', 
+    /^9\.2/ => 'May 31, 2025',
+  }.find { |k, _v| k.match(release) }&.last
+
+  describe "The release \"#{release}\" is still within the support window" do
+    it "ending on #{EOMS_DATE}" do
+      expect(Date.today).to be <= Date.parse(EOMS_DATE)
+    end
+  end
 end
