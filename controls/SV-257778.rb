@@ -34,4 +34,31 @@ $ sudo dnf update'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  only_if("This control takes a long time to execute so it has been disabled through 'slow_controls'") {
+    !input('disable_slow_controls')
+  }
+
+  if input('disconnected_system')
+    describe 'The system is set to a `disconnected` state and you must validate the state of the system packages manually' do
+      skip 'The system is set to a `disconnected` state and you must validate the state of the system packages manually'
+    end
+  else
+    updates = linux_update.updates
+    package_names = updates.map { |h| h['name'] }
+
+    describe.one do
+      describe 'List of out-of-date packages' do
+        subject { package_names }
+        it { should be_empty }
+      end
+      updates.each do |update|
+        describe package(update['name']) do
+          its('version') { should eq update['version'] }
+        end
+      end
+    end
+  end
 end

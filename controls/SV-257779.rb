@@ -58,4 +58,27 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag 'documentable'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
   tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 3']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  banner_file = file('/etc/issue')
+
+  describe banner_file do
+    it { should exist }
+  end
+
+  if banner_file.exist?
+
+    banner = banner_file.content.gsub(/[\r\n\s]/, '')
+    expected_banner = input('banner_message_text_cli').gsub(/[\r\n\s]/, '')
+
+    describe 'The CLI Login Banner ' do
+      it 'is set to the standard banner and has the correct text' do
+        expect(banner).to eq(expected_banner), 'Banner does not match expected text'
+      end
+    end
+  end
 end
