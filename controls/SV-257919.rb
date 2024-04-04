@@ -1,17 +1,8 @@
 control 'SV-257919' do
-  title 'RHEL 8 system commands must be group-owned by root or a system
-account.'
-  desc 'If RHEL 8 were to allow any user to make changes to software
-libraries, then those changes might be implemented without undergoing the
-appropriate testing and approvals that are part of a robust change management
-process.
+  title 'RHEL 9 system commands must be group-owned by root or a system account.'
+  desc 'If RHEL 9 allowed any user to make changes to software libraries, then those changes might be implemented without undergoing the appropriate testing and approvals that are part of a robust change management process.
 
-    This requirement applies to RHEL 8 with software libraries that are
-accessible and configurable, as in the case of interpreted languages. Software
-libraries also include privileged programs that execute with escalated
-privileges. Only qualified and authorized individuals will be allowed to obtain
-access to information system components for purposes of initiating changes,
-including upgrades and modifications.'
+This requirement applies to RHEL 9 with software libraries that are accessible and configurable, as in the case of interpreted languages. Software libraries also include privileged programs that execute with escalated privileges.'
   desc 'check', 'Verify the system commands contained in the following directories are group-owned by "root", or a required system account, with the following command:
 
 $ sudo find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -group root -exec ls -l {} \\;
@@ -24,12 +15,13 @@ file not group-owned by "root" or a required system account.
 
     $ sudo chgrp root [FILE]'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
-  tag gid: 'V-230259'
-  tag rid: 'SV-257919r792864_rule'
-  tag stig_id: 'RHEL-08-010320'
-  tag fix_id: 'F-32903r567524_fix'
+  tag gid: 'V-257919'
+  tag rid: 'SV-257919r925744_rule'
+  tag stig_id: 'RHEL-09-232195'
+  tag fix_id: 'F-61584r925743_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
   tag 'host'

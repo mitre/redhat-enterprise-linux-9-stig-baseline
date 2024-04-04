@@ -1,55 +1,41 @@
 control 'SV-258149' do
-  title 'The RHEL 8 audit records must be off-loaded onto a different system or
-storage media from the system being audited.'
-  desc 'Information stored in one location is vulnerable to accidental or
-incidental deletion or alteration.
+  title 'RHEL 9 must be configured to forward audit records via TCP to a different system or media from the system being audited via rsyslog.'
+  desc 'Information stored in one location is vulnerable to accidental or incidental deletion or alteration.
 
-    Off-loading is a common process in information systems with limited audit
-storage capacity.
+Offloading is a common process in information systems with limited audit storage capacity.
 
-    RHEL 8 installation media provides "rsyslogd".  "rsyslogd" is a system
-utility providing support for message logging.  Support for both internet and
-UNIX domain sockets enables this utility to support both local and remote
-logging.  Couple this utility with "gnutls" (which is a secure communications
-library implementing the SSL, TLS and DTLS protocols), and you have a method to
-securely encrypt and off-load auditing.
+RHEL 9 installation media provides "rsyslogd", a system utility providing support for message logging. Support for both internet and Unix domain sockets enables this utility to support both local and remote logging. Coupling this utility with "gnutls" (a secure communications library implementing the SSL, TLS and DTLS protocols) creates a method to securely encrypt and offload auditing.
 
-    Rsyslog provides three ways to forward message: the traditional UDP
-transport, which is extremely lossy but standard; the plain TCP based
-transport, which loses messages only during certain situations but is widely
-available; and the RELP transport, which does not lose messages but is
-currently available only as part of the rsyslogd 3.15.0 and above.
-    Examples of each configuration:
-    UDP *.* @remotesystemname
-    TCP *.* @@remotesystemname
-    RELP *.* :omrelp:remotesystemname:2514
-    Note that a port number was given as there is no standard port for RELP.'
-  desc 'check', 'Verify the audit system offloads audit records onto a different system or media from the system being audited with the following command:
+Rsyslog provides three ways to forward message: the traditional UDP transport, which is extremely lossy but standard; the plain TCP based transport, which loses messages only during certain situations but is widely available; and the RELP transport, which does not lose messages but is currently available only as part of the rsyslogd 3.15.0 and above.
 
-     $ sudo grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+Examples of each configuration:
+UDP *.* @remotesystemname
+TCP *.* @@remotesystemname
+RELP *.* :omrelp:remotesystemname:2514
+Note that a port number was given as there is no standard port for RELP.'
+  desc 'check', 'Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
 
-     /etc/rsyslog.conf:*.* @@[logaggregationserver.example.mil]:[port]
+$ sudo grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-If a remote server is not configured, or the line is commented out, ask the system administrator to indicate how the audit logs are offloaded to a different system or media.
+/etc/rsyslog.conf:*.* @@[remoteloggingserver]:[port]
+
+If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media. 
 
 If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.'
-  desc 'fix', 'Configure the operating system to offload audit records onto a different system or media from the system being audited by specifying the remote logging server in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
+  desc 'fix', 'Configure RHEL 9 to offload audit records onto a different system or media from the system being audited via TCP using rsyslog by specifying the remote logging server in "/etc/rsyslog.conf"" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
 
-For UDP:
-     *.* @[logaggregationserver.example.mil]:[port]
-
-For TCP:
-     *.* @@[logaggregationserver.example.mil]:[port]'
+*.* @@[remoteloggingserver]:[port]"'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000342-GPOS-00133'
-  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
-  tag gid: 'V-230479'
-  tag rid: 'SV-258149r917883_rule'
-  tag stig_id: 'RHEL-08-030690'
-  tag fix_id: 'F-33123r917882_fix'
-  tag cci: ['CCI-001851']
-  tag nist: ['AU-4 (1)']
+  tag gtitle: 'SRG-OS-000479-GPOS-00224'
+  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227']
+  tag gid: 'V-258149'
+  tag rid: 'SV-258149r926434_rule'
+  tag stig_id: 'RHEL-09-652055'
+  tag fix_id: 'F-61814r926433_fix'
+  tag cci: ['CCI-001851', 'CCI-000366']
+  tag nist: ['AU-4 (1)', 'CM-6 b']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

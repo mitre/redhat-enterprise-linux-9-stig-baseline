@@ -1,48 +1,26 @@
 control 'SV-257851' do
-  title 'RHEL 8 must prevent files with the setuid and setgid bit set from
-being executed on file systems that contain user home directories.'
-  desc 'The "nosuid" mount option causes the system not to execute
-"setuid" and "setgid" files with owner privileges. This option must be used
-for mounting any file system not containing approved "setuid" and "setguid"
-files. Executing files from untrusted file systems increases the opportunity
-for unprivileged users to attain unauthorized administrative access.'
-  desc 'check', %q(Verify file systems that contain user home directories are mounted with the
-"nosuid" option.
+  title 'RHEL 9 must prevent files with the setuid and setgid bit set from being executed on file systems that contain user home directories.'
+  desc 'The "nosuid" mount option causes the system to not execute "setuid" and "setgid" files with owner privileges. This option must be used for mounting any file system not containing approved "setuid" and "setguid" files. Executing files from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.'
+  desc 'check', 'Verify "/home" is mounted with the "nosuid" option with the following command:
 
-    Note: If a separate file system has not been created for the user home
-directories (user home directories are mounted under "/"), this is
-automatically a finding as the "nosuid" option cannot be used on the "/"
-system.
+Note: If a separate file system has not been created for the user home directories (user home directories are mounted under "/"), this is automatically a finding, as the "nosuid" option cannot be used on the "/" system.
 
-    Find the file system(s) that contain the user home directories with the
-following command:
+$ mount | grep /home
 
-    $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1,$3,$6}' /etc/passwd
+tmpfs on /home type tmpfs (rw,nodev,nosuid,noexec,seclabel)
 
-    smithj:1001: /home/smithj
-    robinst:1002: /home/robinst
-
-    Check the file systems that are mounted at boot time with the following
-command:
-
-    $ sudo more /etc/fstab
-
-    UUID=a411dc99-f2a1-4c87-9e05-184977be8539 /home xfs
-rw,relatime,discard,data=ordered,nosuid,nodev,noexec 0 0
-
-    If a file system found in "/etc/fstab" refers to the user home directory
-file system and it does not have the "nosuid" option set, this is a finding.)
-  desc 'fix', 'Configure the "/etc/fstab" to use the "nosuid" option on
-file systems that contain user home directories for interactive users.'
+If the "/home" file system is mounted without the "nosuid" option, this is a finding.'
+  desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/home" directory.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230299'
-  tag rid: 'SV-257851r627750_rule'
-  tag stig_id: 'RHEL-08-010570'
-  tag fix_id: 'F-32943r567644_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
+  tag gid: 'V-257851'
+  tag rid: 'SV-257851r925540_rule'
+  tag stig_id: 'RHEL-09-231050'
+  tag fix_id: 'F-61516r925539_fix'
+  tag cci: ['CCI-000366', 'CCI-001764']
+  tag nist: ['CM-6 b', 'CM-7 (2)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

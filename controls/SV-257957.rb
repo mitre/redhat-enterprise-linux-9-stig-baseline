@@ -11,7 +11,7 @@ Determine if syncookies are used with the following command:
 
 Check the status of the kernel.perf_event_paranoid kernel parameter.
 
-$ sysctl net.ipv4.tcp_syncookies
+$ sudo sysctl net.ipv4.tcp_syncookies
 
 net.ipv4.tcp_syncookies = 1
 
@@ -32,10 +32,10 @@ Load settings from all system configuration files with the following command:
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61698r925856_chk'
+  tag check_id: 'C-61698r942982_chk'
   tag severity: 'medium'
   tag gid: 'V-257957'
-  tag rid: 'SV-257957r925858_rule'
+  tag rid: 'SV-257957r942983_rule'
   tag stig_id: 'RHEL-09-253010'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61622r925857_fix'

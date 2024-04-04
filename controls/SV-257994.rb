@@ -1,6 +1,5 @@
 control 'SV-257994' do
-  title 'RHEL 8 must force a frequent session key renegotiation for SSH
-connections to the server.'
+  title 'RHEL 9 must force a frequent session key renegotiation for SSH connections to the server.'
   desc 'Without protection of the transmitted information, confidentiality and
 integrity may be compromised because unprotected communications can be
 intercepted and either read or altered.
@@ -22,31 +21,29 @@ not have to be employed, and vice versa.
 compromised.'
   desc 'check', 'Verify the SSH server is configured to force frequent session key renegotiation with the following command:
 
-$ sudo grep -ir RekeyLimit /etc/ssh/sshd_config*
+$ sudo grep -ir rekeyLimit /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 RekeyLimit 1G 1h
 
-If "RekeyLimit" does not have a maximum data amount and maximum time defined, is missing or commented out, this is a finding.
-If conflicting results are returned, this is a finding.'
-  desc 'fix', 'Configure the system to force a frequent session key renegotiation for SSH
-connections to the server by add or modifying the following line in the
-"/etc/ssh/sshd_config" file:
+If "RekeyLimit" does not have a maximum data amount and maximum time defined, is missing or commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to force a frequent session key renegotiation for SSH connections to the server by adding or modifying the following line in the "/etc/ssh/sshd_config" file:
 
-    RekeyLimit 1G 1h
+RekeyLimit 1G 1h
 
-    Restart the SSH daemon for the settings to take effect.
+Restart the SSH daemon for the settings to take effect.
 
-    $ sudo systemctl restart sshd.service'
+$ sudo systemctl restart sshd.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000033-GPOS-00014'
-  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000424-GPOS-00188']
-  tag gid: 'V-230527'
-  tag rid: 'SV-257994r877398_rule'
-  tag stig_id: 'RHEL-08-040161'
-  tag fix_id: 'F-33171r568328_fix'
-  tag cci: ['CCI-000068']
-  tag nist: ['AC-17 (2)']
+  tag gtitle: 'SRG-OS-000423-GPOS-00187'
+  tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000423-GPOS-00187']
+  tag gid: 'V-257994'
+  tag rid: 'SV-257994r943044_rule'
+  tag stig_id: 'RHEL-09-255090'
+  tag fix_id: 'F-61659r925968_fix'
+  tag cci: ['CCI-000068', 'CCI-002418', 'CCI-002421']
+  tag nist: ['AC-17 (2)', 'SC-8', 'SC-8 (1)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers without SSH enabled', impact: 0.0) {

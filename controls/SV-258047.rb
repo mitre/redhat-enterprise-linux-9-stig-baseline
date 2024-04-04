@@ -1,5 +1,5 @@
 control 'SV-258047' do
-  title 'RHEL 8 must automatically expire temporary accounts within 72 hours.'
+  title 'RHEL 9 must automatically expire temporary accounts within 72 hours.'
   desc 'Temporary accounts are privileged or nonprivileged accounts that are
     established during pressing circumstances, such as new software or hardware
     configuration or an incident response, where the need for prompt account
@@ -39,13 +39,14 @@ control 'SV-258047' do
 
     $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000123-GPOS-00064'
-  tag gid: 'V-230374'
-  tag rid: 'SV-258047r903129_rule'
-  tag stig_id: 'RHEL-08-020270'
-  tag fix_id: 'F-33018r902730_fix'
-  tag cci: ['CCI-001682']
+  tag gid: 'V-258047'
+  tag rid: 'SV-258047r926128_rule'
+  tag stig_id: 'RHEL-09-411040'
+  tag fix_id: 'F-61712r926127_fix'
+  tag cci: ['CCI-001682', 'CCI-000016']
   tag nist: ['AC-2 (2)']
   tag 'host'
   tag 'container'

@@ -1,51 +1,24 @@
 control 'SV-257866' do
-  title 'RHEL 8 must mount /tmp with the nodev option.'
-  desc 'The organization must identify authorized software programs and permit
-execution of authorized software. The process used to identify software
-programs that are authorized to execute on organizational information systems
-is commonly referred to as whitelisting.
+  title 'RHEL 9 must mount /tmp with the nodev option.'
+  desc 'The "nodev" mount option causes the system to not interpret character or block special devices. Executing character or block special devices from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.
 
-    The "noexec" mount option causes the system to not execute binary files.
-This option must be used for mounting any file system not containing approved
-binary files, as they may be incompatible. Executing files from untrusted file
-systems increases the opportunity for unprivileged users to attain unauthorized
-administrative access.
-
-    The "nodev" mount option causes the system to not interpret character or
-block special devices. Executing character or block special devices from
-untrusted file systems increases the opportunity for unprivileged users to
-attain unauthorized administrative access.
-
-    The "nosuid" mount option causes the system to not execute "setuid" and
-"setgid" files with owner privileges. This option must be used for mounting
-any file system not containing approved "setuid" and "setguid" files.
-Executing files from untrusted file systems increases the opportunity for
-unprivileged users to attain unauthorized administrative access.'
+The only legitimate location for device files is the "/dev" directory located on the root partition, with the exception of chroot jails if implemented.'
   desc 'check', 'Verify "/tmp" is mounted with the "nodev" option:
 
-    $ sudo mount | grep /tmp
+$ mount | grep /tmp
 
-    /dev/mapper/rhel-tmp on /tmp type xfs (rw,nodev,nosuid,noexec,seclabel)
+/dev/mapper/rhel-tmp on /tmp type xfs (rw,nodev,nosuid,noexec,seclabel)
 
-    Verify that the "nodev" option is configured for /tmp:
-
-    $ sudo cat /etc/fstab | grep /tmp
-
-    /dev/mapper/rhel-tmp /tmp xfs defaults,nodev,nosuid,noexec 0 0
-
-    If results are returned and the "nodev" option is missing, or if /tmp is
-mounted without the "nodev" option, this is a finding.'
-  desc 'fix', 'Configure the system so that /tmp is mounted with the "nodev" option by
-adding /modifying the /etc/fstab with the following line:
-
-    /dev/mapper/rhel-tmp /tmp xfs defaults,nodev,nosuid,noexec 0 0'
+If the "/tmp" file system is mounted without the "nodev" option, this is a finding.'
+  desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/tmp" directory.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
-  tag gid: 'V-230511'
-  tag rid: 'SV-257866r854052_rule'
-  tag stig_id: 'RHEL-08-040123'
-  tag fix_id: 'F-33155r568280_fix'
+  tag gid: 'V-257866'
+  tag rid: 'SV-257866r925585_rule'
+  tag stig_id: 'RHEL-09-231125'
+  tag fix_id: 'F-61531r925584_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
   tag 'host'

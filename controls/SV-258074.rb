@@ -1,39 +1,29 @@
 control 'SV-258074' do
-  title 'RHEL 8 must define default permissions for all authenticated users in
-such a way that the user can only read and modify their own files.'
+  title 'RHEL 9 must define default permissions for all authenticated users in such a way that the user can only read and modify their own files.'
   desc 'Setting the most restrictive default permissions ensures that when new
 accounts are created, they do not have unnecessary access.'
-  desc 'check', 'Verify the operating system defines default permissions for all
-authenticated users in such a way that the user can only read and modify their
-own files.
+  desc 'check', 'Verify RHEL 9 defines default permissions for all authenticated users in such a way that the user can only read and modify their own files with the following command:
 
-    Check for the value of the "UMASK" parameter in "/etc/login.defs" file
-with the following command:
+Note: If the value of the "UMASK" parameter is set to "000" in "/etc/login.defs" file, the Severity is raised to a CAT I.
 
-    Note: If the value of the "UMASK" parameter is set to "000" in
-"/etc/login.defs" file, the Severity is raised to a CAT I.
+# grep -i umask /etc/login.defs
 
-    # grep -i umask /etc/login.defs
+UMASK 077
 
-    UMASK 077
+If the value for the "UMASK" parameter is not "077", or the "UMASK" parameter is missing or is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to define default permissions for all authenticated users in such a way that the user can only read and modify their own files.
 
-    If the value for the "UMASK" parameter is not "077", or the "UMASK"
-parameter is missing or is commented out, this is a finding.'
-  desc 'fix', 'Configure the operating system to define default permissions for all
-authenticated users in such a way that the user can only read and modify their
-own files.
+Add or edit the lines for the "UMASK" parameter in the "/etc/login.defs" file to "077":
 
-    Add or edit the line for the "UMASK" parameter in "/etc/login.defs"
-file to "077":
-
-    UMASK 077'
-  impact 0.7
+UMASK 077'
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
-  tag gid: 'V-230383'
-  tag rid: 'SV-258074r627750_rule'
-  tag stig_id: 'RHEL-08-020351'
-  tag fix_id: 'F-33027r567896_fix'
+  tag gid: 'V-258074'
+  tag rid: 'SV-258074r926209_rule'
+  tag stig_id: 'RHEL-09-412065'
+  tag fix_id: 'F-61739r926208_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

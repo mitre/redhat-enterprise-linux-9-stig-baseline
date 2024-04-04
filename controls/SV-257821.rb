@@ -1,52 +1,32 @@
 control 'SV-257821' do
-  title 'RHEL 8 must prevent the installation of software, patches, service
-packs, device drivers, or operating system components of local packages without
-verification they have been digitally signed using a certificate that is issued
-by a Certificate Authority (CA) that is recognized and approved by the
-organization.'
-  desc 'Changes to any software components can have significant effects on the
-overall security of the operating system. This requirement ensures the software
-has not been tampered with and that it has been provided by a trusted vendor.
+  title 'RHEL 9 must check the GPG signature of locally installed software packages before installation.'
+  desc 'Changes to any software components can have significant effects on the overall security of the operating system. This requirement ensures the software has not been tampered with and that it has been provided by a trusted vendor.
 
-    Accordingly, patches, service packs, device drivers, or operating system
-components must be signed with a certificate recognized and approved by the
-organization.
+All software packages must be signed with a cryptographic key recognized and approved by the organization.
 
-    Verifying the authenticity of the software prior to installation validates
-the integrity of the patch or upgrade received from a vendor. This verifies the
-software has not been tampered with and that it has been provided by a trusted
-vendor. Self-signed certificates are disallowed by this requirement. The
-operating system should not have to verify the software again. This requirement
-does not mandate DoD certificates for this purpose; however, the certificate
-used to verify the software must be from an approved CA.'
-  desc 'check', 'Verify the operating system prevents the installation of patches, service
-packs, device drivers, or operating system components from a repository without
-verification that they have been digitally signed using a certificate that is
-recognized and approved by the organization.
+Verifying the authenticity of software prior to installation validates the integrity of the software package received from a vendor. This verifies the software has not been tampered with and that it has been provided by a trusted vendor.'
+  desc 'check', 'Verify that dnf always checks the GPG signature of locally installed software packages before installation:
 
-    Check if YUM is configured to perform a signature check on local packages
-with the following command:
+$ grep localpkg_gpgcheck /etc/dnf/dnf.conf 
 
-    $ sudo grep -i localpkg_gpgcheck /etc/dnf/dnf.conf
+localpkg_gpgcheck=1 
 
-    localpkg_gpgcheck =True
+If "localpkg_gpgcheck" is not set to "1", or if the option is missing or commented out, ask the system administrator how the GPG signatures of local software packages are being verified.
 
-    If "localpkg_gpgcheck" is not set to either "1", "True", or "yes",
-commented out, or is missing from "/etc/dnf/dnf.conf", this is a finding.'
-  desc 'fix', 'Configure the operating system to remove all software components after
-updated versions have been installed.
+If there is no process to verify GPG signatures that is approved by the organization, this is a finding.'
+  desc 'fix', 'Configure dnf to always check the GPG signature of local software packages before installation.
 
-    Set the "localpkg_gpgcheck" option to "True" in the
-"/etc/dnf/dnf.conf" file:
+Add or update the following line in the [main] section of the /etc/dnf/dnf.conf file:
 
-    localpkg_gpgcheck=True'
+localpkg_gpgcheck=1'
   impact 0.7
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
-  tag gid: 'V-230265'
-  tag rid: 'SV-257821r877463_rule'
-  tag stig_id: 'RHEL-08-010371'
-  tag fix_id: 'F-32909r567542_fix'
+  tag gid: 'V-257821'
+  tag rid: 'SV-257821r925450_rule'
+  tag stig_id: 'RHEL-09-214020'
+  tag fix_id: 'F-61486r925449_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
   tag 'host'

@@ -1,38 +1,26 @@
 control 'SV-257817' do
-  title 'RHEL 8 must implement non-executable data to protect its memory from
-unauthorized code execution.'
-  desc 'Some adversaries launch attacks with the intent of executing code in
-non-executable regions of memory or in memory locations that are prohibited.
-Security safeguards employed to protect memory include, for example, data
-execution prevention and address space layout randomization. Data execution
-prevention safeguards can be either hardware-enforced or software-enforced with
-hardware providing the greater strength of mechanism.
+  title 'RHEL 9 must implement nonexecutable data to protect its memory from unauthorized code execution.'
+  desc "ExecShield uses the segmentation feature on all x86 systems to prevent execution in memory higher than a certain address. It writes an address as a limit in the code segment descriptor, to control where code can be executed, on a per-process basis. When the kernel places a process's memory regions such as the stack and heap higher than this address, the hardware prevents execution in that address range. This is enabled by default on the latest Red Hat and Fedora systems if supported by the hardware."
+  desc 'check', %q(Verify ExecShield is enabled on 64-bit RHEL 9 systems with the following command:
 
-    Examples of attacks are buffer overflow attacks.'
-  desc 'check', 'Verify the NX (no-execution) bit flag is set on the system.
+$ sudo dmesg | grep '[NX|DX]*protection' 
 
-    Check that the no-execution bit flag is set with the following commands:
+[ 0.000000] NX (Execute Disable) protection: active
 
-    $ sudo dmesg | grep NX
+If "dmesg" does not show "NX (Execute Disable) protection" active, this is a finding.)
+  desc 'fix', 'Update the GRUB 2 bootloader configuration.
 
-    [ 0.000000] NX (Execute Disable) protection: active
+Run the following command:
 
-    If "dmesg" does not show "NX (Execute Disable) protection" active,
-check the cpuinfo settings with the following command:
-
-    $ sudo less /proc/cpuinfo | grep -i flags
-    flags : fpu vme de pse tsc ms nx rdtscp lm constant_tsc
-
-    If "flags" does not contain the "nx" flag, this is a finding.'
-  desc 'fix', 'The NX bit execute protection must be enabled in the system
-BIOS.'
+$ sudo grubby --update-kernel=ALL --remove-args=noexec'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'
-  tag gid: 'V-230276'
-  tag rid: 'SV-257817r854031_rule'
-  tag stig_id: 'RHEL-08-010420'
-  tag fix_id: 'F-32920r567575_fix'
+  tag gid: 'V-257817'
+  tag rid: 'SV-257817r925438_rule'
+  tag stig_id: 'RHEL-09-213110'
+  tag fix_id: 'F-61482r925437_fix'
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
   tag 'host'

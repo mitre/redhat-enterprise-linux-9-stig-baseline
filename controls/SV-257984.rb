@@ -5,7 +5,7 @@ control 'SV-257984' do
 '
   desc 'check', 'Verify RHEL 9 remote access using SSH prevents logging on with a blank password with the following command:
 
-$ sudo grep -i PermitEmptyPasswords /etc/ssh/sshd_config
+$ sudo grep -ir PermitEmptyPasswords /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 PermitEmptyPassword no
 
@@ -19,10 +19,10 @@ Restart the SSH daemon for the settings to take effect:
 $ sudo systemctl restart sshd.service'
   impact 0.7
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61725r925937_chk'
+  tag check_id: 'C-61725r943033_chk'
   tag severity: 'high'
   tag gid: 'V-257984'
-  tag rid: 'SV-257984r925939_rule'
+  tag rid: 'SV-257984r943034_rule'
   tag stig_id: 'RHEL-09-255040'
   tag gtitle: 'SRG-OS-000106-GPOS-00053'
   tag fix_id: 'F-61649r925938_fix'

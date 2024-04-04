@@ -1,36 +1,27 @@
 control 'SV-258051' do
-  title 'All RHEL 8 local interactive users must have a home directory assigned
-in the /etc/passwd file.'
+  title 'All RHEL 9 local interactive users must have a home directory assigned in the /etc/passwd file.'
   desc 'If local interactive users are not assigned a valid home directory,
 there is no place for the storage and control of files they should own.'
-  desc 'check', "Verify local interactive users on RHEL 8 have a home directory assigned
-with the following command:
+  desc 'check', "Verify that interactive users on the system have a home directory assigned with the following command:
+ 
+$ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1, $3, $6}' /etc/passwd
 
-    $ sudo pwck -r
+smithk:x:1000:1000:smithk:/home/smithk:/bin/bash
+scsaustin:x:1001:1001:scsaustin:/home/scsaustin:/bin/bash
+djohnson:x:1002:1002:djohnson:/home/djohnson:/bin/bash
 
-    user 'lp': directory '/var/spool/lpd' does not exist
-    user 'news': directory '/var/spool/news' does not exist
-    user 'uucp': directory '/var/spool/uucp' does not exist
-    user 'www-data': directory '/var/www' does not exist
+Inspect the output and verify that all interactive users (normally users with a user identifier (UID) greater that 1000) have a home directory defined.
 
-    Ask the System Administrator (SA) if any users found without home
-directories are local interactive users. If the SA is unable to provide a
-response, check for users with a User Identifier (UID) of 1000 or greater with
-the following command:
-
-    $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1, $3, $6}' /etc/passwd
-
-    If any interactive users do not have a home directory assigned, this is a
-finding."
-  desc 'fix', 'Assign home directories to all local interactive users on RHEL
-8 that currently do not have a home directory assigned.'
+If users home directory is not defined, this is a finding."
+  desc 'fix', 'Create and assign home directories to all local interactive users on RHEL 9 that currently do not have a home directory assigned.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230320'
-  tag rid: 'SV-258051r627750_rule'
-  tag stig_id: 'RHEL-08-010720'
-  tag fix_id: 'F-32964r567707_fix'
+  tag gid: 'V-258051'
+  tag rid: 'SV-258051r926140_rule'
+  tag stig_id: 'RHEL-09-411060'
+  tag fix_id: 'F-61716r926139_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

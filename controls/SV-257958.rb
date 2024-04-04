@@ -1,17 +1,11 @@
 control 'SV-257958' do
-  title 'RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages.'
+  title 'RHEL 9 must ignore Internet Protocol version 4 (IPv4) Internet Control Message Protocol (ICMP) redirect messages.'
   desc "ICMP redirect messages are used by routers to inform hosts that a more direct route exists for a particular destination. These messages modify the host's route table and are unauthenticated. An illicit ICMP redirect message could result in a man-in-the-middle attack.
 
-The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
-/etc/sysctl.d/*.conf
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf"
-  desc 'check', 'Verify RHEL 8 ignores IPv4 ICMP redirect messages.
+This feature of the IPv4 protocol has few legitimate uses. It should be disabled unless absolutely required."
+  desc 'check', %q(Verify RHEL 9 will not accept IPv4 ICMP redirect messages.
 
-Check the value of the "accept_redirects" variables with the following command:
+Check the value of the all "accept_redirects" variables with the following command:
 
 $ sudo sysctl net.ipv4.conf.all.accept_redirects
 
@@ -21,37 +15,28 @@ If the returned line does not have a value of "0", a line is not returned, or th
 
 Check that the configuration files are present to enable this network parameter.
 
-$ sudo grep -r net.ipv4.conf.all.accept_redirects /run/sysctl.d/*.conf /usr/local/lib/sysctl.d/*.conf /usr/lib/sysctl.d/*.conf /lib/sysctl.d/*.conf /etc/sysctl.conf /etc/sysctl.d/*.conf
-
-/etc/sysctl.d/99-sysctl.conf: net.ipv4.conf.all.accept_redirects = 0
-
-If "net.ipv4.conf.all.accept_redirects" is not set to "0", is missing or commented out, this is a finding.
-
-If conflicting results are returned, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to ignore IPv4 ICMP redirect messages.
-
-Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
+$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F net.ipv4.conf.all.accept_redirects | tail -1
 
 net.ipv4.conf.all.accept_redirects = 0
 
-Remove any configurations that conflict with the above from the following locations:
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf
-/etc/sysctl.d/*.conf
+If "net.ipv4.conf.all.accept_redirects" is not set to "0" or is missing, this is a finding.)
+  desc 'fix', 'Configure RHEL 9 to ignore IPv4 ICMP redirect messages.
+
+Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
+
+net.ipv4.conf.all.accept_redirects = 0
 
 Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-244553'
-  tag rid: 'SV-257958r858818_rule'
-  tag stig_id: 'RHEL-08-040279'
-  tag fix_id: 'F-47785r858817_fix'
+  tag gid: 'V-257958'
+  tag rid: 'SV-257958r942985_rule'
+  tag stig_id: 'RHEL-09-253015'
+  tag fix_id: 'F-61623r925860_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

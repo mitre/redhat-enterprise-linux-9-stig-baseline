@@ -1,36 +1,34 @@
 control 'SV-258003' do
-  title 'The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to fulfill documented and validated mission requirements.'
-  desc 'Configuring this setting for the SSH daemon provides additional
-assurance that remote logon via SSH will require a password, even in the event
-of misconfiguration elsewhere.'
+  title 'RHEL 9 SSH daemon must not allow GSSAPI authentication.'
+  desc "Generic Security Service Application Program Interface (GSSAPI) authentication is used to provide additional authentication mechanisms to applications. Allowing GSSAPI authentication through SSH exposes the system's GSSAPI to remote hosts, increasing the attack surface of the system."
   desc 'check', 'Verify the SSH daemon does not allow GSSAPI authentication with the following command:
 
-$ sudo grep -ir GSSAPIAuthentication  /etc/ssh/sshd_config*
+$ sudo grep -ir gssapiauth  /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 GSSAPIAuthentication no
 
-If the value is returned as "yes", the returned line is commented out, no output is returned, or has not been documented with the ISSO, this is a finding.
-If conflicting results are returned, this is a finding.'
+If the value is returned as "yes", the returned line is commented out, no output is returned, and the use of GSSAPI authentication has not been documented with the information system security officer (ISSO), this is a finding.
+
+If the required value is not set, this is a finding.'
   desc 'fix', 'Configure the SSH daemon to not allow GSSAPI authentication.
 
-    Add the following line in "/etc/ssh/sshd_config", or uncomment the line
-and set the value to "no":
+Add the following line in "/etc/ssh/sshd_config", or uncomment the line and set the value to "no":
 
-    GSSAPIAuthentication no
+GSSAPIAuthentication no
 
-    The SSH daemon must be restarted for the changes to take effect. To restart
-the SSH daemon, run the following command:
+The SSH service must be restarted for changes to take effect:
 
-    $ sudo systemctl restart sshd.service'
-  impact 0.0
+$ sudo systemctl restart sshd.service'
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-244528'
-  tag rid: 'SV-258003r858709_rule'
-  tag stig_id: 'RHEL-08-010522'
-  tag fix_id: 'F-47760r743832_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag gtitle: 'SRG-OS-000364-GPOS-00151'
+  tag gid: 'V-258003'
+  tag rid: 'SV-258003r925996_rule'
+  tag stig_id: 'RHEL-09-255135'
+  tag fix_id: 'F-61668r925995_fix'
+  tag cci: ['CCI-000366', 'CCI-001813']
+  tag nist: ['CM-6 b', 'CM-5 (1) (a)']
   tag 'host'
   tag 'container-conditional'
 

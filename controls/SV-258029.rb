@@ -14,7 +14,7 @@ If the "disable-restart-button" setting is not set to "true", is missing or comm
 
 Add or update the [org/gnome/settings-daemon/] section of the /etc/dconf/db/local.d/00-security-settings" database file and add or update the following lines:
 
-[org/gnome/settings-daemon/peripherals/smartcard]
+[org/gnome/login-screen]
 disable-restart-buttons='true'
 
 Then update the dconf system databases:
@@ -25,10 +25,10 @@ $ sudo dconf update)
   tag check_id: 'C-61770r926072_chk'
   tag severity: 'medium'
   tag gid: 'V-258029'
-  tag rid: 'SV-258029r926074_rule'
+  tag rid: 'SV-258029r943059_rule'
   tag stig_id: 'RHEL-09-271095'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61694r926073_fix'
+  tag fix_id: 'F-61694r943058_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']

@@ -1,46 +1,24 @@
 control 'SV-257852' do
-  title 'RHEL 8 must prevent code from being executed on file systems that
-contain user home directories.'
-  desc 'The "noexec" mount option causes the system not to execute binary
-files. This option must be used for mounting any file system not containing
-approved binary files, as they may be incompatible. Executing files from
-untrusted file systems increases the opportunity for unprivileged users to
-attain unauthorized administrative access.'
-  desc 'check', %q(Verify file systems that contain user home directories are mounted with the
-"noexec" option.
+  title 'RHEL 9 must prevent code from being executed on file systems that contain user home directories.'
+  desc 'The "noexec" mount option causes the system to not execute binary files. This option must be used for mounting any file system not containing approved binary files, as they may be incompatible. Executing files from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.'
+  desc 'check', 'Verify "/home" is mounted with the "noexec" option with the following command:
 
-    Note: If a separate file system has not been created for the user home
-directories (user home directories are mounted under "/"), this is
-automatically a finding as the "noexec" option cannot be used on the "/"
-system.
+Note: If a separate file system has not been created for the user home directories (user home directories are mounted under "/"), this is automatically a finding, as the "noexec" option cannot be used on the "/" system.
 
-    Find the file system(s) that contain the user home directories with the
-following command:
+$ mount | grep /home
 
-    $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1,$3,$6}' /etc/passwd
+tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
 
-    smithj:1001: /home/smithj
-    robinst:1002: /home/robinst
-
-    Check the file systems that are mounted at boot time with the following
-command:
-
-    $ sudo more /etc/fstab
-
-    UUID=a411dc99-f2a1-4c87-9e05-184977be8539 /home ext4
-rw,relatime,discard,data=ordered,nosuid,nodev,noexec 0 2
-
-    If a file system found in "/etc/fstab" refers to the user home directory
-file system and it does not have the "noexec" option set, this is a finding.)
-  desc 'fix', 'Configure the "/etc/fstab" to use the "noexec" option on
-file systems that contain user home directories for interactive users.'
+If the "/home" file system is mounted without the "noexec" option, this is a finding.'
+  desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/home" directory.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230302'
-  tag rid: 'SV-257852r627750_rule'
-  tag stig_id: 'RHEL-08-010590'
-  tag fix_id: 'F-32946r567653_fix'
+  tag gid: 'V-257852'
+  tag rid: 'SV-257852r925543_rule'
+  tag stig_id: 'RHEL-09-231055'
+  tag fix_id: 'F-61517r925542_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

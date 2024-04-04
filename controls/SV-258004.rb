@@ -1,37 +1,32 @@
 control 'SV-258004' do
-  title 'The RHEL 8 SSH daemon must not allow Kerberos authentication, except
-to fulfill documented and validated mission requirements.'
-  desc 'Configuring these settings for the SSH daemon provides additional
-assurance that remote logon via SSH will not use unused methods of
-authentication, even in the event of misconfiguration elsewhere.'
+  title 'RHEL 9 SSH daemon must not allow Kerberos authentication.'
+  desc "Kerberos authentication for SSH is often implemented using Generic Security Service Application Program Interface (GSSAPI). If Kerberos is enabled through SSH, the SSH daemon provides a means of access to the system's Kerberos implementation. Vulnerabilities in the system's Kerberos implementations may be subject to exploitation."
   desc 'check', 'Verify the SSH daemon does not allow Kerberos authentication with the following command:
 
-$ sudo grep -ir KerberosAuthentication  /etc/ssh/sshd_config*
+$ sudo grep -i kerberosauth  /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 KerberosAuthentication no
 
-If the value is returned as "yes", the returned line is commented out, no output is returned, or has not been documented with the ISSO, this is a finding.
-If conflicting results are returned, this is a finding.'
+If the value is returned as "yes", the returned line is commented out, no output is returned, and the use of Kerberos authentication has not been documented with the information system security officer (ISSO), this is a finding.'
   desc 'fix', 'Configure the SSH daemon to not allow Kerberos authentication.
 
-    Add the following line in "/etc/ssh/sshd_config", or uncomment the line
-and set the value to "no":
+Add the following line in "/etc/ssh/sshd_config", or uncomment the line and set the value to "no":
 
-    KerberosAuthentication no
+KerberosAuthentication no
 
-    The SSH daemon must be restarted for the changes to take effect. To restart
-the SSH daemon, run the following command:
+The SSH service must be restarted for changes to take effect:
 
-    $ sudo systemctl restart sshd.service'
+$ sudo systemctl restart sshd.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230291'
-  tag rid: 'SV-258004r858707_rule'
-  tag stig_id: 'RHEL-08-010521'
-  tag fix_id: 'F-32935r743956_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag gtitle: 'SRG-OS-000364-GPOS-00151'
+  tag gid: 'V-258004'
+  tag rid: 'SV-258004r925999_rule'
+  tag stig_id: 'RHEL-09-255140'
+  tag fix_id: 'F-61669r925998_fix'
+  tag cci: ['CCI-000366', 'CCI-001813']
+  tag nist: ['CM-6 b', 'CM-5 (1) (a)']
   tag 'host'
   tag 'container-conditional'
 

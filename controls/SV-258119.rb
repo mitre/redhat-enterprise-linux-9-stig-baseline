@@ -1,42 +1,28 @@
 control 'SV-258119' do
-  title 'RHEL 8 must encrypt all stored passwords with a FIPS 140-2 approved
-cryptographic hashing algorithm.'
-  desc 'Passwords need to be protected at all times, and encryption is the
-standard method for protecting passwords. If passwords are not encrypted, they
-can be plainly read (i.e., clear text) and easily compromised.
+  title 'RHEL 9 shadow password suite must be configured to use a sufficient number of hashing rounds.'
+  desc 'Passwords need to be protected at all times, and encryption is the standard method for protecting passwords. If passwords are not encrypted, they can be plainly read (i.e., clear text) and easily compromised. Passwords that are encrypted with a weak algorithm are no more protected than if they are kept in plain text.
 
-    Unapproved mechanisms that are used for authentication to the cryptographic
-module are not verified and therefore cannot be relied upon to provide
-confidentiality or integrity, and DoD data may be compromised.
+Using more hashing rounds makes password cracking attacks more difficult.'
+  desc 'check', 'Verify that RHEL 9 has a minimum number of hash rounds configured with the following command:
 
-    FIPS 140-2 is the current standard for validating that mechanisms used to
-access cryptographic modules utilize authentication that meets DoD requirements.'
-  desc 'check', 'Verify that the shadow password suite configuration is set to encrypt
-password with a FIPS 140-2 approved cryptographic hashing algorithm.
+$ grep -i sha_crypt /etc/login.defs
 
-    Check the hashing algorithm that is being used to hash passwords with the
-following command:
+If "SHA_CRYPT_MIN_ROUNDS" or "SHA_CRYPT_MAX_ROUNDS" is less than "5000", this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to encrypt all stored passwords with a strong cryptographic hash.
 
-    $ sudo grep -i crypt /etc/login.defs
+Edit/modify the following line in the "/etc/login.defs" file and set "SHA_CRYPT_MIN_ROUNDS" to a value no lower than "5000":
 
-    ENCRYPT_METHOD SHA512
-
-    If "ENCRYPT_METHOD" does not equal SHA512 or greater, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to encrypt all stored passwords.
-
-    Edit/Modify the following line in the "/etc/login.defs" file and set
-"[ENCRYPT_METHOD]" to SHA512.
-
-    ENCRYPT_METHOD SHA512'
+SHA_CRYPT_MIN_ROUNDS 5000'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
-  tag gid: 'V-230231'
-  tag rid: 'SV-258119r877397_rule'
-  tag stig_id: 'RHEL-08-010110'
-  tag fix_id: 'F-32875r567440_fix'
-  tag cci: ['CCI-000196']
-  tag nist: ['IA-5 (1) (c)']
+  tag gid: 'V-258119'
+  tag rid: 'SV-258119r926344_rule'
+  tag stig_id: 'RHEL-09-611150'
+  tag fix_id: 'F-61784r926343_fix'
+  tag cci: ['CCI-000196', 'CCI-000803']
+  tag nist: ['IA-5 (1) (c)', 'IA-7']
   tag 'host'
   tag 'container'
 

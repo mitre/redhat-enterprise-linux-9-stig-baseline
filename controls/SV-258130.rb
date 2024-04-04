@@ -1,47 +1,32 @@
 control 'SV-258130' do
-  title 'RHEL 8 must prevent system daemons from using Kerberos for
-authentication.'
-  desc 'Unapproved mechanisms that are used for authentication to the
-cryptographic module are not verified and therefore cannot be relied upon to
-provide confidentiality or integrity, and DoD data may be compromised.
+  title 'RHEL 9 must prevent system daemons from using Kerberos for authentication.'
+  desc 'Unapproved mechanisms used for authentication to the cryptographic module are not verified; therefore, cannot be relied upon to provide confidentiality or integrity and DOD data may be compromised.
 
-    RHEL 8 systems utilizing encryption are required to use FIPS-compliant
-mechanisms for authenticating to cryptographic modules.
+RHEL 9 systems utilizing encryption are required to use FIPS-compliant mechanisms for authenticating to cryptographic modules.
 
-    The key derivation function (KDF) in Kerberos is not FIPS compatible.
-Ensuring the system does not have any keytab files present prevents system
-daemons from using Kerberos for authentication.  A keytab is a file containing
-pairs of Kerberos principals and encrypted keys.
+The key derivation function (KDF) in Kerberos is not FIPS compatible. Ensuring the system does not have any keytab files present prevents system daemons from using Kerberos for authentication. A keytab is a file containing pairs of Kerberos principals and encrypted keys.
 
-    FIPS 140-2 is the current standard for validating that mechanisms used to
-access cryptographic modules utilize authentication that meets DoD
-requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a
-general-purpose computing system.'
-  desc 'check', 'Verify that RHEL 8 prevents system daemons from using Kerberos for
-authentication.
+FIPS 140-3 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meets DOD requirements. This allows for Security Levels 1, 2, 3, or 4 for use on a general-purpose computing system.'
+  desc 'check', %q(Verify that RHEL 9 prevents system daemons from using Kerberos for authentication with the following command:
 
-    If the system is a server utilizing krb5-server-1.17-18.el8.x86_64 or
-newer, this requirement is not applicable.
-    If the system is a workstation utilizing
-krb5-workstation-1.17-18.el8.x86_64 or newer, this requirement is not
-applicable.
+$ sudo ls -al /etc/*.keytab
 
-    Check if there are available keytabs with the following command:
+ls: cannot access '/etc/*.keytab': No such file or directory 
 
-    $ sudo ls -al /etc/*.keytab
+If this command produces any "keytab" file(s), this is a finding.)
+  desc 'fix', 'Configure RHEL 9 to prevent system daemons from using Kerberos for authentication.
 
-    If this command produces any file(s), this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to prevent system daemons from using Kerberos for
-authentication.
+Remove any files with the .keytab extension from the operating system.
 
-    Remove any files with the .keytab extension from the operating system.'
+rm -f /etc/*.keytab'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
-  tag gid: 'V-230238'
-  tag rid: 'SV-258130r646862_rule'
-  tag stig_id: 'RHEL-08-010161'
-  tag fix_id: 'F-32882r567461_fix'
+  tag gid: 'V-258130'
+  tag rid: 'SV-258130r926377_rule'
+  tag stig_id: 'RHEL-09-611205'
+  tag fix_id: 'F-61795r926376_fix'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
   tag 'host'

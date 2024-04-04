@@ -1,5 +1,5 @@
 control 'SV-258081' do
-  title 'RHEL 8 must have policycoreutils package installed.'
+  title 'RHEL 9 must have policycoreutils package installed.'
   desc 'Without verification of the security functions, security functions may
 not operate correctly and the failure may go unnoticed. Security function is
 defined as the hardware, software, and/or firmware of the information system
@@ -13,28 +13,28 @@ events to be audited, and setting intrusion detection parameters.
 basic operation of an SELinux-enabled system. These utilities include
 load_policy to load SELinux policies, setfile to label filesystems, newrole to
 switch roles, and run_init to run /etc/init.d scripts in the proper context.'
-  desc 'check', 'Verify the operating system has the policycoreutils package installed with
-the following command:
+  desc 'check', 'Verify RHEL 9 has the policycoreutils package installed with the following command:
 
-    $ sudo yum list installed policycoreutils
+$ sudo dnf list --installed policycoreutils
 
-    policycoreutils.x86_64
-2.9-3.el8                                                  @anaconda
+Example output:
 
-    If the policycoreutils package is not installed, this is a finding.'
-  desc 'fix', 'Configure the operating system to have the policycoreutils package
-installed with the following command:
+policycoreutils.x86_64          3.3-6.el9_0                                                 
 
-    $ sudo yum install policycoreutils'
-  impact 0.3
-  tag severity: 'low'
-  tag gtitle: 'SRG-OS-000134-GPOS-00068'
-  tag gid: 'V-230241'
-  tag rid: 'SV-258081r627750_rule'
-  tag stig_id: 'RHEL-08-010171'
-  tag fix_id: 'F-32885r567470_fix'
-  tag cci: ['CCI-001084']
-  tag nist: ['SC-3']
+If the "policycoreutils" package is not installed, this is a finding.'
+  desc 'fix', 'The policycoreutils package can be installed with the following command:
+ 
+$ sudo dnf install policycoreutils'
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-258081'
+  tag rid: 'SV-258081r926230_rule'
+  tag stig_id: 'RHEL-09-431025'
+  tag fix_id: 'F-61746r926229_fix'
+  tag cci: ['CCI-001084', 'CCI-000366']
+  tag nist: ['SC-3', 'CM-6 b']
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) do

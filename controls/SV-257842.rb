@@ -1,30 +1,29 @@
 control 'SV-257842' do
-  title 'RHEL 8 must be configured to allow sending email notifications of unauthorized configuration changes to designated personnel.'
-  desc "Unauthorized changes to the baseline configuration could make the system vulnerable to various attacks or allow unauthorized access to the operating system. Changes to operating system configurations can have unintended side effects, some of which may be relevant to security.
+  title 'RHEL 9 must have the s-nail package installed.'
+  desc 'The "s-nail" package provides the mail command required to allow sending email notifications of unauthorized configuration changes to designated personnel.'
+  desc 'check', 'Verify that RHEL 9 is configured to allow sending email notifications.
 
-Detecting such changes and providing an automated response can help avoid unintended, negative consequences that could ultimately affect the security state of the operating system. The operating system's IMO/ISSO and SAs must be notified via email and/or monitoring system trap when there is an unauthorized modification of a configuration item."
-  desc 'check', 'Verify that the operating system is configured to allow sending email notifications.
+Note: The "s-nail" package provides the "mail" command that is used to send email messages.
 
-Note: The "mailx" package provides the "mail" command that is used to send email messages.
+Verify that the "s-nail" package is installed on the system:
 
-Verify that the "mailx" package is installed on the system:
+$ sudo dnf list --installed s-nail
 
-     $ sudo yum list installed mailx
+s-nail.x86_64          14.9.22-6.el9
+	 
+If "s-nail" package is not installed, this is a finding.'
+  desc 'fix', 'The s-nail package can be installed with the following command:
 
-     mailx.x86_64     12.5-29.el8     @rhel-8-for-x86_64-baseos-rpm
-
-If "mailx" package is not installed, this is a finding.'
-  desc 'fix', 'Install the "mailx" package on the system:
-
-     $ sudo yum install mailx'
+$ sudo dnf install s-nail'
   impact 0.5
-  tag check_id: 'C-60652r902753_chk'
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag check_id: 'C-61583r942958_chk'
   tag severity: 'medium'
-  tag gid: 'V-256974'
-  tag rid: 'SV-257842r902755_rule'
-  tag stig_id: 'RHEL-08-010358'
+  tag gid: 'V-257842'
+  tag rid: 'SV-257842r942959_rule'
+  tag stig_id: 'RHEL-09-215095'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
-  tag fix_id: 'F-60594r902754_fix'
+  tag fix_id: 'F-61507r925512_fix'
   tag 'documentable'
   tag cci: ['CCI-001744']
   tag nist: ['CM-3 (5)']

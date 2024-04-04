@@ -1,50 +1,35 @@
 control 'SV-258209' do
-  title 'Successful/unsuccessful uses of the usermod command in RHEL 8 must
-generate an audit record.'
-  desc 'Without generating audit records that are specific to the security and
-mission needs of the organization, it would be difficult to establish,
-correlate, and investigate the events relating to an incident or identify those
-responsible for one.
+  title 'RHEL 9 must audit all uses of the usermod command.'
+  desc 'Without generating audit record specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.
 
-    Audit records can be generated from various components within the
-information system (e.g., module or policy filter). The "usermod" command
-modifies the system account files to reflect the changes that are specified on
-the command line.
+Audit records can be generated from various components within the information system (e.g., module or policy filter).
 
-    When a user logs on, the AUID is set to the UID of the account that is
-being authenticated. Daemons are not user sessions and have the loginuid set to
-"-1". The AUID representation is an unsigned 32-bit integer, which equals
-"4294967295". The audit system interprets "-1", "4294967295", and
-"unset" in the same way.'
-  desc 'check', 'Verify that an audit event is generated for any successful/unsuccessful use
-of the "usermod" command by performing the following command to check the
-file system rules in "/etc/audit/audit.rules":
+When a user logs on, the auid is set to the uid of the account being authenticated. Daemons are not user sessions and have the loginuid set to -1. The auid representation is an unsigned 32-bit integer, which equals 4294967295. The audit system interprets -1, 4294967295, and "unset" in the same way.
 
-    $ sudo grep -w usermod /etc/audit/audit.rules
+The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
+  desc 'check', 'Verify that RHEL 9 is configured to audit the execution of the "usermod" command with the following command:
 
-    -a always,exit -F path=/usr/sbin/usermod -F perm=x -F auid>=1000 -F
-auid!=unset -k privileged-usermod
+$ sudo auditctl -l | grep usermod
 
-    If the command does not return a line, or the line is commented out, this
-is a finding.'
-  desc 'fix', 'Configure the audit system to generate an audit event for any
-successful/unsuccessful uses of the "usermod" command by adding or updating
-the following rule in the "/etc/audit/rules.d/audit.rules" file:
+-a always,exit -F path=/usr/sbin/usermod -F perm=x -F auid>=1000 -F auid!=unset -k privileged-usermod
 
-    -a always,exit -F path=/usr/sbin/usermod -F perm=x -F auid>=1000 -F
-auid!=unset -k privileged-usermod
+If the command does not return a line, or the line is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "usermod " command by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
 
-    The audit daemon must be restarted for the changes to take effect.'
+-a always,exit -F path=/usr/sbin/usermod -F perm=x -F auid>=1000 -F auid!=unset -k privileged-usermod
+
+The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000466-GPOS-00210']
-  tag gid: 'V-230463'
-  tag rid: 'SV-258209r627750_rule'
-  tag stig_id: 'RHEL-08-030560'
-  tag fix_id: 'F-33107r568136_fix'
-  tag cci: ['CCI-000169']
-  tag nist: ['AU-12 a']
+  tag gtitle: 'SRG-OS-000037-GPOS-00015'
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000466-GPOS-00210']
+  tag gid: 'V-258209'
+  tag rid: 'SV-258209r926614_rule'
+  tag stig_id: 'RHEL-09-654175'
+  tag fix_id: 'F-61874r926613_fix'
+  tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
+  tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'
 
   audit_command = '/usr/sbin/usermod'

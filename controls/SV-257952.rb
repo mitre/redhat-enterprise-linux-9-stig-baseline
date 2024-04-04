@@ -1,29 +1,42 @@
 control 'SV-257952' do
-  title 'The Trivial File Transfer Protocol (TFTP) server package must not be
-installed if not required for RHEL 8 operational support.'
-  desc 'If TFTP is required for operational support (such as the transmission
-of router configurations) its use must be documented with the Information
-System Security Officer (ISSO), restricted to only authorized personnel, and
-have access control rules established.'
-  desc 'check', 'Verify a TFTP server has not been installed on the system with the
-following command:
+  title 'If the Trivial File Transfer Protocol (TFTP) server is required, RHEL 9 TFTP daemon must be configured to operate in secure mode.'
+  desc 'Restricting TFTP to a specific directory prevents remote users from copying, transferring, or overwriting system files. Using the "-s" option causes the TFTP service to only serve files from the given directory.'
+  desc 'check', 'Verify the TFTP daemon is configured to operate in secure mode.
 
-    $ sudo yum list installed tftp-server
+Check if a TFTP server is installed with the following command:
 
-    tftp-server.x86_64   5.2-24.el8
+$ sudo dnf list --installed tftp-server
 
-    If TFTP is installed and the requirement for TFTP is not documented with
-the ISSO, this is a finding.'
-  desc 'fix', 'Remove the TFTP package from the system with the following command:
+Example output:
 
-$ sudo yum remove tftp-server'
-  impact 0.7
-  tag severity: 'high'
+tftp-server.x86_64          5.2-35.el9.x86_64
+
+Note: If a TFTP server is not installed, this requirement is Not Applicable.
+
+If a TFTP server is installed, check for the server arguments with the following command: 
+
+$ systemctl cat tftp | grep ExecStart
+ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot
+
+If the "ExecStart" line does not have a "-s" option, and a subdirectory is not assigned, this is a finding.'
+  desc 'fix', 'Configure the TFTP daemon to operate in secure mode.
+
+1. Find the path for the systemd service.
+
+$ sudo systemctl show tftp | grep FragmentPath=
+FragmentPath=/etc/systemd/system/tftp.service
+
+2. Edit the ExecStart line on that file to add the -s option with a subdirectory.
+
+ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot'
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230533'
-  tag rid: 'SV-257952r627750_rule'
-  tag stig_id: 'RHEL-08-040190'
-  tag fix_id: 'F-33177r568346_fix'
+  tag gid: 'V-257952'
+  tag rid: 'SV-257952r925843_rule'
+  tag stig_id: 'RHEL-09-252055'
+  tag fix_id: 'F-61617r925842_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

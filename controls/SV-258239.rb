@@ -1,56 +1,33 @@
 control 'SV-258239' do
-  title 'The RHEL 8 operating system must implement DoD-approved encryption in
-the OpenSSL package.'
-  desc 'Without cryptographic integrity protections, information can be
-altered by unauthorized users without detection.
+  title 'RHEL 9 must implement DOD-approved encryption in the OpenSSL package.'
+  desc 'Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
 
-    Remote access (e.g., RDP) is access to DoD nonpublic information systems by
-an authorized user (or an information system) communicating through an
-external, non-organization-controlled network. Remote access methods include,
-for example, dial-up, broadband, and wireless.
+Remote access (e.g., RDP) is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless.
 
-    Cryptographic mechanisms used for protecting the integrity of information
-include, for example, signed hash functions using asymmetric cryptography
-enabling distribution of the public key to verify the hash information while
-maintaining the confidentiality of the secret key used to generate the hash.
+Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash.
 
-    RHEL 8 incorporates system-wide crypto policies by default.  The employed
-algorithms can be viewed in the /etc/crypto-policies/back-ends/openssl.config
-file.'
-  desc 'check', 'Verify the OpenSSL library is configured to use only ciphers employing FIPS
-140-2-approved algorithms:
+The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/openssl.config file.'
+  desc 'check', 'Verify that RHEL 9 OpenSSL library is configured to use only ciphers employing FIPS 140-3 approved algorithms with the following command:
 
-    Verify that system-wide crypto policies are in effect:
+$ sudo grep -i opensslcnf.config /etc/pki/tls/openssl.cnf
 
-    $ sudo grep -i opensslcnf.config /etc/pki/tls/openssl.cnf
+.include = /etc/crypto-policies/back-ends/opensslcnf.config
 
-    .include /etc/crypto-policies/back-ends/opensslcnf.config
+If the "opensslcnf.config" is not defined in the "/etc/pki/tls/openssl.cnf" file, this is a finding.'
+  desc 'fix', 'Configure the RHEL 9 OpenSSL library to use the system cryptographic policy.
 
-    If the "opensslcnf.config" is not defined in the
-"/etc/pki/tls/openssl.cnf" file, this is a finding.
+Edit the "/etc/pki/tls/openssl.cnf" and add or modify the following line:
 
-    Verify which system-wide crypto policy is in use:
-
-    $ sudo update-crypto-policies --show
-
-    FIPS
-
-    If the system-wide crypto policy is set to anything other than "FIPS",
-this is a finding.'
-  desc 'fix', 'Configure the RHEL 8 OpenSSL library to use only ciphers employing FIPS
-140-2-approved algorithms with the following command:
-
-    $ sudo fips-mode-setup --enable
-
-    A reboot is required for the changes to take effect.'
+.include = /etc/crypto-policies/back-ends/opensslcnf.config'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
-  tag gid: 'V-230254'
-  tag rid: 'SV-258239r877394_rule'
-  tag stig_id: 'RHEL-08-010293'
-  tag fix_id: 'F-32898r567509_fix'
+  tag gid: 'V-258239'
+  tag rid: 'SV-258239r926704_rule'
+  tag stig_id: 'RHEL-09-672035'
+  tag fix_id: 'F-61904r926703_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
   tag 'host'

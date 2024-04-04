@@ -1,33 +1,30 @@
 control 'SV-258008' do
-  title 'The RHEL 8 SSH daemon must perform strict mode checking of home
-directory configuration files.'
-  desc 'If other users have access to modify user-specific SSH configuration
-files, they may be able to log on to the system as another user.'
+  title 'RHEL 9 SSH daemon must perform strict mode checking of home directory configuration files.'
+  desc 'If other users have access to modify user-specific SSH configuration files, they may be able to log into the system as another user.'
   desc 'check', 'Verify the SSH daemon performs strict mode checking of home directory configuration files with the following command:
 
-$ sudo grep -ir strictmodes /etc/ssh/sshd_config*
+$ sudo grep -ir strictmodes  /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 StrictModes yes
 
-If "StrictModes" is set to "no", is missing, or the returned line is commented out, this is a finding.
-If conflicting results are returned, this is a finding.'
-  desc 'fix', 'Configure SSH to perform strict mode checking of home directory
-configuration files. Uncomment the "StrictModes" keyword in
-"/etc/ssh/sshd_config" and set the value to "yes":
+If the "StrictModes" keyword is set to "no", the returned line is commented out, or no output is returned, this is a finding.'
+  desc 'fix', 'Configure the SSH daemon to perform strict mode checking of home directory configuration files.
 
-    StrictModes yes
+Add the following line in "/etc/ssh/sshd_config", or uncomment the line and set the value to "yes":
 
-    The SSH daemon must be restarted for the changes to take effect. To restart
-the SSH daemon, run the following command:
+StrictModes yes
 
-    $ sudo systemctl restart sshd.service'
+The SSH service must be restarted for changes to take effect:
+
+$ sudo systemctl restart sshd.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230288'
-  tag rid: 'SV-258008r858701_rule'
-  tag stig_id: 'RHEL-08-010500'
-  tag fix_id: 'F-32932r567611_fix'
+  tag gid: 'V-258008'
+  tag rid: 'SV-258008r926011_rule'
+  tag stig_id: 'RHEL-09-255160'
+  tag fix_id: 'F-61673r926010_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

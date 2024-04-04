@@ -1,62 +1,42 @@
 control 'SV-257975' do
-  title 'RHEL 8 must not accept router advertisements on all IPv6 interfaces by
-default.'
-  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
+  title 'RHEL 9 must not accept router advertisements on all IPv6 interfaces by default.'
+  desc 'An illicit router advertisement message could result in a man-in-the-middle attack.'
+  desc 'check', %q(Verify RHEL 9 does not accept router advertisements on all IPv6 interfaces by default, unless the system is a router.
 
-An illicit router advertisement message could result in a man-in-the-middle attack.
+Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
-The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of which of the directories they reside in. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
-/etc/sysctl.d/*.conf
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf'
-  desc 'check', 'Verify RHEL 8 does not accept router advertisements on all IPv6 interfaces by default, unless the system is a router.
+Determine if router advertisements are not accepted by default by using the following command:
 
-Note: If IPv6 is disabled on the system, this requirement is not applicable.
-
-Check to see if router advertisements are not accepted by default by using the following command:
-
-$ sudo sysctl  net.ipv6.conf.default.accept_ra
+$ sudo sysctl net.ipv6.conf.default.accept_ra
 
 net.ipv6.conf.default.accept_ra = 0
 
-If the "accept_ra" value is not "0" and is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
+If the "accept_ra" value is not "0" and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.
 
 Check that the configuration files are present to enable this network parameter.
 
-$ sudo grep -r net.ipv6.conf.default.accept_ra /run/sysctl.d/*.conf /usr/local/lib/sysctl.d/*.conf /usr/lib/sysctl.d/*.conf /lib/sysctl.d/*.conf /etc/sysctl.conf /etc/sysctl.d/*.conf
+$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' |  grep -F net.ipv6.conf.default.accept_ra | tail -1
 
-/etc/sysctl.d/99-sysctl.conf: net.ipv6.conf.default.accept_ra = 0
+net.ipv6.conf.default.accept_ra = 0
 
-If "net.ipv6.conf.default.accept_ra" is not set to "0", is missing or commented out, this is a finding.
+If "net.ipv6.conf.default.accept_ra" is not set to "0" or is missing, this is a finding.)
+  desc 'fix', 'Configure RHEL 9 to not accept router advertisements on all IPv6 interfaces by default unless the system is a router.
 
-If conflicting results are returned, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to not accept router advertisements on all IPv6 interfaces by default unless the system is a router.
+Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
 
-Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
-
-net.ipv6.conf.default.accept_ra=0
-
-Remove any configurations that conflict with the above from the following locations:
-/run/sysctl.d/*.conf
-/usr/local/lib/sysctl.d/*.conf
-/usr/lib/sysctl.d/*.conf
-/lib/sysctl.d/*.conf
-/etc/sysctl.conf
-/etc/sysctl.d/*.conf
+net.ipv6.conf.default.accept_ra = 0
 
 Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230542'
-  tag rid: 'SV-257975r858814_rule'
-  tag stig_id: 'RHEL-08-040262'
-  tag fix_id: 'F-33186r858813_fix'
+  tag gid: 'V-257975'
+  tag rid: 'SV-257975r943007_rule'
+  tag stig_id: 'RHEL-09-254030'
+  tag fix_id: 'F-61640r925911_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

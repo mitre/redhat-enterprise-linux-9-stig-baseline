@@ -1,62 +1,35 @@
 control 'SV-258195' do
-  title 'Successful/unsuccessful uses of the kmod command in RHEL 8 must
-generate an audit record.'
-  desc 'Without the capability to generate audit records, it would be
-difficult to establish, correlate, and investigate the events relating to an
-incident or identify those responsible for one.
+  title 'RHEL 9 must audit all uses of the kmod command.'
+  desc 'Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.
 
-    Audit records can be generated from various components within the
-information system (e.g., module or policy filter). The "kmod" command is
-used to control Linux Kernel modules.
+Audit records can be generated from various components within the information system (e.g., module or policy filter).
 
-    The list of audited events is the set of events for which audits are to be
-generated. This set of events is typically a subset of the list of all events
-for which the system is capable of generating audit records.
+When a user logs on, the auid is set to the uid of the account being authenticated. Daemons are not user sessions and have the loginuid set to -1. The auid representation is an unsigned 32-bit integer, which equals 4294967295. The audit system interprets -1, 4294967295, and "unset" in the same way.
 
-    DoD has defined the list of events for which RHEL 8 will provide an audit
-record generation capability as the following:
+The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
+  desc 'check', 'Verify that RHEL 9 is configured to audit the execution of the "kmod" command with the following command:
 
-    1) Successful and unsuccessful attempts to access, modify, or delete
-privileges, security objects, security levels, or categories of information
-(e.g., classification levels);
+$ sudo auditctl -l | grep kmod
 
-    2) Access actions, such as successful and unsuccessful logon attempts,
-privileged activities or other system-level access, starting and ending time
-for user access to the system, concurrent logons from different workstations,
-successful and unsuccessful accesses to objects, all program initiations, and
-all direct access to the information system;
+-a always,exit -F path=/usr/bin/kmod -F perm=x -F auid>=1000 -F auid!=unset -k modules
 
-    3) All account creations, modifications, disabling, and terminations; and
+If the command does not return a line, or the line is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "kmod" command by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
 
-    4) All kernel module load, unload, and restart actions.'
-  desc 'check', 'Verify if RHEL 8 is configured to audit the execution of the module
-management program "kmod", by running the following command:
+-a always,exit -F path=/usr/bin/kmod -F perm=x -F auid>=1000 -F auid!=unset -k modules
 
-    $ sudo grep "/usr/bin/kmod" /etc/audit/audit.rules
-
-    -a always,exit -F path=/usr/bin/kmod -F perm=x -F auid>=1000 -F auid!=unset
--k modules
-
-    If the command does not return a line, or the line is commented out, this
-is a finding.'
-  desc 'fix', 'Configure RHEL 8 to audit the execution of the module management program
-"kmod" by adding or updating the following line to
-"/etc/audit/rules.d/audit.rules":
-
-    -a always,exit -F path=/usr/bin/kmod -F perm=x -F auid>=1000 -F auid!=unset
--k modules
-
-    The audit daemon must be restarted for the changes to take effect.'
+The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000062-GPOS-00031'
-  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000062-GPOS-00031', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000471-GPOS-00216', 'SRG-OS-000477-GPOS-00222']
-  tag gid: 'V-230465'
-  tag rid: 'SV-258195r627750_rule'
-  tag stig_id: 'RHEL-08-030580'
-  tag fix_id: 'F-33109r568142_fix'
-  tag cci: ['CCI-000169']
-  tag nist: ['AU-12 a']
+  tag gtitle: 'SRG-OS-000037-GPOS-00015'
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000471-GPOS-00216', 'SRG-OS-000477-GPOS-00222']
+  tag gid: 'V-258195'
+  tag rid: 'SV-258195r926572_rule'
+  tag stig_id: 'RHEL-09-654105'
+  tag fix_id: 'F-61860r926571_fix'
+  tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
+  tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'
 
   audit_command = '/usr/bin/kmod'

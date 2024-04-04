@@ -1,37 +1,23 @@
 control 'SV-258067' do
-  title 'RHEL 8 must prevent users from disabling session control mechanisms.'
-  desc 'A session lock is a temporary action taken when a user stops work and
-moves away from the immediate physical vicinity of the information system but
-does not want to log out because of the temporary nature of the absence.
+  title 'RHEL 9 must prevent users from disabling session control mechanisms.'
+  desc 'The session lock is implemented at the point where session activity can be determined. Rather than be forced to wait for a period of time to expire before the user session can be locked, RHEL 9 must provide users with the ability to manually invoke a session lock so users can secure their session if it is necessary to temporarily vacate the immediate physical vicinity.'
+  desc 'check', 'Verify RHEL 9 prevents users from disabling the tmux terminal multiplexer with the following command:
 
-    The session lock is implemented at the point where session activity can be
-determined. Rather than be forced to wait for a period of time to expire before
-the user session can be locked, RHEL 8 needs to provide users with the ability
-to manually invoke a session lock so users can secure their session if it is
-necessary to temporarily vacate the immediate physical vicinity.
+$ grep -i tmux /etc/shells
 
-    Tmux is a terminal multiplexer that enables a number of terminals to be
-created, accessed, and controlled from a single screen.  Red Hat endorses tmux
-as the recommended session controlling package.'
-  desc 'check', 'Verify the operating system prevents users from disabling the tmux terminal
-multiplexer with the following command:
-
-    $ sudo grep -i tmux /etc/shells
-
-    If any output is produced, this is a finding.'
-  desc 'fix', 'Configure the operating system to prevent users from disabling
-the tmux terminal multiplexer by editing the "/etc/shells" configuration file
-to remove any instances of tmux.'
+If any output is produced, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to prevent users from disabling the tmux terminal multiplexer by editing the "/etc/shells" configuration file to remove any instances of tmux.'
   impact 0.3
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
-  tag gtitle: 'SRG-OS-000028-GPOS-00009'
-  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
-  tag gid: 'V-230350'
-  tag rid: 'SV-258067r627750_rule'
-  tag stig_id: 'RHEL-08-020042'
-  tag fix_id: 'F-32994r567797_fix'
-  tag cci: ['CCI-000056']
-  tag nist: ['AC-11 b']
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011', 'SRG-OS-000324-GPOS-00125']
+  tag gid: 'V-258067'
+  tag rid: 'SV-258067r926188_rule'
+  tag stig_id: 'RHEL-09-412030'
+  tag fix_id: 'F-61732r926187_fix'
+  tag cci: ['CCI-000056', 'CCI-002235']
+  tag nist: ['AC-11 b', 'AC-6 (10)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

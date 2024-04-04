@@ -1,51 +1,30 @@
 control 'SV-258144' do
-  title 'All RHEL 8 remote access methods must be monitored.'
-  desc 'Remote access services, such as those providing remote access to
-network devices and information systems, which lack automated monitoring
-capabilities, increase risk and make remote user access management difficult at
-best.
+  title 'All RHEL 9 remote access methods must be monitored.'
+  desc 'Logging remote access methods can be used to trace the decrease in the risks associated with remote user access management. It can also be used to spot cyberattacks and ensure ongoing compliance with organizational policies surrounding the use of remote access methods.'
+  desc 'check', %q(Verify that RHEL 9 monitors all remote access methods.
 
-    Remote access is access to DoD nonpublic information systems by an
-authorized user (or an information system) communicating through an external,
-non-organization-controlled network. Remote access methods include, for
-example, dial-up, broadband, and wireless.
+Check that remote access methods are being logged by running the following command:
 
-    Automated monitoring of remote access sessions allows organizations to
-detect cyber attacks and ensure ongoing compliance with remote access policies
-by auditing connection activities of remote access capabilities, such as Remote
-Desktop Protocol (RDP), on a variety of information system components (e.g.,
-servers, workstations, notebook computers, smartphones, and tablets).'
-  desc 'check', %q(Verify that RHEL 8 monitors all remote access methods.
+$ grep -rE '(auth.\*|authpriv.\*|daemon.\*)' /etc/rsyslog.conf
 
-    Check that remote access methods are being logged by running the following
-command:
+/etc/rsyslog.conf:authpriv.*
+ 
+If "auth.*", "authpriv.*" or "daemon.*" are not configured to be logged, this is a finding.)
+  desc 'fix', 'Add or update the following lines to the "/etc/rsyslog.conf" file:
 
-    $ sudo grep -E '(auth.*|authpriv.*|daemon.*)' /etc/rsyslog.conf
+auth.*;authpriv.*;daemon.* /var/log/secure
 
-    auth.*;authpriv.*;daemon.* /var/log/secure
+The "rsyslog" service must be restarted for the changes to take effect with the following command:
 
-    If "auth.*", "authpriv.*" or "daemon.*" are not configured to be
-logged, this is a finding.)
-  desc 'fix', 'Configure RHEL 8 to monitor all remote access methods by installing rsyslog
-with the following command:
-
-    $ sudo yum install rsyslog
-
-    Then add or update the following lines to the "/etc/rsyslog.conf" file:
-
-    auth.*;authpriv.*;daemon.* /var/log/secure
-
-    The "rsyslog" service must be restarted for the changes to take effect.
-To restart the "rsyslog" service, run the following command:
-
-    $ sudo systemctl restart rsyslog.service'
+$ sudo systemctl restart rsyslog.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
-  tag gid: 'V-230228'
-  tag rid: 'SV-258144r627750_rule'
-  tag stig_id: 'RHEL-08-010070'
-  tag fix_id: 'F-32872r567431_fix'
+  tag gid: 'V-258144'
+  tag rid: 'SV-258144r926419_rule'
+  tag stig_id: 'RHEL-09-652030'
+  tag fix_id: 'F-61809r926418_fix'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
   tag 'host'

@@ -1,77 +1,81 @@
 control 'SV-258134' do
-  title 'The RHEL 8 operating system must use a file integrity tool to verify correct operation of all security functions.'
-  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed.
-        Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the
-        system security policy and supporting the isolation of code and data on which the protection is based. Security functionality
-        includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges),
-        setting events to be audited, and setting intrusion detection parameters.
+  title 'RHEL 9 must have the AIDE package installed.'
+  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.'
+  desc 'check', %q(Verify that RHEL 9 has the Advanced Intrusion Detection Environment (AIDE) package installed with the following command:
 
-        This requirement applies to the RHEL 8 operating system performing security function verification/testing and/or systems and
-        environments that require this functionality.'
-  desc 'check', %q(Verify that Advanced Intrusion Detection Environment (AIDE) is installed and verifies the correct operation of all
-        security functions.
+$ sudo dnf list --installed aide
 
-        Check that the AIDE package is installed with the following command:
-          $ sudo rpm -q aide
+Example output:
 
-          aide-0.16-14.el8_5.1.x86_64
+aide.x86_64          0.16.100.el9
 
-        If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system.
+If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system. 
 
-        If there is no application installed to perform integrity checks, this is a finding.
+If there is no application installed to perform integrity checks, this is a finding.
 
-        If AIDE is installed, check if it has been initialized with the following command:
-          $ sudo /usr/sbin/aide --check
+If AIDE is installed, check if it has been initialized with the following command:
 
-        If the output is "Couldn't open file /var/lib/aide/aide.db.gz for reading", this is a finding.)
+$ sudo /usr/sbin/aide --check
+
+If the output is "Couldn't open file /var/lib/aide/aide.db.gz for reading", this is a finding.)
   desc 'fix', 'Install AIDE, initialize it, and perform a manual check.
 
-        Install AIDE:
-          $ sudo yum install aide
+Install AIDE:
 
-        Initialize it:
-          $ sudo /usr/sbin/aide --init
+$ sudo dnf install aide
 
-        Example output:
-          Number of entries:      48623
+Initialize AIDE:
+     
+$ sudo /usr/sbin/aide --init
 
-          ---------------------------------------------------
-          The attributes of the (uncompressed) database(s):
-          ---------------------------------------------------
+Example output:
 
-          /var/lib/aide/aide.db.new.gz
-            SHA1     : LTAVQ8tFJthsrf4m9gfRpnf1vyc=
-            SHA256   : NJ9+uzRQKSwmLQ8A6IpKNvYjVKGbhSjt
-              BeJBVcmOVrI=
-            SHA512   : 7d8I/F6A1b07E4ZuGeilZjefRgJJ/F20
-              eC2xoag1OsOVpctt3Mi7Jjjf3vFW4xoY
-              5mdS6/ImQpm0xtlTLOPeQQ==
+Start timestamp: 2023-06-05 10:09:04 -0600 (AIDE 0.16)
+AIDE initialized database at /var/lib/aide/aide.db.new.gz
 
-          End timestamp: 2022-10-20 10:50:52 -0700 (run time: 0m 46s)
+Number of entries:      86833
 
-        The new database will need to be renamed to be read by AIDE:
-          $ sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+---------------------------------------------------
+The attributes of the (uncompressed) database(s):
+---------------------------------------------------
 
-        Perform a manual check:
-          $ sudo /usr/sbin/aide --check
+/var/lib/aide/aide.db.new.gz
+  MD5      : coZUtPHhoFoeD7+k54fUvQ==
+  SHA1     : DVpOEMWJwo0uPgrKZAygIUgSxeM=
+  SHA256   : EQiZH0XNEk001tcDmJa+5STFEjDb4MPE
+             TGdBJ/uvZKc=
+  SHA512   : 86KUqw++PZhoPK0SZvT3zuFq9yu9nnPP
+             toei0nENVELJ1LPurjoMlRig6q69VR8l
+             +44EwO9eYyy9nnbzQsfG1g==
 
-        Example output:
-          Start timestamp: 2022-10-20 11:03:16 -0700 (AIDE 0.16)
-          AIDE found differences between database and filesystem!!
-          ...
+End timestamp: 2023-06-05 10:09:57 -0600 (run time: 0m 53s)
 
-        Done.'
+The new database will need to be renamed to be read by AIDE:
+
+$ sudo mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+
+Perform a manual check:
+
+$ sudo /usr/sbin/aide --check
+
+Example output:
+
+2023-06-05 10:16:08 -0600 (AIDE 0.16)
+AIDE found NO differences between database and filesystem. Looks okay!!
+
+...'
   impact 0.5
-  tag check_id: 'C-55147r880728_chk'
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag check_id: 'C-61875r926387_chk'
   tag severity: 'medium'
-  tag gid: 'V-251710'
-  tag rid: 'SV-258134r880730_rule'
-  tag stig_id: 'RHEL-08-010359'
-  tag gtitle: 'SRG-OS-000445-GPOS-00199'
-  tag fix_id: 'F-55101r880729_fix'
+  tag gid: 'V-258134'
+  tag rid: 'SV-258134r926389_rule'
+  tag stig_id: 'RHEL-09-651010'
+  tag gtitle: 'SRG-OS-000363-GPOS-00150'
+  tag fix_id: 'F-61799r926388_fix'
   tag 'documentable'
-  tag cci: ['CCI-002696']
-  tag nist: ['SI-6 a']
+  tag cci: ['CCI-002696', 'CCI-001744']
+  tag nist: ['SI-6 a', 'CM-3 (5)']
   tag 'host'
 
   file_integrity_tool = input('file_integrity_tool')

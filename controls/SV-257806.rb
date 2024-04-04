@@ -1,44 +1,25 @@
 control 'SV-257806' do
-  title 'RHEL 8 must disable IEEE 1394 (FireWire) Support.'
-  desc 'It is detrimental for operating systems to provide, or install by
-default, functionality exceeding requirements or mission objectives. These
-unnecessary capabilities or services are often overlooked and therefore may
-remain unsecured. They increase the risk to the platform by providing
-additional attack vectors.
+  title 'RHEL 9 must be configured to disable the FireWire kernel module.'
+  desc 'Disabling firewire protects the system against exploitation of any flaws in its implementation.'
+  desc 'check', 'Verify that RHEL 9 disables the ability to load the firewire-core kernel module with the following command:
 
-    The IEEE 1394 (FireWire) is a serial bus standard for high-speed real-time
-communication. Disabling FireWire protects the system against exploitation of
-any flaws in its implementation.'
-  desc 'check', 'Verify the operating system disables the ability to load the firewire-core kernel module.
+$ sudo grep -r firewire-core /etc/modprobe.conf /etc/modprobe.d/* 
 
-     $ sudo grep -r firewire-core /etc/modprobe.d/* | grep "/bin/false"
-     install firewire-core /bin/false
+blacklist firewire-core
 
-If the command does not return any output, or the line is commented out, and use of the firewire-core protocol is not documented with the Information System Security Officer (ISSO) as an operational requirement, this is a finding.
+If the command does not return any output, or the line is commented out, and use of firewire-core is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'To configure the system to prevent the firewire-core kernel module from being loaded, add the following line to the file /etc/modprobe.d/firewire-core.conf (or create firewire-core.conf if it does not exist):
 
-Verify the operating system disables the ability to use the firewire-core kernel module.
-
-Check to see if the firewire-core kernel module is disabled with the following command:
-
-     $ sudo grep -r firewire-core /etc/modprobe.d/* | grep "blacklist"
-     blacklist firewire-core
-
-If the command does not return any output or the output is not "blacklist firewire-core", and use of the firewire-core kernel module is not documented with the ISSO as an operational requirement, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable the ability to use the firewire-core kernel module.
-
-Add or update the following lines in the file "/etc/modprobe.d/blacklist.conf":
-
-     install firewire-core /bin/false
-     blacklist firewire-core
-
-Reboot the system for the settings to take effect.'
-  impact 0.3
-  tag severity: 'low'
+install firewire-core /bin/false
+blacklist firewire-core'
+  impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
-  tag gid: 'V-230499'
-  tag rid: 'SV-257806r942933_rule'
-  tag stig_id: 'RHEL-08-040026'
-  tag fix_id: 'F-33143r942932_fix'
+  tag gid: 'V-257806'
+  tag rid: 'SV-257806r942955_rule'
+  tag stig_id: 'RHEL-09-213055'
+  tag fix_id: 'F-61471r942954_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
   tag 'host'

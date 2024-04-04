@@ -1,30 +1,24 @@
 control 'SV-257855' do
-  title 'RHEL 8 must prevent code from being executed on file systems that are
-imported via Network File System (NFS).'
-  desc 'The "noexec" mount option causes the system not to execute binary
-files. This option must be used for mounting any file system not containing
-approved binary as they may be incompatible. Executing files from untrusted
-file systems increases the opportunity for unprivileged users to attain
-unauthorized administrative access.'
-  desc 'check', 'Verify that  file systems being imported via NFS are mounted with the
-"noexec" option with the following command:
+  title 'RHEL 9  must prevent code from being executed on file systems that are imported via Network File System (NFS).'
+  desc 'The "noexec" mount option causes the system not to execute binary files. This option must be used for mounting any file system not containing approved binary as they may be incompatible. Executing files from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.'
+  desc 'check', 'Verify RHEL 9 has the "noexec" option configured for all NFS mounts with the following command:
 
-    $ sudo grep nfs /etc/fstab | grep noexec
+$ cat /etc/fstab | grep nfs
 
-    UUID=e06097bb-cfcd-437b-9e4d-a691f5662a7d /store nfs rw,nosuid,nodev,noexec
-0 0
+192.168.22.2:/mnt/export /data nfs4 rw,nosuid,nodev,noexec,sync,soft,sec=krb5:krb5i:krb5p
 
-    If a file system found in "/etc/fstab" refers to NFS and it does not have
-the "noexec" option set, this is a finding.'
-  desc 'fix', 'Configure the "/etc/fstab" to use the "noexec" option on
-file systems that are being imported via NFS.'
+If no NFS mounts are configured, this requirement is Not Applicable.
+
+If the system is mounting file systems via NFS and the "noexec" option is missing, this is a finding.'
+  desc 'fix', 'Update each NFS mounted file system to use the "noexec" option on file systems that are being imported via NFS.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230306'
-  tag rid: 'SV-257855r627750_rule'
-  tag stig_id: 'RHEL-08-010630'
-  tag fix_id: 'F-32950r567665_fix'
+  tag gid: 'V-257855'
+  tag rid: 'SV-257855r925552_rule'
+  tag stig_id: 'RHEL-09-231070'
+  tag fix_id: 'F-61520r925551_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

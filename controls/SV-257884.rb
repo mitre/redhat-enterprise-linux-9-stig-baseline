@@ -1,16 +1,8 @@
 control 'SV-257884' do
-  title 'RHEL 8 library files must have mode 755 or less permissive.'
-  desc 'If RHEL 8 were to allow any user to make changes to software
-libraries, then those changes might be implemented without undergoing the
-appropriate testing and approvals that are part of a robust change management
-process.
+  title 'RHEL 9 library files must have mode 755 or less permissive.'
+  desc 'If RHEL 9 allowed any user to make changes to software libraries, then those changes might be implemented without undergoing the appropriate testing and approvals that are part of a robust change management process.
 
-    This requirement applies to RHEL 8 with software libraries that are
-accessible and configurable, as in the case of interpreted languages. Software
-libraries also include privileged programs that execute with escalated
-privileges. Only qualified and authorized individuals will be allowed to obtain
-access to information system components for purposes of initiating changes,
-including upgrades and modifications.'
+This requirement applies to RHEL 9 with software libraries that are accessible and configurable, as in the case of interpreted languages. Software libraries also include privileged programs that execute with escalated privileges.'
   desc 'check', 'Verify the system-wide shared library files contained in the following directories have mode "755" or less permissive with the following command:
 
 $ sudo find -L /lib /lib64 /usr/lib /usr/lib64 -perm /022 -type f -exec ls -l {} \\;
@@ -20,12 +12,13 @@ If any system-wide shared library file is found to be group-writable or world-wr
 
 $ sudo chmod 755 [FILE]'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
-  tag gid: 'V-230260'
-  tag rid: 'SV-257884r792867_rule'
-  tag stig_id: 'RHEL-08-010330'
-  tag fix_id: 'F-32904r792866_fix'
+  tag gid: 'V-257884'
+  tag rid: 'SV-257884r925639_rule'
+  tag stig_id: 'RHEL-09-232020'
+  tag fix_id: 'F-61549r925638_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
   tag 'host'

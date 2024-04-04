@@ -1,69 +1,27 @@
 control 'SV-258122' do
-  title 'RHEL 8 must implement smart card logon for multifactor authentication
-for access to interactive accounts.'
-  desc 'Using an authentication device, such as a Common Access Card (CAC) or
-token that is separate from the information system, ensures that even if the
-information system is compromised, that compromise will not affect credentials
-stored on the authentication device.
+  title 'RHEL 9 must enable certificate based smart card authentication.'
+  desc 'Without the use of multifactor authentication, the ease of access to privileged functions is greatly increased. Multifactor authentication requires using two or more factors to achieve authentication. A privileged account is defined as an information system account with authorizations of a privileged user. The DOD Common Access Card (CAC) with DOD-approved PKI is an example of multifactor authentication.'
+  desc 'check', 'Verify that RHEL 9 has smart cards are enabled in System Security Services Daemon (SSSD), run the following command:
 
-    Multifactor solutions that require devices separate from information
-systems gaining access include, for example, hardware tokens providing
-time-based or challenge-response authenticators and smart cards such as the
-U.S. Government Personal Identity Verification card and the DoD CAC.
+$ sudo grep pam_cert_auth /etc/sssd/sssd.conf
 
-    There are various methods of implementing multifactor authentication for
-RHEL 8. Some methods include a local system multifactor account mapping or
-joining the system to a domain and utilizing a Red Hat idM server or Microsoft
-Windows Active Directory server. Any of these methods will require that the
-client operating system handle the multifactor authentication correctly.'
-  desc 'check', 'Verify RHEL 8 uses multifactor authentication for local access to accounts.
+pam_cert_auth = True 
 
-Note: If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
+If "pam_cert_auth" is not set to "True", the line is commented out, or the line is missing, this is a finding.'
+  desc 'fix', 'Edit the file "/etc/sssd/sssd.conf" and add or edit the following line:
 
-Check that the "pam_cert_auth" setting is set to "true" in the "/etc/sssd/sssd.conf" file.
-
-Check that the "try_cert_auth" or "require_cert_auth" options are configured in both "/etc/pam.d/system-auth" and "/etc/pam.d/smartcard-auth" files with the following command:
-
-     $ sudo grep -ir cert_auth /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf /etc/pam.d/*
-     /etc/sssd/sssd.conf:pam_cert_auth = True
-     /etc/pam.d/smartcard-auth:auth   sufficient   pam_sss.so try_cert_auth
-     /etc/pam.d/system-auth:auth   [success=done authinfo_unavail=ignore ignore=ignore default=die]   pam_sss.so try_cert_auth
-
-If "pam_cert_auth" is not set to "true" in "/etc/sssd/sssd.conf", this is a finding.
-
-If "pam_sss.so" is not set to "try_cert_auth" or "require_cert_auth" in both the "/etc/pam.d/smartcard-auth" and "/etc/pam.d/system-auth" files, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to use multifactor authentication for local access to
-accounts.
-
-    Add or update the "pam_cert_auth" setting in the "/etc/sssd/sssd.conf"
-file to match the following line:
-
-    [pam]
-    pam_cert_auth = True
-
-    Add or update "pam_sss.so" with "try_cert_auth" or
-"require_cert_auth" in the "/etc/pam.d/system-auth" and
-"/etc/pam.d/smartcard-auth" files based on the following examples:
-
-    /etc/pam.d/smartcard-auth:auth   sufficient   pam_sss.so try_cert_auth
-
-    /etc/pam.d/system-auth:auth   [success=done authinfo_unavail=ignore
-ignore=ignore default=die]   pam_sss.so try_cert_auth
-
-    The "sssd" service must be restarted for the changes to take effect. To
-restart the "sssd" service, run the following command:
-
-    $ sudo systemctl restart sssd.service'
+pam_cert_auth = True'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000105-GPOS-00052'
-  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']
-  tag gid: 'V-230372'
-  tag rid: 'SV-258122r942945_rule'
-  tag stig_id: 'RHEL-08-020250'
-  tag fix_id: 'F-33016r942944_fix'
-  tag cci: ['CCI-000765']
-  tag nist: ['IA-2 (1)']
+  tag gtitle: 'SRG-OS-000375-GPOS-00160'
+  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055', 'SRG-OS-000375-GPOS-00160']
+  tag gid: 'V-258122'
+  tag rid: 'SV-258122r926353_rule'
+  tag stig_id: 'RHEL-09-611165'
+  tag fix_id: 'F-61787r926352_fix'
+  tag cci: ['CCI-000765', 'CCI-001948']
+  tag nist: ['IA-2 (1)', 'IA-2 (11)']
   tag 'host'
 
   only_if('If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.', impact: 0.0) {

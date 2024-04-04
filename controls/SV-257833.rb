@@ -1,6 +1,5 @@
 control 'SV-257833' do
-  title 'The iprutils package must not be installed unless mission essential on
-RHEL 8.'
+  title 'RHEL 9 must not have the iprutils package installed.'
   desc 'It is detrimental for operating systems to provide, or install by
 default, functionality exceeding requirements or mission objectives. These
 unnecessary capabilities or services are often overlooked and therefore may
@@ -14,30 +13,26 @@ functions).
 
     The iprutils package provides a suite of utilities to manage and configure
 SCSI devices supported by the ipr SCSI storage device driver.'
-  desc 'check', 'Verify the iprutils package has not been installed on the system with the
-following commands:
+  desc 'check', 'Verify that the iprutils package is not installed with the following command:
 
-    $ sudo yum list installed iprutils
+$ sudo dnf list --installed iprutils
 
-    iprutils.x86_64
-2.4.18.1-1.el8                                                  @anaconda
+Error: No matching Packages to list
 
-    If the iprutils package is installed and is not documented with the
-Information System Security Officer (ISSO) as an operational requirement, this
-is a finding.'
-  desc 'fix', 'Document the iprutils package with the ISSO as an operational requirement
-or remove it from the system with the following command:
+If the "iprutils" package is installed and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'Remove the iprutils package with the following command:
 
-    $ sudo yum remove iprutils'
+$ sudo dnf remove iprutils'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230560'
-  tag rid: 'SV-257833r627750_rule'
-  tag stig_id: 'RHEL-08-040380'
-  tag fix_id: 'F-33204r568427_fix'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag gtitle: 'SRG-OS-000095-GPOS-00049'
+  tag gid: 'V-257833'
+  tag rid: 'SV-257833r925486_rule'
+  tag stig_id: 'RHEL-09-215050'
+  tag fix_id: 'F-61498r925485_fix'
+  tag cci: ['CCI-000366', 'CCI-000381']
+  tag nist: ['CM-6 b', 'CM-7 a']
   tag 'host'
   tag 'container'
 

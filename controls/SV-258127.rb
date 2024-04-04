@@ -1,9 +1,12 @@
 control 'SV-258127' do
-  title 'RHEL 8, for certificate-based authentication, must enforce authorized
-access to the corresponding private key.'
-  desc 'If an unauthorized user obtains access to a private key without a
-passcode, that user would have unauthorized access to any system where the
-associated public key has been installed.'
+  title 'RHEL 9, for PKI-based authentication, must enforce authorized access to the corresponding private key.'
+  desc 'If the private key is discovered, an attacker can use the key to authenticate as an authorized user and gain access to the network infrastructure.
+
+The cornerstone of the PKI is the private key used to encrypt or digitally sign information.
+
+If the private key is stolen, this will lead to the compromise of the authentication and nonrepudiation gained through PKI because the attacker can use the private key to digitally sign documents and pretend to be the authorized user.
+
+Both the holders of a digital certificate and the issuing authority must protect the computers, storage devices, or whatever they use to keep the private keys.'
   desc 'check', 'Verify the SSH private key files have a passcode.
 
 For each private key stored on the system, use the following command:
@@ -16,12 +19,13 @@ following command:
 
     $ sudo ssh-keygen -n [passphrase]'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'
-  tag gid: 'V-230230'
-  tag rid: 'SV-258127r627750_rule'
-  tag stig_id: 'RHEL-08-010100'
-  tag fix_id: 'F-32874r567437_fix'
+  tag gid: 'V-258127'
+  tag rid: 'SV-258127r926368_rule'
+  tag stig_id: 'RHEL-09-611190'
+  tag fix_id: 'F-61792r926367_fix'
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'

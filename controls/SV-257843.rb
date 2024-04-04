@@ -1,37 +1,22 @@
 control 'SV-257843' do
-  title 'A separate RHEL 8 filesystem must be used for user home directories
-(such as /home or an equivalent).'
-  desc 'The use of separate file systems for different paths can protect the
-system from failures resulting from a file system becoming full or failing.'
-  desc 'check', %q(Verify that a separate file system has been created for non-privileged local interactive user home directories.
+  title 'A separate RHEL 9 file system must be used for user home directories (such as /home or an equivalent).'
+  desc 'Ensuring that "/home" is mounted on its own partition enables the setting of more restrictive mount options, and also helps ensure that users cannot trivially fill partitions used for log or audit data storage.'
+  desc 'check', 'Verify that a separate file system/partition has been created for "/home" with the following command:
 
-  Check the home directory assignment for all non-privileged users, users with a User Identifier (UID) greater than 1000, on the system with the following command:
+$ mount | grep /home
 
-     $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1,$3,$6}' /etc/passwd
+UUID=fba5000f-2ffa-4417-90eb-8c54ae74a32f on /home type ext4 (rw,nodev,nosuid,noexec,seclabel)
 
-     doej 1001 /home/doej
-     publicj 1002 /home/publicj
-     smithj 1003 /home/smithj
-
-The output of the command will give the directory/partition that contains the home directories for the non-privileged users on the system (in this example, "/home") and users’ shell. All accounts with a valid shell (such as /bin/bash) are considered interactive users.
-
-Check that a file system/partition has been created for the nonprivileged interactive users with the following command:
-
-Note: The partition of "/home" is used in the example.
-
-     $ sudo grep /home /etc/fstab
-
-     /dev/mapper/...   /home   xfs   defaults,noexec,nosuid,nodev 0 0
-
-If a separate entry for the file system/partition containing the nonprivileged interactive user home directories does not exist, this is a finding.)
-  desc 'fix', 'Migrate the "/home" directory onto a separate file system.'
+If a separate entry for "/home" is not in use, this is a finding.'
+  desc 'fix', 'Migrate the "/home" directory onto a separate file system/partition.'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-230328'
-  tag rid: 'SV-257843r902723_rule'
-  tag stig_id: 'RHEL-08-010800'
-  tag fix_id: 'F-32972r902722_fix'
+  tag gid: 'V-257843'
+  tag rid: 'SV-257843r925516_rule'
+  tag stig_id: 'RHEL-09-231010'
+  tag fix_id: 'F-61508r925515_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

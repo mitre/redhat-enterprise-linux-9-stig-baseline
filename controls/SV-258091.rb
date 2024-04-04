@@ -1,48 +1,38 @@
 control 'SV-258091' do
-  title 'RHEL 8 systems, version 8.4 and above, must ensure the password complexity module is configured for three retries or less.'
+  title 'RHEL 9 must ensure the password complexity module in the system-auth file is configured for three retries or less.'
   desc 'Use of a complex password helps to increase the time and resources required to compromise the password. Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. "pwquality" enforces complex password construction configuration and has the ability to limit brute-force attacks on the system.
 
-RHEL 8 utilizes "pwquality" as a mechanism to enforce password complexity. This is set in both:
+RHEL 9 uses "pwquality" as a mechanism to enforce password complexity. This is set in both:
 /etc/pam.d/password-auth
 /etc/pam.d/system-auth
+
 By limiting the number of attempts to meet the pwquality module complexity requirements before returning with an error, the system will audit abnormal attempts at password changes.'
-  desc 'check', 'Note: This requirement applies to RHEL versions 8.4 or newer. If the system is RHEL below version 8.4, this requirement is not applicable.
+  desc 'check', 'Verify RHEL 9 is configured to limit the "pwquality" retry option to "3". 
 
-Verify the operating system is configured to limit the "pwquality" retry option to 3.
+Check for the use of the "pwquality" retry option in the system-auth file with the following command:
 
-Check for the use of the "pwquality" retry option with the following command:
+$ cat /etc/pam.d/system-auth | grep pam_pwquality
 
-$ sudo grep -r retry /etc/security/pwquality.conf*
+password required pam_pwquality.so retry=3
 
-/etc/security/pwquality.conf:retry = 3
+If the value of "retry" is set to "0" or greater than "3", or is missing, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to limit the "pwquality" retry option to "3".
 
-If the value of "retry" is set to "0" or greater than "3", is commented out or missing, this is a finding.
+Add the following line to the "/etc/pam.d/system-auth" file (or modify the line to have the required value):
 
-If conflicting results are returned, this is a finding.
-
-Check for the use of the "pwquality" retry option in the system-auth and password-auth files with the following command:
-
-$ sudo grep pwquality /etc/pam.d/system-auth /etc/pam.d/password-auth | grep retry
-
-If the command returns any results, this is a finding.'
-  desc 'fix', 'Configure the operating system to limit the "pwquality" retry option to 3.
-
-Add the following line to the "/etc/security/pwquality.conf" file(or modify the line to have the required value):
-
-retry = 3
-
-Remove any configurations that conflict with the above value.'
+password required pam_pwquality.so retry=3'
   impact 0.5
-  tag check_id: 'C-55153r858735_chk'
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag check_id: 'C-61832r926258_chk'
   tag severity: 'medium'
-  tag gid: 'V-251716'
-  tag rid: 'SV-258091r858737_rule'
-  tag stig_id: 'RHEL-08-020104'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-55107r858736_fix'
+  tag gid: 'V-258091'
+  tag rid: 'SV-258091r926260_rule'
+  tag stig_id: 'RHEL-09-611010'
+  tag gtitle: 'SRG-OS-000069-GPOS-00037'
+  tag fix_id: 'F-61756r926259_fix'
   tag 'documentable'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag cci: ['CCI-000366', 'CCI-000192']
+  tag nist: ['CM-6 b', 'IA-5 (1) (a)']
   tag 'host'
   tag 'container'
 

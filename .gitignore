@@ -66,3 +66,8 @@ build-iPhoneSimulator/
 
 # VS CODE / VSCODIUM
 .vscode
+
+# delta files
+delta.json
+report.md
+*xccdf.xml

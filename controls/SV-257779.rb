@@ -1,126 +1,59 @@
 control 'SV-257779' do
-  title 'RHEL 8 must display the Standard Mandatory DoD Notice and Consent
-Banner before granting local or remote access to the system via a command line
-user logon.'
-  desc 'Display of a standardized and approved use notification before
-granting access to the operating system ensures privacy and security
-notification verbiage used is consistent with applicable federal laws,
-Executive Orders, directives, policies, regulations, standards, and guidance.
+  title 'RHEL 9 must display the Standard Mandatory DOD Notice and Consent Banner before granting local or remote access to the system via a command line user logon.'
+  desc 'Display of a standardized and approved use notification before granting access to the operating system ensures privacy and security notification verbiage used is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
-    System use notifications are required only for access via logon interfaces
-with human users and are not required when such human interfaces do not exist.
+System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.'
+  desc 'check', 'Verify RHEL 9 displays the Standard Mandatory DOD Notice and Consent Banner before granting access to the operating system via a command line user logon.
 
-    The banner must be formatted in accordance with applicable DoD policy. Use
-the following verbiage for operating systems that can accommodate banners of
-1300 characters:
+Check that a banner is displayed at the command line login screen with the following command:
 
-    "You are accessing a U.S. Government (USG) Information System (IS) that is
-provided for USG-authorized use only.
+$ sudo cat /etc/issue
 
-    By using this IS (which includes any device attached to this IS), you
-consent to the following conditions:
+If the banner is set correctly it will return the following text:
 
-    -The USG routinely intercepts and monitors communications on this IS for
-purposes including, but not limited to, penetration testing, COMSEC monitoring,
-network operations and defense, personnel misconduct (PM), law enforcement
-(LE), and counterintelligence (CI) investigations.
+"You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
 
-    -At any time, the USG may inspect and seize data stored on this IS.
+By using this IS (which includes any device attached to this IS), you consent to the following conditions:
 
-    -Communications using, or data stored on, this IS are not private, are
-subject to routine monitoring, interception, and search, and may be disclosed
-or used for any USG-authorized purpose.
+-The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
 
-    -This IS includes security measures (e.g., authentication and access
-controls) to protect USG interests--not for your personal benefit or privacy.
+-At any time, the USG may inspect and seize data stored on this IS.
 
-    -Notwithstanding the above, using this IS does not constitute consent to
-PM, LE or CI investigative searching or monitoring of the content of privileged
-communications, or work product, related to personal representation or services
-by attorneys, psychotherapists, or clergy, and their assistants. Such
-communications and work product are private and confidential. See User
-Agreement for details."'
-  desc 'check', 'Verify RHEL 8 displays the Standard Mandatory DoD Notice and Consent Banner
-before granting access to the operating system via a command line user logon.
+-Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
 
-    Check that RHEL 8 displays a banner at the command line login screen with
-the following command:
+-This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
 
-    $ sudo cat /etc/issue
+-Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details."
 
-    If the banner is set correctly it will return the following text:
+If the banner text does not match the Standard Mandatory DOD Notice and Consent Banner exactly, or the line is commented out, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to display the Standard Mandatory DOD Notice and Consent Banner before granting access to the system via command line logon.
 
-    “You are accessing a U.S. Government (USG) Information System (IS) that is
-provided for USG-authorized use only.
+Edit the "/etc/issue" file to replace the default text with the Standard Mandatory DOD Notice and Consent Banner. The DOD-required text is:
 
-    By using this IS (which includes any device attached to this IS), you
-consent to the following conditions:
+"You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
 
-    -The USG routinely intercepts and monitors communications on this IS for
-purposes including, but not limited to, penetration testing, COMSEC monitoring,
-network operations and defense, personnel misconduct (PM), law enforcement
-(LE), and counterintelligence (CI) investigations.
+By using this IS (which includes any device attached to this IS), you consent to the following conditions:
 
-    -At any time, the USG may inspect and seize data stored on this IS.
+-The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
 
-    -Communications using, or data stored on, this IS are not private, are
-subject to routine monitoring, interception, and search, and may be disclosed
-or used for any USG-authorized purpose.
+-At any time, the USG may inspect and seize data stored on this IS.
 
-    -This IS includes security measures (e.g., authentication and access
-controls) to protect USG interests--not for your personal benefit or privacy.
+-Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
 
-    -Notwithstanding the above, using this IS does not constitute consent to
-PM, LE or CI investigative searching or monitoring of the content of privileged
-communications, or work product, related to personal representation or services
-by attorneys, psychotherapists, or clergy, and their assistants. Such
-communications and work product are private and confidential. See User
-Agreement for details.”
+-This IS includes security measures (e.g., authentication and access controls) to protect USG interests -- not for your personal benefit or privacy.
 
-    If the banner text does not match the Standard Mandatory DoD Notice and
-Consent Banner exactly, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to display the Standard Mandatory DoD Notice and Consent
-Banner before granting access to the system via command line logon.
-
-    Edit the "/etc/issue" file to replace the default text with the Standard
-Mandatory DoD Notice and Consent Banner. The DoD-required text is:
-
-    "You are accessing a U.S. Government (USG) Information System (IS) that is
-provided for USG-authorized use only.
-
-    By using this IS (which includes any device attached to this IS), you
-consent to the following conditions:
-
-    -The USG routinely intercepts and monitors communications on this IS for
-purposes including, but not limited to, penetration testing, COMSEC monitoring,
-network operations and defense, personnel misconduct (PM), law enforcement
-(LE), and counterintelligence (CI) investigations.
-
-    -At any time, the USG may inspect and seize data stored on this IS.
-
-    -Communications using, or data stored on, this IS are not private, are
-subject to routine monitoring, interception, and search, and may be disclosed
-or used for any USG-authorized purpose.
-
-    -This IS includes security measures (e.g., authentication and access
-controls) to protect USG interests -- not for your personal benefit or privacy.
-
-    -Notwithstanding the above, using this IS does not constitute consent to
-PM, LE or CI investigative searching or monitoring of the content of privileged
-communications, or work product, related to personal representation or services
-by attorneys, psychotherapists, or clergy, and their assistants. Such
-communications and work product are private and confidential. See User
-Agreement for details."'
+-Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details."'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
-  tag gid: 'V-230227'
-  tag rid: 'SV-257779r627750_rule'
-  tag stig_id: 'RHEL-08-010060'
-  tag fix_id: 'F-32871r567428_fix'
-  tag cci: ['CCI-000048']
-  tag nist: ['AC-8 a']
+  tag gid: 'V-257779'
+  tag rid: 'SV-257779r925324_rule'
+  tag stig_id: 'RHEL-09-211020'
+  tag fix_id: 'F-61444r925323_fix'
+  tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
+  tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 3']
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {

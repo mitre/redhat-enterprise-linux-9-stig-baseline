@@ -5,7 +5,7 @@ control 'SV-257811' do
 '
   desc 'check', %q(Verify RHEL 9 restricts usage of ptrace to descendant processes with the following commands:
 
-$ sysctl kernel.yama.ptrace_scope
+$ sudo sysctl kernel.yama.ptrace_scope
 
 kernel.yama.ptrace_scope = 1
 
@@ -26,10 +26,10 @@ The system configuration files need to be reloaded for the changes to take effec
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61552r925418_chk'
+  tag check_id: 'C-61552r942978_chk'
   tag severity: 'medium'
   tag gid: 'V-257811'
-  tag rid: 'SV-257811r925420_rule'
+  tag rid: 'SV-257811r942979_rule'
   tag stig_id: 'RHEL-09-213080'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61476r925419_fix'

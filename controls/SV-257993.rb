@@ -1,33 +1,33 @@
 control 'SV-257993' do
-  title 'RHEL 8 must not allow users to override SSH environment variables.'
+  title 'RHEL 9 must not allow users to override SSH environment variables.'
   desc 'SSH environment options potentially allow users to bypass access
 restriction in some configurations.'
-  desc 'check', 'Verify that unattended or automatic logon via ssh is disabled with the following command:
+  desc 'check', 'Verify that unattended or automatic logon via SSH is disabled with the following command:
 
-$ sudo grep -ir PermitUserEnvironment /etc/ssh/sshd_config*
+$ sudo grep -ir permituserenvironment /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 PermitUserEnvironment no
 
 If "PermitUserEnvironment" is set to "yes", is missing completely, or is commented out, this is a finding.
-If conflicting results are returned, this is a finding.'
-  desc 'fix', 'Configure RHEL 8 to allow the SSH daemon to not allow unattended or
-automatic logon to the system.
 
-    Add or edit the following line in the "/etc/ssh/sshd_config" file:
+If the required value is not set, this is a finding.'
+  desc 'fix', 'Configure the RHEL 9 SSH daemon to not allow unattended or automatic logon to the system.
 
-    PermitUserEnvironment no
+Add or edit the following line in the "/etc/ssh/sshd_config" file:
 
-    The SSH daemon must be restarted for the changes to take effect. To restart
-the SSH daemon, run the following command:
+PermitUserEnvironment no
 
-    $ sudo systemctl restart sshd.service'
+Restart the SSH daemon  for the setting to take effect:
+
+$ sudo systemctl restart sshd.service'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00229'
-  tag gid: 'V-230330'
-  tag rid: 'SV-257993r877377_rule'
-  tag stig_id: 'RHEL-08-010830'
-  tag fix_id: 'F-32974r567737_fix'
+  tag gid: 'V-257993'
+  tag rid: 'SV-257993r943042_rule'
+  tag stig_id: 'RHEL-09-255085'
+  tag fix_id: 'F-61658r925965_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'
