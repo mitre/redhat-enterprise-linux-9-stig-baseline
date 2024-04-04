@@ -1,0 +1,31 @@
+---
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:spec/results/%{platform}_%{suite}.json
+  inspec_tests:
+    - name: RedHat 8 STIG v1r13
+      path: .
+  input_files:
+    - kitchen.inputs.yml
+  <% if ENV['INSPEC_CONTROL'] %>
+  controls:
+    - "<%= ENV['INSPEC_CONTROL'] %>"
+  <% end %>
+  load_plugins: true
+  env_vars:
+    - "CHEF_LICENSE=<%= ENV['CHEF_LICENSE'] %>"
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+
+transport:
+  max_ssh_sessions: 6
