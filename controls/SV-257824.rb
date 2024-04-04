@@ -1,28 +1,43 @@
 control 'SV-257824' do
-  title 'RHEL 9 must remove all software components after updated versions have been installed.'
-  desc 'Previous versions of software components that are not removed from the information system after updates have been installed may be exploited by some adversaries.'
-  desc 'check', 'Verify RHEL 9 removes all software components after updated versions have been installed with the following command:
+  title 'YUM must remove all software components after updated versions have
+been installed on RHEL 8.'
+  desc 'Previous versions of software components that are not removed from the
+information system after updates have been installed may be exploited by
+adversaries. Some information technology products may remove older versions of
+software automatically from the information system.'
+  desc 'check', 'Verify the operating system removes all software components after updated
+versions have been installed.
 
-$ grep clean /etc/dnf/dnf.conf 
+    Check if YUM is configured to remove unneeded packages with the following
+command:
 
-clean_requirements_on_remove=1 
+    $ sudo grep -i clean_requirements_on_remove /etc/dnf/dnf.conf
 
-If "clean_requirements_on_remove" is not set to "1", this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to remove all software components after updated versions have been installed.
+    clean_requirements_on_remove=True
 
-Edit the file /etc/dnf/dnf.conf by adding or editing the following line:
+    If "clean_requirements_on_remove" is not set to either "1", "True",
+or "yes", commented out, or is missing from "/etc/dnf/dnf.conf", this is a
+finding.'
+  desc 'fix', 'Configure the operating system to remove all software components after
+updated versions have been installed.
 
- clean_requirements_on_remove=1'
+    Set the "clean_requirements_on_remove" option to "True" in the
+"/etc/dnf/dnf.conf" file:
+
+    clean_requirements_on_remove=True'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61565r925457_chk'
   tag severity: 'low'
-  tag gid: 'V-257824'
-  tag rid: 'SV-257824r925459_rule'
-  tag stig_id: 'RHEL-09-214035'
   tag gtitle: 'SRG-OS-000437-GPOS-00194'
-  tag fix_id: 'F-61489r925458_fix'
-  tag 'documentable'
+  tag gid: 'V-230281'
+  tag rid: 'SV-257824r854034_rule'
+  tag stig_id: 'RHEL-08-010440'
+  tag fix_id: 'F-32925r567590_fix'
   tag cci: ['CCI-002617']
   tag nist: ['SI-2 (6)']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/dnf/dnf.conf') do
+    its('main.clean_requirements_on_remove') { should match(/1|True|yes/i) }
+  end
 end

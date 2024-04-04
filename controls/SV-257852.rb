@@ -1,26 +1,79 @@
 control 'SV-257852' do
-  title 'RHEL 9 must prevent code from being executed on file systems that contain user home directories.'
-  desc 'The "noexec" mount option causes the system to not execute binary files. This option must be used for mounting any file system not containing approved binary files, as they may be incompatible. Executing files from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.'
-  desc 'check', 'Verify "/home" is mounted with the "noexec" option with the following command:
+  title 'RHEL 8 must prevent code from being executed on file systems that
+contain user home directories.'
+  desc 'The "noexec" mount option causes the system not to execute binary
+files. This option must be used for mounting any file system not containing
+approved binary files, as they may be incompatible. Executing files from
+untrusted file systems increases the opportunity for unprivileged users to
+attain unauthorized administrative access.'
+  desc 'check', %q(Verify file systems that contain user home directories are mounted with the
+"noexec" option.
 
-Note: If a separate file system has not been created for the user home directories (user home directories are mounted under "/"), this is automatically a finding, as the "noexec" option cannot be used on the "/" system.
+    Note: If a separate file system has not been created for the user home
+directories (user home directories are mounted under "/"), this is
+automatically a finding as the "noexec" option cannot be used on the "/"
+system.
 
-$ mount | grep /home
+    Find the file system(s) that contain the user home directories with the
+following command:
 
-tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
+    $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1,$3,$6}' /etc/passwd
 
-If the "/home" file system is mounted without the "noexec" option, this is a finding.'
-  desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/home" directory.'
+    smithj:1001: /home/smithj
+    robinst:1002: /home/robinst
+
+    Check the file systems that are mounted at boot time with the following
+command:
+
+    $ sudo more /etc/fstab
+
+    UUID=a411dc99-f2a1-4c87-9e05-184977be8539 /home ext4
+rw,relatime,discard,data=ordered,nosuid,nodev,noexec 0 2
+
+    If a file system found in "/etc/fstab" refers to the user home directory
+file system and it does not have the "noexec" option set, this is a finding.)
+  desc 'fix', 'Configure the "/etc/fstab" to use the "noexec" option on
+file systems that contain user home directories for interactive users.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61593r925541_chk'
   tag severity: 'medium'
-  tag gid: 'V-257852'
-  tag rid: 'SV-257852r925543_rule'
-  tag stig_id: 'RHEL-09-231055'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61517r925542_fix'
-  tag 'documentable'
+  tag gid: 'V-230302'
+  tag rid: 'SV-257852r627750_rule'
+  tag stig_id: 'RHEL-08-010590'
+  tag fix_id: 'F-32946r567653_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  interactive_users = passwd.where {
+    uid.to_i >= 1000 && shell !~ /nologin/
+  }
+
+  interactive_user_homedirs = interactive_users.homes.map { |home_path|
+    home_path.match(%r{^(.*)/.*$}).captures.first
+  }.uniq
+
+  option = 'noexec'
+
+  mounted_on_root = interactive_user_homedirs.select { |dir| dir == '/' }
+  not_configured = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.configured? }
+  option_not_set = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.mount_options.flatten.include?(option) }
+
+  describe 'All interactive user home directories' do
+    it "should not be mounted under root ('/')" do
+      expect(mounted_on_root).to be_empty, "Home directories mounted on root ('/'):\n\t- #{mounted_on_root.join("\n\t- ")}"
+    end
+    it 'should be configured in /etc/fstab' do
+      expect(not_configured).to be_empty, "Unconfigured home directories:\n\t- #{not_configured.join("\n\t- ")}"
+    end
+    if (option_not_set - not_configured).nil?
+      it "should have the '#{option}' mount option set" do
+        expect(option_not_set - not_configured).to be_empty, "Mounted home directories without '#{option}' set:\n\t- #{not_configured.join("\n\t- ")}"
+      end
+    end
+  end
 end

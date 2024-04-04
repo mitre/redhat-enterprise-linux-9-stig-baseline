@@ -1,47 +1,46 @@
 control 'SV-258165' do
-  title 'RHEL 9 audit logs must be group-owned by root or by a restricted logging group to prevent unauthorized read access.'
-  desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.
+  title 'RHEL 8 audit logs must be group-owned by root to prevent unauthorized
+read access.'
+  desc 'Unauthorized disclosure of audit records can reveal system and
+configuration data to attackers, thus compromising its confidentiality.
 
-'
-  desc 'check', 'Verify the audit logs are group-owned by "root" or a restricted logging group. 
+    Audit information includes all information (e.g., audit records, audit
+settings, audit reports) needed to successfully audit RHEL 8 activity.'
+  desc 'check', 'Verify the audit logs are group-owned by "root". First determine where
+the audit logs are stored with the following command:
 
-First determine if a group other than "root" has been assigned to the audit logs with the following command:
+    $ sudo grep -iw log_file /etc/audit/auditd.conf
 
-$ sudo grep log_group /etc/audit/auditd.conf
+    log_file = /var/log/audit/audit.log
 
-Then determine where the audit logs are stored with the following command:
+    Using the location of the audit log file, determine if the audit log is
+group-owned by "root" using the following command:
 
-$ sudo grep -iw log_file /etc/audit/auditd.conf
+    $ sudo ls -al /var/log/audit/audit.log
 
-log_file = /var/log/audit/audit.log
+    rw------- 2 root root 23 Jun 11 11:56 /var/log/audit/audit.log
 
-Then using the location of the audit log file, determine if the audit log is group-owned by "root" using the following command:
+    If the audit log is not group-owned by "root", this is a finding.'
+  desc 'fix', 'Configure the audit log to be owned by root by configuring the log group in
+the /etc/audit/auditd.conf file:
 
-$ sudo stat -c "%G %n" /var/log/audit/audit.log
-
-root /var/log/audit/audit.log
-
-If the audit log is not group-owned by "root" or the configured alternative logging group, this is a finding.'
-  desc 'fix', %q(Change the group of the directory of "/var/log/audit" to be owned by a correct group.
-
-Identify the group that is configured to own audit log:
-
-$ sudo grep -P '^[ ]*log_group[ ]+=.*$' /etc/audit/auditd.conf
-
-Change the ownership to that group:
-
-$ sudo chgrp ${GROUP} /var/log/audit)
+    log_group = root'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61906r926480_chk'
   tag severity: 'medium'
-  tag gid: 'V-258165'
-  tag rid: 'SV-258165r926482_rule'
-  tag stig_id: 'RHEL-09-653080'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
-  tag fix_id: 'F-61830r926481_fix'
-  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
-  tag 'documentable'
-  tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']
-  tag nist: ['AU-9 a', 'AU-9 a', 'AU-9 a', 'SI-11 b']
+  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
+  tag gid: 'V-230398'
+  tag rid: 'SV-258165r627750_rule'
+  tag stig_id: 'RHEL-08-030090'
+  tag fix_id: 'F-33042r567941_fix'
+  tag cci: ['CCI-000162']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe file(auditd_conf('/etc/audit/auditd.conf').log_file) do
+    its('group') { should be_in input('var_log_audit_group') }
+  end
 end

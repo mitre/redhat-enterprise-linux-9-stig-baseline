@@ -1,31 +1,63 @@
 control 'SV-257849' do
-  title 'RHEL 9 file system automount function must be disabled unless required.'
-  desc 'An authentication process resists replay attacks if it is impractical to achieve a successful authentication by recording and replaying a previous authentication message.
+  title 'The RHEL 8 file system automounter must be disabled unless required.'
+  desc 'Automatically mounting file systems permits easy introduction of
+unknown devices, thereby facilitating malicious activity.'
+  desc 'check', 'Verify the operating system disables the ability to automount devices.
 
-'
-  desc 'check', 'Verify that RHEL 9 file system automount function has been disabled with the following command:
+    Check to see if automounter service is active with the following command:
 
-$ sudo systemctl is-enabled  autofs
+    Note: If the autofs service is not installed, this requirement is not
+applicable.
 
-masked
+    $ sudo systemctl status autofs
 
-If the returned value is not "masked", "disabled", "Failed to get unit file state for autofs.service for autofs", or "enabled", and is not documented as operational requirement with the information system security officer ISSO, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to disable the ability to automount devices.
+    autofs.service - Automounts filesystems on demand
+    Loaded: loaded (/usr/lib/systemd/system/autofs.service; disabled)
+    Active: inactive (dead)
 
-The autofs service can be disabled with the following command:
+    If the "autofs" status is set to "active" and is not documented with
+the Information System Security Officer (ISSO) as an operational requirement,
+this is a finding.'
+  desc 'fix', 'Configure the operating system to disable the ability to automount devices.
 
-$ sudo systemctl mask --now autofs.service'
+    Turn off the automount service with the following commands:
+
+    $ sudo systemctl stop autofs
+    $ sudo systemctl disable autofs
+
+    If "autofs" is required for Network File System (NFS), it must be
+documented with the ISSO.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61590r925532_chk'
   tag severity: 'medium'
-  tag gid: 'V-257849'
-  tag rid: 'SV-257849r925534_rule'
-  tag stig_id: 'RHEL-09-231040'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
-  tag fix_id: 'F-61514r925533_fix'
-  tag satisfies: ['SRG-OS-000114-GPOS-00059', 'SRG-OS-000378-GPOS-00163', 'SRG-OS-000480-GPOS-00227']
-  tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-000778', 'CCI-001958']
-  tag nist: ['CM-6 b', 'IA-3', 'IA-3']
+  tag gid: 'V-230502'
+  tag rid: 'SV-257849r627750_rule'
+  tag stig_id: 'RHEL-08-040070'
+  tag fix_id: 'F-33146r568253_fix'
+  tag cci: ['CCI-000778']
+  tag nist: ['IA-3']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('autofs_required') == true
+    describe systemd_service('autofs.service') do
+      it { should be_running }
+      it { should be_enabled }
+      it { should be_installed }
+    end
+  elsif package('autofs').installed?
+    describe systemd_service('autofs.service') do
+      it { should_not be_running }
+      it { should_not be_enabled }
+      it { should_not be_installed }
+    end
+  else
+    impact 0.0
+    describe 'The autofs service is not installed' do
+      skip 'The autofs service is not installed, this control is Not Applicable.'
+    end
+  end
 end

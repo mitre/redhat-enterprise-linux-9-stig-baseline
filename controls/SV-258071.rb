@@ -1,28 +1,50 @@
 control 'SV-258071' do
-  title 'RHEL 9 must enforce a delay of at least four seconds between logon prompts following a failed logon attempt.'
-  desc 'Increasing the time between a failed authentication attempt and reprompting to enter credentials helps to slow a single-threaded brute force attack.'
-  desc 'check', 'Verify RHEL 9 enforces a delay of at least four seconds between console logon prompts following a failed logon attempt with the following command:
+  title 'RHEL 8 must enforce a delay of at least four seconds between logon
+prompts following a failed logon attempt.'
+  desc 'Configuring the operating system to implement organization-wide
+security implementation guides and security checklists verifies compliance with
+federal standards and establishes a common security baseline across the DoD
+that reflects the most restrictive security posture consistent with operational
+requirements.
 
-$ grep -i fail_delay /etc/login.defs
+    Configuration settings are the set of parameters that can be changed in
+hardware, software, or firmware components of the system that affect the
+security posture and/or functionality of the system. Security-related
+parameters are those parameters impacting the security state of the system,
+including the parameters required to satisfy other security control
+requirements. Security-related parameters include, for example, registry
+settings; account, file, and directory permission settings; and settings for
+functions, ports, protocols, services, and remote connections.'
+  desc 'check', 'Verify the operating system enforces a delay of at least four seconds
+between console logon prompts following a failed logon attempt with the
+following command:
 
-FAIL_DELAY 4
+    $ sudo grep -i fail_delay /etc/login.defs
 
-If the value of "FAIL_DELAY" is not set to "4" or greater, or the line is commented out, this is a finding.'
-  desc 'fix', 'Configure the RHEL 9 to enforce a delay of at least four seconds between logon prompts following a failed console logon attempt.
+    FAIL_DELAY 4
 
-Modify the "/etc/login.defs" file to set the "FAIL_DELAY" parameter to 4 or greater:
+    If the value of "FAIL_DELAY" is not set to "4" or greater, or the line
+is commented out, this is a finding.'
+  desc 'fix', 'Configure the operating system to enforce a delay of at least four seconds
+between logon prompts following a failed console logon attempt.
 
-FAIL_DELAY 4'
+    Modify the "/etc/login.defs" file to set the "FAIL_DELAY" parameter to
+"4" or greater:
+
+    FAIL_DELAY 4'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61812r926198_chk'
   tag severity: 'medium'
-  tag gid: 'V-258071'
-  tag rid: 'SV-258071r926200_rule'
-  tag stig_id: 'RHEL-09-412050'
   tag gtitle: 'SRG-OS-000480-GPOS-00226'
-  tag fix_id: 'F-61736r926199_fix'
-  tag 'documentable'
+  tag gid: 'V-230378'
+  tag rid: 'SV-258071r627750_rule'
+  tag stig_id: 'RHEL-08-020310'
+  tag fix_id: 'F-33022r567881_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe login_defs do
+    its('FAIL_DELAY.to_i') { should cmp >= input('login_prompt_delay') }
+  end
 end

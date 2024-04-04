@@ -1,34 +1,58 @@
 control 'SV-258058' do
-  title 'RHEL 9 must not have unauthorized accounts.'
-  desc 'Accounts providing no operational purpose provide additional opportunities for system compromise. Unnecessary accounts include user accounts for individuals not requiring access to the system and application accounts for applications not installed on the system.'
-  desc 'check', 'Verify that there are no unauthorized interactive user accounts with the following command:
+  title 'RHEL 8 must not have unnecessary accounts.'
+  desc 'Accounts providing no operational purpose provide additional
+opportunities for system compromise. Unnecessary accounts include user accounts
+for individuals not requiring access to the system and application accounts for
+applications not installed on the system.'
+  desc 'check', 'Verify all accounts on the system are assigned to an active system,
+application, or user account.
 
-$ less /etc/passwd  
+    Obtain the list of authorized system accounts from the Information System
+Security Officer (ISSO).
 
-root:x:0:0:root:/root:/bin/bash
-...
-games:x:12:100:games:/usr/games:/sbin/nologin
-scsaustin:x:1001:1001:scsaustin:/home/scsaustin:/bin/bash
-djohnson:x:1002:1002:djohnson:/home/djohnson:/bin/bash
+    Check the system accounts on the system with the following command:
 
-Interactive user account, generally will have a user identifier (UID) of 1000 or greater, a home directory in a specific partition, and an interactive shell.
+    $ sudo more /etc/passwd
 
-Obtain the list of interactive user accounts authorized to be on the system from the system administrator or information system security officer (ISSO) and compare it to the list of local interactive user accounts on the system.
+    root:x:0:0:root:/root:/bin/bash
+    bin:x:1:1:bin:/bin:/sbin/nologin
+    daemon:x:2:2:daemon:/sbin:/sbin/nologin
+    sync:x:5:0:sync:/sbin:/bin/sync
+    shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+    halt:x:7:0:halt:/sbin:/sbin/halt
+    games:x:12:100:games:/usr/games:/sbin/nologin
+    gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
 
-If there are unauthorized local user accounts on the system, this is a finding.'
-  desc 'fix', 'Remove unauthorized local interactive user accounts with the following command where <unauthorized_user> is the unauthorized account:
+    Accounts such as "games" and "gopher" are not authorized accounts as
+they do not support authorized system functions.
 
-$ sudo userdel  <unauthorized_user>'
+    If the accounts on the system do not match the provided documentation, or
+accounts that do not support an authorized system function are present, this is
+a finding.'
+  desc 'fix', 'Configure the system so all accounts on the system are assigned to an
+active system, application, or user account.
+
+    Remove accounts that do not support approved system activities or that
+allow for a normal user to perform administrative-level actions.
+
+    Document all authorized accounts on the system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61799r926159_chk'
   tag severity: 'medium'
-  tag gid: 'V-258058'
-  tag rid: 'SV-258058r926161_rule'
-  tag stig_id: 'RHEL-09-411095'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61723r926160_fix'
-  tag 'documentable'
+  tag gid: 'V-230379'
+  tag rid: 'SV-258058r627750_rule'
+  tag stig_id: 'RHEL-08-020320'
+  tag fix_id: 'F-33023r567884_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  failing_users = passwd.users.reject { |u| (input('known_system_accounts') + input('user_accounts')).uniq.include?(u) }
+
+  describe 'All users' do
+    it 'should have an explicit, authorized purpose (either a known user account or a required system account)' do
+      expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
+    end
+  end
 end

@@ -1,31 +1,45 @@
 control 'SV-258228' do
-  title 'RHEL 9 audit system must protect logon UIDs from unauthorized change.'
-  desc 'If modification of login user identifiers (UIDs) is not prevented, they can be changed by nonprivileged users and make auditing complicated or impossible.
+  title 'RHEL 8 audit system must protect logon UIDs from unauthorized change.'
+  desc 'Unauthorized disclosure of audit records can reveal system and
+configuration data to attackers, thus compromising its confidentiality.
 
-'
-  desc 'check', 'Verify the audit system prevents unauthorized changes to logon UIDs with the following command:
+    Audit information includes all information (e.g., audit records, audit
+settings, audit reports) needed to successfully audit RHEL 8 system activity.
 
-$ sudo grep -i immutable /etc/audit/audit.rules
+    In immutable mode, unauthorized users cannot execute changes to the audit
+system to potentially hide malicious activity and then put the audit rules
+back.  A system reboot would be noticeable and a system administrator could
+then investigate the unauthorized changes.'
+  desc 'check', 'Verify the audit system prevents unauthorized changes to logon UIDs with
+the following command:
 
---loginuid-immutable
+    $ sudo grep -i immutable /etc/audit/audit.rules
 
-If the "--loginuid-immutable" option is not returned in the "/etc/audit/audit.rules", or the line is commented out, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 auditing to prevent modification of login UIDs once they are set by adding the following line to /etc/audit/rules.d/audit.rules:
+    --loginuid-immutable
 
---loginuid-immutable
+    If the login UIDs are not set to be immutable by adding the
+"--loginuid-immutable" option to the "/etc/audit/audit.rules", this is a
+finding.'
+  desc 'fix', 'Configure the audit system to set the logon UIDs to be immutable by adding
+the following line to "/etc/audit/rules.d/audit.rules"
 
-The audit daemon must be restarted for the changes to take effect.'
+    --loginuid-immutable'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61969r926669_chk'
   tag severity: 'medium'
-  tag gid: 'V-258228'
-  tag rid: 'SV-258228r926671_rule'
-  tag stig_id: 'RHEL-09-654270'
-  tag gtitle: 'SRG-OS-000462-GPOS-00206'
-  tag fix_id: 'F-61893r926670_fix'
-  tag satisfies: ['SRG-OS-000462-GPOS-00206', 'SRG-OS-000475-GPOS-00220', 'SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
-  tag 'documentable'
-  tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-000172']
-  tag nist: ['AU-9 a', 'AU-9 a', 'AU-9 a', 'AU-12 c']
+  tag gtitle: 'SRG-OS-000057-GPOS-00027'
+  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
+  tag gid: 'V-230403'
+  tag rid: 'SV-258228r627750_rule'
+  tag stig_id: 'RHEL-08-030122'
+  tag fix_id: 'F-33047r567956_fix'
+  tag cci: ['CCI-000162']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe command('grep -i immutable /etc/audit/audit.rules') do
+    its('stdout.strip') { should cmp '--loginuid-immutable' }
+  end
 end

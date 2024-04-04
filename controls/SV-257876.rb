@@ -1,26 +1,65 @@
 control 'SV-257876' do
-  title 'RHEL 9 must mount /var/tmp with the nodev option.'
-  desc 'The "nodev" mount option causes the system to not interpret character or block special devices. Executing character or block special devices from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.
+  title 'RHEL 8 must mount /var/tmp with the nodev option.'
+  desc 'The organization must identify authorized software programs and permit
+execution of authorized software. The process used to identify software
+programs that are authorized to execute on organizational information systems
+is commonly referred to as whitelisting.
 
-The only legitimate location for device files is the "/dev" directory located on the root partition, with the exception of chroot jails if implemented.'
+    The "noexec" mount option causes the system to not execute binary files.
+This option must be used for mounting any file system not containing approved
+binary files, as they may be incompatible. Executing files from untrusted file
+systems increases the opportunity for unprivileged users to attain unauthorized
+administrative access.
+
+    The "nodev" mount option causes the system to not interpret character or
+block special devices. Executing character or block special devices from
+untrusted file systems increases the opportunity for unprivileged users to
+attain unauthorized administrative access.
+
+    The "nosuid" mount option causes the system to not execute "setuid" and
+"setgid" files with owner privileges. This option must be used for mounting
+any file system not containing approved "setuid" and "setguid" files.
+Executing files from untrusted file systems increases the opportunity for
+unprivileged users to attain unauthorized administrative access.'
   desc 'check', 'Verify "/var/tmp" is mounted with the "nodev" option:
 
-$ mount | grep /var/tmp
+$ sudo mount | grep /var/tmp
 
 /dev/mapper/rhel-var-tmp on /var/tmp type xfs (rw,nodev,nosuid,noexec,seclabel)
 
-If the "/var/tmp" file system is mounted without the "nodev" option, this is a finding.'
-  desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/var/tmp" directory.'
+Verify that the "nodev" option is configured for /var/tmp:
+
+$ sudo cat /etc/fstab | grep /var/tmp
+
+/dev/mapper/rhel-var-tmp /var/tmp xfs defaults,nodev,nosuid,noexec 0 0
+
+If results are returned and the "nodev" option is missing, or if /var/tmp is mounted without the "nodev" option, this is a finding.'
+  desc 'fix', 'Configure the system so that /var/tmp is mounted with the "nodev" option by adding /modifying the /etc/fstab with the following line:
+
+/dev/mapper/rhel-var-tmp /var/tmp xfs defaults,nodev,nosuid,noexec 0 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61617r925613_chk'
   tag severity: 'medium'
-  tag gid: 'V-257876'
-  tag rid: 'SV-257876r925615_rule'
-  tag stig_id: 'RHEL-09-231175'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
-  tag fix_id: 'F-61541r925614_fix'
-  tag 'documentable'
+  tag gid: 'V-230520'
+  tag rid: 'SV-257876r854061_rule'
+  tag stig_id: 'RHEL-08-040132'
+  tag fix_id: 'F-33164r792926_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var/tmp'
+  option = 'nodev'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
+  end
 end

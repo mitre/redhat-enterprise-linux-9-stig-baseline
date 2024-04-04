@@ -1,33 +1,39 @@
 control 'SV-257837' do
-  title 'A graphical display manager must not be installed on RHEL 9 unless approved.'
-  desc 'Unnecessary service packages must not be installed to decrease the attack surface of the system. Graphical display managers have a long history of security vulnerabilities and must not be used, unless approved and documented.'
-  desc 'check', 'Verify that a graphical user interface is not installed with the following command:
+  title 'The graphical display manager must not be installed on RHEL 8 unless
+approved.'
+  desc 'Internet services that are not required for system or application
+processes must not be active to decrease the attack surface of the system.
+Graphical display managers have a long history of security vulnerabilities and
+must not be used, unless approved and documented.'
+  desc 'check', 'Verify that a graphical user interface is not installed:
 
-$ sudo dnf list --installed "xorg*common"
+$ rpm -qa | grep xorg | grep server
 
-Error: No matching Packages to list
+Ask the System Administrator if use of a graphical user interface is an operational requirement.
 
-If the "x11-server-common" package is installed, and the use of a graphical user interface has not been documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'Document the requirement for a graphical user interface with the ISSO or remove all xorg packages with the following command:
+If the use of a graphical user interface on the system is not documented with the ISSO, this is a finding.'
+  desc 'fix', 'Document the requirement for a graphical user interface with the ISSO or reinstall the operating system without the graphical user interface. If reinstallation is not feasible, then continue with the following procedure:
 
-Warning: If you are accessing the system through the graphical user interface, change to the multi-user.target with the following command:
+Open an SSH session and enter the following commands:
 
-$ sudo systemctl isolate multi-user.target
+$ sudo yum remove xorg-x11-server-Xorg xorg-x11-server-common xorg-x11-server-utils xorg-x11-server-Xwayland
 
-Warning: Removal of the graphical user interface will immediately render it useless. The following commands must not be run from a virtual terminal emulator in the graphical interface.
-
-$ sudo dnf remove "xorg*"
-$ sudo systemctl set-default multi-user.target'
+A reboot is required for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61578r925496_chk'
   tag severity: 'medium'
-  tag gid: 'V-257837'
-  tag rid: 'SV-257837r925498_rule'
-  tag stig_id: 'RHEL-09-215070'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61502r925497_fix'
-  tag 'documentable'
+  tag gid: 'V-230553'
+  tag rid: 'SV-257837r809324_rule'
+  tag stig_id: 'RHEL-08-040320'
+  tag fix_id: 'F-33197r809323_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  input('remove_xorg_x11_server_packages').each do |p|
+    describe package(p) do
+      it { should_not be_installed }
+    end
+  end
 end

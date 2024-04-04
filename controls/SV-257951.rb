@@ -1,26 +1,53 @@
 control 'SV-257951' do
-  title 'RHEL 9 must be configured to prevent unrestricted mail relaying.'
-  desc 'If unrestricted mail relaying is permitted, unauthorized senders could use this host as a mail relay for the purpose of sending spam or other unauthorized activity.'
-  desc 'check', 'Verify RHEL 9 is configured to prevent unrestricted mail relaying with the following command:
+  title 'RHEL 8 must be configured to prevent unrestricted mail relaying.'
+  desc 'If unrestricted mail relaying is permitted, unauthorized senders could
+use this host as a mail relay for the purpose of sending spam or other
+unauthorized activity.'
+  desc 'check', 'Verify the system is configured to prevent unrestricted mail relaying.
 
-$ postconf -n smtpd_client_restrictions 
+    Determine if "postfix" is installed with the following commands:
 
-smtpd_client_restrictions = permit_mynetworks,reject 
+    $ sudo yum list installed postfix
 
-If the "smtpd_client_restrictions" parameter contains any entries other than "permit_mynetworks" and "reject", and the additional entries have not been documented with the information system security officer (ISSO), this is a finding.'
-  desc 'fix', "Modify the postfix configuration file to restrict client connections to the local network with the following command:
+    postfix.x86_64  2:3.3.1-9.el8
 
-$ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'"
+    If postfix is not installed, this is Not Applicable.
+
+    If postfix is installed, determine if it is configured to reject
+connections from unknown or untrusted networks with the following command:
+
+    $ sudo postconf -n smtpd_client_restrictions
+
+    smtpd_client_restrictions = permit_mynetworks, reject
+
+    If the "smtpd_client_restrictions" parameter contains any entries other
+than "permit_mynetworks" and "reject", this is a finding.'
+  desc 'fix', %q(If "postfix" is installed, modify the "/etc/postfix/main.cf" file to
+restrict client connections to the local network with the following command:
+
+    $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject')
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61692r925838_chk'
   tag severity: 'medium'
-  tag gid: 'V-257951'
-  tag rid: 'SV-257951r925840_rule'
-  tag stig_id: 'RHEL-09-252050'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61616r925839_fix'
-  tag 'documentable'
+  tag gid: 'V-230550'
+  tag rid: 'SV-257951r627750_rule'
+  tag stig_id: 'RHEL-08-040290'
+  tag fix_id: 'F-33194r568397_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  if package('postfix').installed?
+    describe command('postconf -n smtpd_client_restrictions') do
+      its('stdout.strip') {
+        should match(/^smtpd_client_restrictions\s+=\s+(permit_mynetworks|reject)($|(,\s*(permit_mynetworks|reject)\s*$))/i)
+      }
+    end
+  else
+    impact 0.0
+    describe 'The `postfix` package is not installed' do
+      skip 'The `postfix` package is not installed, this control is Not Applicable'
+    end
+  end
 end

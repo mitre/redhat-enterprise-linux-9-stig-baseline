@@ -1,29 +1,44 @@
 control 'SV-257826' do
-  title 'RHEL 9 must not have a File Transfer Protocol (FTP) server package installed.'
-  desc 'The FTP service provides an unencrypted remote access that does not provide for the confidentiality and integrity of user passwords or the remote session. If a privileged user were to log on using this service, the privileged user password could be compromised. SSH or other encrypted file transfer methods must be used in place of this service.
+  title 'A File Transfer Protocol (FTP) server package must not be installed
+unless mission essential on RHEL 8.'
+  desc 'The FTP service provides an unencrypted remote access that does not
+provide for the confidentiality and integrity of user passwords or the remote
+session. If a privileged user were to log on using this service, the privileged
+user password could be compromised. SSH or other encrypted file transfer
+methods must be used in place of this service.'
+  desc 'check', 'Verify an FTP server has not been installed on the system with the
+following commands:
 
-Removing the "vsftpd" package decreases the risk of accidental activation.
+    $ sudo yum list installed *ftpd*
 
-'
-  desc 'check', 'Verify that RHEL 9 does not have a File Transfer Protocol (FTP) server package installed with the following command:
+    vsftpd.x86_64
+3.0.3-28.el8                                                  appstream
 
-$ sudo dnf list --installed | grep ftp 
+    If an FTP server is installed and is not documented with the Information
+System Security Officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'Document the FTP server package with the ISSO as an operational requirement
+or remove it from the system with the following command:
 
-If the "ftp" package is installed, this is a finding.'
-  desc 'fix', 'The ftp package can be removed with the following command (using vsftpd as an example):
-
-$ sudo dnf remove vsftpd'
+    $ sudo yum remove vsftpd'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61567r925463_chk'
   tag severity: 'high'
-  tag gid: 'V-257826'
-  tag rid: 'SV-257826r925465_rule'
-  tag stig_id: 'RHEL-09-215015'
-  tag gtitle: 'SRG-OS-000074-GPOS-00042'
-  tag fix_id: 'F-61491r925464_fix'
-  tag satisfies: ['SRG-OS-000074-GPOS-00042', 'SRG-OS-000095-GPOS-00049', 'SRG-OS-000480-GPOS-00227']
-  tag 'documentable'
-  tag cci: ['CCI-000197', 'CCI-000366', 'CCI-000381']
-  tag nist: ['IA-5 (1) (c)', 'CM-6 b', 'CM-7 a']
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-230558'
+  tag rid: 'SV-257826r627750_rule'
+  tag stig_id: 'RHEL-08-040360'
+  tag fix_id: 'F-33202r568421_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  if input('ftp_required')
+    describe package('vsftpd') do
+      it { should be_installed }
+    end
+  else
+    describe package('vsftpd') do
+      it { should_not be_installed }
+    end
+  end
 end

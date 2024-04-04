@@ -1,37 +1,53 @@
 control 'SV-258166' do
-  title 'RHEL 9 audit log directory must be owned by root to prevent unauthorized read access.'
-  desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.
+  title 'RHEL 8 audit log directory must be owned by root to prevent
+unauthorized read access.'
+  desc 'Unauthorized disclosure of audit records can reveal system and
+configuration data to attackers, thus compromising its confidentiality.
 
-'
-  desc 'check', 'Verify the audit logs directory is owned by "root". 
+    Audit information includes all information (e.g., audit records, audit
+settings, audit reports) needed to successfully audit RHEL 8 activity.'
+  desc 'check', 'Verify the audit log directory is owned by "root" to prevent unauthorized
+read access.
 
-First determine where the audit logs are stored with the following command:
+    Determine where the audit logs are stored with the following command:
 
-$ sudo grep -iw log_file /etc/audit/auditd.conf
+    $ sudo grep -iw log_file /etc/audit/auditd.conf
 
-log_file = /var/log/audit/audit.log
+    log_file = /var/log/audit/audit.log
 
-Then using the location of the audit log file, determine if the audit log directory is owned by "root" using the following command:
+    Determine the owner of the audit log directory by using the output of the
+above command (ex: "/var/log/audit/"). Run the following command with the
+correct audit log directory path:
 
-$ sudo ls -ld /var/log/audit
+    $ sudo ls -ld /var/log/audit
 
-drwx------ 2 root root 23 Jun 11 11:56 /var/log/audit
+    drw------- 2 root root 23 Jun 11 11:56 /var/log/audit
 
-If the audit log directory is not owned by "root", this is a finding.'
-  desc 'fix', 'Configure the audit log to be protected from unauthorized read access by setting the correct owner as "root" with the following command:
+    If the audit log directory is not owned by "root", this is a finding.'
+  desc 'fix', 'Configure the audit log to be protected from unauthorized read access, by
+setting the correct owner as "root" with the following command:
 
-$ sudo chown root /var/log/audit'
+    $ sudo chown root [audit_log_directory]
+
+    Replace "[audit_log_directory]" with the correct audit log directory
+path, by default this location is usually "/var/log/audit".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61907r926483_chk'
   tag severity: 'medium'
-  tag gid: 'V-258166'
-  tag rid: 'SV-258166r926485_rule'
-  tag stig_id: 'RHEL-09-653085'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
-  tag fix_id: 'F-61831r926484_fix'
-  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
-  tag 'documentable'
-  tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']
-  tag nist: ['AU-9 a', 'AU-9 a', 'AU-9 a', 'SI-11 b']
+  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029']
+  tag gid: 'V-230399'
+  tag rid: 'SV-258166r627750_rule'
+  tag stig_id: 'RHEL-08-030100'
+  tag fix_id: 'F-33043r567944_fix'
+  tag cci: ['CCI-000162']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  log_dir = auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')
+  describe directory(log_dir) do
+    its('owner') { should eq 'root' }
+  end
 end
