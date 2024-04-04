@@ -14,6 +14,8 @@ jobs:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.disa.ec2.yml
+      SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
+      SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       PLATFORM: 'rhel-9'
       LC_ALL: "en_US.UTF-8"
     strategy:
