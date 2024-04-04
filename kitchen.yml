@@ -6,7 +6,7 @@ verifier:
     - cli
     - json:spec/results/%{platform}_%{suite}.json
   inspec_tests:
-    - name: RedHat 8 STIG v1r13
+    - name: RedHat 9 STIG v1r2
       path: .
   input_files:
     - kitchen.inputs.yml
