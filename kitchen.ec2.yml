@@ -4,6 +4,7 @@ platforms:
 
 driver:
   name: ec2
+  subnet_id: subnet-0956e346cfb8f5527
   # subnet_filter:
   #   tag: 'Default'
   #   value: '*public*'
