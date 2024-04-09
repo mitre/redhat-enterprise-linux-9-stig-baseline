@@ -61,11 +61,7 @@ lifecycle:
         echo "+++ Installing needed packages for workflow and utility +++\n\n"
         sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
         echo ""
-        echo "+++ Installing Python 3.9 and Ansible +++\n\n"
-        export PATH=/usr/local/bin:$PATH
-        sudo dnf -y install python3.9
-        sudo dnf -y install python3-pip
-        sudo update-alternatives --set python3 /usr/bin/python3.9
+        echo "+++ Installing pip dependencies for Ansible +++\n\n"
         sudo python3 -m pip install ansible jmespath
         echo ""
         echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
