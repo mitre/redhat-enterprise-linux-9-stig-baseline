@@ -9,4 +9,4 @@
   become: yes
   vars:
     rhel9stig_bootloader_password_hash: "changethispassword"
-    rhel_09_010380: false
+    system_is_ec2: true
