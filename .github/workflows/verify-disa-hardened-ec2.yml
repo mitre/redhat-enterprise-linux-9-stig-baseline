@@ -24,7 +24,9 @@ jobs:
       fail-fast: false
     steps:
       - name: add needed packages
-        run: sudo apt-get update && apt -y install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install jq
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

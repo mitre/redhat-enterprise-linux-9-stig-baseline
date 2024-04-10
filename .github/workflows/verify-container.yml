@@ -24,7 +24,9 @@ jobs:
       fail-fast: false
     steps:
       - name: add needed packages
-        run: sudo apt-get update && apt -y install jq
+        run: |
+          sudo apt-get update
+          sudo apt -y install jq
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
