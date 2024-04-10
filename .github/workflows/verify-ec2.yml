@@ -16,7 +16,7 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.ec2.yml
       SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
       SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
-      PLATFORM: 'rhel-9'
+      PLATFORM: "rhel-9"
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
     steps:
       - name: add needed packages
-        run: sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt -y install jq
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
