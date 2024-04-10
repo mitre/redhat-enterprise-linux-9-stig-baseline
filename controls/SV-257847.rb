@@ -7,7 +7,7 @@ control 'SV-257847' do
 
 Note: /var/log/audit is used as the example as it is a common location.
 
-$ mount | grep /var/log/audit 
+$ mount | grep /var/log/audit
 
 UUID=2efb2979-45ac-82d7-0ae632d11f51 on /var/log/home type xfs  (rw,realtime,seclabel,attr2,inode64)
 

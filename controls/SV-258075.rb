@@ -7,7 +7,7 @@ control 'SV-258075' do
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/profile" file, the Severity is raised to a CAT I.
 
-$ grep umask /etc/profile 
+$ grep umask /etc/profile
 
 umask 077
 

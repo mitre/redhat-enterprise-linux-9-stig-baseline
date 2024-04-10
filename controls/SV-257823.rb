@@ -3,7 +3,7 @@ control 'SV-257823' do
   desc 'The hashes of important files like system executables should match the information given by the RPM database. Executables with erroneous hashes could be a sign of nefarious activity on the system.'
   desc 'check', %q(The following command will list which files on the system have file hashes different from what is expected by the RPM database:
 
- $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"' 
+ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
 
 If there is output, this is a finding.)
   desc 'fix', %q(Given output from the check command, identify the package that provides the output and reinstall it. The following trimmed example output shows a package that has failed verification, been identified, and been reinstalled:

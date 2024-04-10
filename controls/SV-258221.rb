@@ -5,7 +5,7 @@ control 'SV-258221' do
 '
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/security/opasswd" with the following command:
 
-$ sudo auditctl -l | egrep '(/etc/security/opasswd)' 
+$ sudo auditctl -l | egrep '(/etc/security/opasswd)'
 
 -w /etc/security/opasswd -p wa -k identity
 

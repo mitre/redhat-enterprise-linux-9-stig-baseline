@@ -7,7 +7,7 @@ Audit processing failures include software/hardware errors, failures in the audi
 '
   desc 'check', 'Verify the audit service is configured to panic on a critical error with the following command:
 
-$ sudo grep "\\-f" /etc/audit/audit.rules 
+$ sudo grep "\\-f" /etc/audit/audit.rules
 
 -f 2
 

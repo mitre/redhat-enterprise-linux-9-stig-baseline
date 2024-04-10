@@ -11,7 +11,7 @@ The system call rules are loaded into a matching engine that intercepts each sys
 '
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/gshadow" with the following command:
 
-$ sudo auditctl -l | egrep '(/usr/bin/passwd)' 
+$ sudo auditctl -l | egrep '(/usr/bin/passwd)'
 
 -a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=unset -k privileged-passwd
 

@@ -7,9 +7,9 @@ control 'SV-258176' do
 
 $ sudo auditctl -l | grep execve
 
--a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv
 -a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv
 -a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv
 
 If the command does not return all lines, or the lines are commented out, this is a finding.'
@@ -17,10 +17,10 @@ If the command does not return all lines, or the lines are commented out, this i
 
 Add or update the following file system rules to "/etc/audit/rules.d/audit.rules":
 
--a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv
 -a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv 
--a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv
+-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv
 
 The audit daemon must be restarted for the changes to take effect.'
   impact 0.5

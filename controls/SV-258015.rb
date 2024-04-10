@@ -17,7 +17,7 @@ Check that the automount setting is locked from nonprivileged user modification 
 
 Note: The example below is using the database "local" for the system, so the path is "/etc/dconf/db/local.d". This path must be modified if a database other than "local" is being used.
 
-$ grep 'automount-open' /etc/dconf/db/local.d/locks/* 
+$ grep 'automount-open' /etc/dconf/db/local.d/locks/*
 
 /org/gnome/desktop/media-handling/automount-open
 

@@ -10,7 +10,7 @@ Verify that the "s-nail" package is installed on the system:
 $ sudo dnf list --installed mailx
 
 s-nail.x86_64          14.9.22-6.el9
-	 
+
 If "s-nail" package is not installed, this is a finding.'
   desc 'fix', 'The s-nail package can be installed with the following command:
 

@@ -21,7 +21,7 @@ fapolicyd.x86_64          1.1-103.el9_0
 
 If the "fapolicyd" package is not installed, this is a finding.'
   desc 'fix', 'The  fapolicyd  package can be installed with the following command:
- 
+
 $ sudo dnf install fapolicyd'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

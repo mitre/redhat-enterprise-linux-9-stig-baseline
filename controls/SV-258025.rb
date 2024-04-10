@@ -12,7 +12,7 @@ uint32 5
 If the "uint32" setting is not set to "5" or less, or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to initiate a session lock for graphical user interfaces when a screensaver is activated.
 
-Create a database to contain the system-wide screensaver settings (if it does not already exist) with the following command: 
+Create a database to contain the system-wide screensaver settings (if it does not already exist) with the following command:
 
 Note: The example below is using the database "local" for the system, so if the system is using another database in "/etc/dconf/profile/user", the file should be created under the appropriate subdirectory.
 

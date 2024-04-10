@@ -7,7 +7,7 @@ RHEL 9 uses "pwquality" as a mechanism to enforce password complexity. This is s
 /etc/pam.d/system-auth
 
 By limiting the number of attempts to meet the pwquality module complexity requirements before returning with an error, the system will audit abnormal attempts at password changes.'
-  desc 'check', 'Verify RHEL 9 is configured to limit the "pwquality" retry option to "3". 
+  desc 'check', 'Verify RHEL 9 is configured to limit the "pwquality" retry option to "3".
 
 Check for the use of the "pwquality" retry option in the system-auth file with the following command:
 

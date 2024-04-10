@@ -3,9 +3,9 @@ control 'SV-258168' do
   desc 'If option "freq" is not set to a value that requires audit records being written to disk after a threshold number is reached, then audit records may be lost.'
   desc 'check', %q(Verify that audit system is configured to flush to disk after every 100 records with the following command:
 
-$ sudo grep freq /etc/audit/auditd.conf 
+$ sudo grep freq /etc/audit/auditd.conf
 
-freq = 100 
+freq = 100
 
 If "freq" isn't set to a value of "100" or greater, the value is missing, or the line is commented out, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to flush audit to disk by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":

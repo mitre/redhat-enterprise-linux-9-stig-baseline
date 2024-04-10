@@ -20,7 +20,7 @@ If the "maxpoll" option is set to a number greater than 16 or the line is commen
 Verify the "chrony.conf" file is configured to an authoritative DOD time source by running the following command:
 
 $ sudo grep -i server /etc/chrony.conf
-server 0.us.pool.ntp.mil 
+server 0.us.pool.ntp.mil
 
 If the parameter "server" is not set or is not set to an authoritative DOD time source, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to securely compare internal information system clocks at least every 24 hours with an NTP server by adding/modifying the following line in the /etc/chrony.conf file.

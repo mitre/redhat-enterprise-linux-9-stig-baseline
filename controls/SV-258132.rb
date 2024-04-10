@@ -3,8 +3,8 @@ control 'SV-258132' do
   desc 'Without mapping the certificate used to authenticate to the user account, the ability to determine the identity of the individual user or group will not be available for forensic analysis.'
   desc 'check', 'Verify the certificate of the user or group is mapped to the corresponding user or group in the "sssd.conf" file with the following command:
 
-$ sudo cat /etc/sssd/sssd.conf 
- 
+$ sudo cat /etc/sssd/sssd.conf
+
 [certmap/testing.test/rule_name]
 matchrule =<SAN>.*EDIPI@mil
 maprule = (userCertificate;binary={cert!bin})

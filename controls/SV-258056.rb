@@ -7,14 +7,14 @@ control 'SV-258056' do
 
 Note: If the system administrator demonstrates the use of an approved centralized account management method that locks an account after three unsuccessful logon attempts within a period of 15 minutes, this requirement is Not Applicable.
 
-$ grep fail_interval /etc/security/faillock.conf 
+$ grep fail_interval /etc/security/faillock.conf
 
 fail_interval = 900
 
 If the "fail_interval" option is not set to "900" or less (but not "0"), the line is commented out, or the line is missing, this is a finding.'
   desc 'fix', 'To configure RHEL 9 to lock out the "root" account after a number of incorrect login attempts within 15 minutes using "pam_faillock.so", enable the feature using the following command:
- 
-$ authselect enable-feature with-faillock  
+
+$ authselect enable-feature with-faillock
 
 Then edit the "/etc/security/faillock.conf" file as follows:
 

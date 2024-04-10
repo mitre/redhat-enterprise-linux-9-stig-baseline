@@ -14,7 +14,7 @@ If there is no evidence that real-time alerts are configured on the system, this
 
 Edit the following line in "/etc/audit/auditd.conf" to ensure that the system is forced into single user mode in the event the audit record storage volume is about to reach maximum capacity:
 
-admin_space_left_action = single 
+admin_space_left_action = single
 
 The audit daemon must be restarted for changes to take effect.'
   impact 0.5

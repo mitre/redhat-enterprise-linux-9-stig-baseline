@@ -5,12 +5,12 @@ control 'SV-258138' do
 ACLs can provide permissions beyond those permitted through the file mode and must be verified by the file integrity tools.'
   desc 'check', 'Verify that that AIDE is verifying ACLs with the following command:
 
-$ grep acl /etc/aide.conf 
+$ grep acl /etc/aide.conf
 
 All= p+i+n+u+g+s+m+S+sha512+acl+xattrs+selinux
 
 If the "acl" rule is not being used on all uncommented selection lines in the "/etc/aide.conf" file, or ACLs are not being checked by another file integrity tool, this is a finding.'
-  desc 'fix', 'Configure the file integrity tool to check file and directory ACLs. 
+  desc 'fix', 'Configure the file integrity tool to check file and directory ACLs.
 
 If AIDE is installed, ensure the "acl" rule is present on all uncommented file and directory selection lists.'
   impact 0.3

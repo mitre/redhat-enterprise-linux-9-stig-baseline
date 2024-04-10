@@ -15,7 +15,7 @@ opensc.x86_64          0.22.0-2.el9
 
 If the "opensc" package is not installed, this is a finding.'
   desc 'fix', 'The opensc package can be installed with the following command:
- 
+
 $ sudo dnf install opensc'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

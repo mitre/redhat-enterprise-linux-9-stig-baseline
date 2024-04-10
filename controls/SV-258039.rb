@@ -5,7 +5,7 @@ control 'SV-258039' do
 '
   desc 'check', 'Verify that RHEL 9 disables the ability to load the Bluetooth kernel module with the following command:
 
-$ sudo grep -r bluetooth /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r bluetooth /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist bluetooth
 

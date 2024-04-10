@@ -7,9 +7,9 @@ All software packages must be signed with a cryptographic key recognized and app
 Verifying the authenticity of software prior to installation validates the integrity of the software package received from a vendor. This verifies the software has not been tampered with and that it has been provided by a trusted vendor.'
   desc 'check', 'Verify that dnf always checks the GPG signature of locally installed software packages before installation:
 
-$ grep localpkg_gpgcheck /etc/dnf/dnf.conf 
+$ grep localpkg_gpgcheck /etc/dnf/dnf.conf
 
-localpkg_gpgcheck=1 
+localpkg_gpgcheck=1
 
 If "localpkg_gpgcheck" is not set to "1", or if the option is missing or commented out, ask the system administrator how the GPG signatures of local software packages are being verified.
 

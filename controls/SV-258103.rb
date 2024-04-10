@@ -9,7 +9,7 @@ Check the value for "dcredit" with the following command:
 
 $ sudo grep dcredit /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf
 
-/etc/security/pwquality.conf:dcredit = -1 
+/etc/security/pwquality.conf:dcredit = -1
 
 If the value of "dcredit" is a positive number or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity by requiring at least one numeric character be used by setting the "dcredit" option.

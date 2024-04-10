@@ -5,7 +5,7 @@ control 'SV-257800' do
 '
   desc 'check', %q(Verify the runtime status of the kernel.kptr_restrict kernel parameter with the following command:
 
-$ sysctl kernel.kptr_restrict 
+$ sysctl kernel.kptr_restrict
 
 kernel.kptr_restrict = 1
 

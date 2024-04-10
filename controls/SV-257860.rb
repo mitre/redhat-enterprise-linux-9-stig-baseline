@@ -4,7 +4,7 @@ control 'SV-257860' do
   desc 'check', %q(Verify that the "/boot" mount point has the "nodev" option is with the following command:
 
 Note: This control is not applicable to RHEL 9 system booted UEFI.
-  
+
 $ sudo mount | grep '\s/boot\s'
 
 /dev/sda1 on /boot type xfs (rw,nodev,relatime,seclabel,attr2)

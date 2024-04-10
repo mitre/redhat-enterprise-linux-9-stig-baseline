@@ -11,7 +11,7 @@ RHEL 9 functionality (e.g., SSH) must be capable of taking enforcement action if
 '
   desc 'check', 'Run the following command to determine if the firewalld package is installed with the following command:
 
-$ sudo dnf list --installed firewalld 
+$ sudo dnf list --installed firewalld
 
 Example output:
 

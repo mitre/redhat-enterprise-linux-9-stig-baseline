@@ -7,7 +7,7 @@ Offloading is a common process in information systems with limited audit storage
 '
   desc 'check', 'Verify that RHEL 9 audit system is configured to take an appropriate action when the internal event queue is full:
 
-$ sudo grep -i overflow_action /etc/audit/auditd.conf 
+$ sudo grep -i overflow_action /etc/audit/auditd.conf
 
 overflow_action = syslog
 

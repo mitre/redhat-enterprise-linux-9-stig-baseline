@@ -5,7 +5,7 @@ control 'SV-258031' do
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-$ gsettings get org.gnome.settings-daemon.plugins.media-keys logout 
+$ gsettings get org.gnome.settings-daemon.plugins.media-keys logout
 
 "['']"
 

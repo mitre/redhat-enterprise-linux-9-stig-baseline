@@ -19,7 +19,7 @@ Check that the removal action setting is locked from nonprivileged user modifica
 
 Note: The example below is using the database "local" for the system, so the path is "/etc/dconf/db/local.d". This path must be modified if a database other than "local" is being used.
 
-$ grep 'removal-action' /etc/dconf/db/local.d/locks/* 
+$ grep 'removal-action' /etc/dconf/db/local.d/locks/*
 
 /org/gnome/settings-daemon/peripherals/smartcard/removal-action
 

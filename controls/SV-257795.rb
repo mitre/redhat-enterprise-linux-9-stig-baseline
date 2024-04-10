@@ -7,11 +7,11 @@ control 'SV-257795' do
 
 $ sudo grubby --info=ALL | grep pti
 
-args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on 
+args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on
 
 If the "pti" entry does not equal "on", or is missing, this is a finding.
 
-Check that kernel page-table isolation is enabled by default to persist in kernel updates: 
+Check that kernel page-table isolation is enabled by default to persist in kernel updates:
 
 $ sudo grep pti /etc/default/grub
 

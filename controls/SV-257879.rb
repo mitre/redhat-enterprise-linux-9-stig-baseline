@@ -5,7 +5,7 @@ control 'SV-257879' do
 Selection of a cryptographic mechanism is based on the need to protect the integrity of organizational information. The strength of the mechanism is commensurate with the security category and/or classification of the information. Organizations have the flexibility to either encrypt all information on storage devices (i.e., full disk encryption) or encrypt specific data structures (e.g., files, records, or fields).
 
 '
-  desc 'check', 'Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption. 
+  desc 'check', 'Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption.
 
 Note: If there is a documented and approved reason for not having data-at-rest encryption, this requirement is Not Applicable.
 

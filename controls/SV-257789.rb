@@ -3,11 +3,11 @@ control 'SV-257789' do
   desc 'Having a nondefault grub superuser username makes password-guessing attacks less effective.'
   desc 'check', 'Verify the boot loader superuser account has been set with the following command:
 
-$ sudo grep -A1 "superusers" /etc/grub2.cfg 
+$ sudo grep -A1 "superusers" /etc/grub2.cfg
 
  set superusers="<superusers-account>"
 export superusers
- 
+
 The <superusers-account> is the actual account name different from common names like root, admin, or administrator.
 
 If superusers contains easily guessable usernames, this is a finding.'

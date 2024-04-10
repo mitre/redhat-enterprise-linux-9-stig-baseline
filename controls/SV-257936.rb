@@ -11,7 +11,7 @@ RHEL 9 functionality (e.g., RDP) must be capable of taking enforcement action if
 '
   desc 'check', 'Verify that "firewalld" is active with the following command:
 
-$ systemctl is-active firewalld 
+$ systemctl is-active firewalld
 
 active
 

@@ -7,7 +7,7 @@ Removing the "vsftpd" package decreases the risk of accidental activation.
 '
   desc 'check', 'Verify that RHEL 9 does not have a File Transfer Protocol (FTP) server package installed with the following command:
 
-$ sudo dnf list --installed | grep ftp 
+$ sudo dnf list --installed | grep ftp
 
 If the "ftp" package is installed, this is a finding.'
   desc 'fix', 'The ftp package can be removed with the following command (using vsftpd as an example):

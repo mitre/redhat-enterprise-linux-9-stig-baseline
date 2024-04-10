@@ -9,9 +9,9 @@ RHEL 9 installation media provides "rsyslogd", a system utility providing suppor
 '
   desc 'check', %q(Verify RHEL 9 uses the gtls driver to encrypt audit records offloaded onto a different system or media from the system being audited with the following command:
 
-$ sudo grep -i '$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/*.conf 
+$ sudo grep -i '$DefaultNetstreamDriver' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-/etc/rsyslog.conf:$DefaultNetstreamDriver gtls 
+/etc/rsyslog.conf:$DefaultNetstreamDriver gtls
 
 If the value of the "$DefaultNetstreamDriver" option is not set to "gtls" or the line is commented out, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to use the gtls driver to encrypt offloaded audit records by setting the following options in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf":

@@ -7,7 +7,7 @@ control 'SV-258121' do
 
 $ grep card_drivers /etc/opensc.conf
 
-card_drivers = cac; 
+card_drivers = cac;
 
 If "cac" is not listed as a card driver, or there is no line returned for "card_drivers", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to load the CAC driver.

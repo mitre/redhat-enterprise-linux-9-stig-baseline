@@ -11,7 +11,7 @@ audispd-plugins.x86_64          3.0.7-101.el9_0.2
 
 If the "audispd-plugins" package is not installed, this is a finding.'
   desc 'fix', 'The audispd-plugins package can be installed with the following command:
- 
+
 $ sudo dnf install audispd-plugins'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

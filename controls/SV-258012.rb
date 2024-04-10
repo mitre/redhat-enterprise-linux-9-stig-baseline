@@ -7,7 +7,7 @@ For U.S. Government systems, system use notifications are required only for acce
 '
   desc 'check', 'Verify RHEL 9 displays a banner before granting access to the operating system via a graphical user logon.
 
-Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable. 
+Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
 Determine if the operating system displays a banner at the logon screen with the following command:
 

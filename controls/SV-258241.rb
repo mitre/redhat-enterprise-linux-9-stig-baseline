@@ -5,7 +5,7 @@ control 'SV-258241' do
 '
   desc 'check', 'Verify that the RHEL 9 cryptography policy has been configured correctly with the following commands:
 
-$ sudo update-crypto-policies --show 
+$ sudo update-crypto-policies --show
 
 FIPS
 

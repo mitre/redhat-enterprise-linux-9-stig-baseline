@@ -3,7 +3,7 @@ control 'SV-258166' do
   desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.
 
 '
-  desc 'check', 'Verify the audit logs directory is owned by "root". 
+  desc 'check', 'Verify the audit logs directory is owned by "root".
 
 First determine where the audit logs are stored with the following command:
 

@@ -5,13 +5,13 @@ control 'SV-258027' do
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-$ gsettings get org.gnome.desktop.screensaver picture-uri 
+$ gsettings get org.gnome.desktop.screensaver picture-uri
 
 If properly configured, the output should be "''".
 
-To ensure that users cannot set the screensaver background, run the following: 
+To ensure that users cannot set the screensaver background, run the following:
 
-$ grep picture-uri /etc/dconf/db/local.d/locks/* 
+$ grep picture-uri /etc/dconf/db/local.d/locks/*
 
 If properly configured, the output should be "/org/gnome/desktop/screensaver/picture-uri".
 

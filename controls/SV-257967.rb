@@ -3,7 +3,7 @@ control 'SV-257967' do
   desc 'Some routers will send responses to broadcast frames that violate RFC-1122, which fills up a log file system with many useless error messages. An attacker may take advantage of this and attempt to flood the logs with bogus error logs. Ignoring bogus ICMP error responses reduces log size, although some activity would not be logged.'
   desc 'check', %q(The runtime status of the net.ipv4.icmp_ignore_bogus_error_responses kernel parameter can be queried by running the following command:
 
-$ sudo sysctl net.ipv4.icmp_ignore_bogus_error_responses 
+$ sudo sysctl net.ipv4.icmp_ignore_bogus_error_responses
 
 net.ipv4.icmp_ignore_bogus_error_responses = 1
 
@@ -16,7 +16,7 @@ $ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -
 net.ipv4.icmp_ignore_bogus_error_response = 1
 
 If "net.ipv4.icmp_ignore_bogus_error_response" is not set to "1" or is missing, this is a finding.)
-  desc 'fix', 'Configure RHEL 9 to not log bogus ICMP errors: 
+  desc 'fix', 'Configure RHEL 9 to not log bogus ICMP errors:
 
 Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
 

@@ -5,7 +5,7 @@ control 'SV-258128' do
 This requirement prevents attackers with physical access from trivially bypassing security on the machine and gaining root access. Such accesses are further prevented by configuring the bootloader password.'
   desc 'check', 'Verify that RHEL 9 requires authentication for emergency mode with the following command:
 
-$ grep sulogin /usr/lib/systemd/system/emergency.service 
+$ grep sulogin /usr/lib/systemd/system/emergency.service
 
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency
 

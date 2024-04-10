@@ -5,7 +5,7 @@ control 'SV-258171' do
 
 $ sudo stat -c "%a %n"  /etc/audit/rules.d/*.rules
 
-640 /etc/audit/rules.d/audit.rules 
+640 /etc/audit/rules.d/audit.rules
 
 If the files in the "/etc/audit/rules.d/" directory or the "/etc/audit/auditd.conf" file have a mode more permissive than "0640", this is a finding.'
   desc 'fix', 'Configure the files in directory "/etc/audit/rules.d/" and the "/etc/audit/auditd.conf" file to have a mode of "0640" with the following commands:

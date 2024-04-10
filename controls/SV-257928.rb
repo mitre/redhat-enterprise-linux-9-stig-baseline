@@ -7,7 +7,7 @@ The only authorized public directories are those temporary directories supplied 
 '
   desc 'check', 'Verify that world writable directories are owned by root, a system account, or an application account with the following command. It will discover and print world-writable directories that are not owned by root.  Run it once for each local partition [PART]:
 
-$ sudo find  PART  -xdev -type d -perm -0002 -uid +0 -print 
+$ sudo find  PART  -xdev -type d -perm -0002 -uid +0 -print
 
 If there is output, this is a finding.'
   desc 'fix', 'Configure all public directories to be owned by root or a system account to prevent unauthorized and unintended information transferred via shared system resources.

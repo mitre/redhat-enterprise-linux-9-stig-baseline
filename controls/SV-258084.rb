@@ -1,6 +1,6 @@
 control 'SV-258084' do
   title 'RHEL 9 must require reauthentication when using the "sudo" command.'
-  desc %q(Without reauthentication, users may access resources or perform tasks for which they do not have authorization. 
+  desc %q(Without reauthentication, users may access resources or perform tasks for which they do not have authorization.
 
 When operating systems provide the capability to escalate a functional capability, it is critical the organization requires the user to reauthenticate when using the "sudo" command.
 

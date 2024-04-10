@@ -9,7 +9,7 @@ This requirement applies to each audit data storage repository (i.e., distinct i
 
 Find the alias maps that are being used with the following command:
 
-$ postconf alias_maps 
+$ postconf alias_maps
 
 alias_maps = hash:/etc/aliases
 

@@ -5,7 +5,7 @@ control 'SV-258114' do
 Password complexity is one factor of several that determines how long it takes to crack a password. The more complex a password, the greater the number of possible combinations that need to be tested before the password is compromised.'
   desc 'check', 'Verify the value of the "maxrepeat" option in "/etc/security/pwquality.conf" with the following command:
 
-$ grep maxrepeat /etc/security/pwquality.conf 
+$ grep maxrepeat /etc/security/pwquality.conf
 
 maxrepeat = 3
 

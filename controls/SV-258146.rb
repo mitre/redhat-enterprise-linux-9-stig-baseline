@@ -15,11 +15,11 @@ x509/name - certificate validation and subject name authentication
 '
   desc 'check', %q(Verify RHEL 9 authenticates the remote logging server for offloading audit logs with the following command:
 
-$ sudo grep -i '$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf 
+$ sudo grep -i '$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
- /etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name 
+ /etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name
 
-If the value of the "$ActionSendStreamDriverAuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media. 
+If the value of the "$ActionSendStreamDriverAuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media.
 
 If there is no evidence that the transfer of the audit logs being offloaded to another system or media is encrypted, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to authenticate the remote logging server for offloading audit logs by setting the following option in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf":

@@ -7,7 +7,7 @@ Synchronizing internal information system clocks provides uniformity of time sta
 
 $ systemctl is-active chronyd
 
-active 
+active
 
 If the chronyd service is not active, this is a finding.'
   desc 'fix', 'To enable the chronyd service run the following command:

@@ -5,7 +5,7 @@ control 'SV-258220' do
 '
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/gshadow" with the following command:
 
-$ sudo auditctl -l | egrep '(/etc/gshadow)' 
+$ sudo auditctl -l | egrep '(/etc/gshadow)'
 
 -w /etc/gshadow -p wa -k identity
 

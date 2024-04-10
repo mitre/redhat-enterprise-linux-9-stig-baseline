@@ -11,7 +11,7 @@ $ sudo grubby --info=ALL | grep args | grep -v 'page_poison=1'
 
 If any output is returned, this is a finding.
 
-Check that page poisoning is enabled by default to persist in kernel updates with the following command: 
+Check that page poisoning is enabled by default to persist in kernel updates with the following command:
 
 $ sudo grep page_poison /etc/default/grub
 

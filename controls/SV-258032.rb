@@ -5,7 +5,7 @@ control 'SV-258032' do
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-$ grep logout /etc/dconf/db/local.d/locks/* 
+$ grep logout /etc/dconf/db/local.d/locks/*
 
 /org/gnome/settings-daemon/plugins/media-keys/logout
 

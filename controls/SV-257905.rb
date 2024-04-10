@@ -3,7 +3,7 @@ control 'SV-257905' do
   desc 'The "/etc/gshadow-" file is a backup of "/etc/gshadow", and as such, contains group password hashes. Protection of this file is critical for system security.'
   desc 'check', 'Verify the group ownership of the "/etc/gshadow-" file with the following command:
 
-$ sudo stat -c "%G %n" /etc/gshadow- 
+$ sudo stat -c "%G %n" /etc/gshadow-
 
 root /etc/gshadow-
 

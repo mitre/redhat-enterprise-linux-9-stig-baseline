@@ -3,9 +3,9 @@ control 'SV-258110' do
   desc 'Use of a complex password helps to increase the time and resources required to compromise the password. Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. If RHEL 9 allows the user to select passwords based on dictionary words, this increases the chances of password compromise by increasing the opportunity for successful guesses, and brute-force attacks.'
   desc 'check', 'Verify RHEL 9 prevents the use of dictionary words for passwords with the following command:
 
-$ sudo grep dictcheck /etc/security/pwquality.conf /etc/pwquality.conf.d/*.conf 
+$ sudo grep dictcheck /etc/security/pwquality.conf /etc/pwquality.conf.d/*.conf
 
-/etc/security/pwquality.conf:dictcheck=1 
+/etc/security/pwquality.conf:dictcheck=1
 
 If "dictcheck" does not have a value other than "0", or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent the use of dictionary words for passwords.

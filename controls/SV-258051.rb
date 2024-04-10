@@ -2,7 +2,7 @@ control 'SV-258051' do
   title 'All RHEL 9 local interactive users must have a home directory assigned in the /etc/passwd file.'
   desc 'If local interactive users are not assigned a valid home directory, there is no place for the storage and control of files they should own.'
   desc 'check', "Verify that interactive users on the system have a home directory assigned with the following command:
- 
+
 $ sudo awk -F: '($3>=1000)&&($7 !~ /nologin/){print $1, $3, $6}' /etc/passwd
 
 smithk:x:1000:1000:smithk:/home/smithk:/bin/bash

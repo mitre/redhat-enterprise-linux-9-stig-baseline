@@ -6,7 +6,7 @@ control 'SV-258225' do
   desc 'check', 'Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/var/log/lastlog" with the following command:
 
 $ sudo auditctl -l | grep /var/log/lastlog
- 
+
 -w /var/log/lastlog -p wa -k logins
 
 If the command does not return a line, or the line is commented out, this is a finding.'

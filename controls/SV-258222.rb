@@ -5,7 +5,7 @@ control 'SV-258222' do
 '
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/passwd" with the following command:
 
-$ sudo auditctl -l | egrep '(/etc/passwd)' 
+$ sudo auditctl -l | egrep '(/etc/passwd)'
 
 -w /etc/passwd -p wa -k identity
 

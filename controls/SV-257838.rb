@@ -14,7 +14,7 @@ openssl-pkcs.x86_64          0.4.11-7.el9
 
 If the "openssl-pkcs11" package is not installed, this is a finding.'
   desc 'fix', 'The openssl-pkcs11 package can be installed with the following command:
- 
+
 $ sudo dnf install openssl-pkcs11'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

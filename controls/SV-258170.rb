@@ -3,16 +3,16 @@ control 'SV-258170' do
   desc 'Audit data should be synchronously written to disk to ensure log integrity. This setting assures that all audit event data is written disk.'
   desc 'check', 'Verify that the audit system is configured to write logs to the disk with the following command:
 
-$ sudo grep write_logs /etc/audit/auditd.conf 
+$ sudo grep write_logs /etc/audit/auditd.conf
 
-write_logs = yes 
+write_logs = yes
 
 If "write_logs" does not have a value of "yes", the line is commented out, or the line is missing, this is a finding.'
   desc 'fix', 'Configure the audit system to write log files to the disk.
 
 Edit the /etc/audit/auditd.conf file and add or update the "write_logs" option to "yes":
 
-write_logs = yes 
+write_logs = yes
 
 The audit daemon must be restarted for changes to take effect.'
   impact 0.5

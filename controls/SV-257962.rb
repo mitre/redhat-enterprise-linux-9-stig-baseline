@@ -16,7 +16,7 @@ $ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -
 net.ipv4.conf.all.rp_filter = 1
 
 If "net.ipv4.conf.all.rp_filter" is not set to "1" or is missing, this is a finding.)
-  desc 'fix', 'Configure RHEL 9 to use reverse path filtering on all IPv4 interfaces. 
+  desc 'fix', 'Configure RHEL 9 to use reverse path filtering on all IPv4 interfaces.
 
 Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
 

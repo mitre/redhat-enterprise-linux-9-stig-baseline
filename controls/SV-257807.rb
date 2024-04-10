@@ -7,7 +7,7 @@ Failing to disconnect unused protocols can result in a system compromise.
 The Stream Control Transmission Protocol (SCTP) is a transport layer protocol, designed to support the idea of message-oriented communication, with several streams of messages within one connection. Disabling SCTP protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the sctp kernel module with the following command:
 
-$ sudo grep -r sctp /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r sctp /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist sctp
 

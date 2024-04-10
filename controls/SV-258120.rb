@@ -10,7 +10,7 @@ If the command returns any results, this is a finding."
 
 Perform a password reset:
 
-$ sudo passwd [username] 
+$ sudo passwd [username]
 
 To lock an account:
 

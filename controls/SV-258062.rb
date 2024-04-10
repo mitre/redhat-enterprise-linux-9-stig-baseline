@@ -5,7 +5,7 @@ control 'SV-258062' do
 
 Note: The example will be for a system that is configured to create user home directories in the "/home" directory.
 
-$ sudo find /home -perm -002 -type f -name ".[^.]*" -exec ls -ld {} \\; 
+$ sudo find /home -perm -002 -type f -name ".[^.]*" -exec ls -ld {} \\;
 
 If any local initialization files are found to reference world-writable files, this is a finding.'
   desc 'fix', 'Set the mode on files being executed by the local initialization files with the following command:

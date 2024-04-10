@@ -11,7 +11,7 @@ sudo.x86_64          1.9.5p2-7.el9
 
 If the "sudo" package is not installed, this is a finding.'
   desc 'fix', 'The  sudo  package can be installed with the following command:
- 
+
 $ sudo dnf install sudo'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

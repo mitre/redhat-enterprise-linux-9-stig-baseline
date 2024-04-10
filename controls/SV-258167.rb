@@ -5,7 +5,7 @@ control 'SV-258167' do
 The structure and content of error messages must be carefully considered by the organization and development team. The extent to which the information system is able to identify and handle error conditions is guided by organizational policy and operational requirements.
 
 "
-  desc 'check', 'Verify the audit logs have a mode of "0600". 
+  desc 'check', 'Verify the audit logs have a mode of "0600".
 
 First determine where the audit logs are stored with the following command:
 

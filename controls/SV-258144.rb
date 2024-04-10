@@ -8,7 +8,7 @@ Check that remote access methods are being logged by running the following comma
 $ grep -rE '(auth.\*|authpriv.\*|daemon.\*)' /etc/rsyslog.conf
 
 /etc/rsyslog.conf:authpriv.*
- 
+
 If "auth.*", "authpriv.*" or "daemon.*" are not configured to be logged, this is a finding.)
   desc 'fix', 'Add or update the following lines to the "/etc/rsyslog.conf" file:
 

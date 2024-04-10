@@ -13,7 +13,7 @@ For every existing temporary account, run the following command to obtain its ac
 
 $ sudo chage -l <temporary_account_name> | grep -i "account expires"
 
-Verify each of these accounts has an expiration date set within 72 hours. 
+Verify each of these accounts has an expiration date set within 72 hours.
 
 If any temporary accounts have no expiration date set or do not expire within 72 hours, this is a finding.'
   desc 'fix', 'Configure the operating system to expire temporary accounts after 72 hours with the following command:

@@ -5,7 +5,7 @@ control 'SV-258013' do
 For U.S. Government systems, system use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
 
 '
-  desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces. 
+  desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
@@ -19,12 +19,12 @@ Check that graphical settings are locked from nonprivileged user modification wi
 
 Note: The example below is using the database "local" for the system, so the path is "/etc/dconf/db/local.d". This path must be modified if a database other than "local" is being used.
 
-$ sudo grep banner-message-enable /etc/dconf/db/local.d/* 
+$ sudo grep banner-message-enable /etc/dconf/db/local.d/*
 
 /org/gnome/login-screen/banner-message-enable
 
 If the output is not "/org/gnome/login-screen/banner-message-enable", the line is commented out, or the line is missing, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to prevent a user from overriding the banner setting for graphical user interfaces. 
+  desc 'fix', 'Configure RHEL 9 to prevent a user from overriding the banner setting for graphical user interfaces.
 
 Create a database to contain the system-wide graphical user logon settings (if it does not already exist) with the following command:
 

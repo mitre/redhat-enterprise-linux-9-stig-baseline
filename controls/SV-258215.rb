@@ -5,7 +5,7 @@ control 'SV-258215' do
 '
   desc 'check', 'Verify that RHEL 9 generates an audit record for all uses of the "umount" and system call with the following command:
 
-$ sudo grep "umount" /etc/audit/audit.* 
+$ sudo grep "umount" /etc/audit/audit.*
 
 If the system is configured to audit this activity, it will return a line like the following:
 

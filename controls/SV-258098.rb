@@ -5,7 +5,7 @@ control 'SV-258098' do
 
 $ cat /etc/pam.d/system-auth | grep pam_pwquality
 
-password required pam_pwquality.so 
+password required pam_pwquality.so
 
 If the command does not return a line containing the value "pam_pwquality.so", or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to use "pwquality" to enforce password complexity rules.

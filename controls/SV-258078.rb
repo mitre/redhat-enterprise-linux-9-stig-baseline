@@ -25,7 +25,7 @@ If SELINUX line is missing, commented out, or not set to "enforcing", this is a 
 
 Edit the file "/etc/selinux/config" and add or modify the following line:
 
- SELINUX=enforcing 
+ SELINUX=enforcing
 
 A reboot is required for the changes to take effect.'
   impact 0.7

@@ -11,7 +11,7 @@ The system call rules are loaded into a matching engine that intercepts each sys
 '
   desc 'check', %q(Verify that RHEL 9 is configured to audit successful/unsuccessful attempts to use the "truncate", "ftruncate", "creat", "open", "openat", and "open_by_handle_at" system calls with the following command:
 
-$ sudo auditctl -l | grep 'open\|truncate\|creat' 
+$ sudo auditctl -l | grep 'open\|truncate\|creat'
 
 -a always,exit -F arch=b32 -S truncate,ftruncate,creat,open,openat,open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=unset -k perm_access
 -a always,exit -F arch=b64 -S truncate,ftruncate,creat,open,openat,open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=unset -k perm_access

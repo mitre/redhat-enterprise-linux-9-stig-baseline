@@ -3,9 +3,9 @@ control 'SV-257951' do
   desc 'If unrestricted mail relaying is permitted, unauthorized senders could use this host as a mail relay for the purpose of sending spam or other unauthorized activity.'
   desc 'check', 'Verify RHEL 9 is configured to prevent unrestricted mail relaying with the following command:
 
-$ postconf -n smtpd_client_restrictions 
+$ postconf -n smtpd_client_restrictions
 
-smtpd_client_restrictions = permit_mynetworks,reject 
+smtpd_client_restrictions = permit_mynetworks,reject
 
 If the "smtpd_client_restrictions" parameter contains any entries other than "permit_mynetworks" and "reject", and the additional entries have not been documented with the information system security officer (ISSO), this is a finding.'
   desc 'fix', "Modify the postfix configuration file to restrict client connections to the local network with the following command:

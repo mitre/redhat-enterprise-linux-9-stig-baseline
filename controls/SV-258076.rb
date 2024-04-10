@@ -8,7 +8,7 @@ $ sudo grep pam_lastlog /etc/pam.d/postlogin
 session required pam_lastlog.so showfailed
 
 If "pam_lastlog" is missing from "/etc/pam.d/postlogin" file, or the silent option is present, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to provide users with feedback on when account accesses last occurred by setting the required configuration options in "/etc/pam.d/postlogin". 
+  desc 'fix', 'Configure RHEL 9 to provide users with feedback on when account accesses last occurred by setting the required configuration options in "/etc/pam.d/postlogin".
 
 Add the following line to the top of "/etc/pam.d/postlogin":
 
