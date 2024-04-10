@@ -61,7 +61,9 @@ lifecycle:
         echo "+++ Installing needed packages for workflow and utility +++\n\n"
         sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
         echo ""
-        echo "+++ Installing pip dependencies for Ansible +++\n\n"
+        echo "+++ Installing Python 3.9 and Ansible +++\n\n"
+        export PATH=/usr/local/bin:$PATH
+        sudo dnf -y install python3-pip
         sudo python3 -m pip install ansible jmespath
         echo ""
         echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
@@ -69,7 +71,7 @@ lifecycle:
         echo ""
         echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
-        sudo dnf install git
+        sudo dnf -y install git
 
 transport:
   name: ssh
