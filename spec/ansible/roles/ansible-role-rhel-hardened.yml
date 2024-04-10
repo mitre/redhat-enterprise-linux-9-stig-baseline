@@ -10,3 +10,4 @@
   vars:
     rhel9stig_bootloader_password_hash: "changethispassword"
     system_is_ec2: true
+    rhel_09_251040: false # task is busted as of release 1.1.0
