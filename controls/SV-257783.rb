@@ -23,4 +23,10 @@ $ sudo systemctl enable --now systemd-journald'
   tag 'documentable'
   tag cci: ['CCI-001665']
   tag nist: ['SC-24']
+  tag 'host'
+
+  describe service('systemd-journald') do
+    it { should be_enabled }
+    it { should be_running }
+  end
 end
