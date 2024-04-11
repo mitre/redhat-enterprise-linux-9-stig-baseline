@@ -4,14 +4,14 @@ platforms:
 
 driver:
   name: ec2
-  # subnet_filter:
-  #   tag: 'Default'
-  #   value: '*public*'
+  subnet_id: "<%= ENV['SAF_PIPELINE_SUBNET'] %>"
+  security_group_ids:
+    - "<%= ENV['SAF_PIPELINE_SG'] %>"
   metadata_options:
     http_tokens: required
     http_put_response_hop_limit: 1
     instance_metadata_tags: enabled
-  instance_type: t2.micro
+  instance_type: t2.small
   associate_public_ip: true
   interface: public
   skip_cost_warning: true
@@ -63,9 +63,7 @@ lifecycle:
         echo ""
         echo "+++ Installing Python 3.9 and Ansible +++\n\n"
         export PATH=/usr/local/bin:$PATH
-        sudo dnf -y install python3.9
         sudo dnf -y install python3-pip
-        sudo update-alternatives --set python3 /usr/bin/python3.9
         sudo python3 -m pip install ansible jmespath
         echo ""
         echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
@@ -73,6 +71,7 @@ lifecycle:
         echo ""
         echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+        sudo dnf -y install git
 
 transport:
   name: ssh

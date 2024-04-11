@@ -12,7 +12,7 @@
       - unzip
       - wget
       - curl
-      - mailx
+      # - mailx
       #- python3-libsemanage
     state: latest
 - name: Install required packages via pip

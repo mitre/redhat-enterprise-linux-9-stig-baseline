@@ -1,6 +1,6 @@
 AllCops:
   Exclude:
-    - "libraries/**/*"
+  - "libraries/**/*"
 
 Layout/LineLength:
   Max: 1500
