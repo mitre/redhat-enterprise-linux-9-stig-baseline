@@ -5,7 +5,7 @@ control 'SV-258216' do
 '
   desc 'check', 'To determine if the system is configured to audit calls to the  umount2 system call, run the following command:
 
-$ sudo grep "umount2" /etc/audit/audit.* 
+$ sudo grep "umount2" /etc/audit/audit.*
 
 If the system is configured to audit this activity, it will return a line.
 

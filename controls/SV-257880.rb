@@ -14,7 +14,7 @@ designed for simplicity and space-efficiency.  It is mainly used in embedded
 and small-footprint systems.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the cramfs kernel module with the following command:
 
-$ sudo grep -r cramfs /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r cramfs /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist cramfs
 

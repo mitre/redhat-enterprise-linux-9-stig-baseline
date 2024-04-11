@@ -3,7 +3,7 @@ control 'SV-258118' do
   desc 'Without reauthentication, users may access resources or perform tasks for which they do not have authorization. When operating systems provide the capability to escalate a functional capability, it is critical the user reauthenticate.'
   desc 'check', 'Verify the operating system is not configured to bypass password requirements for privilege escalation with the following command:
 
-$ sudo grep pam_succeed_if /etc/pam.d/sudo 
+$ sudo grep pam_succeed_if /etc/pam.d/sudo
 
 If any occurrences of "pam_succeed_if" are returned, this is a finding.'
   desc 'fix', 'Configure the operating system to require users to supply a password for privilege escalation.

@@ -3,7 +3,7 @@ control 'SV-258221' do
   desc 'In addition to auditing new user and group accounts, these watches will alert the system administrator(s) to any modifications. Any unexpected users, groups, or modifications should be investigated for legitimacy.'
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/security/opasswd" with the following command:
 
-$ sudo auditctl -l | egrep '(/etc/security/opasswd)' 
+$ sudo auditctl -l | egrep '(/etc/security/opasswd)'
 
 -w /etc/security/opasswd -p wa -k identity
 

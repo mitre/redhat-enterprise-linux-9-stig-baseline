@@ -5,9 +5,9 @@ control 'SV-258088' do
 '
   desc 'check', 'Verify that RHEL 9 requires uses to be members of the "wheel" group with the following command:
 
-$ grep pam_wheel /etc/pam.d/su 
+$ grep pam_wheel /etc/pam.d/su
 
-auth             required        pam_wheel.so use_uid 
+auth             required        pam_wheel.so use_uid
 
 If a line for "pam_wheel.so" does not exist, or is commented out, this is a finding.'
   desc 'fix', %q(Configure RHEL 9 to require users to be in the "wheel" group to run "su" command.

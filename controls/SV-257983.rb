@@ -4,11 +4,11 @@ control 'SV-257983' do
 
 '
   desc 'check', 'Verify that RHEL 9 SSH daemon accepts public key encryption with the following command:
- 
+
 $ sudo grep -ir PubkeyAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 PubkeyAuthentication yes
- 
+
 If "PubkeyAuthentication" is set to no, the line is commented out, or the line is missing, this is a finding.'
   desc 'fix', 'To configure the system add or modify the following line in "/etc/ssh/sshd_config".
 

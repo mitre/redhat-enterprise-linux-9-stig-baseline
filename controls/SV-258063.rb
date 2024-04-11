@@ -11,7 +11,7 @@ tmux.x86_64          3.2a-4.el9
 
 If the "tmux" package is not installed, this is a finding.'
   desc 'fix', 'The tmux package can be installed with the following command:
- 
+
 $ sudo dnf install tmux'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

@@ -3,7 +3,7 @@ control 'SV-258222' do
   desc 'In addition to auditing new user and group accounts, these watches will alert the system administrator(s) to any modifications. Any unexpected users, groups, or modifications should be investigated for legitimacy.'
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/passwd" with the following command:
 
-$ sudo auditctl -l | egrep '(/etc/passwd)' 
+$ sudo auditctl -l | egrep '(/etc/passwd)'
 
 -w /etc/passwd -p wa -k identity
 

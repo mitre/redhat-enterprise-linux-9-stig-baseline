@@ -11,9 +11,9 @@ RHEL 9 incorporates system-wide crypto policies by default. The employed algorit
 
 Note: If the "bind" package is not installed, this requirement is Not Applicable.
 
-$ sudo grep include /etc/named.conf 
+$ sudo grep include /etc/named.conf
 
-include "/etc/crypto-policies/back-ends/bind.config";' 
+include "/etc/crypto-policies/back-ends/bind.config";'
 
 If BIND is installed and the BIND config file doesn't contain the  include "/etc/crypto-policies/back-ends/bind.config" directive, or the line is commented out, this is a finding.)
   desc 'fix', 'Configure BIND to use the system crypto policy.

@@ -2,9 +2,9 @@ control 'SV-258061' do
   title 'RHEL 9 groups must have unique Group ID (GID).'
   desc 'To ensure accountability and prevent unauthenticated access, groups must be identified uniquely to prevent potential misuse and compromise of the system.'
   desc 'check', 'Verify that RHEL 9 contains no duplicate GIDs for interactive users with the following command:
- 
+
  $  cut -d : -f 3 /etc/group | uniq -d
- 
+
 If the system has duplicate GIDs, this is a finding.'
   desc 'fix', 'Edit the file "/etc/group" and provide each group that has a duplicate GID with a unique GID.'
   impact 0.5

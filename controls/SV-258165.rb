@@ -1,7 +1,7 @@
 control 'SV-258165' do
   title 'RHEL 9 audit logs must be group-owned by root or by a restricted logging group to prevent unauthorized read access.'
   desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.'
-  desc 'check', 'Verify the audit logs are group-owned by "root" or a restricted logging group. 
+  desc 'check', 'Verify the audit logs are group-owned by "root" or a restricted logging group.
 
 First determine if a group other than "root" has been assigned to the audit logs with the following command:
 

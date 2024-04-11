@@ -13,7 +13,7 @@ tftp-server.x86_64          5.2-35.el9.x86_64
 
 Note: If a TFTP server is not installed, this requirement is Not Applicable.
 
-If a TFTP server is installed, check for the server arguments with the following command: 
+If a TFTP server is installed, check for the server arguments with the following command:
 
 $ systemctl cat tftp | grep ExecStart
 ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot

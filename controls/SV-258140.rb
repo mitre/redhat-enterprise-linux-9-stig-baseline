@@ -11,7 +11,7 @@ rsyslog.x86_64          8.2102.0-101.el9_0.1
 
 If the "rsyslogd" package is not installed, this is a finding.'
   desc 'fix', 'The rsyslogd package can be installed with the following command:
- 
+
 $ sudo dnf install rsyslogd'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

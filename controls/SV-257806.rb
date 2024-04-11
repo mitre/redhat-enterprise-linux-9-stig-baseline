@@ -3,7 +3,7 @@ control 'SV-257806' do
   desc 'Disabling firewire protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the firewire-core kernel module with the following command:
 
-$ sudo grep -r firewire-core /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r firewire-core /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist firewire-core
 

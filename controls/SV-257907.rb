@@ -3,7 +3,7 @@ control 'SV-257907' do
   desc 'The "/etc/passwd" file contains information about the users that are configured on the system. Protection of this file is critical for system security.'
   desc 'check', 'Verify the group ownership of the "/etc/passwd" file with the following command:
 
-$ sudo stat -c "%G %n" /etc/passwd 
+$ sudo stat -c "%G %n" /etc/passwd
 
 root /etc/passwd
 

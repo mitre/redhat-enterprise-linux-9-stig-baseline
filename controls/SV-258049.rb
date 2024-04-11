@@ -14,7 +14,7 @@ $ sudo grep -i inactive /etc/default/useradd
 INACTIVE=35
 
 If "INACTIVE" is set to "-1", a value greater than "35", or is commented out, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to disable account identifiers after 35 days of inactivity after the password expiration. 
+  desc 'fix', 'Configure RHEL 9 to disable account identifiers after 35 days of inactivity after the password expiration.
 
 Run the following command to change the configuration for useradd:
 

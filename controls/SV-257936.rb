@@ -9,7 +9,7 @@ Remote access is access to DOD nonpublic information systems by an authorized us
 RHEL 9 functionality (e.g., RDP) must be capable of taking enforcement action if the audit reveals unauthorized activity. Automated control of remote access sessions allows organizations to ensure ongoing compliance with remote access policies by enforcing connection rules of remote access applications on a variety of information system components (e.g., servers, workstations, notebook computers, smartphones, and tablets).'
   desc 'check', 'Verify that "firewalld" is active with the following command:
 
-$ systemctl is-active firewalld 
+$ systemctl is-active firewalld
 
 active
 

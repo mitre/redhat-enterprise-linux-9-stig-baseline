@@ -3,7 +3,7 @@ control 'SV-257790' do
   desc 'The "root" group is a highly privileged group. Furthermore, the group-owner of this file should not have any access privileges anyway.'
   desc 'check', 'Verify the group ownership of the "/boot/grub2/grub.cfg" file with the following command:
 
-$ sudo stat -c "%G %n" /boot/grub2/grub.cfg 
+$ sudo stat -c "%G %n" /boot/grub2/grub.cfg
 
 root /boot/grub2/grub.cfg
 

@@ -9,11 +9,11 @@ Check that the current GRUB 2 configuration enabled auditing:
 
 $ sudo grubby --info=ALL | grep audit
 
-args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on 
+args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on
 
 If "audit" is not set to "1" or is missing, this is a finding.
 
-Check that auditing is enabled by default to persist in kernel updates: 
+Check that auditing is enabled by default to persist in kernel updates:
 
 $ sudo grep audit /etc/default/grub
 

@@ -14,7 +14,7 @@ If the loaded policy name is not "targeted", this is a finding.'
 
 Edit the file "/etc/selinux/config" and add or modify the following line:
 
- SELINUXTYPE=targeted 
+ SELINUXTYPE=targeted
 
 A reboot is required for the changes to take effect.'
   impact 0.5

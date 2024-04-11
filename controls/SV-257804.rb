@@ -3,7 +3,7 @@ control 'SV-257804' do
   desc 'Disabling Asynchronous Transfer Mode (ATM) protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the ATM kernel module with the following command:
 
-$ sudo grep -r atm /etc/modprobe.conf /etc/modprobe.d/* 
+$ sudo grep -r atm /etc/modprobe.conf /etc/modprobe.d/*
 
 blacklist atm
 

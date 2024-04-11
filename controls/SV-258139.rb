@@ -5,7 +5,7 @@ control 'SV-258139' do
 Extended attributes in file systems are used to contain arbitrary data and file metadata with security implications.'
   desc 'check', 'Verify that AIDE is configured to verify extended attributes with the following command:
 
-$ grep xattrs /etc/aide.conf 
+$ grep xattrs /etc/aide.conf
 
 All= p+i+n+u+g+s+m+S+sha512+acl+xattrs+selinux
 

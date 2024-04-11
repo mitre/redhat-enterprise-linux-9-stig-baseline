@@ -11,7 +11,7 @@ FIPS 140-3 is the current standard for validating that mechanisms used to access
 
 $ sudo ls -al /etc/*.keytab
 
-ls: cannot access '/etc/*.keytab': No such file or directory 
+ls: cannot access '/etc/*.keytab': No such file or directory
 
 If this command produces any "keytab" file(s), this is a finding.)
   desc 'fix', 'Configure RHEL 9 to prevent system daemons from using Kerberos for authentication.

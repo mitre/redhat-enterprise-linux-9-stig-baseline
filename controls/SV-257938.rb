@@ -9,9 +9,9 @@ To support the requirements and principles of least functionality, the operating
 '
   desc 'check', 'Inspect the list of enabled firewall ports and verify they are configured correctly by running the following command:
 
-$ sudo firewall-cmd --list-all 
+$ sudo firewall-cmd --list-all
 
-Ask the system administrator for the site or program Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA. 
+Ask the system administrator for the site or program Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA). Verify the services allowed by the firewall match the PPSM CLSA.
 
 If there are additional ports, protocols, or services that are not in the PPSM CLSA, or there are ports, protocols, or services that are prohibited by the PPSM Category Assurance List (CAL), or there are no firewall rules configured, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to allow approved settings and/or running services to comply with the PPSM CLSA for the site or program and the PPSM CAL.

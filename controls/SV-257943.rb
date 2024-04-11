@@ -7,11 +7,11 @@ $ sudo dnf list --installed chrony
 
 Example output:
 
-chrony.x86_64          4.1-3.el9       
+chrony.x86_64          4.1-3.el9
 
 If the "chrony" package is not installed, this is a finding.'
   desc 'fix', 'The chrony package can be installed with the following command:
- 
+
 $ sudo dnf install chrony'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

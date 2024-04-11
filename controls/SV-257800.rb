@@ -3,7 +3,7 @@ control 'SV-257800' do
   desc 'Exposing kernel pointers (through procfs or "seq_printf()") exposes kernel writeable structures, which may contain functions pointers. If a write vulnerability occurs in the kernel, allowing write access to any of this structure, the kernel can be compromised. This option disallows any program without the CAP_SYSLOG capability to get the addresses of kernel pointers by replacing them with "0".'
   desc 'check', %q(Verify the runtime status of the kernel.kptr_restrict kernel parameter with the following command:
 
-$ sudo sysctl kernel.kptr_restrict 
+$ sudo sysctl kernel.kptr_restrict
 
 kernel.kptr_restrict = 1
 

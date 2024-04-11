@@ -6,7 +6,7 @@ Password complexity is one factor of several that determines how long it takes t
   desc 'check', 'Verify the value of the "minclass" option in "/etc/security/pwquality.conf" with the following command:
 
 $ grep minclass /etc/security/pwquality.conf
- 
+
 minclass = 4
 
 If the value of "minclass" is set to less than "4", or is commented out, this is a finding.'

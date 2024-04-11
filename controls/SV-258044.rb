@@ -20,7 +20,7 @@ Note: The example is for a system that is configured to create users home direct
 /home/wadea/.bash_history:grep -i umask /etc/login.defs
 
 If any local interactive user initialization files are found to have a umask statement that sets a value less restrictive than "077", this is a finding.'
-  desc 'fix', %q(Remove the umask statement from all local interactive user's initialization files. 
+  desc 'fix', %q(Remove the umask statement from all local interactive user's initialization files.
 
 If the account is for an application, the requirement for a umask less restrictive than "077" can be documented with the information system security officer, but the user agreement for access to the account must specify that the local interactive user must log on to their account first and then switch the user to the application account with the correct option to gain the account's environment variables.)
   impact 0.5

@@ -3,7 +3,7 @@ control 'SV-258045' do
   desc 'To ensure accountability and prevent unauthenticated access, interactive users must be identified and authenticated to prevent potential misuse and compromise of the system.'
   desc 'check', %q(Verify that RHEL 9 contains no duplicate UIDs for interactive users with the following command:
 
-$ sudo awk -F ":" 'list[$3]++{print $1, $3}' /etc/passwd 
+$ sudo awk -F ":" 'list[$3]++{print $1, $3}' /etc/passwd
 
 If output is produced and the accounts listed are interactive user accounts, this is a finding.)
   desc 'fix', 'Edit the file "/etc/passwd" and provide each interactive user account that has a duplicate UID with a unique UID.'

@@ -3,7 +3,7 @@ control 'SV-257911' do
   desc 'The "/etc/shadow" file stores password hashes. Protection of this file is critical for system security.'
   desc 'check', 'Verify the group ownership of the "/etc/shadow" file with the following command:
 
-$ sudo stat -c "%G %n" /etc/shadow 
+$ sudo stat -c "%G %n" /etc/shadow
 
 root /etc/shadow
 

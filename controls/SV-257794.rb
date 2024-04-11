@@ -9,11 +9,11 @@ SLAB objects are blocks of physically contiguous memory. SLUB is the unqueued SL
 
 Check that the current GRUB 2 configuration has poisoning of SLUB/SLAB objects enabled:
 
-$ sudo grubby --info=ALL | grep args | grep -v 'slub_debug=P' 
+$ sudo grubby --info=ALL | grep args | grep -v 'slub_debug=P'
 
 If any output is returned, this is a finding.
 
-Check that poisoning of SLUB/SLAB objects is enabled by default to persist in kernel updates: 
+Check that poisoning of SLUB/SLAB objects is enabled by default to persist in kernel updates:
 
 $ sudo grep slub_debug /etc/default/grub
 

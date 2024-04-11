@@ -5,7 +5,7 @@ control 'SV-258145' do
 '
   desc 'check', 'Verify RHEL 9 is configured use the audisp-remote syslog service with the following command:
 
-$ sudo grep active /etc/audit/plugins.d/syslog.conf 
+$ sudo grep active /etc/audit/plugins.d/syslog.conf
 
 active = yes
 

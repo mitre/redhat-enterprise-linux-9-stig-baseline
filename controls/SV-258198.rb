@@ -9,7 +9,7 @@ When a user logs on, the auid is set to the uid of the account being authenticat
 The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/gshadow" with the following command:
 
-$ sudo auditctl -l | egrep '(/usr/bin/passwd)' 
+$ sudo auditctl -l | egrep '(/usr/bin/passwd)'
 
 -a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=unset -k privileged-passwd
 

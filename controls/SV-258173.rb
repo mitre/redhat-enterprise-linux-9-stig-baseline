@@ -17,7 +17,7 @@ maintaining a stable boot process.  With an insufficient limit allocated, the
 system is susceptible to boot failures and crashes.'
   desc 'check', %q(Verify RHEL 9 allocates a sufficient audit_backlog_limit to capture processes that start prior to the audit daemon with the following command:
 
-$ sudo grubby --info=ALL | grep args | grep -v 'audit_backlog_limit=8192' 
+$ sudo grubby --info=ALL | grep args | grep -v 'audit_backlog_limit=8192'
 
 If the command returns any outputs, and audit_backlog_limit is less than "8192", this is a finding.)
   desc 'fix', 'Configure RHEL 9 to allocate sufficient audit_backlog_limit to capture processes that start prior to the audit daemon with the following command:

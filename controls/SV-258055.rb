@@ -11,11 +11,11 @@ even_deny_root
 
 If the "even_deny_root" option is not set, is missing or commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to lock out the "root" account after a number of incorrect login attempts using "pam_faillock.so", first enable the feature using the following command:
- 
-$ sudo authselect enable-feature with-faillock  
+
+$ sudo authselect enable-feature with-faillock
 
  Then edit the "/etc/security/faillock.conf" file as follows:
- 
+
   add or uncomment the following line:
  even_deny_root'
   impact 0.5

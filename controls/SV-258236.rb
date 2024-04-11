@@ -7,7 +7,7 @@ control 'SV-258236' do
 
 List all of the crypto backends configured on the system.
 
-$ ls -l /etc/crypto-policies/back-ends/ 
+$ ls -l /etc/crypto-policies/back-ends/
 lrwxrwxrwx. 1 root root 40 Oct  7 08:44 bind.config -> /usr/share/crypto-policies/FIPS/bind.txt
 lrwxrwxrwx. 1 root root 42 Oct  7 08:44 gnutls.config -> /usr/share/crypto-policies/FIPS/gnutls.txt
 lrwxrwxrwx. 1 root root 40 Oct  7 08:44 java.config -> /usr/share/crypto-policies/FIPS/java.txt

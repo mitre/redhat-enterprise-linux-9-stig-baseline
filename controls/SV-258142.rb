@@ -3,7 +3,7 @@ control 'SV-258142' do
   desc 'The "rsyslog" service must be running to provide logging services, which are essential to system administration.'
   desc 'check', 'Verify that "rsyslog" is active with the following command:
 
-$ systemctl is-active rsyslog 
+$ systemctl is-active rsyslog
 
 active
 

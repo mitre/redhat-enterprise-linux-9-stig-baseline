@@ -10,7 +10,7 @@ Note: If another logging package is used, substitute the utility configuration f
 $ sudo grep -s cron /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
 /etc/rsyslog.conf:*.info;mail.none;authpriv.none;cron.none                          /var/log/messages
-/etc/rsyslog.conf:cron.*                                                           /var/log/cron             
+/etc/rsyslog.conf:cron.*                                                           /var/log/cron
 
 If the command does not return a response, check for cron logging all facilities with the following command:
 

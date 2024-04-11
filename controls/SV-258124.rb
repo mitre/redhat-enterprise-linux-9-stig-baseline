@@ -11,7 +11,7 @@ pcsc-lite.x86_64          1.9.4-1.el9
 
 If the "pcsc-lite" package is not installed, this is a finding.'
   desc 'fix', 'The  pcsc-lite  package can be installed with the following command:
- 
+
 $ sudo dnf install pcsc-lite'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

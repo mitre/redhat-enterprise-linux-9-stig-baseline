@@ -5,7 +5,7 @@ control 'SV-258122' do
 
 $ sudo grep pam_cert_auth /etc/sssd/sssd.conf
 
-pam_cert_auth = True 
+pam_cert_auth = True
 
 If "pam_cert_auth" is not set to "True", the line is commented out, or the line is missing, this is a finding.'
   desc 'fix', 'Edit the file "/etc/sssd/sssd.conf" and add or edit the following line:

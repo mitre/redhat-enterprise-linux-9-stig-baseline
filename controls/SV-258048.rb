@@ -4,9 +4,9 @@ control 'SV-258048' do
   desc 'check', 'Verify that all RHEL 9 interactive users have a valid GID.
 
 Check that the interactive users have a valid GID with the following command:
- 
-$ sudo pwck -qr 
- 
+
+$ sudo pwck -qr
+
 If the system has any interactive users with duplicate GIDs, this is a finding.'
   desc 'fix', %q(Configure the system so that all GIDs are referenced in "/etc/passwd" are defined in "/etc/group".
 

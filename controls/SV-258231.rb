@@ -9,7 +9,7 @@ plainly read (i.e., clear text) and easily compromised.'
 
 $ sudo cut -d: -f2 /etc/shadow
 
-$6$kcOnRq/5$NUEYPuyL.wghQwWssXRcLRFiiru7f5JPV6GaJhNC2aK5F3PZpE/BCCtwrxRc/AInKMNX3CdMw11m9STiql12f/ 
+$6$kcOnRq/5$NUEYPuyL.wghQwWssXRcLRFiiru7f5JPV6GaJhNC2aK5F3PZpE/BCCtwrxRc/AInKMNX3CdMw11m9STiql12f/
 
 Password hashes "!" or "*" indicate inactive accounts not available for logon and are not evaluated.
 

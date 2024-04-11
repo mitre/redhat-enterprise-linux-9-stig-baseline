@@ -5,7 +5,7 @@ control 'SV-258116' do
 This setting ensures user and group account administration utilities are configured to store only encrypted representations of passwords. Additionally, the "crypt_style" configuration option ensures the use of a strong hashing algorithm that makes password cracking attacks more difficult.'
   desc 'check', 'Verify the user and group account administration utilities are configured to store only encrypted representations of passwords with the following command:
 
-# grep crypt /etc/libuser.conf 
+# grep crypt /etc/libuser.conf
 
 crypt_style = sha512
 

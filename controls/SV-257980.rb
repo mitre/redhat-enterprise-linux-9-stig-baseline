@@ -11,7 +11,7 @@ openssh-clients.x86_64          8.7p1-8.el9
 
 If the "openssh-clients" package is not installed, this is a finding.'
   desc 'fix', 'The openssh-clients package can be installed with the following command:
- 
+
 $ sudo dnf install openssh-clients'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

@@ -5,7 +5,7 @@ control 'SV-258104' do
 Setting the minimum password age protects against users cycling back to a favorite password after satisfying the password reuse requirement."
   desc 'check', 'Verify RHEL 9 enforces 24 hours as the minimum password lifetime for new user accounts.
 
-Check for the value of "PASS_MIN_DAYS" in "/etc/login.defs" with the following command: 
+Check for the value of "PASS_MIN_DAYS" in "/etc/login.defs" with the following command:
 
 $ grep -i pass_min_days /etc/login.defs
 

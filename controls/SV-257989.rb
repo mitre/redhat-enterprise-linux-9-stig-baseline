@@ -9,7 +9,7 @@ Cryptographic mechanisms used for protecting the integrity of information includ
 RHEL 9 incorporates system-wide crypto policies by default. The SSH configuration file has no effect on the ciphers, MACs, or algorithms unless specifically defined in the /etc/sysconfig/sshd file. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/opensshserver.config file.'
   desc 'check', 'Verify the SSH client is configured to use only ciphers employing FIPS 140-3 approved algorithms with the following command:
 
-$ sudo grep -i ciphers /etc/crypto-policies/back-ends/openssh.config 
+$ sudo grep -i ciphers /etc/crypto-policies/back-ends/openssh.config
 
 Ciphers aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
 

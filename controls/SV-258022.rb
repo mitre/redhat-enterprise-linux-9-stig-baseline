@@ -5,7 +5,7 @@ control 'SV-258022' do
 The session lock is implemented at the point where session activity can be determined and/or controlled.
 
 Implementing session settings will have little value if a user is able to manipulate these settings from the defaults prescribed in the other requirements of this implementation guide."
-  desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces. 
+  desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, Gnome Shell. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
@@ -26,7 +26,7 @@ $ sudo grep -i lock-enabled /etc/dconf/db/local.d/locks/*
 If the command does not return at least the example result, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent a user from overriding settings for graphical user interfaces.
 
-Create a database to contain the system-wide screensaver settings (if it does not already exist) with the following command: 
+Create a database to contain the system-wide screensaver settings (if it does not already exist) with the following command:
 
 Note: The example below is using the database "local" for the system, so if the system is using another database in "/etc/dconf/profile/user", the file should be created under the appropriate subdirectory.
 

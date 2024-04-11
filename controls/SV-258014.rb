@@ -7,7 +7,7 @@ control 'SV-258014' do
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-$ gsettings get org.gnome.desktop.media-handling automount-open 
+$ gsettings get org.gnome.desktop.media-handling automount-open
 
 false
 

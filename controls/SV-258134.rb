@@ -9,7 +9,7 @@ Example output:
 
 aide.x86_64          0.16.100.el9
 
-If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system. 
+If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system.
 
 If there is no application installed to perform integrity checks, this is a finding.
 
@@ -25,7 +25,7 @@ Install AIDE:
 $ sudo dnf install aide
 
 Initialize AIDE:
-     
+
 $ sudo /usr/sbin/aide --init
 
 Example output:
