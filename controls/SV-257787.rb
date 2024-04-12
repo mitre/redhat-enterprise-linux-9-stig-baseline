@@ -38,4 +38,36 @@ Confirm password:'
   tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
+
+  only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  grubfile = file(input('grub_conf_path'))
+  grub_userfile = file(input('grub_user_conf_path'))
+
+  describe grubfile do
+    it { should exist }
+  end
+
+  describe grub_userfile do
+    it { should exist }
+  end
+
+  if grubfile.exist? && grub_userfile.exist?
+    password_set = file(grubfile).content.lines.select { |line| line.match(/password_pbkdf2\s+\w+\s+\$\{\w+\}/) }
+
+    describe 'The GRUB bootloader superuser password' do
+      it "should be set in the GRUB config file (\'#{grubfile}\')" do
+        expect(password_set).to_not be_empty, "No bootloader superuser password set in \'#{grubfile}\'"
+      end
+
+      grub_envar = password_set.first.match(/\$\{(?<grub_pw_envar>\w+)\}/).captures.first
+      password_encrypted = file(grub_userfile).content.match(/#{grub_envar}=grub.pbkdf2/)
+      it "should be encrypted in the user config file (\'#{grub_userfile}\')" do
+        expect(password_encrypted).to eq(true), "GRUB password environment variable not set to an encrypted value in \'#{grub_userfile}\'"
+      end
+    end
+  end
 end

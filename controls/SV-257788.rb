@@ -23,4 +23,15 @@ $ sudo grubby --update-kernel=ALL --remove-args="systemd.confirm_spawn"'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  grubby = command('grubby --info=ALL').stdout
+
+  describe parse_config(grubby) do
+    its('args') { should_not include 'systemd.confirm_spawn' }
+  end
 end

@@ -296,6 +296,27 @@ inputs:
     type: Array
     value: ["/boot/efi/EFI/redhat/user.cfg"]
 
+  # SV-257787, SV-257789
+  - name: grub_conf_path
+    description: Grub config filepath
+    type: String
+    value: '/etc/grub2.cfg'
+
+  # SV-257787
+  - name: grub_user_conf_path
+    description: Grub user config filepath
+    type: String
+    value: '/boot/grub2/user.cfg'
+
+  # SV-257789
+  - name: disallowed_grub_superusers
+    description: List of default users that cannot be the default GRUB superuser
+    type: Array
+    value:
+      - root
+      - admin
+      - administrator
+
   # SV-230317, SV-230320, SV-230321, SV-230322, SV-230325, SV-230328,SV-230264, SV-230267
   - name: exempt_home_users
     description: Users exempt from home directory-based controls in array format
