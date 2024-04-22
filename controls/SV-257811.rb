@@ -37,4 +37,49 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001082']
   tag nist: ['CM-6 b', 'SC-2']
+  tag 'host'
+
+  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+    !input('network_router')
+  }
+
+  # Define the kernel parameter to be checked
+  parameter = 'kernel.yama.ptrace_scope'
+  action = 'usage of ptrace'
+  value = 1
+
+  # Get the current value of the kernel parameter
+  current_value = kernel_parameter(parameter)
+
+  # Check if the system is a Docker container
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable within a container' do
+      skip 'Control not applicable within a container'
+    end
+  else
+
+    describe kernel_parameter(parameter) do
+      it 'is disabled in sysctl -a' do
+        expect(current_value.value).to cmp value
+        expect(current_value.value).not_to be_nil
+      end
+    end
+
+    # Search for the kernel parameter in the configuration files
+    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter} | tail -1").stdout.strip
+
+    # Check the configuration files
+    describe 'Configuration files' do
+      if search_results.empty?
+        it "do not explicitly set the `#{parameter}` parameter" do
+          expect(search_results).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
+        end
+      else
+        it "set the parameter to the right value for #{action}" do
+          expect(search_results).to match(/#{parameter}\s*=\s*#{value}/)
+        end
+      end
+    end
+  end
 end

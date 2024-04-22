@@ -36,6 +36,10 @@ GRUB_CMDLINE_LINUX="page_poison=1"'
   tag nist: ['SC-3', 'CM-6 b']
   tag 'host'
 
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
   grub_stdout = command('grub2-editenv - list').stdout
   setting = /page_poison\s*=\s*1/
 
