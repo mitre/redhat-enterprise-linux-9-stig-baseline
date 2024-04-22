@@ -27,7 +27,7 @@ $ sudo chmod 0644 /etc/group'
 
   mode = input('etc_group_mode')
 
-  descibe file('/etc/group') do
+  describe file('/etc/group') do
     it { should exist }
     its('mode') { should_not be_more_permissive_than(mode) }
   end

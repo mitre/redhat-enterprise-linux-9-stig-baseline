@@ -27,7 +27,7 @@ $ sudo chmod 0644 /etc/passwd-'
 
   mode = input('etc_passwd_mode')
 
-  descibe file('/etc/passwd-') do
+  describe file('/etc/passwd-') do
     it { should exist }
     its('mode') { should_not be_more_permissive_than(mode) }
   end

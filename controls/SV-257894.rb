@@ -27,7 +27,7 @@ $ sudo chmod 0000 /etc/gshadow-'
 
   mode = input('etc_gshadow_mode')
 
-  descibe file('/etc/gshadow-') do
+  describe file('/etc/gshadow-') do
     it { should exist }
     its('mode') { should_not be_more_permissive_than(mode) }
   end
