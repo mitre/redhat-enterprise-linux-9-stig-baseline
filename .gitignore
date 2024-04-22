@@ -73,3 +73,7 @@ report.md
 *xccdf.xml
 check-results.txt
 kitchen.local.ec2.yml
+
+# local stuff
+check-out.txt
+unpopulated-tests.csv
