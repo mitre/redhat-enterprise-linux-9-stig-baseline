@@ -116,6 +116,30 @@ inputs:
     type: String
     value: "0750"
 
+  # SV-257888
+  - name: cron_dir_mode
+    description: All cron directories should have permissions equal to or less than this octet
+    type: String
+    value: "0700"
+
+  # SV-257891
+  - name: etc_group_mode
+    description: Expected mode for the /etc/group file
+    type: String
+    value: "0644"
+
+  # SV-257893
+  - name: etc_gshadow_mode
+    description: Expected mode for the /etc/gshadow file
+    type: String
+    value: "0000"
+
+  # SV-257895
+  - name: etc_passwd_mode
+    description: Expected mode for the /etc/passwd file
+    type: String
+    value: "0644"
+
   # SV-230321
   - name: initialization_file_mode
     description: All initialization files (.bash_profile etc) should have permissions equal to or less than this octet

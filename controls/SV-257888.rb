@@ -27,4 +27,16 @@ chmod 0700 [cron configuration directory]'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  cron_dirs = command('find /etc/cron* -type d').stdout.split("\n")
+  mode = input('cron_dir_mode')
+
+  non_compliant_cron_dirs = cron_dirs.select { |dir| file(dir).more_permissive_than?(mode) }
+
+  describe 'All cron directories' do
+    it "have a mode of '#{mode}' or less permissive" do
+      expect(non_compliant_cron_dirs).to be_empty, "Failing directories:\n\t- #{non_compliant_cron_dirs.join("\n\t- ")}"
+    end
+  end
 end

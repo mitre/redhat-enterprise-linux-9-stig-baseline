@@ -23,4 +23,24 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  directory = '/var'
+  parameter = 'nodev'
+
+  if file('/sys/firmware/efi').exist?
+    impact 0.0
+    describe 'System running UEFI' do
+      skip 'The System is running UEFI, this control is Not Applicable.'
+    end
+  else
+    describe mount(directory) do
+      it { should be_mounted }
+      its('options') { should include parameter }
+    end
+  end
 end

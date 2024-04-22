@@ -25,4 +25,31 @@ Ensure the "sec" option is defined as "krb5p:krb5i:krb5".'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  nfs_mounts = etc_fstab.where { filesystem_type == 'nfs' }
+
+  if nfs_mounts.empty?
+    impact 0.0
+    describe 'Not Applicable' do
+      skip 'No NFS mounts are configured; this control is Not Applicable'
+    end
+  else
+    describe 'NFS mounts' do
+      it 'should have the "sec" option defined as "krb5p:krb5i:krb5"' do
+        nfs_mounts.each do |nfs_mount|
+          expect(nfs_mount.mount_options.join).to match(/sec=\w*krb5p:krb5i:krb5\w*/)
+        end
+      end
+      it 'should not have the "sec" option defined as "sys"' do
+        nfs_mounts.each do |nfs_mount|
+          expect(nfs_mount.mount_options.join).not_to match(/sec=\w*sys\w*/)
+        end
+      end
+    end
+  end
 end
