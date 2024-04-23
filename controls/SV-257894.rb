@@ -25,10 +25,12 @@ $ sudo chmod 0000 /etc/gshadow-'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  mode = input('etc_gshadow_mode')
+  system_file = '/etc/gshadow-'
 
-  describe file('/etc/gshadow-') do
+  mode = input('expected_modes')[system_file]
+
+  describe file(system_file) do
     it { should exist }
-    its('mode') { should_not be_more_permissive_than(mode) }
+    it { should_not be_more_permissive_than(mode) }
   end
 end

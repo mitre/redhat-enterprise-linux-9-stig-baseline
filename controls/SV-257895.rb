@@ -25,10 +25,12 @@ $ sudo chmod 0644 /etc/passwd'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  mode = input('etc_passwd_mode')
+  system_file = '/etc/passwd'
 
-  describe file('/etc/passwd') do
+  mode = input('expected_modes')[system_file]
+
+  describe file(system_file) do
     it { should exist }
-    its('mode') { should_not be_more_permissive_than(mode) }
+    it { should_not be_more_permissive_than(mode) }
   end
 end

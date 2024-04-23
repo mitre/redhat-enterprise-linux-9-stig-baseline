@@ -25,10 +25,12 @@ $ sudo chmod 0644 /etc/group'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  mode = input('etc_group_mode')
+  system_file = '/etc/group'
 
-  describe file('/etc/group') do
+  mode = input('expected_modes')[system_file]
+
+  describe file(system_file) do
     it { should exist }
-    its('mode') { should_not be_more_permissive_than(mode) }
+    it { should_not be_more_permissive_than(mode) }
   end
 end

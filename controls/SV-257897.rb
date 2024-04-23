@@ -23,4 +23,14 @@ $ sudo chmod 0000 /etc/shadow-'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  system_file = '/etc/shadow-'
+
+  mode = input('expected_system_file_attributes')[system_file]['mode']
+
+  describe file(system_file) do
+    it { should exist }
+    it { should_not be_more_permissive_than(mode) }
+  end
 end
