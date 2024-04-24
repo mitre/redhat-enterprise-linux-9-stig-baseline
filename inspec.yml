@@ -116,8 +116,8 @@ inputs:
     type: String
     value: "0750"
 
-  - name: expected_system_file_attributes
-    description: Expected modes/ownership of system files and/or directories
+  - name: expected_modes
+    description: Expected modes of system files and/or directories
     type: Hash
     value:
       home_dirs: "0750"
@@ -131,8 +131,9 @@ inputs:
       /etc/shadow: "0000"
       /etc/shadow-: "0000"
       /etc/crontab: "0600"
+      /etc/ssh/sshd_config: "0600"
 
-  # SV-230321
+  # SV-230321 TODO: fold this into expected_system_file_mode
   - name: initialization_file_mode
     description: All initialization files (.bash_profile etc) should have permissions equal to or less than this octet
     type: String

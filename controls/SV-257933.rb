@@ -27,7 +27,7 @@ $ sudo chmod 0600 /etc/crontab'
 
   system_file = '/etc/crontab'
 
-  mode = input('expected_system_file_attributes')[system_file]['mode']
+  mode = input('expected_modes')[system_file]
 
   describe file(system_file) do
     it { should exist }

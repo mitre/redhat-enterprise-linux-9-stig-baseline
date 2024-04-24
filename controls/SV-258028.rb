@@ -23,4 +23,24 @@ $ sudo dconf update'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
+    impact 0.0
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    end
+  else
+
+    describe false do
+      # TODO: find a way to test that one-liner function -- force a fail for now
+      it { should eq true }
+    end
+  end
 end

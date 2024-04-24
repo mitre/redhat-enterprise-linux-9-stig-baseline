@@ -30,7 +30,7 @@ chmod 0700 [cron configuration directory]'
   tag 'host', 'container'
 
   cron_dirs = command('find /etc/cron* -type d').stdout.split("\n")
-  mode = input('cron_dir_mode')
+  mode = input('expected_modes')['cron_dirs']
 
   non_compliant_cron_dirs = cron_dirs.select { |dir| file(dir).more_permissive_than?(mode) }
 

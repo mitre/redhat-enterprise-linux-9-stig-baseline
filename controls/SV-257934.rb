@@ -27,7 +27,7 @@ $ sudo chmod 0000 /etc/shadow'
 
   system_file = '/etc/shadow'
 
-  mode = input('expected_system_file_attributes')[system_file]['mode']
+  mode = input('expected_modes')[system_file]
 
   describe file(system_file) do
     it { should exist }
