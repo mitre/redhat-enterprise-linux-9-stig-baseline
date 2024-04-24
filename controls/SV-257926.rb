@@ -31,7 +31,7 @@ $ sudo chown root [cron config file]'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  crontabs = command("stat -c \"%U %n\" /etc/cron*").stdout.split("\n")
+  crontabs = command('stat -c "%U %n" /etc/cron*').stdout.split("\n")
 
   failing_crontabs = crontabs.reject { |c| file(c.split[1]).owned_by?('root') }
 

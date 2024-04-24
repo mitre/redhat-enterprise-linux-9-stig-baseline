@@ -29,4 +29,10 @@ $ sudo systemctl reload NetworkManager'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  describe ini(command: 'NetworkManager --print-config') do
+    its('main.dns') { should exist }
+    its('main.dns') { should be_in ['none', 'default'] }
+  end
 end

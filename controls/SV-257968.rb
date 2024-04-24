@@ -47,7 +47,7 @@ $ sudo sysctl --system'
 
   # Define the kernel parameter to be checked
   parameter = 'net.ipv4.conf.all.send_redirects'
-  action = 'IPv4 redirects'
+  action = 'IPv4 sending redirects'
   value = 0
 
   # Get the current value of the kernel parameter
@@ -67,7 +67,7 @@ $ sudo sysctl --system'
   else
 
     describe kernel_parameter(parameter) do
-      it 'is disabled in sysctl -a' do
+      it 'is correctly set in the active kernel parameters' do
         expect(current_value.value).to cmp value
         expect(current_value.value).not_to be_nil
       end

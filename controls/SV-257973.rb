@@ -41,10 +41,6 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
-    !input('network_router')
-  }
-
   # Define the kernel parameter to be checked
   parameter = 'net.ipv6.conf.all.accept_source_route'
   action = 'accepting IPv6 source-routed packets'
@@ -67,7 +63,7 @@ $ sudo sysctl --system'
   else
 
     describe kernel_parameter(parameter) do
-      it 'is disabled in sysctl -a' do
+      it 'is correctly set in the active kernel parameters' do
         expect(current_value.value).to cmp value
         expect(current_value.value).not_to be_nil
       end

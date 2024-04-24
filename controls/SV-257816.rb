@@ -59,7 +59,7 @@ $ sudo sysctl --system'
   else
 
     describe kernel_parameter(parameter) do
-      it 'is disabled in sysctl -a' do
+      it 'is correctly set in the active kernel parameters' do
         expect(current_value.value).to cmp value
         expect(current_value.value).not_to be_nil
       end

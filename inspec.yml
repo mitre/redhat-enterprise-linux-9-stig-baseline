@@ -128,8 +128,9 @@ inputs:
       /etc/gshadow-: "0000"
       /etc/passwd: "0644"
       /etc/passwd-: "0644"
-      /etc/shadow: "0644"
+      /etc/shadow: "0000"
       /etc/shadow-: "0000"
+      /etc/crontab: "0600"
 
   # SV-230321
   - name: initialization_file_mode
@@ -1079,3 +1080,27 @@ inputs:
     description: The audit rules to be applied to the system
     type: Hash
     value: {}
+
+  # SV-257932
+  - name: device_file_locations
+    description: Directories where device files live
+    type: Array
+    value: 
+      - /dev
+
+  # SV-257932
+  - name: exempt_device_files
+    description: Full filepaths of files that are exempt from device file checks if the target host is a virtual machine
+    type: Array
+    value:
+      - /dev/vmci
+
+  # SV-257938
+  - name: approved_ppsm_clsa
+    description: Defines allowed ports, protocols, and services as defined in the approved site or program Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA)
+    type: Hash
+    value:
+      ports: []
+      protocols: []
+      services:
+        - ssh

@@ -31,4 +31,11 @@ $ sudo newaliases'
   tag 'documentable'
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
+  tag 'host', 'container'
+
+  options = { "assignment_regex": /^(\S+):\s*(\S+)/ }
+
+  describe parse_config_file('/etc/aliases', options) do
+    its('postmaster') { should cmp 'root' }
+  end
 end

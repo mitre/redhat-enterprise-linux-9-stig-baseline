@@ -25,4 +25,9 @@ $ sudo dnf install chrony'
   tag 'documentable'
   tag cci: ['CCI-001891']
   tag nist: ['AU-8 (1) (a)']
+  tag 'host', 'container'
+
+  describe package('chrony') do
+    it { should be_installed }
+  end
 end

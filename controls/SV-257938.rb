@@ -34,4 +34,15 @@ $ sudo firewall-cmd --permanent --add-service=service_name'
   tag 'documentable'
   tag cci: ['CCI-000382', 'CCI-002314']
   tag nist: ['CM-7 b', 'AC-17 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe firewalld do
+    its('ports.flatten') { should be_in input('approved_ppsm_clsa')['ports'] }
+    its('protocols.flatten') { should be_in input('approved_ppsm_clsa')['protocols'] }
+    its('services.flatten') { should be_in input('approved_ppsm_clsa')['services'] }
+  end
 end

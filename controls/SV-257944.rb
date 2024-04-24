@@ -25,4 +25,10 @@ $ sudo systemctl enable --now chronyd'
   tag 'documentable'
   tag cci: ['CCI-001891']
   tag nist: ['AU-8 (1) (a)']
+  tag 'host', 'container'
+
+  describe service('chronyd') do
+    it { should be_enabled }
+    it { should be_running }
+  end
 end
