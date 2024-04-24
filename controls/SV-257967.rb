@@ -38,7 +38,7 @@ $ sudo sysctl --system'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'
-  
+
   # Define the kernel parameter to be checked
   parameter = 'net.ipv4.icmp_ignore_bogus_error_response'
   action = 'IPv4 bogus error response logging'

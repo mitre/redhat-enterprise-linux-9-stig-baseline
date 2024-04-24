@@ -1104,3 +1104,11 @@ inputs:
       protocols: []
       services:
         - ssh
+
+  # SV-257989, SV-257990
+  - name: approved_openssh_server_conf
+    description: Config values expected for openssh server (order matters, so these values are comma-delimited strings and not arrays)
+    type: Hash
+    value: 
+      ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
+      macs: hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512

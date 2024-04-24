@@ -25,4 +25,13 @@ $ sudo dnf install openssh-clients'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('openssh-clients') do
+    it { should be_installed }
+  end
 end

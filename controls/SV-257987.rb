@@ -43,6 +43,9 @@ $ sudo dnf reinstall openssh-server'
       end
     end
   else
+    describe file('/etc/ssh/sshd_config.d/50-redhat.conf') do
+      it { should exist }
+    end
     describe 'The system' do
       it 'does not have a CRYPTO_POLICY setting configured' do
         expect(parse_config_file('/etc/sysconfig/sshd').params['CRYPTO_POLICY']).to be_nil, 'The CRYPTO_POLICY setting in the /etc/sysconfig/sshd should not be present. Please ensure it is commented out.'

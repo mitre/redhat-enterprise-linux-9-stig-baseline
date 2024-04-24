@@ -30,4 +30,14 @@ $ sudo systemctl restart sshd.service'
   tag 'documentable'
   tag cci: ['CCI-000765', 'CCI-000766', 'CCI-000767', 'CCI-000768']
   tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe sshd_config do
+    its('PubkeyAuthentication') { should cmp 'yes' }
+  end
 end

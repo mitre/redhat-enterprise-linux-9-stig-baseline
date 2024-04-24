@@ -32,39 +32,23 @@ A reboot is required for the changes to take effect.'
   tag 'host'
   tag 'container-conditional'
 
-  # Check if SSH is installed within containerized RHEL
-  only_if('SSH is not installed within containerized RHEL. Therefore, this requirement is not applicable.', impact: 0.0) do
+  # NOTE: At time of writing, the STIG baseline calls for two different values for the MACs option in the openssh.config file.
+  # SV-257990 calls for one set of MACs and SV-257991 calls for a mutually exclusive set.
+
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
-  end
+  }
 
-  # Define the required algorithms
-  required_algorithms = input('openssh_server_required_algorithms')
+  approved_macs = input('approved_openssh_server_conf')['macs']
 
-  # TODO: make a simple resource for this based off 'login_defs' or 'yum' as a model
+  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
-  # Parse the configuration file to get the value of "CRYPTO_POLICY"
-  crypto_policy = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config')['CRYPTO_POLICY']
+  actual_macs = opensshserver_conf['macs'].join(',')
 
-  # Parse the CRYPTO_POLICY string into a hash of configuration options
-  config_options = crypto_policy.scan(/-o(\w+)=([\w\-,@]+.)/).to_h
-
-  # Split each configuration option's values into an array
-  config_options.transform_values! { |v| v.split(',') }
-
-  # Define the path to the crypto policy file
-  crypto_policy_file = '/etc/crypto-policies/back-ends/opensshserver.config'
-
-  # Test that the crypto policy file is configured with the required algorithms
-  describe "The crypto policy file #{crypto_policy_file}" do
-    it 'is configured with the required algorithms' do
-      expect(crypto_policy).not_to be_nil, "The crypto policy file #{crypto_policy_file} \ndoes not contain the required algorithms\n\n\t#{required_algorithms}."
-    end
-  end
-
-  # Test that the MACS option in the crypto policy file contains the required algorithms in the correct order
-  describe 'The MACs option in the crypto policy file' do
-    it 'contains the required algorithms in the correct order' do
-      expect(config_options['MACS']).to eq(required_algorithms), "The MACS option in the crypto policy file does not contain the required algorithms in the *exact order*:\n\n\texpected: #{required_algorithms}\n\tgot:#{config_options['MACS']}"
+  describe 'OpenSSH server configuration' do
+    it 'implement approved MACs' do
+      expect(actual_macs).to eq(approved_macs), "OpenSSH server cipher configuration actual value:\n\t#{actual_macs}\ndoes not match the expected value:\n\t#{approved_macs}"
     end
   end
 end
