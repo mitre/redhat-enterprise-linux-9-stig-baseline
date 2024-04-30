@@ -36,7 +36,7 @@ umask 077'
 
   expected_umask = input('permissions_for_shells')[:profile_umask]
 
-  umask_check = command("grep umask #{file}").stdout.strip.match(%r{^umask\s+(?<umask>\d+)$})
+  umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 
   if umask_check.nil?
     describe "UMASK should be set in #{file}" do
@@ -44,10 +44,8 @@ umask 077'
       it { should_not be_nil }
     end
   else
-    if umask_check[:umask] == '0000' || umask_check[:umask] == '000'
-      impact 0.7
-    end
-    describe "UMASK" do
+    impact 0.7 if umask_check[:umask] == '0000' || umask_check[:umask] == '000'
+    describe 'UMASK' do
       subject { umask_check[:umask] }
       it { should cmp expected_umask }
     end

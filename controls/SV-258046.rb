@@ -47,5 +47,4 @@ Do not perform the steps in this section on the root account. Doing so will caus
       expect(non_interactive_shells).to be_empty, "Non-interactive system accounts with interactive shells:\n\t- #{non_interactive_shells.join("\n\t- ")}"
     end
   end
-
 end

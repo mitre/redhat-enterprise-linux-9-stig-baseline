@@ -21,10 +21,10 @@ If the system has duplicate GIDs, this is a finding.'
   tag nist: ['IA-2']
   tag 'host', 'container'
 
-  duplicate_gids = command("cut -d : -f 3 /etc/group | uniq -d").stdout.strip.split
+  duplicate_gids = command('cut -d : -f 3 /etc/group | uniq -d').stdout.strip.split
 
-  describe "All GIDs" do
-    it "should be unique" do
+  describe 'All GIDs' do
+    it 'should be unique' do
       expect(duplicate_gids).to be_empty, "GIDs with more than one group name:\n\t- #{duplicate_gids.join("\n\t- ")}"
     end
   end

@@ -38,6 +38,6 @@ $ sudo authselect enable-feature with-faillock
   }
 
   describe command('grep even_deny_root /etc/security/faillock.conf').stdout.strip do
-    it { should match(%r{^even_deny_root$}) }
+    it { should match(/^even_deny_root$/) }
   end
 end
