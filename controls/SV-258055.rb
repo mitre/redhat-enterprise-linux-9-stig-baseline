@@ -31,4 +31,13 @@ $ sudo authselect enable-feature with-faillock
   tag 'documentable'
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe command('grep even_deny_root /etc/security/faillock.conf').stdout.strip do
+    it { should match(%r{^even_deny_root$}) }
+  end
 end

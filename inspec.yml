@@ -353,6 +353,13 @@ inputs:
       - "/bin/sync"
       - "/bin/true"
 
+  # SV-258046
+  - name: interactive_system_account_exemptions
+    description: System accounts that are exempt from the non-interactive shell requirement
+    type: Array
+    value:
+      - root
+
   # SV-230379
   - name: user_accounts
     description: Accounts of known managed users
@@ -605,7 +612,7 @@ inputs:
     type: Numeric
     value: 900
 
-  # SV-230336, SV-230337
+  # SV-258057
   - name: lockout_time
     description: Minimum amount of time account must be locked out after failed logins. '0' indicates an account should not unlock until reset by an admin.
     type: Numeric
@@ -866,7 +873,7 @@ inputs:
     value:
       - user_u
 
-  # SV-257258
+  # SV-258068
   - name: stop_idle_session_sec
     description: Number of seconds the system can be idle before session timeout
     type: Numeric

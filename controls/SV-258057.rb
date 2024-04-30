@@ -30,4 +30,11 @@ unlock_time = 0'
   tag 'documentable'
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
+  tag 'host', 'container'
+
+  lockout_time = input('lockout_time')
+
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('unlock_time') { should cmp lockout_time }
+  end
 end

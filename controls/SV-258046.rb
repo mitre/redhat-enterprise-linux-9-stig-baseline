@@ -37,4 +37,15 @@ Do not perform the steps in this section on the root account. Doing so will caus
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  ignore_shells = input('non_interactive_shells').join('|')
+  non_interactive_shells = passwd.where { uid.to_i < 1000 && !shell.match(ignore_shells) }.users - input('interactive_system_account_exemptions')
+
+  describe 'Non-interactive system accounts' do
+    it 'should have non-interactive shells' do
+      expect(non_interactive_shells).to be_empty, "Non-interactive system accounts with interactive shells:\n\t- #{non_interactive_shells.join("\n\t- ")}"
+    end
+  end
+
 end

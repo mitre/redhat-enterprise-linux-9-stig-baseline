@@ -25,4 +25,13 @@ $ sudo dnf install sudo'
   tag 'documentable'
   tag cci: ['CCI-002235']
   tag nist: ['AC-6 (10)']
+  tag 'host'
+  
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  describe package('sudo') do
+    it { should be_installed }
+  end
 end

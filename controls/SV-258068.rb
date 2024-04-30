@@ -30,4 +30,16 @@ declare -xr TMOUT=900'
   tag 'documentable'
   tag cci: ['CCI-000057', 'CCI-001133']
   tag nist: ['AC-11 a', 'SC-10']
+  tag 'host', 'container'
+
+  stop_idle_session_sec = input('stop_idle_session_sec')
+
+  tmout_lines = command('grep -i tmout /etc/profile /etc/profile.d/*.sh').stdout.strip
+  tmout_value = tmout_lines.match(/^[^#]+TMOUT\s*=\s*(\d+)/i)
+
+  describe 'The system' do
+    it "should exit after #{stop_idle_session_sec} seconds of inactivity" do
+      expect(tmout_value.captures.first.to_i).to be <= stop_idle_session_sec
+    end
+  end
 end

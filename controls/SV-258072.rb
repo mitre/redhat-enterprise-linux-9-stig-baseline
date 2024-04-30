@@ -31,4 +31,26 @@ umask 077'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  file = '/etc/bashrc'
+
+  expected_umask = input('permissions_for_shells')[:bashrc_umask]
+
+  umask_check = command("grep umask #{file}").stdout.strip.match(%r{^umask\s+(?<umask>\d+)$})
+
+  if umask_check.nil?
+    describe "UMASK should be set in #{file}" do
+      subject { umask_check }
+      it { should_not be_nil }
+    end
+  else
+    if umask_check[:umask] == '0000' || umask_check[:umask] == '000'
+      impact 0.7
+    end
+    describe "UMASK" do
+      subject { umask_check[:umask] }
+      it { should cmp expected_umask }
+    end
+  end
 end

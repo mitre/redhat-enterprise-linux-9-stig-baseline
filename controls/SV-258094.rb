@@ -21,4 +21,16 @@ Note: Manual changes to the listed file may be overwritten by the "authselect" p
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  pam_auth_files = input('pam_auth_files')
+  file_list = pam_auth_files.values.join(' ')
+  bad_entries = command("grep -i nullok #{file_list}").stdout.lines.collect(&:squish)
+
+  describe 'The system is configureed' do
+    subject { command("grep -i nullok #{file_list}") }
+    it 'to not allow null passwords' do
+      expect(subject.stdout.strip).to be_empty, "The system is configured to allow null passwords. Please remove any instances of the `nullok` option from: \n\t- #{bad_entries.join("\n\t- ")}"
+    end
+  end
 end

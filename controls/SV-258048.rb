@@ -23,4 +23,15 @@ Edit the file "/etc/passwd" and ensure that every user's GID is a valid GID.)
   tag 'documentable'
   tag cci: ['CCI-000764']
   tag nist: ['IA-2']
+  tag 'host', 'container'
+
+  ignore_shells = input('non_interactive_shells').join('|')
+  interactive_users = passwd.where { uid.to_i >= 1000 && !shell.match(ignore_shells) }.users
+  interactive_users_without_group = interactive_users.reject { |u| group(user(u).group).exists? }
+
+  describe 'Interactive users' do
+    it 'should have a valid primary group' do
+      expect(interactive_users_without_group).to be_empty, "Interactive users without a valid primary group:\n\t- #{interactive_users_without_group.join("\n\t- ")}"
+    end
+  end
 end
