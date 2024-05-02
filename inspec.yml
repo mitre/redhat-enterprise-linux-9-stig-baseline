@@ -132,6 +132,7 @@ inputs:
       /etc/shadow-: "0000"
       /etc/crontab: "0600"
       /etc/ssh/sshd_config: "0600"
+      auditd_conf: "0640"
 
   # SV-230321 TODO: fold this into expected_system_file_mode
   - name: initialization_file_mode
@@ -181,7 +182,7 @@ inputs:
     type: Numeric
     value: 4
 
-  # SV-230363
+  # SV-258112
   - name: difok
     description: "The minimum number of required changed characters when passwords are updated."
     type: Numeric
@@ -681,6 +682,30 @@ inputs:
       - SINGLE
       - HALT
 
+  # SV-258158
+  - name: admin_space_left
+    description: The percentage of space left on the audit storage volume that will trigger the system to take action
+    type: String
+    value: "5%"
+
+  # SV-258159
+  - name: admin_space_left_action
+    description: Action the system should take when the audit storage volume is full
+    type: String
+    value: "SINGLE"
+
+  # SV-258160
+  - name: max_log_file_action
+    description: Action the system should take when the audit files have reached maximum size
+    type: String
+    value: "ROTATE"
+
+  # SV-258168
+  - name: audit_flush_threshold
+    description: Threshold at which the audit system should flush the audit logs to disk
+    type: Numeric
+    value: 100
+
   # SV-230296
   - name: permit_root_login
     description: Whether to permit direct logons to the root account using remote access via SSH
@@ -1073,7 +1098,15 @@ inputs:
       '/usr/bin/chacl'                : 'perm_mod',
       '/usr/bin/kmod'                 : 'modules',
       '/var/log/faillock'             : 'logins',
-      '/var/log/lastlog'              : 'logins'
+      '/var/log/lastlog'              : 'logins',
+      '/usr/bin/sudoedit'             : 'priv_cmd',
+      '/usr/sbin/init'                : 'privileged-init',
+      '/usr/sbin/poweroff'            : 'privileged-poweroff',
+      '/usr/sbin/reboot'              : 'privileged-reboot',
+      '/usr/sbin/shutdown'            : 'privileged-shutdown',
+      'umount2'                       : 'perm_mod',
+      '/var/log/faillock'             : 'logins',
+      '/var/log/tallylog'             : 'logins'
     }
 
   # Override values for expected keynames for all audit rules
@@ -1120,3 +1153,26 @@ inputs:
     value: 
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512
+
+  - name: password_hash_rounds
+    description: Number of rounds for hashing passwords
+    type: Numeric
+    value: 5000
+
+  # SV-258227
+  - name: expected_panic_value
+    description: Expected value for the audit.rules '-f' flag
+    type: Numeric
+    value: 2
+
+  # SV-258227
+  - name: high_availability_required
+    description: Set to true if there is a documented requirement for the target system to have high availability (and therefore cannot panic on audit failure)
+    type: Boolean
+    value: false
+
+  # SV-258232
+  - name: approved_crypto_backend
+    description: FIPS 140-2/140-3 approved cryptographic module conf file
+    type: String
+    value: /etc/crypto-policies/back-ends/libreswan.config

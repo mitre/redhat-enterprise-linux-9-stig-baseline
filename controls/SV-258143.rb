@@ -42,4 +42,21 @@ $ sudo systemctl restart rsyslog.service'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  if input('log_aggregator')
+    describe 'N/A' do
+      skip 'This control is NA because the system is a log aggregation server.'
+    end
+  else
+    modload = command('grep -i modload /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip.split
+    serverrun = command('grep -i serverrun /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip.split
+
+    describe 'Rsyslog config' do
+      it 'should not accept remote logs' do
+        expect(modload).to be_empty, "ModLoad settings found:\n\t- #{modload.join("\n\t- ")}"
+        expect(serverrun).to be_empty, "ServerRun settings found:\n\t- #{serverrun.join("\n\t- ")}"
+      end
+    end
+  end
 end

@@ -30,4 +30,20 @@ The audit daemon must be restarted for the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-000172', 'CCI-002884']
   tag nist: ['AU-12 c', 'MA-4 (1) (a)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_command = '/var/log/tallylog'
+
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.permissions.flatten).to include('w', 'a')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
+    end
+  end
 end

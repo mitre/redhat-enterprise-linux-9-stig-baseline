@@ -29,4 +29,15 @@ The audit daemon must be restarted for changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  admin_space_left_action = input('admin_space_left_action').upcase
+
+  describe auditd_conf do
+    its('admin_space_left_action.upcase') { should cmp admin_space_left_action }
+  end
 end

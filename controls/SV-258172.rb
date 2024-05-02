@@ -23,4 +23,15 @@ $ sudo chmod 0640 /etc/audit/auditd.conf'
   tag 'documentable'
   tag cci: ['CCI-000171']
   tag nist: ['AU-12 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  mode = input('expected_modes')['auditd_conf']
+
+  describe file(auditd_conf.conf_path) do
+    it { should_not be_more_permissive_than(mode) }
+  end
 end

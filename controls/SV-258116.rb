@@ -27,4 +27,9 @@ crypt_style = sha512'
   tag 'documentable'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
+
+  describe parse_config_file('/etc/libuser.conf') do
+    its('crypt_style') { should cmp 'sha512' }
+  end
 end

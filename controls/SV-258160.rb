@@ -25,4 +25,17 @@ max_log_file_action = ROTATE'
   tag 'documentable'
   tag cci: ['CCI-000140']
   tag nist: ['AU-5 b']
+  tag 'host'
+
+  # TODO: should probably make all audit conf inputs into one hash for ease of use
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  max_log_file_action = input('max_log_file_action').upcase
+
+  describe auditd_conf do
+    its('max_log_file_action.upcase') { should cmp max_log_file_action }
+  end
 end

@@ -42,4 +42,15 @@ The system must be rebooted to make the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
   tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag 'host'
+
+  crypto_policies = command('ls -l /etc/crypto-policies/back-ends/ | awk \'{ print $9 " " $11 }\'').stdout.strip
+
+  crypto_policy_hash = {}
+
+  crypto_policies.each do |crypto_policy|
+    service = crypto_policy.split(' ')[0].strip
+    path = crypto_policy.split(' ')[1].strip
+    crypto_policy_hash[service] = path
+  end
 end

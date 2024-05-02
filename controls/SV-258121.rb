@@ -28,4 +28,20 @@ card_drivers = cac;'
   tag 'documentable'
   tag cci: ['CCI-000764', 'CCI-000766', 'CCI-000767', 'CCI-000768', 'CCI-000770', 'CCI-001941', 'CCI-001942']
   tag nist: ['IA-2', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)', 'IA-2 (5)', 'IA-2 (8)', 'IA-2 (9)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('smart_card_enabled')
+    describe parse_config_file('/etc/opensc.conf') do
+      its('card_drivers') { should cmp 'cac' }
+    end
+  else
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
+    end
+  end
 end

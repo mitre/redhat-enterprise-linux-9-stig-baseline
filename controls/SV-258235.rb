@@ -26,4 +26,13 @@ $ sudo dnf reinstall crypto-policies'
   tag 'documentable'
   tag cci: ['CCI-002450']
   tag nist: ['SC-13 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe command('rpm -V crypto-policies') do
+    its('stdout') { should be_empty }
+  end
 end

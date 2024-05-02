@@ -25,4 +25,15 @@ The audit daemon must be restarted for the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-000154']
   tag nist: ['AU-6 (4)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  freq = input('audit_flush_threshold')
+
+  describe auditd_conf do
+    its('freq.to_i') { should cmp >= freq }
+  end
 end

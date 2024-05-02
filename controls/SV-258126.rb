@@ -30,4 +30,20 @@ $ sudo dnf install opensc'
   tag 'documentable'
   tag cci: ['CCI-001948', 'CCI-001953']
   tag nist: ['IA-2 (11)', 'IA-2 (12)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('smart_card_enabled')
+    describe package('opensc') do
+      it { should be_installed }
+    end
+  else
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
+    end
+  end
 end

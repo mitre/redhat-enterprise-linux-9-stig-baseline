@@ -32,4 +32,19 @@ enforce_for_root'
   tag 'documentable'
   tag cci: ['CCI-000192', 'CCI-000193', 'CCI-000194', 'CCI-000195', 'CCI-000205', 'CCI-000366', 'CCI-001619']
   tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (a)', 'IA-5 (1) (a)', 'IA-5 (1) (b)', 'IA-5 (1) (a)', 'CM-6 b', 'IA-5 (1) (a)']
+  tag 'host'
+  tag 'container'
+
+  # TODO: use this pattern on the rest of the pwquality.conf settings (current implementation for the other ones dont account for multiple conmf files)
+
+  setting = 'enforce_for_root'
+
+  setting_check = command("grep #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf").stdout.strip.match(/^:+#{setting}$/)
+
+  describe 'The root account' do
+    it 'should enforce password complexity rules' do
+      expect(setting_check).to_not be_nil, "'#{setting}' not found (or commented out) in conf file(s)"
+      expect(setting_check.length).to eq(1), "'#{setting}' set more than once in conf file(s)"
+    end
+  end
 end

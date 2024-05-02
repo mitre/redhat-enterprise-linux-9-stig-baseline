@@ -25,4 +25,21 @@ $ sudo systemctl enable --now pcscd'
   tag 'documentable'
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('smart_card_enabled')
+    describe service('pcscd') do
+      it { should be_enabled }
+      it { should be_running }
+    end
+  else
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
+    end
+  end
 end

@@ -30,4 +30,13 @@ password sufficient pam_unix.so sha512 rounds=5000')
   tag 'documentable'
   tag cci: ['CCI-000196', 'CCI-000803']
   tag nist: ['IA-5 (1) (c)', 'IA-7']
+  tag 'host'
+  tag 'container'
+
+  expected_line = 'password sufficient pam_unix.so sha512'
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') { should match_pam_rule(expected_line).any_with_integer_arg('rounds', '>=', input('password_hash_rounds')) }
+  end
 end
