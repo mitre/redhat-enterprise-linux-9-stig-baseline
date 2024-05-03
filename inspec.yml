@@ -1104,6 +1104,7 @@ inputs:
       '/usr/sbin/poweroff'            : 'privileged-poweroff',
       '/usr/sbin/reboot'              : 'privileged-reboot',
       '/usr/sbin/shutdown'            : 'privileged-shutdown',
+      '/usr/bin/umount',              : 'privileged-mount',
       'umount2'                       : 'perm_mod',
       '/var/log/faillock'             : 'logins',
       '/var/log/tallylog'             : 'logins'
