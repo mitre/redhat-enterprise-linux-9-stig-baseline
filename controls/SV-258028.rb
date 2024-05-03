@@ -38,9 +38,14 @@ $ sudo dconf update'
     end
   else
 
-    describe false do
-      # TODO: find a way to test that one-liner function -- force a fail for now
-      it { should eq true }
+    db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
+
+    failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
+
+    describe 'dconf databases' do
+      it 'should have been updated after the last corresponding keyfile edit' do
+        expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
+      end
     end
   end
 end

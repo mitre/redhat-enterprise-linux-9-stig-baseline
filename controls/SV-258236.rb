@@ -44,13 +44,31 @@ The system must be rebooted to make the changes to take effect.'
   tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
   tag 'host'
 
-  crypto_policies = command('ls -l /etc/crypto-policies/back-ends/ | awk \'{ print $9 " " $11 }\'').stdout.strip
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  crypto_policy_hash = {}
+  crypto_policies_dir = '/etc/crypto-policies/back-ends'
+  expected_link_path_dir = '/usr/share/crypto-policies/FIPS'
+
+  crypto_policies = command("ls -l #{crypto_policies_dir} | awk \'{ print $9 }\'").stdout.strip.split("\n")
+
+  failing_crypto_policies = {}
 
   crypto_policies.each do |crypto_policy|
-    service = crypto_policy.split(' ')[0].strip
-    path = crypto_policy.split(' ')[1].strip
-    crypto_policy_hash[service] = path
+    service = "#{crypto_policies_dir}/#{crypto_policy}"
+    link_path = file(service).link_path
+
+    if link_path.nil?
+      failing_crypto_policies[service] = 'No link path found'
+    elsif !link_path.match?(/^#{expected_link_path_dir}/)
+      failing_crypto_policies[service] = link_path
+    end
+  end
+
+  describe 'Crypto policies' do
+    it 'should link to the correct libriries' do
+      expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
+    end
   end
 end

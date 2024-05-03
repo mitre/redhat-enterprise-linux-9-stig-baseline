@@ -84,7 +84,7 @@ SV-258016,Implemented
 SV-258017,Implemented
 SV-258020,Implemented
 SV-258027,Implemented
-SV-258028,Not Implemented
+SV-258028,Implemented
 SV-258029,Implemented
 SV-258030,Implemented
 SV-258031,Implemented
@@ -136,12 +136,12 @@ SV-258224,Implemented
 SV-258226,Implemented
 SV-258227,Implemented
 SV-258232,Implemented
-SV-258234,Not Implemented
-SV-258235,Not Implemented
-SV-258236,Not Implemented
-SV-258237,Not Implemented
-SV-258241,Not Implemented
-SV-258242,Not Implemented
+SV-258234,Implemented
+SV-258235,Implemented
+SV-258236,Implemented
+SV-258237,Implemented
+SV-258241,Implemented
+SV-258242,Implemented
 SV-257777,Implemented (Carried Over From RHEL8 Profile)
 SV-257778,Implemented (Carried Over From RHEL8 Profile)
 SV-257779,Implemented (Carried Over From RHEL8 Profile)

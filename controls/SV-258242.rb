@@ -34,4 +34,23 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   tag 'documentable'
   tag cci: ['CCI-002418', 'CCI-002422']
   tag nist: ['SC-8', 'SC-8 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe file('/etc/named.conf') do
+    it { should exist }
+  end
+
+  bind_grep = command('grep include /etc/named.conf').stdout.lines.map(&:strip)
+
+  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config$}i) }
+
+  describe 'Bind config file' do
+    it 'should include system-wide crypto policies' do
+      expect(bind_conf).to eq(true), 'Bind conf files do not include /etc/crypto-policies/back-ends/bind.config'
+    end
+  end
 end
