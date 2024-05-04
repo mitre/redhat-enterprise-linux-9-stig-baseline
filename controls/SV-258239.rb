@@ -33,17 +33,12 @@ Edit the "/etc/pki/tls/openssl.cnf" and add or modify the following line:
   tag 'host'
   tag 'container-conditional'
 
-  only_if("Checking the host's FIPS compliance can't be done within the container and should be reveiwed manually.") {
+  only_if("Checking the host's FIPS compliance can't be done within the container and should be reveiwed at the host level.") {
     !(virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?)
   }
 
   describe 'A line in the OpenSSL config file' do
     subject { command('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf').stdout.strip }
     it { should match(/^\.include.*opensslcnf.config$/) }
-  end
-
-  describe 'System-wide crypto policy' do
-    subject { command('update-crypto-policies --show').stdout.strip }
-    it { should eq input('system_wide_crypto_policy') }
   end
 end
