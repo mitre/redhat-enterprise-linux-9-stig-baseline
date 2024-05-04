@@ -31,9 +31,9 @@ Ensure the "sec" option is defined as "krb5p:krb5i:krb5".'
     !virtualization.system.eql?('docker')
   }
 
-  nfs_mounts = etc_fstab.where { filesystem_type == 'nfs' }
+  nfs_mounts = etc_fstab.where { file_system_type == 'nfs' }
 
-  if nfs_mounts.empty?
+  if nfs_mounts.entries.empty?
     impact 0.0
     describe 'Not Applicable' do
       skip 'No NFS mounts are configured; this control is Not Applicable'
