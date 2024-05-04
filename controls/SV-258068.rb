@@ -38,8 +38,13 @@ declare -xr TMOUT=900'
   tmout_value = tmout_lines.match(/^[^#]+TMOUT\s*=\s*(\d+)/i)
 
   describe 'The system' do
-    it "should exit after #{stop_idle_session_sec} seconds of inactivity" do
-      expect(tmout_value.captures.first.to_i).to be <= stop_idle_session_sec
+    it 'should set a TMOUT value' do
+      expect(tmout_value).to_not be_nil, 'No TMOUT value set in /etc/profile or /etc/profile.d/*.sh'
+    end
+    unless tmout_value.nil?
+      it "should exit after #{stop_idle_session_sec} seconds of inactivity" do
+        expect(tmout_value.captures.first.to_i).to be <= stop_idle_session_sec
+      end
     end
   end
 end

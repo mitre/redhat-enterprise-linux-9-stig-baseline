@@ -47,7 +47,7 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
         expect(EOMS_DATE).not_to be_nil, "Release '#{release}' has no specified support window"
       end
     else
-      it "is still within the support window" do
+      it 'is still within the support window' do
         expect(Date.today).to be <= Date.parse(EOMS_DATE)
       end
     end

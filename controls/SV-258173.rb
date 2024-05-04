@@ -39,7 +39,7 @@ $ sudo grubby --update-kernel=ALL --args=audit_backlog_limit=8192'
     !virtualization.system.eql?('docker')
   end
 
-  expected_audit_backlog_limit = input('expected_audit_backlog_limit') 
+  expected_audit_backlog_limit = input('expected_audit_backlog_limit')
 
   grubby = command('grubby --info=ALL').stdout
 
@@ -47,12 +47,12 @@ $ sudo grubby --update-kernel=ALL --args=audit_backlog_limit=8192'
 
   describe 'Audit backlog limit' do
     it 'should be set' do
-      expect(arg_match).not_to be_nil, "Setting for audit_backlog_limit not found in grubby output"
+      expect(arg_match).not_to be_nil, 'Setting for audit_backlog_limit not found in grubby output'
     end
-    if !arg_match.nil?
+    unless arg_match.nil?
       it "should be at least #{expected_audit_backlog_limit}" do
         expect(arg_match[:actual_audit_backlog_limit].to_i).to be >= expected_audit_backlog_limit
-      end 
+      end
     end
   end
 end
