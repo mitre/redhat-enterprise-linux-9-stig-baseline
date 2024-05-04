@@ -35,24 +35,24 @@ $ sudo grubby --update-kernel=ALL --args=audit_backlog_limit=8192'
   tag nist: ['AU-4', 'AU-14 (1)']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
+  only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
     !virtualization.system.eql?('docker')
-  }
-
-  grub_config = command('grub2-editenv - list').stdout
-  kernelopts = parse_config(grub_config)['kernelopts'].strip.gsub(' ', "\n")
-  grub_cmdline_linux = parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX'].strip.gsub(' ', "\n").gsub('"',
-                                                                                                               '')
-
-  expected_backlog_limit = input('expected_backlog_limit')
-
-  describe 'kernelopts' do
-    subject { parse_config(kernelopts) }
-    its('audit_backlog_limit') { should cmp >= expected_backlog_limit }
   end
 
-  describe 'persistant kernelopts' do
-    subject { parse_config(grub_cmdline_linux) }
-    its('audit_backlog_limit') { should cmp >= expected_backlog_limit }
+  expected_audit_backlog_limit = input('expected_audit_backlog_limit') 
+
+  grubby = command('grubby --info=ALL').stdout
+
+  arg_match = parse_config(grubby)['args'].match(/audit_backlog_limit\s*=\s*(?<actual_audit_backlog_limit>\d+)/)
+
+  describe 'Audit backlog limit' do
+    it 'should be set' do
+      expect(arg_match).not_to be_nil, "Setting for audit_backlog_limit not found in grubby output"
+    end
+    if !arg_match.nil?
+      it "should be at least #{expected_audit_backlog_limit}" do
+        expect(arg_match[:actual_audit_backlog_limit].to_i).to be >= expected_audit_backlog_limit
+      end 
+    end
   end
 end

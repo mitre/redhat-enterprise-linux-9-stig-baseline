@@ -1177,3 +1177,9 @@ inputs:
     description: FIPS 140-2/140-3 approved cryptographic module conf file
     type: String
     value: /etc/crypto-policies/back-ends/libreswan.config
+
+  # SV-258173
+  - name: expected_audit_backlog_limit
+    description: Expected value for the audit backlog limit
+    type: Numeric
+    value: 8192
