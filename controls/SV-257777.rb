@@ -37,12 +37,19 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   EOMS_DATE = {
     /^9\.0/ => '31 May 2024',
     /^9\.1/ => 'April 1, 2023',
-    /^9\.2/ => 'May 31, 2025'
+    /^9\.2/ => 'May 31, 2025',
+    /^9\.4/ => 'May 31, 2026'
   }.find { |k, _v| k.match(release) }&.last
 
-  describe "The release \"#{release}\" is still within the support window" do
-    it "ending on #{EOMS_DATE}" do
-      expect(Date.today).to be <= Date.parse(EOMS_DATE)
+  describe "The release \"#{release}\"" do
+    if EOMS_DATE.nil?
+      it 'is a supported release' do
+        expect(EOMS_DATE).not_to be_nil, "Release '#{release}' has no specified support window"
+      end
+    else
+      it "is still within the support window" do
+        expect(Date.today).to be <= Date.parse(EOMS_DATE)
+      end
     end
   end
 end
