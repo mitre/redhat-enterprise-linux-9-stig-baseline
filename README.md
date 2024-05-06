@@ -1,9 +1,9 @@
 # (WIP) RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile
 
-The Redhat Enterprise Linux 9.X Security Technical Implementation Guide (RHEL8.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 7.x System to Department of Defense (DoD) requirements.
+The Redhat Enterprise Linux 9.X Security Technical Implementation Guide (RHEL9.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 9.x System to Department of Defense (DoD) requirements.
 
-- Profile Version: `0.0.1` (WIP)
-- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r1
+- Profile Version: `1.2.0`
+- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r2
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.
 
@@ -38,11 +38,13 @@ The RHEL9.x STIG profile checks were developed to provide technical implementati
 
 ### Source Guidance
 
-- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r1
+- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r2
 
 ### Current Profile Statistics
 
 The profile will be tested on every commit and every release against both `vanilla` and `hardened` ubi and ec2 images using a CI/CD pipeline. The `vanilla` images are unmodified base images sourced from Red Hat itself. The `hardened` images have had their settings configured for security according to STIG guidance. Testing both vanilla and hardened configurations of both containerized and virtual machine implementations of RHEL9 is necessary to ensure the profile works in multiple environments.
+
+Further pipelines may be employed to test different hardening content sources (e.g., Ansible code sourced directly from DISA or Red Hat).
 
 # Getting Started and Intended Usage
 
@@ -56,7 +58,7 @@ The profile will be tested on every commit and every release against both `vanil
 
 ## Intended Usage - `main` vs `releases`
 
-1. The latest `released` version of the profile is intended for use in A&A testing, formal results to AO's and IAM's etc. Please use the `released` versions of the profile in these types of workflows.
+1. The latest `released` version of the profile is intended for use in A&A testing, as well as providing formal results to Authorizing Officials and IAMs. Please use the `released` versions of the profile in these types of workflows.
 
 2. The `main` branch is a development branch that will become the next release of the profile. The `main` branch is intended for use in _developement and testing_ merge requests for the next release of the profile, and _is not intended_ be used for formal and ongoing testing on systems.
 
