@@ -49,7 +49,7 @@ $ sudo sysctl --system'
     its('value') { should eq kernel_expected_value }
   end
 
-  k_conf_files = input('kernel_config_files')
+  k_conf_files = input('sysctl_conf_files')
 
   # make sure the setting is set somewhere
   k_conf = command("grep -r #{kernel_setting} #{k_conf_files.join(' ')}").stdout.split("\n")
@@ -60,7 +60,7 @@ $ sudo sysctl --system'
   describe 'Kernel config files' do
     it "should set '#{kernel_setting}' on startup" do
       expect(k_conf).to_not be_empty, "Setting not found in any of the following config files:\n\t- #{k_conf_files.join("\n\t- ")}"
-      expect(failing_k_conf).to be_empty, "Incorrect or conflicting settings found:\n\t- #{failing_k_conf.join("\n\t- ")}" if k_conf.nil?
+      expect(failing_k_conf).to be_empty, "Incorrect or conflicting settings found:\n\t- #{failing_k_conf.join("\n\t- ")}" unless k_conf.empty?
     end
   end
 end

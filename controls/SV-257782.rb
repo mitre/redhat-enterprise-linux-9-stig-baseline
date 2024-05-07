@@ -38,7 +38,7 @@ $ sudo systemctl enable --now rngd'
   if input('use_fips') == true
     impact 0.0
     describe 'N/A' do
-      skip "For RHEL 9 running with kernel FIPS mode enabled, this requirement is Not Applicable."
+      skip 'For RHEL 9 running with kernel FIPS mode enabled, this requirement is Not Applicable.'
     end
   else
     describe service('rngd') do
