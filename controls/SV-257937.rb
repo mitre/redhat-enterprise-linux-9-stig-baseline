@@ -50,45 +50,25 @@ $ sudo firewall-cmd --reload'
   tag fix_id: 'F-61602r925797_fix'
   tag cci: ['CCI-001764', 'CCI-000366']
   tag nist: ['CM-7 (2)', 'CM-6 b']
+  tag 'host'
 
-  #TODO?
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
 
-  # Check if the system is a Docker container or not using Fapolicyd
-  if virtualization.system.eql?('docker') || !input('use_fapolicyd')
-    impact 0.0
-    describe 'Control not applicable' do
-      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable' unless input('use_fapolicyd')
-      skip 'Control not applicable within a container' if virtualization.system.eql?('docker')
-    end
-  else
-    # Parse the fapolicyd configuration file
-    fapolicyd_config = parse_config_file('/etc/fapolicyd/fapolicyd.conf')
+  describe service('firewalld') do
+    it { should be_running }
+  end
 
-    describe 'Fapolicyd configuration' do
-      it 'permissive should not be commented out' do
-        expect(fapolicyd_config.content).to match(/^permissive\s*=\s*0$/), 'permissive is commented out in the fapolicyd.conf file'
-      end
-      it 'should have permissive set to 0' do
-        expect(fapolicyd_config.params['permissive']).to cmp '0'
-      end
-    end
+  describe firewalld do
+    its('zone') { should_not be_empty }
+  end
 
-    # Determine the rules file based on the OS release
-    rules_file = os.release.to_f < 8.4 ? '/etc/fapolicyd/fapolicyd.rules' : '/etc/fapolicyd/compiled.rules'
+  failing_zones = firewalld.zone.reject { |fz| firewalld.zone(fz).target == 'DROP' }
 
-    # Check if the rules file exists
-    describe file(rules_file) do
-      it { should exist }
-    end
-
-    # If the rules file exists, check the last rule
-    if file(rules_file).exist?
-      rules = file(rules_file).content.strip.split("\n")
-      last_rule = rules.last
-
-      describe 'Last rule in the rules file' do
-        it { expect(last_rule).to cmp 'deny perm=any all : all' }
-      end
+  describe 'All firewall zones' do
+    it 'should be configured to drop all incoming network packets unless explicitly accepted' do
+      expect(failing_zones).to be_empty, "Failing zones:\n\t- #{failing_zones.join("\n\t- ")}"
     end
   end
 end
