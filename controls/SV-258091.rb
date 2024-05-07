@@ -34,11 +34,10 @@ password required pam_pwquality.so retry=3'
   tag cci: ['CCI-000366', 'CCI-000192']
   tag nist: ['CM-6 b', 'IA-5 (1) (a)']
   tag 'host'
-  tag 'container'
 
-  only_if('This requirement only applies to RHEL 8 versions above 8.4', impact: 0.0) {
-    os.release.to_f >= 8.4
-  }
+  only_if('This control is Not Applicable for containers', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
 
   describe 'System pwquality setting' do
     subject { parse_config(command('grep -rh retry /etc/security/pwquality.conf*').stdout.strip) }
