@@ -33,61 +33,28 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b', 'SC-2', 'SI-16']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
-    !input('network_router')
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
   }
 
-  # Define the kernel parameter to be checked
-  parameter = 'kernel.kptr_restrict'
-  action = 'kernel pointer addresses'
-  value = 1
+  action = 'kernel.kptr_restrict'
 
-  # Get the current value of the kernel parameter
-  current_value = kernel_parameter(parameter)
+  describe kernel_parameter(action) do
+    its('value') { should eq 1 }
+  end
 
-  # Check if the system is a Docker container
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  search_result = command("grep -r ^#{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+
+  correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
+  incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{action}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
-  else
-
-    describe kernel_parameter(parameter) do
-      it 'is correctly set in the active kernel parameters' do
-        expect(current_value.value).to cmp value
-        expect(current_value.value).not_to be_nil
-      end
-    end
-
-    # Get the list of sysctl configuration files
-    sysctl_config_files = input('sysctl_conf_files').map(&:strip).join(' ')
-
-    # Search for the kernel parameter in the configuration files
-    search_results = command("grep -r #{parameter} #{sysctl_config_files} {} \;").stdout.split("\n")
-
-    # Parse the search results into a hash
-    config_values = search_results.each_with_object({}) do |item, results|
-      file, setting = item.split(':')
-      results[file] ||= []
-      results[file] << setting.split('=').last
-    end
-
-    uniq_config_values = config_values.values.flatten.map(&:strip).map(&:to_i).uniq
-
-    # Check the configuration files
-    describe 'Configuration files' do
-      if search_results.empty?
-        it "do not explicitly set the `#{parameter}` parameter" do
-          expect(config_values).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
-        end
-      else
-        it "do not have conflicting settings for #{action}" do
-          expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
-        end
-        it "set the parameter to the right value for #{action}" do
-          expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
-        end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end
     end
   end
