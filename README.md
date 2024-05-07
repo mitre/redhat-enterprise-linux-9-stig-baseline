@@ -1,4 +1,4 @@
-# (WIP) RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile
+# RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile
 
 The Redhat Enterprise Linux 9.X Security Technical Implementation Guide (RHEL9.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 9.x System to Department of Defense (DoD) requirements.
 
@@ -60,7 +60,7 @@ Further pipelines may be employed to test different hardening content sources (e
 
 1. The latest `released` version of the profile is intended for use in A&A testing, as well as providing formal results to Authorizing Officials and IAMs. Please use the `released` versions of the profile in these types of workflows.
 
-2. The `main` branch is a development branch that will become the next release of the profile. The `main` branch is intended for use in _developement and testing_ merge requests for the next release of the profile, and _is not intended_ be used for formal and ongoing testing on systems.
+2. The `main` branch is a development branch that will become the next release of the profile. The `main` branch is intended for use in _developing and testing_ merge requests for the next release of the profile, and _is not intended_ be used for formal and ongoing testing on systems.
 
 ## Environment Aware Testing
 

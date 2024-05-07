@@ -2,6 +2,9 @@ name: Lint & Check the Profile
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   validate:
@@ -32,10 +35,6 @@ jobs:
 
       - name: Confirm git commit SHA output
         run: echo ${{ env.COMMIT_SHORT_SHA }}
-
-      - name: Get commit message
-        id: commit
-        run: echo "::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
