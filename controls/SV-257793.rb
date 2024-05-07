@@ -40,12 +40,12 @@ GRUB_CMDLINE_LINUX="page_poison=1"'
     !virtualization.system.eql?('docker')
   }
 
-  grub_stdout = command('grub2-editenv - list').stdout
+  grub_stdout = command('grubby --info=ALL').stdout
   setting = /page_poison\s*=\s*1/
 
   describe 'GRUB config' do
     it 'should enable page poisoning' do
-      expect(parse_config(grub_stdout)['kernelopts']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
       expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
     end
   end

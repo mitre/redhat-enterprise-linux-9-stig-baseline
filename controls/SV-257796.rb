@@ -44,13 +44,13 @@ GRUB_CMDLINE_LINUX="audit=1"'
     !virtualization.system.eql?('docker')
   }
 
-  grub_config = command('grub2-editenv - list').stdout
+  grub_stdout = command('grubby --info=ALL').stdout
+  setting = /audit\s*=\s*1/
 
-  describe parse_config(grub_config) do
-    its('kernelopts') { should match(/audit=1/) }
-  end
-
-  describe parse_config_file('/etc/default/grub') do
-    its('GRUB_CMDLINE_LINUX') { should match(/audit=1/) }
+  describe 'GRUB config' do
+    it 'should enable page poisoning' do
+      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
+    end
   end
 end

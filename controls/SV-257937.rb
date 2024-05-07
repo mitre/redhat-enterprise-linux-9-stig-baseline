@@ -51,6 +51,8 @@ $ sudo firewall-cmd --reload'
   tag cci: ['CCI-001764', 'CCI-000366']
   tag nist: ['CM-7 (2)', 'CM-6 b']
 
+  #TODO?
+
   # Check if the system is a Docker container or not using Fapolicyd
   if virtualization.system.eql?('docker') || !input('use_fapolicyd')
     impact 0.0
