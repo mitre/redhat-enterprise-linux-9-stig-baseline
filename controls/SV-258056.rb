@@ -31,10 +31,6 @@ fail_interval = 900'
   tag 'host'
   tag 'container'
 
-  only_if('This check applies to RHEL versions 8.2 or newer, if the system is RHEL version 8.0 or 8.1, this check is not applicable.', impact: 0.0) {
-    (os.release.to_f) >= 8.2
-  }
-
   describe parse_config_file(input('security_faillock_conf')) do
     its('fail_interval') { should cmp >= input('fail_interval') }
   end

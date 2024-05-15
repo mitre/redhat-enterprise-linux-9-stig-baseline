@@ -27,10 +27,6 @@ deny = 3'
   tag 'host'
   tag 'container'
 
-  only_if('This check applies to RHEL version 8.2 and later. If the system is not RHEL version 8.2 or newer, this check is Not Applicable.', impact: 0.0) {
-    (os.release.to_f) >= 8.2
-  }
-
   describe parse_config_file('/etc/security/faillock.conf') do
     its('deny') { should cmp <= input('unsuccessful_attempts') }
     its('deny') { should_not cmp 0 }
