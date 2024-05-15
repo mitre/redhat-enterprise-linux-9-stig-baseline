@@ -34,10 +34,31 @@ $ sudo sysctl --system'
   tag nist: ['SI-16', 'CM-6 b']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
+  only_if('Control not applicable within a container', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  describe kernel_parameter('kernel.randomize_va_space') do
-    its('value') { should eq 2 }
+
+  parameter = 'kernel.randomize_va_space'
+  value = 2
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).select { |line| !line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
   end
 end

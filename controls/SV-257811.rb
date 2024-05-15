@@ -39,46 +39,30 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b', 'SC-2']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
-    !input('network_router')
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
   }
 
-  # Define the kernel parameter to be checked
   parameter = 'kernel.yama.ptrace_scope'
-  action = 'usage of ptrace'
   value = 1
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
-  # Get the current value of the kernel parameter
-  current_value = kernel_parameter(parameter)
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
 
-  # Check if the system is a Docker container
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).select { |line| !line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
-  else
-
-    describe kernel_parameter(parameter) do
-      it 'is correctly set in the active kernel parameters' do
-        expect(current_value.value).to cmp value
-        expect(current_value.value).not_to be_nil
-      end
-    end
-
-    # Search for the kernel parameter in the configuration files
-    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter} | tail -1").stdout.strip
-
-    # Check the configuration files
-    describe 'Configuration files' do
-      if search_results.empty?
-        it "do not explicitly set the `#{parameter}` parameter" do
-          expect(search_results).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
-        end
-      else
-        it "set the parameter to the right value for #{action}" do
-          expect(search_results).to match(/#{parameter}\s*=\s*#{value}/)
-        end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end
     end
   end

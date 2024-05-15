@@ -49,19 +49,21 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  action = 'kernel.dmesg_restrict'
+  parameter = 'kernel.dmesg_restrict'
+  value = 1
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
-  describe kernel_parameter(action) do
-    its('value') { should eq 1 }
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
   end
 
-  search_result = command("grep -r ^#{action} #{input('sysctl_conf_files').join(' ')}").stdout.strip
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
 
-  correct_result = search_result.lines.any? { |line| line.match(/#{action}\s*=\s*1$/) }
-  incorrect_results = search_result.lines.map(&:strip).select { |line| line.match(/#{action}\s*=\s*[^1]$/) }
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).select { |line| !line.match(regexp) }
 
   describe 'Kernel config files' do
-    it "should configure '#{action}'" do
+    it "should configure '#{parameter}'" do
       expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
     unless incorrect_results.nil?

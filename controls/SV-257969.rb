@@ -44,62 +44,33 @@ $ sudo sysctl --system'
   only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
     !input('network_router')
   }
-
-  # Define the kernel parameter to be checked
-  parameter = 'net.ipv4.conf.default.send_redirects'
-  action = 'Default IPv4 packet redirects for interfaces'
-  value = 0
-
-  # Get the current value of the kernel parameter
-  current_value = kernel_parameter(parameter)
-
-  # Check if the system is a Docker container
-  if virtualization.system.eql?('docker')
+  if input('send_redirects')
     impact 0.0
-    describe 'Control not applicable within a container' do
-      skip 'Control not applicable within a container'
-    end
-  elsif input('ipv4_enabled') == false
-    impact 0.0
-    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
-      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
   else
 
+    parameter = 'net.ipv4.conf.default.send_redirects'
+    value = 0
+    regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
     describe kernel_parameter(parameter) do
-      it 'is correctly set in the active kernel parameters' do
-        expect(current_value.value).to cmp value
-        expect(current_value.value).not_to be_nil
+      its('value') { should eq value }
+    end
+
+    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+    correct_result = search_results.any? { |line| line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).select { |line| !line.match(regexp) }
+
+    describe 'Kernel config files' do
+      it "should configure '#{parameter}'" do
+        expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
       end
-    end
-
-    # Get the list of sysctl configuration files
-    sysctl_config_files = input('sysctl_conf_files').map(&:strip).join(' ')
-
-    # Search for the kernel parameter in the configuration files
-    search_results = command("grep -r #{parameter} #{sysctl_config_files} {} \;").stdout.split("\n")
-
-    # Parse the search results into a hash
-    config_values = search_results.each_with_object({}) do |item, results|
-      file, setting = item.split(':')
-      results[file] ||= []
-      results[file] << setting.split('=').last
-    end
-
-    uniq_config_values = config_values.values.flatten.map(&:strip).map(&:to_i).uniq
-
-    # Check the configuration files
-    describe 'Configuration files' do
-      if search_results.empty?
-        it "do not explicitly set the `#{parameter}` parameter" do
-          expect(config_values).not_to be_empty, "Add the line `#{parameter}=#{value}` to a file in the `/etc/sysctl.d/` directory"
-        end
-      else
-        it "do not have conflicting settings for #{action}" do
-          expect(uniq_config_values.count).to eq(1), "Expected one unique configuration, but got #{config_values}"
-        end
-        it "set the parameter to the right value for #{action}" do
-          expect(config_values.values.flatten.all? { |v| v.to_i.eql?(value) }).to be true
+      unless incorrect_results.nil?
+        it 'should not have incorrect or conflicting setting(s) in the config files' do
+          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
         end
       end
     end

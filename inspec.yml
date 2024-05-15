@@ -1171,3 +1171,15 @@ inputs:
     description: Expected value for the audit backlog limit
     type: Numeric
     value: 8192
+
+  # SV-257969
+  - name: send_redirects
+    description: Set to true if there is a requirement for this system to be able to send redirects that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257970
+  - name: forwarding
+    description: Set to true if there is a requirement for this system to be able forward packets that is documented with the ISSO
+    type: Boolean
+    value: false
