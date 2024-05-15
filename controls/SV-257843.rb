@@ -21,7 +21,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
+  only_if('This requirement is Not Applicable inside a container, the container's host manages the container's filesystems') {
     !virtualization.system.eql?('docker')
   }
 
