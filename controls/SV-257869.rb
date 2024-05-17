@@ -29,8 +29,8 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
     !virtualization.system.eql?('docker')
   }
 
-  directory = '/var'
-  parameter = 'nodev'
+  path = '/var'
+  option = 'nodev'
 
   if mount_option_enabled
     describe mount(path) do
