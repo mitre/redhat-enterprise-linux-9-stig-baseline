@@ -51,7 +51,7 @@ $ sudo systemctl mask --now kdump'
 
   describe service('kdump') do
     it { should_not be_running }
-    its('LoadState') { should cmp 'masked' }
-    its('UnitFileState') { should cmp 'masked' }
+    its('params.LoadState') { should cmp 'masked' }
+    its('params.UnitFileState') { should cmp 'masked' }
   end
 end
