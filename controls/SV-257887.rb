@@ -39,7 +39,7 @@ Replace "[audit_tool]" with each audit tool that has a more permissive mode than
     !virtualization.system.eql?('docker')
   }
 
-  audit_tools = ['/sbin/auditctl', '/sbin/aureport', '/sbin/ausearch', '/sbin/autrace', '/sbin/auditd', '/sbin/rsyslogd', '/sbin/augenrules']
+  audit_tools = input('audit_tools')
 
   failing_tools = audit_tools.select { |at| file(at).more_permissive_than?(input('audit_tool_mode')) }
 

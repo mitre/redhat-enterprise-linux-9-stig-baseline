@@ -33,7 +33,7 @@ $ sudo chmod 0750 /home/wadea)
   }
 
   exempt_home_users = input('exempt_home_users')
-  expected_mode = input('home_dir_mode')
+  expected_mode = input('expected_modes')['home_dirs']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 

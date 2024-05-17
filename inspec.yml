@@ -735,8 +735,22 @@ inputs:
       - /sbin
       - /usr/bin
       - /usr/sbin
+      - /usr/libexec
       - /usr/local/bin
       - /usr/local/sbin
+
+  # SV-257887
+  - name: audit_tools
+    description: Paths to tools related to audit function
+    tpye: Array
+    value:
+      - /sbin/auditctl
+      - /sbin/aureport
+      - /sbin/ausearch
+      - /sbin/autrace
+      - /sbin/auditd
+      - /sbin/rsyslogd
+      - /sbin/augenrules
 
   #SV-251709
   - name: required_system_accounts

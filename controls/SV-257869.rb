@@ -32,15 +32,21 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
   directory = '/var'
   parameter = 'nodev'
 
-  if file('/sys/firmware/efi').exist?
-    impact 0.0
-    describe 'System running UEFI' do
-      skip 'The System is running UEFI, this control is Not Applicable.'
+  if mount_option_enabled
+    describe mount(path) do
+      its('options') { should include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should include option }
     end
   else
-    describe mount(directory) do
-      it { should be_mounted }
-      its('options') { should include parameter }
+    describe mount(path) do
+      its('options') { should_not include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should_not include option }
     end
   end
 end

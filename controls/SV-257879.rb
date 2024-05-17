@@ -32,6 +32,10 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   tag nist: ['SC-28', 'SC-28 (1)']
   tag 'host'
 
+  only_if('This control is Not Applicable to containers (disk encryption and data-at-rest implementation is handled on the host)', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
   all_args = command('blkid').stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
 
   def describe_and_skip(message)
@@ -41,11 +45,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   end
 
   # TODO: This should really have a resource
-
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe_and_skip('Disk Encryption and Data At Rest Implementation is handled on the Container Host')
-  elsif input('data_at_rest_exempt') == true
+  if input('data_at_rest_exempt') == true
     impact 0.0
     describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.')
   elsif all_args.empty?
