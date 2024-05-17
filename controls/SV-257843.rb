@@ -21,7 +21,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This requirement is Not Applicable inside a container, the container's host manages the container's filesystems') {
+  only_if('This requirement is Not Applicable inside a container; the host manages the container filesystem') {
     !virtualization.system.eql?('docker')
   }
 
@@ -29,9 +29,9 @@ If a separate entry for "/home" is not in use, this is a finding.'
   homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
   root_device = etc_fstab.where { mount_point == '/' }.device_name
 
-  if input('seperate_filesystem_exempt')
+  if input('separate_filesystem_exempt')
     impact 0.0
-    describe 'This system is not required to have sperate filesystems for each mount point' do
+    describe 'This system is not required to have separate filesystems for each mount point' do
       skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'
     end
   else
