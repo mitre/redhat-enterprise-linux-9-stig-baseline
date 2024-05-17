@@ -31,6 +31,7 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
 
   path = '/var'
   option = 'nodev'
+  mount_option_enabled = input('mount_tmp_options')[option]
 
   if mount_option_enabled
     describe mount(path) do
