@@ -45,12 +45,13 @@ $ sudo systemctl mask --now kdump'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('Control not applicable within a container', impact: 0.0) {
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
-  describe service('rngd') do
-    it { should be_enabled }
-    it { should be_running }
+  describe service('kdump') do
+    it { should_not be_running }
+    its('LoadState') { should cmp 'masked' }
+    its('UnitFileState') { should cmp 'masked' }
   end
 end

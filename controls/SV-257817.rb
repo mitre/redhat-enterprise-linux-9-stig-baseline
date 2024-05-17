@@ -29,23 +29,11 @@ $ sudo grubby --update-kernel=ALL --remove-args=noexec'
     !virtualization.system.eql?('docker')
   }
 
-  options = {
-    assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
-  }
+  dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout.match(/:\s+(\S+)$/).captures.first
 
-  dmesg_nx_conf = command('dmesg | grep NX').stdout.match(/:\s+(\S+)$/).captures.first
-  cpuinfo_flags = parse_config_file('/proc/cpuinfo', options).flags.split
-
-  describe.one do
-    describe 'The no-execution bit flag' do
-      it 'should be set in kernel messages' do
-        expect(dmesg_nx_conf).to eq('active'), "dmesg does not show NX protection set to 'active'"
-      end
-    end
-    describe 'The no-execution bit flag' do
-      it 'should be set in CPU info' do
-        expect(cpuinfo_flags).to include('nx'), "'nx' flag not set in /proc/cpuinfo flags"
-      end
+  describe 'The no-execution bit flag' do
+    it 'should be set in kernel messages' do
+      expect(dmesg_nx_conf).to eq('active'), "dmesg does not show NX protection set to 'active'"
     end
   end
 end

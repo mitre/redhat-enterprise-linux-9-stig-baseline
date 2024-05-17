@@ -201,7 +201,7 @@ inputs:
     value: 60
 
   # SV-230328
-  - name: seperate_filesystem_exempt
+  - name: separate_filesystem_exempt
     description: "The system manages file system useage, LVM/XFS etc. or is managed by the service provider"
     type: Boolean
     value: false
@@ -813,7 +813,7 @@ inputs:
 
   # SV-230511, SV-230512, SV-230513
   - name: mount_tmp_options
-    description: rhel_08_04012[3-5] - RHEL 8 must mount /tmp with the (nodev|nosuid|noexec) option.
+    description: rhel_08_04012[3-5] - RHEL 9 must mount /tmp with the (nodev|nosuid|noexec) option.
     type: Hash
     value:
       nodev: false

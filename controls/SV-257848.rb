@@ -25,6 +25,10 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
     !virtualization.system.eql?('docker')
   }
 
+  describe mount('/var/tmp') do
+    it { should be_mounted }
+  end
+
   describe etc_fstab.where { mount_point == '/var/tmp' } do
     it { should exist }
   end

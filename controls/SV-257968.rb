@@ -41,8 +41,6 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  CAVEAT
-
   only_if('Control not applicable within a container', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
@@ -65,7 +63,7 @@ $ sudo sysctl --system'
     search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
 
     correct_result = search_results.any? { |line| line.match(regexp) }
-    incorrect_results = search_results.map(&:strip).select { |line| !line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
 
     describe 'Kernel config files' do
       it "should configure '#{parameter}'" do
