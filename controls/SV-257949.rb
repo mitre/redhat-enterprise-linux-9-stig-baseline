@@ -31,8 +31,18 @@ $ sudo systemctl reload NetworkManager'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  describe ini(command: 'NetworkManager --print-config') do
-    its('main.dns') { should exist }
-    its('main.dns') { should be_in ['none', 'default'] }
+  network_manager = command('NetworkManager --print-config')
+
+  if network_manager.stdout == '' && !network_manager.stderr.empty?
+    describe 'NetworkManager' do
+      it 'should be installed' do
+        expect(network_manager.stdout).not_to be_empty, 'NetworkManager not found on system'
+      end
+    end
+  else
+    describe ini(network_manager) do
+      its('main.dns') { should exist }
+      its('main.dns') { should be_in ['none', 'default'] }
+    end
   end
 end
