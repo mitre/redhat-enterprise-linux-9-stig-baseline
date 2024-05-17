@@ -106,7 +106,7 @@ inputs:
 
   # SV-230472
   - name: audit_tool_mode
-    description: All audit config files on the filesystem should be equal or less permissive than this octet
+    description: All audit config tools on the filesystem should be equal or less permissive than this octet
     type: String
     value: '0755'
 
