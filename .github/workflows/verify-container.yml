@@ -109,4 +109,4 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.2
         with:
-          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ubi9_${{ matrix.suite }}.threshold.yml"
