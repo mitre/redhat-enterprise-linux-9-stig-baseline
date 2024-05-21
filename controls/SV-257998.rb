@@ -23,4 +23,15 @@ $ sudo chown root /etc/ssh/sshd_config'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe file('/etc/ssh/sshd_config') do
+    it { should exist }
+    it { should be_owned_by 'root' }
+  end
 end

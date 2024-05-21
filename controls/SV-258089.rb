@@ -8,9 +8,7 @@ User home directories/folders may contain information of a sensitive nature. Non
 
 RHEL 9 ships with many optional packages. One such package is a file access policy daemon called "fapolicyd". "fapolicyd" is a userspace daemon that determines access rights to files based on attributes of the process and file. It can be used to either blocklist or allowlist processes or file access.
 
-Proceed with caution with enforcing the use of this daemon. Improper configuration may render the system nonfunctional. The "fapolicyd" API is not namespace aware and can cause issues when launching or running containers.
-
-'
+Proceed with caution with enforcing the use of this daemon. Improper configuration may render the system nonfunctional. The "fapolicyd" API is not namespace aware and can cause issues when launching or running containers.'
   desc 'check', 'Verify that RHEL 9 fapolicyd package is installed with the following command:
 
 $ sudo dnf list --installed fapolicyd
@@ -25,15 +23,29 @@ If the "fapolicyd" package is not installed, this is a finding.'
 $ sudo dnf install fapolicyd'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61830r926252_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000370-GPOS-00155'
+  tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-258089'
   tag rid: 'SV-258089r926254_rule'
   tag stig_id: 'RHEL-09-433010'
-  tag gtitle: 'SRG-OS-000370-GPOS-00155'
   tag fix_id: 'F-61754r926253_fix'
-  tag satisfies: ['SRG-OS-000370-GPOS-00155', 'SRG-OS-000368-GPOS-00154']
-  tag 'documentable'
   tag cci: ['CCI-001764', 'CCI-001774']
   tag nist: ['CM-7 (2)', 'CM-7 (5) (b)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if !input('use_fapolicyd')
+    impact 0.0
+    describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
+    end
+  else
+    describe package('fapolicyd') do
+      it { should be_installed }
+    end
+  end
 end

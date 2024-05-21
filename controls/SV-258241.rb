@@ -34,4 +34,13 @@ Reboot the system for the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
   tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe command('update-crypto-policies --show') do
+    its('stdout') { should match(/FIPS/) }
+  end
 end

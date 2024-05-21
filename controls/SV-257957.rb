@@ -11,7 +11,7 @@ Determine if syncookies are used with the following command:
 
 Check the status of the kernel.perf_event_paranoid kernel parameter.
 
-$ sysctl net.ipv4.tcp_syncookies
+$ sudo sysctl net.ipv4.tcp_syncookies
 
 net.ipv4.tcp_syncookies = 1
 
@@ -32,10 +32,10 @@ Load settings from all system configuration files with the following command:
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61698r925856_chk'
+  tag check_id: 'C-61698r942982_chk'
   tag severity: 'medium'
   tag gid: 'V-257957'
-  tag rid: 'SV-257957r925858_rule'
+  tag rid: 'SV-257957r942983_rule'
   tag stig_id: 'RHEL-09-253010'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61622r925857_fix'
@@ -43,4 +43,33 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001095', 'CCI-002385']
   tag nist: ['CM-6 b', 'SC-5 (2)', 'SC-5 a']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  parameter = 'net.ipv4.tcp_syncookies'
+  value = 1
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
+  end
 end

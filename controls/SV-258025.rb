@@ -28,14 +28,31 @@ Update the system databases:
 $ sudo dconf update'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61766r926060_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000029-GPOS-00010'
+  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258025'
   tag rid: 'SV-258025r926062_rule'
   tag stig_id: 'RHEL-09-271075'
-  tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag fix_id: 'F-61690r926061_fix'
-  tag 'documentable'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
+    impact 0.0
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    end
+  else
+    describe command('gsettings get org.gnome.desktop.screensaver lock-delay') do
+      its('stdout.strip') { should match(/uint32\s[0-5]/) }
+    end
+  end
 end

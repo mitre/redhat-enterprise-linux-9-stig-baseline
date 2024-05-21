@@ -11,14 +11,28 @@ If the "/var/log" file system is mounted without the "nosuid" option, this is a 
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/var/log" directory.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61613r925601_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257872'
   tag rid: 'SV-257872r925603_rule'
   tag stig_id: 'RHEL-09-231155'
-  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61537r925602_fix'
-  tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var/log'
+  option = 'nosuid'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
+  end
 end

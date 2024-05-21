@@ -1,6 +1,7 @@
 control 'SV-258074' do
   title 'RHEL 9 must define default permissions for all authenticated users in such a way that the user can only read and modify their own files.'
-  desc 'Setting the most restrictive default permissions ensures that when new accounts are created, they do not have unnecessary access.'
+  desc 'Setting the most restrictive default permissions ensures that when new
+accounts are created, they do not have unnecessary access.'
   desc 'check', 'Verify RHEL 9 defines default permissions for all authenticated users in such a way that the user can only read and modify their own files with the following command:
 
 Note: If the value of the "UMASK" parameter is set to "000" in "/etc/login.defs" file, the Severity is raised to a CAT I.
@@ -17,14 +18,20 @@ Add or edit the lines for the "UMASK" parameter in the "/etc/login.defs" file to
 UMASK 077'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61815r926207_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag gid: 'V-258074'
   tag rid: 'SV-258074r926209_rule'
   tag stig_id: 'RHEL-09-412065'
-  tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag fix_id: 'F-61739r926208_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  permissions_for_shells = input('permissions_for_shells')
+
+  describe login_defs do
+    its('UMASK') { should cmp permissions_for_shells['default_umask'] }
+  end
 end

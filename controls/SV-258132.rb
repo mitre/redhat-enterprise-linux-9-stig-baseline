@@ -23,14 +23,22 @@ The "sssd" service must be restarted for the changes to take effect. To restart 
 $ sudo systemctl restart sssd.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61873r926381_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000068-GPOS-00036'
   tag gid: 'V-258132'
   tag rid: 'SV-258132r926383_rule'
   tag stig_id: 'RHEL-09-631015'
-  tag gtitle: 'SRG-OS-000068-GPOS-00036'
   tag fix_id: 'F-61797r926382_fix'
-  tag 'documentable'
   tag cci: ['CCI-000187']
-  tag nist: ['IA-5 (2) (a) (2)']
+  tag nist: ['IA-5 (2) (c)', 'IA-5 (2) (a) (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe file('/etc/sssd/sssd.conf') do
+    it { should exist }
+    its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
+  end
 end

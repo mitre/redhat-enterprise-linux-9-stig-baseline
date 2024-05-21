@@ -30,4 +30,23 @@ A reboot is required for the changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
+  }
+
+  approved_macs = input('approved_openssh_server_conf')['macs']
+
+  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+
+  actual_macs = opensshserver_conf['macs'].join(',')
+
+  describe 'OpenSSH server configuration' do
+    it 'implement approved MACs' do
+      expect(actual_macs).to eq(approved_macs), "OpenSSH server cipher configuration actual value:\n\t#{actual_macs}\ndoes not match the expected value:\n\t#{approved_macs}"
+    end
+  end
 end

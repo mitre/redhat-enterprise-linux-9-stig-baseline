@@ -11,14 +11,28 @@ If the /dev/shm file system is mounted without the "noexec" option, this is a fi
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/dev/shm" file system.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61605r925577_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257864'
   tag rid: 'SV-257864r925579_rule'
   tag stig_id: 'RHEL-09-231115'
-  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61529r925578_fix'
-  tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/dev/shm'
+  option = 'noexec'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
+  end
 end

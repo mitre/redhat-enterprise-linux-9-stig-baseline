@@ -17,14 +17,24 @@ Add or modify the following line in the "/etc/login.defs" file:
 PASS_MAX_DAYS 60'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61782r926108_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258041'
   tag rid: 'SV-258041r926110_rule'
   tag stig_id: 'RHEL-09-411010'
-  tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag fix_id: 'F-61706r926109_fix'
-  tag 'documentable'
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
+
+  value = input('pass_max_days')
+  setting = input_object('pass_max_days').name.upcase
+
+  describe "/etc/login.defs does not have `#{setting}` configured" do
+    let(:config) { login_defs.read_params[setting] }
+    it "greater than #{value} day" do
+      expect(config).to cmp <= value
+    end
+  end
 end

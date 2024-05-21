@@ -2,9 +2,7 @@ control 'SV-258019' do
   title 'RHEL 9 must be able to initiate directly a session lock for all connection types using smart card when the smart card is removed.'
   desc 'A session lock is a temporary action taken when a user stops work and moves away from the immediate physical vicinity of the information system but does not want to log out because of the temporary nature of the absence.
 
-The session lock is implemented at the point where session activity can be determined. Rather than be forced to wait for a period of time to expire before the user session can be locked, RHEL 9 needs to provide users with the ability to manually invoke a session lock so users can secure their session if it is necessary to temporarily vacate the immediate physical vicinity.
-
-'
+The session lock is implemented at the point where session activity can be determined. Rather than be forced to wait for a period of time to expire before the user session can be locked, RHEL 9 needs to provide users with the ability to manually invoke a session lock so users can secure their session if it is necessary to temporarily vacate the immediate physical vicinity.'
   desc 'check', %q(Verify RHEL 9 enables a user's session lock until that user re-establishes access using established identification and authentication procedures with the following command:
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -32,15 +30,43 @@ Then update the dconf system databases:
 $ sudo dconf update)
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61760r926042_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000028-GPOS-00009'
+  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258019'
   tag rid: 'SV-258019r926044_rule'
   tag stig_id: 'RHEL-09-271045'
-  tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag fix_id: 'F-61684r926043_fix'
-  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
-  tag 'documentable'
   tag cci: ['CCI-000056', 'CCI-000058']
   tag nist: ['AC-11 b', 'AC-11 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if !input('smart_card_enabled')
+    impact 0.0
+    describe "The system is not smartcard enabled thus this control is Not
+    Applicable" do
+      skip "The system is not using Smartcards / PIVs to fulfil the MFA
+      requirement, this control is Not Applicable."
+    end
+  elsif !package('gnome-desktop3').installed?
+    impact 0.0
+    describe 'The system does not have GNOME installed' do
+      skip "The system does not have GNOME installed, this requirement is Not
+      Applicable."
+    end
+  else
+
+    # we're going to do this with grep to avoid doing really complicated tree parsing logic
+    dconf = command('grep -R removal-action /etc/dconf/db/*').stdout.strip
+
+    describe 'The dconf database' do
+      it 'should be set to initate a session lock when a smartcard is removed' do
+        expect(dconf).to match(/removal-action\s*=\s*['"]lock-screen['"]/), 'lock-screen setting not found'
+      end
+    end
+  end
 end

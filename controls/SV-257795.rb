@@ -1,8 +1,6 @@
 control 'SV-257795' do
   title 'RHEL 9 must enable mitigations against processor-based vulnerabilities.'
-  desc 'Kernel page-table isolation is a kernel feature that mitigates the Meltdown security vulnerability and hardens the kernel against attempts to bypass kernel address space layout randomization (KASLR).
-
-'
+  desc 'Kernel page-table isolation is a kernel feature that mitigates the Meltdown security vulnerability and hardens the kernel against attempts to bypass kernel address space layout randomization (KASLR).'
   desc 'check', 'Verify RHEL 9 enables kernel page-table isolation with the following command:
 
 $ sudo grubby --info=ALL | grep pti
@@ -27,15 +25,27 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 GRUB_CMDLINE_LINUX="pti=on"'
   impact 0.3
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61536r925370_chk'
   tag severity: 'low'
+  tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-257795'
   tag rid: 'SV-257795r925372_rule'
   tag stig_id: 'RHEL-09-212050'
-  tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag fix_id: 'F-61460r925371_fix'
-  tag satisfies: ['SRG-OS-000433-GPOS-00193', 'SRG-OS-000095-GPOS-00049']
-  tag 'documentable'
   tag cci: ['CCI-000381', 'CCI-002824']
   tag nist: ['CM-7 a', 'SI-16']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  grub_stdout = command('grubby --info=ALL').stdout
+  setting = /pti\s*=\s*on/
+
+  describe 'GRUB config' do
+    it 'should enable page poisoning' do
+      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
+    end
+  end
 end

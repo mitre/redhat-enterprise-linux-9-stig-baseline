@@ -19,14 +19,20 @@ Edit/modify the following line in the "/etc/pam.d/password-auth" file to include
 password sufficient pam_unix.so sha512'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61974r926684_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258233'
   tag rid: 'SV-258233r926686_rule'
   tag stig_id: 'RHEL-09-671025'
-  tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag fix_id: 'F-61898r926685_fix'
-  tag 'documentable'
-  tag cci: ['CCI-000196']
-  tag nist: ['IA-5 (1) (c)']
+  tag cci: ['CCI-000803', 'CCI-000196']
+  tag nist: ['IA-7', 'IA-5 (1) (c)']
+  tag 'host'
+  tag 'container'
+
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['system-auth']) do
+    its('lines') { should match_pam_rule('password sufficient pam_unix.so sha512') }
+  end
 end

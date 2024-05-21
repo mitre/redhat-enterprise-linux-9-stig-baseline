@@ -8,11 +8,9 @@ This requirement applies to RHEL 9 with software libraries that are accessible a
 $ sudo find /lib /lib64 /usr/lib /usr/lib64 ! -user root -type d -exec stat -c "%n %U" '{}' \;
 
 If any system-wide shared library directory is not owned by root, this is a finding.)
-  desc 'fix', 'Configure the system-wide shared library directories within (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access.
+  desc 'fix', 'Configure the system-wide shared library directories within (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access. Run the following command, replacing "[DIRECTORY]" with any library directory not owned by "root".
 
-Run the following command, replacing "[DIRECTORY]" with any library directory not owned by "root".
-
-$ sudo chown root [DIRECTORY]'
+              $ sudo chown root [DIRECTORY]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61663r925751_chk'
@@ -25,4 +23,15 @@ $ sudo chown root [DIRECTORY]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
+
+  non_root_owned_libs = input('system_libraries').reject { |lib| file(lib).owned_by?('root') }
+
+  describe 'System libraries' do
+    it 'should be owned by root' do
+      fail_msg = "Libs not owned by root:\n\t- #{non_root_owned_libs.join("\n\t- ")}"
+      expect(non_root_owned_libs).to be_empty, fail_msg
+    end
+  end
 end

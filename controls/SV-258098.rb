@@ -25,4 +25,14 @@ password required pam_pwquality.so'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  pam_auth_files = input('pam_auth_files')
+
+  [pam_auth_files['password-auth'], pam_auth_files['system-auth']].each do |path|
+    describe pam(path) do
+      its('lines') { should match_pam_rule('.* .* pam_pwquality.so') }
+    end
+  end
 end

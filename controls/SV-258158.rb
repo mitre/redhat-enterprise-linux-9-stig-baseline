@@ -23,4 +23,15 @@ admin_space_left  = 5%'
   tag 'documentable'
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  admin_space_left = input('admin_space_left')
+
+  describe auditd_conf do
+    its('admin_space_left') { should cmp admin_space_left }
+  end
 end

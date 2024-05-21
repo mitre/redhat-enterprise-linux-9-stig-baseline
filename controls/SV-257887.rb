@@ -25,14 +25,27 @@ $ sudo chmod 0755 [audit_tool]
 Replace "[audit_tool]" with each audit tool that has a more permissive mode than 0755.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61628r925646_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag gid: 'V-257887'
   tag rid: 'SV-257887r925648_rule'
   tag stig_id: 'RHEL-09-232035'
-  tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag fix_id: 'F-61552r925647_fix'
-  tag 'documentable'
   tag cci: ['CCI-001493']
-  tag nist: ['AU-9 a']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = input('audit_tools')
+
+  failing_tools = audit_tools.select { |at| file(at).more_permissive_than?(input('audit_tool_mode')) }
+
+  describe 'Audit executables' do
+    it "should be no more permissive than '#{input('audit_tool_mode')}'" do
+      expect(failing_tools).to be_empty, "Failing tools:\n\t- #{failing_tools.join("\n\t- ")}"
+    end
+  end
 end

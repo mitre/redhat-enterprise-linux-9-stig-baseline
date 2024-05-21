@@ -8,21 +8,31 @@ This requirement applies to RHEL 9 with software libraries that are accessible a
 $ sudo find -L /lib /lib64 /usr/lib /usr/lib64 ! -user root -exec ls -l {} \\;
 
 If any system-wide shared library file is not owned by root, this is a finding.'
-  desc 'fix', 'Configure the system-wide shared library files (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access.
+  desc 'fix', 'Configure the system-wide shared library files (/lib, /lib64, /usr/lib and
+/usr/lib64) to be protected from unauthorized access.
 
-Run the following command, replacing "[FILE]" with any library file not owned by "root".
+    Run the following command, replacing "[FILE]" with any library file not
+owned by "root".
 
-$ sudo chown root [FILE]'
+    $ sudo chown root [FILE]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61661r925745_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257920'
   tag rid: 'SV-257920r925747_rule'
   tag stig_id: 'RHEL-09-232200'
-  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61585r925746_fix'
-  tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
+
+  failing_files = command("find -L #{input('system_libraries').join(' ')} ! -user root -exec ls -d {} \\;").stdout.split("\n")
+
+  describe 'System libraries' do
+    it 'should be owned by root' do
+      expect(failing_files).to be_empty, "Files not owned by root:\n\t- #{failing_files.join("\n\t- ")}"
+    end
+  end
 end

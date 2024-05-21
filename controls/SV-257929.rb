@@ -19,14 +19,33 @@ Set the sticky bit on all world-writable directories using the command, replace 
 $ chmod a+t [World-Writable Directory]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61670r925772_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-257929'
   tag rid: 'SV-257929r925774_rule'
   tag stig_id: 'RHEL-09-232245'
-  tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag fix_id: 'F-61594r925773_fix'
-  tag 'documentable'
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
+  tag 'host'
+  tag 'container'
+
+  partitions = etc_fstab.params.map { |partition| partition['mount_point'] }.uniq
+
+  ww_dirs = command("find #{partitions} -type d \\( -perm -0002 -a ! -perm -1000 \\) -print 2>/dev/null").stdout.split("\n")
+
+  if ww_dirs.empty?
+    describe 'List of world-writable directories on the target' do
+      subject { ww_dirs }
+      it { should be_empty }
+    end
+  else
+    non_sticky_ww_dirs = ww_dirs.reject { |dir| file(dir).sticky? }
+    describe 'All world-writeable directories' do
+      it 'should have the sticky bit set' do
+        fail_msg = "Public directories without sticky bit:\n\t- #{non_sticky_ww_dirs.join("\n\t- ")}"
+        expect(non_sticky_ww_dirs).to be_empty, fail_msg
+      end
+    end
+  end
 end

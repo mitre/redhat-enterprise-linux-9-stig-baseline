@@ -19,14 +19,45 @@ The "rsyslog" service must be restarted for the changes to take effect with the 
 $ sudo systemctl restart rsyslog.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61885r926417_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag gid: 'V-258144'
   tag rid: 'SV-258144r926419_rule'
   tag stig_id: 'RHEL-09-652030'
-  tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag fix_id: 'F-61809r926418_fix'
-  tag 'documentable'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('Control not applicable; remote access not configured within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+  }
+
+  rsyslog = file('/etc/rsyslog.conf')
+
+  describe rsyslog do
+    it { should exist }
+  end
+
+  if rsyslog.exist?
+
+    auth_pattern = %r{^\s*[a-z.;*]*auth(,[a-z,]+)*\.\*\s*/*}
+    authpriv_pattern = %r{^\s*[a-z.;*]*authpriv(,[a-z,]+)*\.\*\s*/*}
+    daemon_pattern = %r{^\s*[a-z.;*]*daemon(,[a-z,]+)*\.\*\s*/*}
+
+    rsyslog_conf = command('grep -E \'(auth.*|authpriv.*|daemon.*)\' /etc/rsyslog.conf')
+
+    describe 'Logged remote access methods' do
+      it 'should include auth.*' do
+        expect(rsyslog_conf.stdout).to match(auth_pattern), 'auth.* not configured for logging'
+      end
+      it 'should include authpriv.*' do
+        expect(rsyslog_conf.stdout).to match(authpriv_pattern), 'authpriv.* not configured for logging'
+      end
+      it 'should include daemon.*' do
+        expect(rsyslog_conf.stdout).to match(daemon_pattern), 'daemon.* not configured for logging'
+      end
+    end
+  end
 end

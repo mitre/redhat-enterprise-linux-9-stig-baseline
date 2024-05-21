@@ -25,4 +25,9 @@ $ sudo dnf install subscription-manager'
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
+
+  describe package('subscription-manager') do
+    it { should be_installed }
+  end
 end

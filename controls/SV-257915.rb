@@ -15,14 +15,19 @@ If "/var/log" does not have a group owner of "root", this is a finding.'
 $ sudo chgrp root /var/log'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61656r925730_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257915'
   tag rid: 'SV-257915r925732_rule'
   tag stig_id: 'RHEL-09-232175'
-  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag fix_id: 'F-61580r925731_fix'
-  tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+  tag 'container'
+
+  describe directory('/var/log') do
+    it { should exist }
+    its('group') { should eq 'root' }
+  end
 end

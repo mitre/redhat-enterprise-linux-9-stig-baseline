@@ -12,9 +12,7 @@ Examples of each configuration:
 UDP *.* @remotesystemname
 TCP *.* @@remotesystemname
 RELP *.* :omrelp:remotesystemname:2514
-Note that a port number was given as there is no standard port for RELP.
-
-'
+Note that a port number was given as there is no standard port for RELP.'
   desc 'check', 'Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
 
 $ sudo grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf
@@ -29,15 +27,28 @@ If there is no evidence that the audit logs are being offloaded to another syste
 *.* @@[remoteloggingserver]:[port]"'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61890r926432_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000479-GPOS-00224'
+  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258149'
   tag rid: 'SV-258149r926434_rule'
   tag stig_id: 'RHEL-09-652055'
-  tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag fix_id: 'F-61814r926433_fix'
-  tag satisfies: ['SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227', 'SRG-OS-000342-GPOS-00133']
-  tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-001851']
-  tag nist: ['CM-6 b', 'AU-4 (1)']
+  tag cci: ['CCI-001851', 'CCI-000366']
+  tag nist: ['AU-4 (1)', 'CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe command("grep @@ #{input('logging_conf_files').join(' ')}") do
+      its('stdout') { should match(/^[^#]*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/) }
+    end
+  end
 end

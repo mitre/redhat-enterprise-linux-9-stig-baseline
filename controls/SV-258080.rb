@@ -39,6 +39,32 @@ $ sudo restorecon -R -v /var/log/faillock'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag fix_id: 'F-61745r926226_fix'
   tag 'documentable'
-  tag cci: ['CCI-000044']
-  tag nist: ['AC-7 a']
+  tag cci: ['CCI-000044', 'CCI-002238']
+  tag nist: ['AC-7 a', 'AC-7 b']
+  tag 'host'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable in a container' do
+      skip 'SELinux controls Not Applicable in a container'
+    end
+  else
+
+    describe selinux do
+      it { should be_installed }
+      it { should be_enforcing }
+      it { should_not be_disabled }
+    end
+
+    describe parse_config_file('/etc/security/faillock.conf') do
+      its('dir') { should cmp input('non_default_tally_dir') }
+    end
+
+    faillock_tally = input('faillock_tally')
+
+    describe "The selected non-default tally directory for PAM: #{input('non_default_tally_dir')}" do
+      subject { file(input('non_default_tally_dir')) }
+      its('selinux_label') { should match(/#{faillock_tally}/) }
+    end
+  end
 end

@@ -10,9 +10,7 @@ RHEL 9 installation media provides "rsyslogd", a system utility providing suppor
 anon - anonymous authentication
 x509/fingerprint - certificate fingerprint authentication
 x509/certvalid - certificate validation only
-x509/name - certificate validation and subject name authentication
-
-'
+x509/name - certificate validation and subject name authentication'
   desc 'check', %q(Verify RHEL 9 encrypts audit records offloaded onto a different system or media from the system being audited via rsyslog with the following command:
 
 $ sudo grep -i '$ActionSendStreamDriverMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
@@ -25,15 +23,38 @@ If the value of the "$ActionSendStreamDriverMode" option is not set to "1" or th
 $ActionSendStreamDriverMode 1'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61888r926426_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000342-GPOS-00133'
+  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258147'
   tag rid: 'SV-258147r926428_rule'
   tag stig_id: 'RHEL-09-652045'
-  tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag fix_id: 'F-61812r926427_fix'
-  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
-  tag 'documentable'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe 'rsyslog configuration' do
+      subject {
+        command("grep -i '^\$DefaultNetstreamDriver' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
+      }
+      it { should match(/\$DefaultNetstreamDriver\s+gtls/) }
+    end
+
+    describe 'rsyslog configuration' do
+      subject {
+        command("grep -i '^\$ActionSendStreamDriverMode' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
+      }
+      it { should match(/\$ActionSendStreamDriverMode\s+1/) }
+    end
+  end
 end

@@ -49,4 +49,31 @@ $ sudo more /etc/cron.daily/aide
   tag 'documentable'
   tag cci: ['CCI-001744', 'CCI-002699', 'CCI-002702']
   tag nist: ['CM-3 (5)', 'SI-6 b', 'SI-6 d']
+  tag 'host'
+
+  file_integrity_tool = input('file_integrity_tool')
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package(file_integrity_tool) do
+    it { should be_installed }
+  end
+  describe.one do
+    describe file("/etc/cron.daily/#{file_integrity_tool}") do
+      its('content') { should match %r{/bin/mail} }
+    end
+    describe file("/etc/cron.weekly/#{file_integrity_tool}") do
+      its('content') { should match %r{/bin/mail} }
+    end
+    describe crontab('root').where { command =~ /#{file_integrity_tool}/ } do
+      its('commands.flatten') { should include(match %r{/bin/mail}) }
+    end
+    if file("/etc/cron.d/#{file_integrity_tool}").exist?
+      describe crontab(path: "/etc/cron.d/#{file_integrity_tool}") do
+        its('commands') { should include(match %r{/bin/mail}) }
+      end
+    end
+  end
 end

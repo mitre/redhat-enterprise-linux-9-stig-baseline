@@ -7,7 +7,7 @@ Note: The "s-nail" package provides the "mail" command that is used to send emai
 
 Verify that the "s-nail" package is installed on the system:
 
-$ sudo dnf list --installed mailx
+$ sudo dnf list --installed s-nail
 
 s-nail.x86_64          14.9.22-6.el9
 
@@ -17,14 +17,22 @@ If "s-nail" package is not installed, this is a finding.'
 $ sudo dnf install s-nail'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61583r925511_chk'
+  tag check_id: 'C-61583r942958_chk'
   tag severity: 'medium'
   tag gid: 'V-257842'
-  tag rid: 'SV-257842r925513_rule'
+  tag rid: 'SV-257842r942959_rule'
   tag stig_id: 'RHEL-09-215095'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61507r925512_fix'
   tag 'documentable'
   tag cci: ['CCI-001744']
   tag nist: ['CM-3 (5)']
+  tag 'host'
+  tag 'container'
+
+  mail_package = input('mail_package')
+
+  describe package(mail_package) do
+    it { should be_installed }
+  end
 end

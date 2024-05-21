@@ -5,7 +5,7 @@ control 'SV-257982' do
 
 Check what the SSH daemon's "LogLevel" option is set to with the following command:
 
-$ sudo grep -i LogLevel /etc/ssh/sshd_config
+$ sudo grep -ir LogLevel /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 LogLevel VERBOSE
 
@@ -19,14 +19,24 @@ Restart the SSH daemon for the settings to take effect:
 $ sudo systemctl restart sshd.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61723r925931_chk'
+  tag check_id: 'C-61723r943029_chk'
   tag severity: 'medium'
   tag gid: 'V-257982'
-  tag rid: 'SV-257982r925933_rule'
+  tag rid: 'SV-257982r943030_rule'
   tag stig_id: 'RHEL-09-255030'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag fix_id: 'F-61647r925932_fix'
   tag 'documentable'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe sshd_config do
+    its('LogLevel') { should cmp 'VERBOSE' }
+  end
 end

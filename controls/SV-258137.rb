@@ -6,9 +6,7 @@ Audit tools include, but are not limited to, vendor-provided and open-source aud
 
 It is not uncommon for attackers to replace the audit tools or inject code into the existing tools to provide the capability to hide or erase system activity from the audit logs.
 
-To address this risk, audit tools must be cryptographically signed to provide the capability to identify when the audit tools have been modified, manipulated, or replaced. An example is a checksum hash of the file or files.
-
-'
+To address this risk, audit tools must be cryptographically signed to provide the capability to identify when the audit tools have been modified, manipulated, or replaced. An example is a checksum hash of the file or files.'
   desc 'check', 'Check that AIDE is properly configured to protect the integrity of the audit tools with the following command:
 
 $ sudo cat /etc/aide.conf | grep /usr/sbin/au
@@ -17,7 +15,6 @@ $ sudo cat /etc/aide.conf | grep /usr/sbin/au
 /usr/sbin/auditd p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/ausearch p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/aureport p+i+n+u+g+s+b+acl+xattrs+sha512
-/usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/augenrules p+i+n+u+g+s+b+acl+xattrs+sha512
 
@@ -31,19 +28,50 @@ If any of the audit tools listed above do not have a corresponding line, ask the
 /usr/sbin/ausearch p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/aureport p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512
-/usr/sbin/autrace p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/augenrules p+i+n+u+g+s+b+acl+xattrs+sha512'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61878r926396_chk'
   tag severity: 'medium'
-  tag gid: 'V-258137'
-  tag rid: 'SV-258137r926398_rule'
-  tag stig_id: 'RHEL-09-651025'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
-  tag fix_id: 'F-61802r926397_fix'
-  tag satisfies: ['SRG-OS-000256-GPOS-00097', 'SRG-OS-000257-GPOS-00098', 'SRG-OS-000258-GPOS-00099', 'SRG-OS-000278-GPOS-00108']
-  tag 'documentable'
-  tag cci: ['CCI-001493', 'CCI-001494', 'CCI-001495', 'CCI-001496']
-  tag nist: ['AU-9 a', 'AU-9', 'AU-9', 'AU-9 (3)']
+  tag gid: 'V-258137'
+  tag rid: 'SV-258137r943021_rule'
+  tag stig_id: 'RHEL-09-651025'
+  tag fix_id: 'F-61802r943020_fix'
+  tag cci: ['CCI-001496', 'CCI-001493', 'CCI-001494', 'CCI-001495']
+  tag nist: ['AU-9 (3)', 'AU-9 a', 'AU-9']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = %w[/usr/sbin/auditctl
+                   /usr/sbin/auditd
+                   /usr/sbin/ausearch
+                   /usr/sbin/aureport
+                   /usr/sbin/autrace
+                   /usr/sbin/rsyslogd
+                   /usr/sbin/augenrules]
+
+  if package('aide').installed?
+    audit_tools.each do |tool|
+      describe "selection_line: #{tool}" do
+        subject { aide_conf.where { selection_line.eql?(tool) } }
+        its('rules.flatten') { should include 'p' }
+        its('rules.flatten') { should include 'i' }
+        its('rules.flatten') { should include 'n' }
+        its('rules.flatten') { should include 'u' }
+        its('rules.flatten') { should include 'g' }
+        its('rules.flatten') { should include 's' }
+        its('rules.flatten') { should include 'b' }
+        its('rules.flatten') { should include 'acl' }
+        its('rules.flatten') { should include 'xattrs' }
+        its('rules.flatten') { should include 'sha512' }
+      end
+    end
+  else
+    describe 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE)' do
+      skip 'The system is not utilizing Advanced Intrusion Detection Environment (AIDE), manual review is required.'
+    end
+  end
 end

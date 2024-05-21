@@ -23,14 +23,30 @@ Reload tmux configuration to take effect. This can be performed in tmux while it
 $ tmux source-file /etc/tmux.conf'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61806r926180_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000028-GPOS-00009'
+  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258065'
   tag rid: 'SV-258065r926182_rule'
   tag stig_id: 'RHEL-09-412020'
-  tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag fix_id: 'F-61730r926181_fix'
-  tag 'documentable'
   tag cci: ['CCI-000056']
   tag nist: ['AC-11 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  lock_command = command('grep -i lock-command /etc/tmux.conf').stdout.strip
+  lock_session = command('grep -i lock-session /etc/tmux.conf').stdout.strip
+
+  describe 'tmux settings' do
+    it 'should set lock-command' do
+      expect(lock_command).to match(/set -g lock-command vlock/)
+    end
+    it 'should bind a specific key to lock-session' do
+      expect(lock_session).to match(/bind . lock-session/)
+    end
+  end
 end

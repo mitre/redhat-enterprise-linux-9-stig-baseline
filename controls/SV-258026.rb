@@ -33,14 +33,29 @@ Add the following setting to prevent nonprivileged users from modifying it:
 /org/gnome/desktop/screensaver/lock-delay'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61767r926063_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000029-GPOS-00010'
+  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258026'
   tag rid: 'SV-258026r926065_rule'
   tag stig_id: 'RHEL-09-271080'
-  tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag fix_id: 'F-61691r926064_fix'
-  tag 'documentable'
   tag cci: ['CCI-000057']
   tag nist: ['AC-11 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if package('gnome-desktop3').installed?
+    describe command('grep -i lock-delay /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-delay' }
+    end
+  else
+    impact 0.0
+    describe 'The GNOME desktop is not installed' do
+      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
+    end
+  end
 end

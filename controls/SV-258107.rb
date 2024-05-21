@@ -23,14 +23,18 @@ Add the following line to "/etc/security/pwquality.conf" (or modify the line to 
 minlen = 15'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61848r926306_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-258107'
   tag rid: 'SV-258107r926308_rule'
   tag stig_id: 'RHEL-09-611090'
-  tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag fix_id: 'F-61772r926307_fix'
-  tag 'documentable'
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/security/pwquality.conf') do
+    its('minlen.to_i') { should cmp >= input('pass_min_len') }
+  end
 end

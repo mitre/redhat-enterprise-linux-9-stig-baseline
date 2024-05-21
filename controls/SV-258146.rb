@@ -10,9 +10,7 @@ RHEL 9 installation media provides "rsyslogd", a system utility providing suppor
 anon - anonymous authentication
 x509/fingerprint - certificate fingerprint authentication
 x509/certvalid - certificate validation only
-x509/name - certificate validation and subject name authentication
-
-'
+x509/name - certificate validation and subject name authentication'
   desc 'check', %q(Verify RHEL 9 authenticates the remote logging server for offloading audit logs with the following command:
 
 $ sudo grep -i '$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
@@ -27,15 +25,31 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
 $ActionSendStreamDriverAuthMode x509/name'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61887r926423_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000342-GPOS-00133'
+  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258146'
   tag rid: 'SV-258146r926425_rule'
   tag stig_id: 'RHEL-09-652040'
-  tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag fix_id: 'F-61811r926424_fix'
-  tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
-  tag 'documentable'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe 'rsyslog configuration' do
+      subject {
+        command("grep -i '^\$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
+      }
+      it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
+    end
+  end
 end

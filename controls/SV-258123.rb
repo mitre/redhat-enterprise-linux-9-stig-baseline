@@ -4,9 +4,7 @@ control 'SV-258123' do
 
 Multifactor solutions that require devices separate from information systems gaining access include, for example, hardware tokens providing time-based or challenge-response authenticators and smart cards such as the U.S. Government Personal Identity Verification (PIV) card and the DOD CAC.
 
-RHEL 9 includes multiple options for configuring certificate status checking, but for this requirement focuses on the System Security Services Daemon (SSSD). By default, SSSD performs Online Certificate Status Protocol (OCSP) checking and certificate verification using a sha256 digest function.
-
-'
+RHEL 9 includes multiple options for configuring certificate status checking, but for this requirement focuses on the System Security Services Daemon (SSSD). By default, SSSD performs Online Certificate Status Protocol (OCSP) checking and certificate verification using a sha256 digest function.'
   desc 'check', 'Verify the operating system implements Online Certificate Status Protocol (OCSP) and is using the proper digest value on the system with the following command:
 
 $ sudo grep certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/*.conf | grep -v "^#"
@@ -32,15 +30,40 @@ The "sssd" service must be restarted for the changes to take effect. To restart 
 $ sudo systemctl restart sssd.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61864r926354_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000375-GPOS-00160'
+  tag satisfies: ['SRG-OS-000375-GPOS-00160', 'SRG-OS-000377-GPOS-00162']
   tag gid: 'V-258123'
   tag rid: 'SV-258123r926356_rule'
   tag stig_id: 'RHEL-09-611170'
-  tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag fix_id: 'F-61788r926355_fix'
-  tag satisfies: ['SRG-OS-000375-GPOS-00160', 'SRG-OS-000377-GPOS-00162']
-  tag 'documentable'
   tag cci: ['CCI-001948', 'CCI-001954']
   tag nist: ['IA-2 (11)', 'IA-2 (12)']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternate_mfa_method').nil?
+    describe 'Manual Review' do
+      skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
+    end
+  else
+    sssd_conf_files = input('sssd_conf_files')
+    sssd_conf_contents = ini({ command: "cat #{input('sssd_conf_files').join(' ')}" })
+    sssd_certificate_verification = input('sssd_certificate_verification')
+
+    describe 'SSSD' do
+      it 'should be installed and enabled' do
+        expect(service('sssd')).to be_installed.and be_enabled
+        expect(sssd_conf_contents.params).to_not be_empty, "SSSD configuration files not found or have no content; files checked:\n\t- #{sssd_conf_files.join("\n\t- ")}"
+      end
+      if sssd_conf_contents.params.nil?
+        it "should configure certificate_verification to be '#{sssd_certificate_verification}'" do
+          expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
+        end
+      end
+    end
+  end
 end

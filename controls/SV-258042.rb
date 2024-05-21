@@ -13,14 +13,26 @@ If any results are returned that are not associated with a system account, this 
 passwd -x 60 [user]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61783r926111_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258042'
   tag rid: 'SV-258042r926113_rule'
   tag stig_id: 'RHEL-09-411015'
-  tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag fix_id: 'F-61707r926112_fix'
-  tag 'documentable'
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
+
+  value = input('pass_max_days')
+
+  bad_users = users.where { uid >= 1000 }.where { value > 60 or maxdays.negative? }.usernames
+  in_scope_users = bad_users - input('exempt_home_users')
+
+  describe 'Users are not be able' do
+    it "to retain passwords for more then #{value} day(s)" do
+      failure_message = "The following users can update their password more then every #{value} day(s): #{in_scope_users.join(', ')}"
+      expect(in_scope_users).to be_empty, failure_message
+    end
+  end
 end

@@ -15,14 +15,19 @@ If "/var/log" does not have an owner of "root", this is a finding.'
 $ sudo chown root /var/log'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61655r925727_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257914'
   tag rid: 'SV-257914r925729_rule'
   tag stig_id: 'RHEL-09-232170'
-  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag fix_id: 'F-61579r925728_fix'
-  tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+  tag 'container'
+
+  describe directory('/var/log') do
+    it { should exist }
+    it { should be_owned_by 'root' }
+  end
 end

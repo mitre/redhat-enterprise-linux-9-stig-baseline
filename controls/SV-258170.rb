@@ -27,4 +27,13 @@ The audit daemon must be restarted for changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe auditd_conf do
+    its('write_logs.upcase') { should cmp 'YES' }
+  end
 end

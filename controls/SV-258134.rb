@@ -1,8 +1,6 @@
 control 'SV-258134' do
   title 'RHEL 9 must have the AIDE package installed.'
-  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
-
-'
+  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.'
   desc 'check', %q(Verify that RHEL 9 has the Advanced Intrusion Detection Environment (AIDE) package installed with the following command:
 
 $ sudo dnf list --installed aide
@@ -75,8 +73,24 @@ AIDE found NO differences between database and filesystem. Looks okay!!
   tag stig_id: 'RHEL-09-651010'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61799r926388_fix'
-  tag satisfies: ['SRG-OS-000363-GPOS-00150', 'SRG-OS-000445-GPOS-00199']
   tag 'documentable'
-  tag cci: ['CCI-001744', 'CCI-002696']
-  tag nist: ['CM-3 (5)', 'SI-6 a']
+  tag cci: ['CCI-002696', 'CCI-001744']
+  tag nist: ['SI-6 a', 'CM-3 (5)']
+  tag 'host'
+
+  file_integrity_tool = input('file_integrity_tool')
+
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if file_integrity_tool == 'aide'
+    describe command('/usr/sbin/aide --check') do
+      its('stdout') { should_not include "Couldn't open file" }
+    end
+  end
+
+  describe package(file_integrity_tool) do
+    it { should be_installed }
+  end
 end

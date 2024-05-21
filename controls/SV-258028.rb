@@ -23,4 +23,29 @@ $ sudo dconf update'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
+    impact 0.0
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    end
+  else
+
+    db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
+
+    failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
+
+    describe 'dconf databases' do
+      it 'should have been updated after the last corresponding keyfile edit' do
+        expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
+      end
+    end
+  end
 end

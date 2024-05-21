@@ -13,14 +13,22 @@ If any system-wide shared library file is found to be group-writable or world-wr
 $ sudo chmod 755 [FILE]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61625r925637_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257884'
   tag rid: 'SV-257884r925639_rule'
   tag stig_id: 'RHEL-09-232020'
-  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61549r925638_fix'
-  tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
+
+  failing_files = command("find -L #{input('system_libraries').join(' ')} -perm /0022 -type f -exec ls -d {} \\;").stdout.split("\n")
+
+  describe 'System libraries' do
+    it "should have mode '0755' or less permissive" do
+      expect(failing_files).to be_empty, "Files with excessive permissions:\n\t- #{failing_files.join("\n\t- ")}"
+    end
+  end
 end

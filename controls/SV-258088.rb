@@ -32,4 +32,10 @@ If necessary, create a "wheel" group and add administrative users to the group.)
   tag 'documentable'
   tag cci: ['CCI-002038', 'CCI-002165']
   tag nist: ['IA-11', 'AC-3 (4)']
+  tag 'host'
+  tag 'container'
+
+  describe pam('/etc/pam.d/su') do
+    its('lines') { should match_pam_rule('auth required pam_wheel.so').all_with_args('use_uid') }
+  end
 end

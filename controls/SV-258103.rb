@@ -19,14 +19,32 @@ Add the following line to "/etc/security/pwquality.conf" (or modify the line to 
 dcredit = -1'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61844r926294_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000071-GPOS-00039'
   tag gid: 'V-258103'
   tag rid: 'SV-258103r926296_rule'
   tag stig_id: 'RHEL-09-611070'
-  tag gtitle: 'SRG-OS-000071-GPOS-00039'
   tag fix_id: 'F-61768r926295_fix'
-  tag 'documentable'
   tag cci: ['CCI-000194']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host'
+  tag 'container'
+
+  describe 'pwquality.conf settings' do
+    let(:config) { parse_config_file('/etc/security/pwquality.conf', multiple_values: true) }
+    let(:setting) { 'dcredit' }
+    let(:value) { Array(config.params[setting]) }
+
+    it 'has `dcredit` set' do
+      expect(value).not_to be_empty, 'dcredit is not set in pwquality.conf'
+    end
+
+    it 'only sets `dcredit` once' do
+      expect(value.length).to eq(1), 'dcredit is commented or set more than once in pwquality.conf'
+    end
+
+    it 'does not set `dcredit` to a positive value' do
+      expect(value.first.to_i).to be < 0, 'dcredit is not set to a negative value in pwquality.conf'
+    end
+  end
 end

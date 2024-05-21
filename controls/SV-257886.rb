@@ -15,14 +15,26 @@ If "/var/log/messages" does not have a mode of "0640" or less permissive, this i
 $ sudo chmod 0640 /var/log/messages'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61627r925643_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257886'
   tag rid: 'SV-257886r925645_rule'
   tag stig_id: 'RHEL-09-232030'
-  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag fix_id: 'F-61551r925644_fix'
-  tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe.one do
+    describe file('/var/log/messages') do
+      it { should_not be_more_permissive_than('0640') }
+    end
+    describe file('/var/log/messages') do
+      it { should_not exist }
+    end
+  end
 end

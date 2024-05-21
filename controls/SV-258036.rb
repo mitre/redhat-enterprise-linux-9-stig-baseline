@@ -17,14 +17,28 @@ If there is no evidence that unauthorized peripherals are being blocked before e
 $ sudo systemctl enable --now usbguard'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61777r926093_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258036'
   tag rid: 'SV-258036r926095_rule'
   tag stig_id: 'RHEL-09-291020'
-  tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag fix_id: 'F-61701r926094_fix'
-  tag 'documentable'
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
+
+  only_if('This requirement does not apply to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  peripherals_service = input('peripherals_service')
+
+  describe service(peripherals_service) do
+    it "is expected to be running. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.running?).to be(true), "The #{peripherals_service} service is not running"
+    end
+    it "is expected to be enabled. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+      expect(subject.enabled?).to be(true), "The #{peripherals_service} service is not enabled"
+    end
+  end
 end

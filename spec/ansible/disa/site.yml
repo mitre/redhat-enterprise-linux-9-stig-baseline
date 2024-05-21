@@ -2,3 +2,17 @@
   gather_facts: no
   roles:
     - rhel9STIG
+  vars: # turn off all tasks that would trigger the reboot handler to avoid pipeline issues
+    rhel9STIG_stigrule_257804_Manage: false
+    rhel9STIG_stigrule_257805_Manage: false
+    rhel9STIG_stigrule_257806_Manage: false
+    rhel9STIG_stigrule_257807_Manage: false
+    rhel9STIG_stigrule_257808_Manage: false
+    rhel9STIG_stigrule_257880_Manage: false
+    rhel9STIG_stigrule_257989_Manage: false
+    rhel9STIG_stigrule_258034_Manage: false
+    rhel9STIG_stigrule_258034_Manage: false
+    rhel9STIG_stigrule_258039_Manage: false
+    rhel9STIG_stigrule_258078_Manage: false
+    rhel9STIG_stigrule_258079_Manage: false
+    rhel9STIG_stigrule_258240_Manage: false

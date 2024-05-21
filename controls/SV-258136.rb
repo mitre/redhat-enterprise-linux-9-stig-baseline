@@ -25,4 +25,21 @@ If AIDE is installed, ensure the "sha512" rule is present on all uncommented fil
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  file_integrity_tool = input('file_integrity_tool')
+
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if file_integrity_tool == 'aide'
+    describe parse_config_file('/etc/aide.conf') do
+      its('ALL') { should match(/sha512/) }
+    end
+  else
+    describe 'Manual Review' do
+      skip "Review the selected file integrity tool (#{file_integrity_tool}) configuration to ensure it is using FIPS 140-2/140-3-approved cryptographic hashes for validating file contents and directories."
+    end
+  end
 end

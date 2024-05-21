@@ -15,14 +15,25 @@ Run the following command:
 $ sudo grubby --update-kernel=ALL --remove-args=noexec'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61558r925436_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000433-GPOS-00192'
   tag gid: 'V-257817'
   tag rid: 'SV-257817r925438_rule'
   tag stig_id: 'RHEL-09-213110'
-  tag gtitle: 'SRG-OS-000433-GPOS-00192'
   tag fix_id: 'F-61482r925437_fix'
-  tag 'documentable'
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout.match(/:\s+(\S+)$/).captures.first
+
+  describe 'The no-execution bit flag' do
+    it 'should be set in kernel messages' do
+      expect(dmesg_nx_conf).to eq('active'), "dmesg does not show NX protection set to 'active'"
+    end
+  end
 end

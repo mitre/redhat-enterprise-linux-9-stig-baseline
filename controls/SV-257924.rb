@@ -25,14 +25,28 @@ $ sudo chown root [audit_tool]
 Replace "[audit_tool]" with each audit tool not owned by "root".'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61665r925757_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000256-GPOS-00097'
+  tag satisfies: ['SRG-OS-000256-GPOS-00097', 'SRG-OS-000257-GPOS-00098', 'SRG-OS-000258-GPOS-00099']
   tag gid: 'V-257924'
   tag rid: 'SV-257924r925759_rule'
   tag stig_id: 'RHEL-09-232220'
-  tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag fix_id: 'F-61589r925758_fix'
-  tag 'documentable'
   tag cci: ['CCI-001493']
-  tag nist: ['AU-9 a']
+  tag nist: ['AU-9', 'AU-9 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  audit_tools = ['/sbin/auditctl', '/sbin/aureport', '/sbin/ausearch', '/sbin/autrace', '/sbin/auditd', '/sbin/rsyslogd', '/sbin/augenrules']
+
+  failing_tools = audit_tools.reject { |at| file(at).owned_by?('root') }
+
+  describe 'Audit executables' do
+    it 'should be owned by root' do
+      expect(failing_tools).to be_empty, "Failing tools:\n\t- #{failing_tools.join("\n\t- ")}"
+    end
+  end
 end

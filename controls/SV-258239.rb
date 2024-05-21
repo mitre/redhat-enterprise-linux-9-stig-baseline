@@ -21,14 +21,24 @@ Edit the "/etc/pki/tls/openssl.cnf" and add or modify the following line:
 .include = /etc/crypto-policies/back-ends/opensslcnf.config'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61980r926702_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000250-GPOS-00093'
+  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-258239'
   tag rid: 'SV-258239r926704_rule'
   tag stig_id: 'RHEL-09-672035'
-  tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag fix_id: 'F-61904r926703_fix'
-  tag 'documentable'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if("Checking the host's FIPS compliance can't be done within the container and should be reveiwed at the host level.") {
+    !(virtualization.system.eql?('docker') && !file('/etc/pki/tls/openssl.cnf').exist?)
+  }
+
+  describe 'A line in the OpenSSL config file' do
+    subject { command('grep -i opensslcnf.config /etc/pki/tls/openssl.cnf').stdout.strip }
+    it { should match(/^\.include.*opensslcnf.config$/) }
+  end
 end

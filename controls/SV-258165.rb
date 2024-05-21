@@ -1,8 +1,6 @@
 control 'SV-258165' do
   title 'RHEL 9 audit logs must be group-owned by root or by a restricted logging group to prevent unauthorized read access.'
-  desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.
-
-'
+  desc 'Unauthorized disclosure of audit records can reveal system and configuration data to attackers, thus compromising its confidentiality.'
   desc 'check', 'Verify the audit logs are group-owned by "root" or a restricted logging group.
 
 First determine if a group other than "root" has been assigned to the audit logs with the following command:
@@ -33,15 +31,21 @@ Change the ownership to that group:
 $ sudo chgrp ${GROUP} /var/log/audit)
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61906r926480_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000057-GPOS-00027'
+  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
   tag gid: 'V-258165'
   tag rid: 'SV-258165r926482_rule'
   tag stig_id: 'RHEL-09-653080'
-  tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag fix_id: 'F-61830r926481_fix'
-  tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
-  tag 'documentable'
   tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']
-  tag nist: ['AU-9 a', 'AU-9 a', 'AU-9 a', 'SI-11 b']
+  tag nist: ['AU-9', 'AU-9 a', 'SI-11 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+  describe file(auditd_conf('/etc/audit/auditd.conf').log_file) do
+    its('group') { should be_in input('var_log_audit_group') }
+  end
 end

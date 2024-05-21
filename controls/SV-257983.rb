@@ -5,7 +5,7 @@ control 'SV-257983' do
 '
   desc 'check', 'Verify that RHEL 9 SSH daemon accepts public key encryption with the following command:
 
-$ sudo grep -i PubkeyAuthentication /etc/ssh/sshd_config
+$ sudo grep -ir PubkeyAuthentication /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
 
 PubkeyAuthentication yes
 
@@ -19,10 +19,10 @@ Restart the SSH daemon for the settings to take effect:
 $ sudo systemctl restart sshd.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61724r925934_chk'
+  tag check_id: 'C-61724r943031_chk'
   tag severity: 'medium'
   tag gid: 'V-257983'
-  tag rid: 'SV-257983r925936_rule'
+  tag rid: 'SV-257983r943032_rule'
   tag stig_id: 'RHEL-09-255035'
   tag gtitle: 'SRG-OS-000105-GPOS-00052'
   tag fix_id: 'F-61648r925935_fix'
@@ -30,4 +30,14 @@ $ sudo systemctl restart sshd.service'
   tag 'documentable'
   tag cci: ['CCI-000765', 'CCI-000766', 'CCI-000767', 'CCI-000768']
   tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
+  tag 'host'
+  tag 'container-conditional'
+
+  only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+  }
+
+  describe sshd_config do
+    its('PubkeyAuthentication') { should cmp 'yes' }
+  end
 end

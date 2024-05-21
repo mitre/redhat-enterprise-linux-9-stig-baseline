@@ -13,14 +13,19 @@ If the "rsh-server" package is installed, this is a finding.'
 $ sudo dnf remove rsh-server'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61571r925475_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000095-GPOS-00049'
+  tag satisfies: ['SRG-OS-000095-GPOS-00049', 'SRG-OS-000074-GPOS-00042']
   tag gid: 'V-257830'
   tag rid: 'SV-257830r925477_rule'
   tag stig_id: 'RHEL-09-215035'
-  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61495r925476_fix'
-  tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe package('rsh-server') do
+    it { should_not be_installed }
+  end
 end

@@ -31,6 +31,16 @@ password required pam_pwquality.so retry=3'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag fix_id: 'F-61756r926259_fix'
   tag 'documentable'
-  tag cci: ['CCI-000192']
-  tag nist: ['IA-5 (1) (a)']
+  tag cci: ['CCI-000366', 'CCI-000192']
+  tag nist: ['CM-6 b', 'IA-5 (1) (a)']
+  tag 'host'
+
+  only_if('This control is Not Applicable for containers', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  describe 'System pwquality setting' do
+    subject { parse_config(command('grep -rh retry /etc/security/pwquality.conf*').stdout.strip) }
+    its('retry') { should cmp >= input('min_retry') }
+  end
 end

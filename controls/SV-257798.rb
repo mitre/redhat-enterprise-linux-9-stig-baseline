@@ -6,14 +6,12 @@ This requirement generally applies to the design of an information technology pr
 
 There may be shared resources with configurable protections (e.g., files in storage) that may be assessed on specific information system components.
 
-Setting the kernel.perf_event_paranoid kernel parameter to "2" prevents attackers from gaining additional system information as a nonprivileged user.
-
-'
+Setting the kernel.perf_event_paranoid kernel parameter to "2" prevents attackers from gaining additional system information as a nonprivileged user.'
   desc 'check', %q(Verify RHEL 9 is configured to prevent kernel profiling by nonprivileged users with the following commands:
 
 Check the status of the kernel.perf_event_paranoid kernel parameter.
 
-$sysctl kernel.perf_event_paranoid
+$ sudo sysctl kernel.perf_event_paranoid
 
 kernel.perf_event_paranoid = 2
 
@@ -36,15 +34,41 @@ Load settings from all system configuration files with the following command:
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61539r925379_chk'
   tag severity: 'medium'
-  tag gid: 'V-257798'
-  tag rid: 'SV-257798r925381_rule'
-  tag stig_id: 'RHEL-09-213015'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
+  tag gid: 'V-257798'
+  tag rid: 'SV-257798r942967_rule'
+  tag stig_id: 'RHEL-09-213015'
   tag fix_id: 'F-61463r925380_fix'
-  tag satisfies: ['SRG-OS-000132-GPOS-00067', 'SRG-OS-000138-GPOS-00069']
-  tag 'documentable'
-  tag cci: ['CCI-001082', 'CCI-001090']
-  tag nist: ['SC-2', 'SC-4']
+  tag cci: ['CCI-001090', 'CCI-001082']
+  tag nist: ['SC-4', 'SC-2']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  parameter = 'kernel.perf_event_paranoid'
+  value = 2
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
+  end
 end

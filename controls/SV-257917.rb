@@ -15,14 +15,26 @@ If "/var/log/messages" does not have a group owner of "root", this is a finding.
 $ sudo chgrp root /var/log/messages'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61658r925736_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257917'
   tag rid: 'SV-257917r925738_rule'
   tag stig_id: 'RHEL-09-232185'
-  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag fix_id: 'F-61582r925737_fix'
-  tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe.one do
+    describe file('/var/log/messages') do
+      its('group') { should be_in input('var_log_messages_group') }
+    end
+    describe file('/var/log/messages') do
+      it { should_not exist }
+    end
+  end
 end

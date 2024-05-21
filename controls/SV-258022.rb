@@ -4,9 +4,7 @@ control 'SV-258022' do
 
 The session lock is implemented at the point where session activity can be determined and/or controlled.
 
-Implementing session settings will have little value if a user is able to manipulate these settings from the defaults prescribed in the other requirements of this implementation guide.
-
-"
+Implementing session settings will have little value if a user is able to manipulate these settings from the defaults prescribed in the other requirements of this implementation guide."
   desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, Gnome Shell. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -39,15 +37,29 @@ Add the following setting to prevent nonprivileged users from modifying it:
 /org/gnome/desktop/screensaver/lock-enabled'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61763r926051_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000028-GPOS-00009'
+  tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227', 'SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258022'
   tag rid: 'SV-258022r926053_rule'
   tag stig_id: 'RHEL-09-271060'
-  tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag fix_id: 'F-61687r926052_fix'
-  tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
-  tag 'documentable'
-  tag cci: ['CCI-000056', 'CCI-000058']
-  tag nist: ['AC-11 b', 'AC-11 a']
+  tag cci: ['CCI-000057', 'CCI-000056', 'CCI-000058']
+  tag nist: ['AC-11 a', 'AC-11 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if !package('gnome-desktop3').installed?
+    impact 0.0
+    describe 'The GNOME desktop is not installed, this control is Not Applicable.' do
+      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
+    end
+  else
+    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
+    end
+  end
 end

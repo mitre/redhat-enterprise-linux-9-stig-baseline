@@ -43,4 +43,15 @@ $ sudo systemctl mask --now kdump'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('kdump') do
+    it { should_not be_running }
+    its('params.LoadState') { should cmp 'masked' }
+    its('params.UnitFileState') { should cmp 'masked' }
+  end
 end

@@ -19,14 +19,24 @@ Add the following line in "/etc/login.defs" (or modify the line to have the requ
 PASS_MIN_DAYS 1'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61845r926297_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-258104'
   tag rid: 'SV-258104r926299_rule'
   tag stig_id: 'RHEL-09-611075'
-  tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag fix_id: 'F-61769r926298_fix'
-  tag 'documentable'
   tag cci: ['CCI-000198']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
+
+  value = input('pass_min_days')
+  setting = input_object('pass_min_days').name.upcase
+
+  describe "/etc/login.defs does not have `#{setting}` configured" do
+    let(:config) { login_defs.read_params[setting] }
+    it "greater than #{value} day" do
+      expect(config).to cmp <= value
+    end
+  end
 end

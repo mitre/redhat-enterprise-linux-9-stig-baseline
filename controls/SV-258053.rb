@@ -23,14 +23,42 @@ Note: The example will be for the user "wadea", who has a home directory of "/ho
 $ sudo chgrp users /home/wadea)
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61794r926144_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258053'
   tag rid: 'SV-258053r926146_rule'
   tag stig_id: 'RHEL-09-411070'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61718r926145_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  exempt_home_users = input('exempt_home_users')
+  uid_min = login_defs.read_params['UID_MIN'].to_i
+  uid_min = 1000 if uid_min.nil?
+
+  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
+
+  if !iuser_entries.users.nil? && !iuser_entries.users.empty?
+    failing_iusers = iuser_entries.entries.reject { |iu|
+      file(iu['home']).gid == iu.gid.to_i
+    }
+    failing_homedirs = failing_iusers.map { |iu| iu['home'] }
+
+    describe 'All non-exempt interactive user account home directories on the system' do
+      it 'should be group-owned by the group of the user they are associated with' do
+        expect(failing_homedirs).to be_empty, "Failing home directories:\n\t- #{failing_homedirs.join("\n\t- ")}"
+      end
+    end
+  else
+    describe 'No non-exempt interactive user accounts' do
+      it 'were detected on the system' do
+        expect(true).to eq(true)
+      end
+    end
+  end
 end

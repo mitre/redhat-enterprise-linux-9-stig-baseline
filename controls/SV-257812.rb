@@ -17,14 +17,22 @@ Add or modify the following line in /etc/systemd/coredump.conf:
 ProcessSizeMax=0'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61553r925421_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257812'
   tag rid: 'SV-257812r925423_rule'
   tag stig_id: 'RHEL-09-213085'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61477r925422_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
+  tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe parse_config_file('/etc/systemd/coredump.conf') do
+    its('Coredump.ProcessSizeMax') { should cmp '0' }
+  end
 end

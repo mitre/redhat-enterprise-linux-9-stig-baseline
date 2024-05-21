@@ -21,14 +21,31 @@ Remove any files with the .keytab extension from the operating system.
 rm -f /etc/*.keytab'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61871r926375_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-258130'
   tag rid: 'SV-258130r926377_rule'
   tag stig_id: 'RHEL-09-611205'
-  tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag fix_id: 'F-61795r926376_fix'
-  tag 'documentable'
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
+  tag 'host'
+  tag 'container'
+
+  krb5_server = package('krb5-server')
+  krb5_workstation = package('krb5-workstation')
+
+  if (krb5_server.installed? && krb5_server.version >= '1.17-18.el8') || (krb5_workstation.installed? && krb5_workstation.version >= '1.17-18.el8')
+    impact 0.0
+    describe 'The system has krb5-workstation and server version 1.17-18 or higher' do
+      skip 'The system has krb5-workstation and server version 1.17-18 or higner, this requirement is Not Applicable.'
+    end
+  else
+    keytabs = command('ls /etc/*.keytab').stdout.split
+    describe 'The system' do
+      it 'should not have keytab files for Kerberos' do
+        expect(keytabs).to be_empty, "Keytab files:\n\t- #{keytabs.join("\n\t- ")}"
+      end
+    end
+  end
 end

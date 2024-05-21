@@ -15,14 +15,19 @@ Add/modify the "/etc/security/faillock.conf" file to match the following line:
 dir = /var/log/faillock'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61801r926165_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000021-GPOS-00005'
+  tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258060'
   tag rid: 'SV-258060r926167_rule'
   tag stig_id: 'RHEL-09-411105'
-  tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag fix_id: 'F-61725r926166_fix'
-  tag 'documentable'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('dir') { should cmp input('log_directory') }
+  end
 end

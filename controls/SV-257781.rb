@@ -23,4 +23,22 @@ $ sudo systemctl set-default multi-user.target'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('gui_required')
+    impact 0.0
+    describe 'skip' do
+      skip 'A GUI is indicated as a requirement for this system. This control is Not Applicable.'
+    end
+  else
+    get_default = command('systemctl get-default').stdout.strip
+
+    describe get_default do
+      it { should cmp 'multi-user.target' }
+    end
+  end
 end

@@ -11,14 +11,25 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var/tmp" path onto a separate file system.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61589r925529_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257848'
   tag rid: 'SV-257848r925531_rule'
   tag stig_id: 'RHEL-09-231035'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61513r925530_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe mount('/var/tmp') do
+    it { should be_mounted }
+  end
+
+  describe etc_fstab.where { mount_point == '/var/tmp' } do
+    it { should exist }
+  end
 end

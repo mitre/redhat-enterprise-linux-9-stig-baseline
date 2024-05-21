@@ -7,7 +7,7 @@ This feature of the IPv4 protocol has few legitimate uses. It must be disabled u
 
 Check the value of the default "accept_redirects" variables with the following command:
 
-$ sysctl net.ipv4.conf.default.accept_redirects
+$ sudo sysctl net.ipv4.conf.default.accept_redirects
 
 net.ipv4.conf.default.accept_redirects = 0
 
@@ -31,14 +31,41 @@ Load settings from all system configuration files with the following command:
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61704r925874_chk'
   tag severity: 'medium'
-  tag gid: 'V-257963'
-  tag rid: 'SV-257963r925876_rule'
-  tag stig_id: 'RHEL-09-253040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-257963'
+  tag rid: 'SV-257963r942991_rule'
+  tag stig_id: 'RHEL-09-253040'
   tag fix_id: 'F-61628r925875_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  parameter = 'net.ipv4.conf.default.accept_redirects'
+  value = 0
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
+  end
 end

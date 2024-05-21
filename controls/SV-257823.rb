@@ -30,4 +30,13 @@ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  misconfigured_files = command("rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'").stdout.strip.split("\n")
+
+  describe 'All system file hashes' do
+    it 'should match vendor hashes' do
+      expect(misconfigured_files).to be_empty, "Misconfigured files:\n\t- #{misconfigured_files.join("\n\t- ")}"
+    end
+  end
 end

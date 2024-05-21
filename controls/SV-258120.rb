@@ -27,4 +27,15 @@ $ sudo passwd -l [username]'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  users_with_blank_passwords = shadow.where { password.nil? || password.empty? }.users - input('users_allowed_blank_passwords')
+
+  describe 'All users' do
+    it 'should have a password set' do
+      fail_msg = "Users with blank passwords:\n\t- #{users_with_blank_passwords.join("\n\t- ")}"
+      expect(users_with_blank_passwords).to be_empty, fail_msg
+    end
+  end
 end

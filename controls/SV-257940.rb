@@ -29,14 +29,28 @@ Then run the following command to load the newly created rule(s):
 $ sudo firewall-cmd --reload"
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61681r925805_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257940'
   tag rid: 'SV-257940r925807_rule'
   tag stig_id: 'RHEL-09-251035'
-  tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag fix_id: 'F-61605r925806_fix'
-  tag 'documentable'
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  firewalld_properties = input('firewalld_properties')
+
+  describe firewalld do
+    it { should be_running }
+  end
+  describe firewalld do
+    its('ports') { should cmp [firewalld_properties['ports']] }
+    its('protocols') { should cmp [firewalld_properties['protocols']] }
+    its('services') { should cmp [firewalld_properties['services']] }
+  end
 end

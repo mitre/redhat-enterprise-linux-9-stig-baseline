@@ -19,14 +19,23 @@ disk_error_action = HALT
 If availability has been determined to be more important, and this decision is documented with the information system security officer (ISSO), configure the operating system to notify SA staff and ISSO staff in the event of an audit processing failure by setting the "disk_error_action" to "SYSLOG".'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61894r926444_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag gid: 'V-258153'
   tag rid: 'SV-258153r926446_rule'
   tag stig_id: 'RHEL-09-653020'
-  tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag fix_id: 'F-61818r926445_fix'
-  tag 'documentable'
   tag cci: ['CCI-000140']
   tag nist: ['AU-5 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  disk_error_action = input('disk_error_action').map(&:upcase)
+
+  describe auditd_conf do
+    its('disk_error_action.upcase') { should be_in disk_error_action }
+  end
 end

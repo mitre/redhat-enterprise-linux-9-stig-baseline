@@ -41,14 +41,34 @@ Reload the firewall rules for changes to take effect:
 $ sudo firewall-cmd --reload'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61678r925796_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-257937'
   tag rid: 'SV-257937r925798_rule'
   tag stig_id: 'RHEL-09-251020'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61602r925797_fix'
-  tag 'documentable'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag cci: ['CCI-001764', 'CCI-000366']
+  tag nist: ['CM-7 (2)', 'CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('firewalld') do
+    it { should be_running }
+  end
+
+  describe firewalld do
+    its('zone') { should_not be_empty }
+  end
+
+  failing_zones = firewalld.zone.reject { |fz| firewalld.zone(fz).target == 'DROP' }
+
+  describe 'All firewall zones' do
+    it 'should be configured to drop all incoming network packets unless explicitly accepted' do
+      expect(failing_zones).to be_empty, "Failing zones:\n\t- #{failing_zones.join("\n\t- ")}"
+    end
+  end
 end

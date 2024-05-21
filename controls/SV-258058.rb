@@ -1,6 +1,9 @@
 control 'SV-258058' do
   title 'RHEL 9 must not have unauthorized accounts.'
-  desc 'Accounts providing no operational purpose provide additional opportunities for system compromise. Unnecessary accounts include user accounts for individuals not requiring access to the system and application accounts for applications not installed on the system.'
+  desc 'Accounts providing no operational purpose provide additional
+opportunities for system compromise. Unnecessary accounts include user accounts
+for individuals not requiring access to the system and application accounts for
+applications not installed on the system.'
   desc 'check', 'Verify that there are no unauthorized interactive user accounts with the following command:
 
 $ less /etc/passwd
@@ -21,14 +24,22 @@ If there are unauthorized local user accounts on the system, this is a finding.'
 $ sudo userdel  <unauthorized_user>'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61799r926159_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258058'
   tag rid: 'SV-258058r926161_rule'
   tag stig_id: 'RHEL-09-411095'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61723r926160_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  failing_users = passwd.users.reject { |u| (input('known_system_accounts') + input('user_accounts')).uniq.include?(u) }
+
+  describe 'All users' do
+    it 'should have an explicit, authorized purpose (either a known user account or a required system account)' do
+      expect(failing_users).to be_empty, "Failing users:\n\t- #{failing_users.join("\n\t- ")}"
+    end
+  end
 end

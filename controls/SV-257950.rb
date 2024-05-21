@@ -31,4 +31,10 @@ If the IPsec tunnels are active and not approved, this is a finding.'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  describe service('ipsec') do
+    it { should_not be_enabled }
+    it { should_not be_running }
+  end
 end

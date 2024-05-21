@@ -27,4 +27,19 @@ include /etc/crypto-policies/back-ends/libreswan.config'
   tag 'documentable'
   tag cci: ['CCI-000068']
   tag nist: ['AC-17 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  expected_value = input('approved_crypto_backend')
+
+  setting_check = command('grep include /etc/ipsec.conf /etc/ipsec.d/*.conf').stdout.strip.match?(/^.*:?[^#]include\s*#{expected_value}$/)
+
+  describe 'RHEL9 IPsec config' do
+    it "should include the conf file '#{expected_value}'" do
+      expect(setting_check).to eq(true), "Conf file '#{expected_value}' not included in ipsec config"
+    end
+  end
 end

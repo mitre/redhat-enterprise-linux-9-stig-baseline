@@ -31,4 +31,10 @@ gpgcheck=1'
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
+
+  describe 'DNF configuration should enforce GPG signature checking' do
+    subject { parse_config_file('/etc/dnf/dnf.conf').params['main'] }
+    its('gpgcheck') { should cmp 1 }
+  end
 end

@@ -11,14 +11,45 @@ If a separate entry for "/home" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/home" directory onto a separate file system/partition.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61584r925514_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257843'
   tag rid: 'SV-257843r925516_rule'
   tag stig_id: 'RHEL-09-231010'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61508r925515_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable inside a container; the host manages the container filesystem') {
+    !virtualization.system.eql?('docker')
+  }
+
+  ignore_shells = input('non_interactive_shells').join('|')
+  homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
+  root_device = etc_fstab.where { mount_point == '/' }.device_name
+
+  if input('separate_filesystem_exempt')
+    impact 0.0
+    describe 'This system is not required to have separate filesystems for each mount point' do
+      skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'
+    end
+  else
+    homes.each do |home|
+      pn_parent = Pathname.new(home).parent.to_s
+      home_device = etc_fstab.where { mount_point == pn_parent }.device_name
+
+      describe "The '#{pn_parent}' mount point" do
+        subject { home_device }
+
+        it 'is not on the same partition as the root partition' do
+          is_expected.not_to equal(root_device)
+        end
+
+        it 'has its own partition' do
+          is_expected.not_to be_empty
+        end
+      end
+    end
+  end
 end

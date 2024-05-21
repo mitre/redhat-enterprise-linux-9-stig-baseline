@@ -15,14 +15,19 @@ Add/modify the "/etc/security/faillock.conf" file to match the following line:
 audit'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61811r926195_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000021-GPOS-00005'
+  tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258070'
   tag rid: 'SV-258070r926197_rule'
   tag stig_id: 'RHEL-09-412045'
-  tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag fix_id: 'F-61735r926196_fix'
-  tag 'documentable'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('audit') { should_not be_nil }
+  end
 end

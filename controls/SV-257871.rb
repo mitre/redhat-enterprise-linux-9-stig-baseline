@@ -11,14 +11,28 @@ If the "/var/log" file system is mounted without the "noexec" option, this is a 
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/var/log" directory.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61612r925598_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257871'
   tag rid: 'SV-257871r925600_rule'
   tag stig_id: 'RHEL-09-231150'
-  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61536r925599_fix'
-  tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var/log'
+  option = 'noexec'
+
+  describe mount(path) do
+    its('options') { should include option }
+  end
+
+  describe etc_fstab.where { mount_point == path } do
+    its('mount_options.flatten') { should include option }
+  end
 end

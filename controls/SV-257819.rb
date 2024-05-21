@@ -57,4 +57,23 @@ Using the steps listed in the Check Text, confirm the newly imported keys show a
   tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host'
+  tag 'container'
+
+  rpm_gpg_file = input('rpm_gpg_file')
+  rpm_gpg_keys = input('rpm_gpg_keys')
+
+  describe file(rpm_gpg_file) do
+    it { should exist }
+  end
+  rpm_gpg_keys.each do |k, v|
+    describe command('rpm -q --queryformat "%{SUMMARY}\\n" gpg-pubkey | grep -i "red hat"') do
+      its('stdout') { should include k.to_s }
+    end
+    next unless file(rpm_gpg_file).exist?
+
+    describe command("gpg -q --keyid-format short --with-fingerprint #{rpm_gpg_file}") do
+      its('stdout') { should include v }
+    end
+  end
 end

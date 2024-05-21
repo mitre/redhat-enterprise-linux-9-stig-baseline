@@ -7,22 +7,33 @@ $ sudo grep freq /etc/audit/auditd.conf
 
 freq = 100
 
-If "freq" isn't set to a value of "100" or greater, the value is missing, or the line is commented out, this is a finding.)
-  desc 'fix', 'Configure RHEL 9 to flush audit to disk by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
+If "freq" isn't set to a value between "1" and "100", the value is missing, or the line is commented out, this is a finding.)
+  desc 'fix', 'Configure RHEL 9 to flush audit to disk by adding or updating the following rule in "/etc/audit/auditd.conf":
 
 freq = 100
 
 The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61909r926489_chk'
+  tag check_id: 'C-61909r943022_chk'
   tag severity: 'medium'
   tag gid: 'V-258168'
-  tag rid: 'SV-258168r926491_rule'
+  tag rid: 'SV-258168r943024_rule'
   tag stig_id: 'RHEL-09-653095'
   tag gtitle: 'SRG-OS-000051-GPOS-00024'
-  tag fix_id: 'F-61833r926490_fix'
+  tag fix_id: 'F-61833r943023_fix'
   tag 'documentable'
   tag cci: ['CCI-000154']
   tag nist: ['AU-6 (4)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  freq = input('audit_flush_threshold')
+
+  describe auditd_conf do
+    its('freq.to_i') { should cmp >= freq }
+  end
 end

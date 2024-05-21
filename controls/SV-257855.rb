@@ -13,14 +13,35 @@ If the system is mounting file systems via NFS and the "noexec" option is missin
   desc 'fix', 'Update each NFS mounted file system to use the "noexec" option on file systems that are being imported via NFS.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61596r925550_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257855'
   tag rid: 'SV-257855r925552_rule'
   tag stig_id: 'RHEL-09-231070'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61520r925551_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  option = 'noexec'
+  nfs_file_systems = etc_fstab.nfs_file_systems.params
+  failing_mounts = nfs_file_systems.reject { |mnt| mnt['mount_options'].include?(option) }
+
+  if nfs_file_systems.empty?
+    describe 'No NFS' do
+      it 'is mounted' do
+        expect(nfs_file_systems).to be_empty
+      end
+    end
+  else
+    describe 'Any mounted Network File System (NFS)' do
+      it "should have '#{option}' set" do
+        expect(failing_mounts).to be_empty, "NFS without '#{option}' set:\n\t- #{failing_mounts.join("\n\t- ")}"
+      end
+    end
+  end
 end

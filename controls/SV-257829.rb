@@ -25,4 +25,9 @@ $ sudo dnf remove ypserv'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
+
+  describe package('ypserv') do
+    it { should_not be_installed }
+  end
 end

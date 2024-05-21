@@ -17,14 +17,21 @@ Add or modify the following line in the "/usr/lib/systemd/system/emergency.servi
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61869r926369_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-258128'
   tag rid: 'SV-258128r926371_rule'
   tag stig_id: 'RHEL-09-611195'
-  tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-61793r926370_fix'
-  tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe service('emergency') do
+    its('params.ExecStart') { should include '/usr/lib/systemd/systemd-sulogin-shell emergency' }
+  end
 end

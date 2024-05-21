@@ -19,14 +19,27 @@ Edit the file "/etc/selinux/config" and add or modify the following line:
 A reboot is required for the changes to take effect.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61820r926222_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag gid: 'V-258079'
   tag rid: 'SV-258079r926224_rule'
   tag stig_id: 'RHEL-09-431015'
-  tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag fix_id: 'F-61744r926223_fix'
-  tag 'documentable'
   tag cci: ['CCI-002696']
   tag nist: ['SI-6 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe selinux do
+    it { should_not be_disabled }
+    it { should be_enforcing }
+    its('policy') { should eq 'targeted' }
+  end
+
+  describe parse_config_file('/etc/selinux/config') do
+    its('SELINUXTYPE') { should eq 'targeted' }
+  end
 end

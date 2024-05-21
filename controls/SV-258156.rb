@@ -1,6 +1,8 @@
 control 'SV-258156' do
   title 'RHEL 9 must take action when allocated audit record storage volume reaches 75 percent of the repository maximum audit record storage capacity.'
-  desc 'If security personnel are not notified immediately when storage volume reaches 75 percent utilization, they are unable to plan for audit record storage capacity expansion.'
+  desc 'If security personnel are not notified immediately when storage volume
+    reaches 75 percent utilization, they are unable to plan for audit record
+    storage capacity expansion.'
   desc 'check', 'Verify RHEL 9 takes action when allocated audit record storage volume reaches 75 percent of the repository maximum audit record storage capacity with the following command:
 
 $ sudo grep -w space_left /etc/audit/auditd.conf
@@ -13,14 +15,27 @@ If the value of the "space_left" keyword is not set to 25 percent of the storage
 space_left  = 25%'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61897r926453_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-258156'
   tag rid: 'SV-258156r926455_rule'
   tag stig_id: 'RHEL-09-653035'
-  tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag fix_id: 'F-61821r926454_fix'
-  tag 'documentable'
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe auditd_conf do
+      its('space_left.to_i') { should cmp >= input('audit_storage_threshold') }
+    end
+  end
 end

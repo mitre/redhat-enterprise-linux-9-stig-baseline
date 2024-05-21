@@ -20,14 +20,21 @@ auth required pam_faillock.so authfail
 account required pam_faillock.so'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61837r926273_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000021-GPOS-00005'
+  tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258096'
   tag rid: 'SV-258096r926275_rule'
   tag stig_id: 'RHEL-09-611035'
-  tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag fix_id: 'F-61761r926274_fix'
-  tag 'documentable'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe pam('/etc/pam.d/password-auth') do
+    its('lines') { should match_pam_rule('auth required pam_faillock.so preauth') }
+    its('lines') { should match_pam_rule('auth required pam_faillock.so authfail') }
+    its('lines') { should match_pam_rule('account required pam_faillock.so') }
+  end
 end

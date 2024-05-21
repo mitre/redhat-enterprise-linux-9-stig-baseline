@@ -23,4 +23,31 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/var'
+  option = 'nodev'
+  mount_option_enabled = input('mount_tmp_options')[option]
+
+  if mount_option_enabled
+    describe mount(path) do
+      its('options') { should include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should include option }
+    end
+  else
+    describe mount(path) do
+      its('options') { should_not include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should_not include option }
+    end
+  end
 end

@@ -19,14 +19,25 @@ The SSH service must be restarted for changes to take effect:
 $ sudo systemctl restart sshd.service'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61750r926012_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258009'
   tag rid: 'SV-258009r926014_rule'
   tag stig_id: 'RHEL-09-255165'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61674r926013_fix'
-  tag 'documentable'
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag cci: ['CCI-000366', 'CCI-000052']
+  tag nist: ['CM-6 b', 'AC-9']
+  tag 'host'
+  tag 'container-conditional'
+
+  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
+    impact 0.0
+    describe 'Control not applicable - SSH is not installed within containerized RHEL' do
+      skip 'Control not applicable - SSH is not installed within containerized RHEL'
+    end
+  else
+    describe sshd_config do
+      its('PrintLastLog') { should cmp 'yes' }
+    end
+  end
 end

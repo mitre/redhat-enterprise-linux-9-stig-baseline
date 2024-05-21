@@ -11,14 +11,39 @@ If the "/tmp" file system is mounted without the "noexec" option, this is a find
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/tmp" directory.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61608r925586_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257867'
   tag rid: 'SV-257867r925588_rule'
   tag stig_id: 'RHEL-09-231130'
-  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61532r925587_fix'
-  tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/tmp'
+  option = 'noexec'
+  mount_option_enabled = input('mount_tmp_options')[option]
+
+  if mount_option_enabled
+    describe mount(path) do
+      its('options') { should include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should include option }
+    end
+  else
+    describe mount(path) do
+      its('options') { should_not include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should_not include option }
+    end
+  end
 end

@@ -15,14 +15,21 @@ If the "rng-tools" package is not installed, this is a finding.'
 $ sudo dnf install rng-tools'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61582r925508_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257841'
   tag rid: 'SV-257841r925510_rule'
   tag stig_id: 'RHEL-09-215090'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61506r925509_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('rng-tools') do
+    it { should be_installed }
+  end
 end

@@ -21,14 +21,18 @@ Add or update the following line in the [main] section of the /etc/dnf/dnf.conf 
 localpkg_gpgcheck=1'
   impact 0.7
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61562r925448_chk'
   tag severity: 'high'
+  tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag gid: 'V-257821'
   tag rid: 'SV-257821r925450_rule'
   tag stig_id: 'RHEL-09-214020'
-  tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61486r925449_fix'
-  tag 'documentable'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/dnf/dnf.conf') do
+    its('main.localpkg_gpgcheck') { should match(/True|1|yes/i) }
+  end
 end

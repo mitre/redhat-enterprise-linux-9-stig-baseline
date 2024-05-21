@@ -17,14 +17,18 @@ If the "telnet-server" package is installed, this is a finding.'
 $ sudo dnf remove telnet-server'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61572r925478_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257831'
   tag rid: 'SV-257831r925480_rule'
   tag stig_id: 'RHEL-09-215040'
-  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61496r925479_fix'
-  tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe package('telnet-server') do
+    it { should_not be_installed }
+  end
 end

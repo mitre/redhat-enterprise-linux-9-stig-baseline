@@ -27,4 +27,9 @@ ENCRYPT_METHOD SHA512'
   tag 'documentable'
   tag cci: ['CCI-000196']
   tag nist: ['IA-5 (1) (c)']
+  tag 'host', 'container'
+
+  describe login_defs do
+    its('ENCRYPT_METHOD') { should cmp 'SHA512' }
+  end
 end

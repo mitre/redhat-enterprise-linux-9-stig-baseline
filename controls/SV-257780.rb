@@ -19,14 +19,34 @@ If the daemon is not running, this is a finding.'
   desc 'fix', 'Install and enable the latest McAfee ENSLTP package.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61521r925325_chk'
   tag severity: 'medium'
-  tag gid: 'V-257780'
-  tag rid: 'SV-257780r925327_rule'
-  tag stig_id: 'RHEL-09-211025'
   tag gtitle: 'SRG-OS-000191-GPOS-00080'
+  tag gid: 'V-257780'
+  tag rid: 'SV-257780r939261_rule'
+  tag stig_id: 'RHEL-09-211025'
   tag fix_id: 'F-61445r925326_fix'
-  tag 'documentable'
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !virtualization.system.eql?('docker')
+  end
+
+  if input('skip_endpoint_security_tool')
+    impact 0.0
+    describe 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable by agreement with  the approval authority of the organization.' do
+      skip 'Implementing the Endpoint Security for Linux Threat Prevention tool is not applicable by agreement with  the approval authority of the organization.'
+    end
+  else
+    linux_threat_prevention_package = input('linux_threat_prevention_package')
+    linux_threat_prevention_service = input('linux_threat_prevention_service')
+    describe package(linux_threat_prevention_package) do
+      it { should be_installed }
+    end
+
+    describe processes(linux_threat_prevention_service) do
+      it { should exist }
+    end
+  end
 end

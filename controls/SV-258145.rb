@@ -28,4 +28,9 @@ The audit daemon must be restarted for changes to take effect.'
   tag 'documentable'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host'
+
+  describe parse_config_file('/etc/audit/plugins.d/syslog.conf') do
+    its('active') { should cmp 'yes' }
+  end
 end

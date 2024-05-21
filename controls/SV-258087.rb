@@ -14,14 +14,30 @@ ALL     ALL=(ALL) ALL
 ALL     ALL=(ALL:ALL) ALL'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61828r926246_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258087'
   tag rid: 'SV-258087r926248_rule'
   tag stig_id: 'RHEL-09-432030'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61752r926247_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+  }
+
+  bad_sudoers_rules = sudoers(input('sudoers_config_files').join(' ')).rules.where {
+    users == 'ALL' &&
+      hosts == 'ALL' &&
+      run_as.start_with?('ALL') &&
+      commands == 'ALL'
+  }
+
+  describe 'Sudoers file(s)' do
+    it 'should not contain any unrestricted sudo rules' do
+      expect(bad_sudoers_rules.entries).to be_empty, "Unrestricted sudo rules found; check sudoers file(s):\n\t- #{input('sudoers_config_files').join("\n\t- ")}"
+    end
+  end
 end

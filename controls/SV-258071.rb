@@ -15,14 +15,18 @@ Modify the "/etc/login.defs" file to set the "FAIL_DELAY" parameter to 4 or grea
 FAIL_DELAY 4'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61812r926198_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00226'
   tag gid: 'V-258071'
   tag rid: 'SV-258071r926200_rule'
   tag stig_id: 'RHEL-09-412050'
-  tag gtitle: 'SRG-OS-000480-GPOS-00226'
   tag fix_id: 'F-61736r926199_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe login_defs do
+    its('FAIL_DELAY.to_i') { should cmp >= input('login_prompt_delay') }
+  end
 end

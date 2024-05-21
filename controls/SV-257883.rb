@@ -15,14 +15,30 @@ Run the following command, replacing "[DIRECTORY]" with any library directory wi
 $ sudo chmod 755 [DIRECTORY]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61624r925634_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257883'
   tag rid: 'SV-257883r925636_rule'
   tag stig_id: 'RHEL-09-232015'
-  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61548r925635_fix'
-  tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  permissions_for_libs = input('permissions_for_libs')
+
+  overly_permissive_libs = input('system_libraries').select { |lib|
+    file(lib).more_permissive_than?(permissions_for_libs)
+  }
+
+  describe 'System libraries' do
+    it "should not have permissions set higher than #{permissions_for_libs}" do
+      fail_msg = "Overly permissive system libraries:\n\t- #{overly_permissive_libs.join("\n\t- ")}"
+      expect(overly_permissive_libs).to be_empty, fail_msg
+    end
+  end
 end

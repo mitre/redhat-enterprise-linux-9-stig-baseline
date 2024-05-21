@@ -10,18 +10,26 @@ blacklist firewire-core
 If the command does not return any output, or the line is commented out, and use of firewire-core is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'To configure the system to prevent the firewire-core kernel module from being loaded, add the following line to the file /etc/modprobe.d/firewire-core.conf (or create firewire-core.conf if it does not exist):
 
-install firewire-core /bin/true
+install firewire-core /bin/false
 blacklist firewire-core'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61547r925403_chk'
   tag severity: 'medium'
-  tag gid: 'V-257806'
-  tag rid: 'SV-257806r928942_rule'
-  tag stig_id: 'RHEL-09-213055'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
-  tag fix_id: 'F-61471r928942_fix'
-  tag 'documentable'
+  tag gid: 'V-257806'
+  tag rid: 'SV-257806r942955_rule'
+  tag stig_id: 'RHEL-09-213055'
+  tag fix_id: 'F-61471r942954_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe kernel_module('firewire_core') do
+    it { should be_disabled }
+    it { should be_blacklisted }
+  end
 end

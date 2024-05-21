@@ -23,4 +23,14 @@ $ sudo chmod 0644 /etc/group-'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
+
+  system_file = '/etc/group-'
+
+  mode = input('expected_modes')[system_file]
+
+  describe file(system_file) do
+    it { should exist }
+    it { should_not be_more_permissive_than(mode) }
+  end
 end

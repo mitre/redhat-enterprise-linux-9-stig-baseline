@@ -11,14 +11,25 @@ If a separate entry for "/var" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var" path onto a separate file system.'
   impact 0.3
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61586r925520_chk'
   tag severity: 'low'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257845'
   tag rid: 'SV-257845r925522_rule'
   tag stig_id: 'RHEL-09-231020'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61510r925521_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe mount('/var') do
+    it { should be_mounted }
+  end
+
+  describe etc_fstab.where { mount_point == '/var' } do
+    it { should exist }
+  end
 end

@@ -30,4 +30,32 @@ Add the following line to the bottom of the /etc/audit/audit.rules file:
   tag 'documentable'
   tag cci: ['CCI-000139', 'CCI-000140']
   tag nist: ['AU-5 a', 'AU-5 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  expected_panic_value = input('expected_panic_value')
+  panic_flag = command('grep "\\-f" /etc/audit/audit.rules').stdout.strip
+
+  if input('high_availability_required')
+    impact 0.0
+    describe 'N/A' do
+      skip 'This system is indicated as requiring high availability and cannot panic in the event of audit failure'
+    end
+  elsif panic_flag.empty?
+    describe 'The audit service' do
+      it 'is expected to configure fail behavior' do
+        expect(panic_flag).not_to be_empty, "The '-f' flag was not set in audit.rules"
+      end
+    end
+  else
+    value = panic_flag.split[1].to_i
+    describe 'The audit service ' do
+      it 'is expected to panic on a critical error' do
+        expect(value).to eq(expected_panic_value), "The '-f' flag was set to '#{value}' instead of '#{expected_panic_value}'"
+      end
+    end
+  end
 end

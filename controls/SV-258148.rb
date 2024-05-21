@@ -30,4 +30,34 @@ $DefaultNetstreamDriver gtls'
   tag 'documentable'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+  tag 'host', 'container'
+
+  setting = 'DefaultNetstreamDriver'
+  expected_value = 'gtls'
+
+  pattern = /[^#]\$#{setting}\s*(?<value>\w+)$/
+  setting_check = command("grep -i #{setting} /etc/rsyslog.conf /etc/rsyslog.d/*.conf").stdout.strip.scan(pattern).flatten
+
+  describe 'Rsyslogd DefaultNetstreamDriver' do
+    if setting_check.empty?
+      it 'should be set' do
+        expect(setting_check).to_not be_empty, "'#{setting}' not found (or commented out) in conf file(s)"
+      end
+    else
+      it 'should only be set once' do
+        expect(setting_check.length).to eq(1), "'#{setting}' set more than once in conf file(s)"
+      end
+      it "should be set to '#{expected_value}'" do
+        expect(setting_check.first).to eq(expected_value), "'#{setting}' set to '#{setting_check.first}' in conf file(s)"
+      end
+    end
+  end
+
+  # netstream_driver = command('grep -i $DefaultNetstreamDriver /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip
+
+  # describe "Rsyslog config" do
+  #   it "should encrypt audit records for transfer" do
+  #     expect(modload).to be_empty, "ModLoad settings found:\n\t- #{modload.join("\n\t- ")}"
+  #   end
+  # end
 end

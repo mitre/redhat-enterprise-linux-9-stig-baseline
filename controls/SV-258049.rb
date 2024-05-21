@@ -23,14 +23,42 @@ $ sudo useradd -D -f 35
 The recommendation is 35 days, but a lower value is acceptable.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61790r926132_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000118-GPOS-00060'
   tag gid: 'V-258049'
   tag rid: 'SV-258049r926134_rule'
   tag stig_id: 'RHEL-09-411050'
-  tag gtitle: 'SRG-OS-000118-GPOS-00060'
   tag fix_id: 'F-61714r926133_fix'
-  tag 'documentable'
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e']
+  tag 'host'
+  tag 'container'
+
+  days_of_inactivity = input('days_of_inactivity')
+
+  describe 'Useradd configuration' do
+    useradd_config = parse_config_file('/etc/default/useradd')
+
+    context 'when INACTIVE is set' do
+      it 'should exist' do
+        expect(useradd_config.params).to include('INACTIVE')
+      end
+
+      it 'should not be nil' do
+        expect(useradd_config.params['INACTIVE']).not_to be_nil
+      end
+
+      it 'should have INACTIVE greater than or equal to 0' do
+        expect(useradd_config.params['INACTIVE'].to_i).to be >= 0
+      end
+
+      it 'should have INACTIVE less than or equal to days_of_inactivity' do
+        expect(useradd_config.params['INACTIVE'].to_i).to be <= days_of_inactivity
+      end
+
+      it 'should not have INACTIVE equal to -1' do
+        expect(useradd_config.params['INACTIVE']).not_to eq '-1'
+      end
+    end
+  end
 end

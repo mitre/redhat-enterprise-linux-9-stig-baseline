@@ -20,14 +20,20 @@ $ sudo dnf remove "xorg*"
 $ sudo systemctl set-default multi-user.target'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61578r925496_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257837'
   tag rid: 'SV-257837r925498_rule'
   tag stig_id: 'RHEL-09-215070'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61502r925497_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  input('remove_xorg_x11_server_packages').each do |p|
+    describe package(p) do
+      it { should_not be_installed }
+    end
+  end
 end

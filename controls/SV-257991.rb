@@ -20,14 +20,35 @@ MACs hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openss
 A reboot is required for the changes to take effect.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61732r925958_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000250-GPOS-00093'
+  tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-257991'
   tag rid: 'SV-257991r925960_rule'
   tag stig_id: 'RHEL-09-255075'
-  tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag fix_id: 'F-61656r925959_fix'
-  tag 'documentable'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+  tag 'host'
+  tag 'container-conditional'
+
+  # NOTE: At time of writing, the STIG baseline calls for two different values for the MACs option in the openssh.config file.
+  # SV-257990 calls for one set of MACs and SV-257991 calls for a mutually exclusive set.
+
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
+    !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
+  }
+
+  approved_macs = input('approved_openssh_server_conf')['macs']
+
+  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+
+  actual_macs = opensshserver_conf['macs'].join(',')
+
+  describe 'OpenSSH server configuration' do
+    it 'implement approved MACs' do
+      expect(actual_macs).to eq(approved_macs), "OpenSSH server cipher configuration actual value:\n\t#{actual_macs}\ndoes not match the expected value:\n\t#{approved_macs}"
+    end
+  end
 end

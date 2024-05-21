@@ -9,7 +9,7 @@ Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
 Check the value of the accept source route variable with the following command:
 
-$ sysctl net.ipv6.conf.default.accept_source_route
+$ sudo sysctl net.ipv6.conf.default.accept_source_route
 
 net.ipv6.conf.default.accept_source_route = 0
 
@@ -33,14 +33,41 @@ Load settings from all system configuration files with the following command:
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61718r925916_chk'
   tag severity: 'medium'
-  tag gid: 'V-257977'
-  tag rid: 'SV-257977r925918_rule'
-  tag stig_id: 'RHEL-09-254040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-257977'
+  tag rid: 'SV-257977r943011_rule'
+  tag stig_id: 'RHEL-09-254040'
   tag fix_id: 'F-61642r925917_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  parameter = 'net.ipv6.conf.default.accept_source_route'
+  value = 0
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
+  end
 end

@@ -28,4 +28,13 @@ $ sudo dnf install crypto-policies'
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
   tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe package('crypto-policies') do
+    it { should be_installed }
+  end
 end

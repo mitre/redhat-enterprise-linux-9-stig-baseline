@@ -29,4 +29,12 @@ Note: To preserve running user programs such as tmux, uncomment and/or edit "Kil
   tag 'documentable'
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']
+  tag 'container'
+  tag 'host'
+
+  stop_idle_session_sec = input('stop_idle_session_sec')
+
+  describe parse_config_file('/etc/systemd/logind.conf') do
+    its('Login') { should include('StopIdleSessionSec' => stop_idle_session_sec.to_s) }
+  end
 end

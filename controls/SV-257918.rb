@@ -10,19 +10,28 @@ $ sudo find -L /bin /sbin /usr/bin /usr/sbin /usr/libexec /usr/local/bin /usr/lo
 If any system commands are found to not be owned by root, this is a finding.'
   desc 'fix', 'Configure the system commands to be protected from unauthorized access.
 
-Run the following command, replacing "[FILE]" with any system command file not owned by "root".
+    Run the following command, replacing "[FILE]" with any system command
+file not owned by "root".
 
-$ sudo chown root [FILE]'
+    $ sudo chown root [FILE]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61659r925739_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257918'
   tag rid: 'SV-257918r925741_rule'
   tag stig_id: 'RHEL-09-232190'
-  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61583r925740_fix'
-  tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
+
+  failing_files = command("find -L #{input('system_command_dirs').join(' ')} ! -user root -exec ls -d {} \\;").stdout.split("\n")
+
+  describe 'System commands' do
+    it 'should be owned by root' do
+      expect(failing_files).to be_empty, "Files not owned by root:\n\t- #{failing_files.join("\n\t- ")}"
+    end
+  end
 end

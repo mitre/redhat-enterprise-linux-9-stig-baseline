@@ -10,19 +10,28 @@ $ sudo find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -g
 If any system commands are returned and is not group-owned by a required system account, this is a finding.'
   desc 'fix', 'Configure the system commands to be protected from unauthorized access.
 
-Run the following command, replacing "[FILE]" with any system command file not group-owned by "root" or a required system account.
+    Run the following command, replacing "[FILE]" with any system command
+file not group-owned by "root" or a required system account.
 
-$ sudo chgrp root [FILE]'
+    $ sudo chgrp root [FILE]'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61660r925742_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257919'
   tag rid: 'SV-257919r925744_rule'
   tag stig_id: 'RHEL-09-232195'
-  tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61584r925743_fix'
-  tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
+
+  failing_files = command("find -L #{input('system_command_dirs').join(' ')} ! -group root -exec ls -d {} \\;").stdout.split("\n")
+
+  describe 'System commands' do
+    it 'should be group-owned by root' do
+      expect(failing_files).to be_empty, "Files not group-owned by root:\n\t- #{failing_files.join("\n\t- ")}"
+    end
+  end
 end

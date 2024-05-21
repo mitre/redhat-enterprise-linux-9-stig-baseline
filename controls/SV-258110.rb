@@ -15,14 +15,18 @@ Add or update the following line in the "/etc/security/pwquality.conf" file or a
 dictcheck=1'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61851r926315_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00225'
   tag gid: 'V-258110'
   tag rid: 'SV-258110r926317_rule'
   tag stig_id: 'RHEL-09-611105'
-  tag gtitle: 'SRG-OS-000480-GPOS-00225'
   tag fix_id: 'F-61775r926316_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe parse_config_file('/etc/security/pwquality.conf') do
+    its('dictcheck') { should eq '1' }
+  end
 end

@@ -21,14 +21,20 @@ Add the following line in "/etc/pam.d/password-auth" (or modify the line to have
 password required pam_pwhistory.so use_authtok remember=5 retry=3'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61833r926261_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000077-GPOS-00045'
   tag gid: 'V-258092'
   tag rid: 'SV-258092r926263_rule'
   tag stig_id: 'RHEL-09-611015'
-  tag gtitle: 'SRG-OS-000077-GPOS-00045'
   tag fix_id: 'F-61757r926262_fix'
-  tag 'documentable'
   tag cci: ['CCI-000200']
   tag nist: ['IA-5 (1) (e)']
+  tag 'host'
+  tag 'container'
+
+  pam_auth_files = input('pam_auth_files')
+
+  describe pam(pam_auth_files['password-auth']) do
+    its('lines') { should match_pam_rule('password (required|requisite|sufficient) pam_pwhistory.so').any_with_integer_arg('remember', '>=', input('min_reuse_generations')) }
+  end
 end

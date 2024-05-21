@@ -13,14 +13,39 @@ If the "/tmp" file system is mounted without the "nodev" option, this is a findi
   desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/tmp" directory.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61607r925583_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257866'
   tag rid: 'SV-257866r925585_rule'
   tag stig_id: 'RHEL-09-231125'
-  tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61531r925584_fix'
-  tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  path = '/tmp'
+  option = 'nodev'
+  mount_option_enabled = input('mount_tmp_options')[option]
+
+  if mount_option_enabled
+    describe mount(path) do
+      its('options') { should include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should include option }
+    end
+  else
+    describe mount(path) do
+      its('options') { should_not include option }
+    end
+
+    describe etc_fstab.where { mount_point == path } do
+      its('mount_options.flatten') { should_not include option }
+    end
+  end
 end

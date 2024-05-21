@@ -18,14 +18,22 @@ install tipc /bin/false
 blacklist tipc'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61549r925409_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257808'
   tag rid: 'SV-257808r925411_rule'
   tag stig_id: 'RHEL-09-213065'
-  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61473r925410_fix'
-  tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe kernel_module('tipc') do
+    it { should be_disabled }
+    it { should be_blacklisted }
+  end
 end

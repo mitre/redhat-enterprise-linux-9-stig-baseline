@@ -14,14 +14,22 @@ install can /bin/false
 blacklist can'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61546r925400_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257805'
   tag rid: 'SV-257805r925402_rule'
   tag stig_id: 'RHEL-09-213050'
-  tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61470r925401_fix'
-  tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe kernel_module('can') do
+    it { should be_disabled }
+    it { should be_blacklisted }
+  end
 end

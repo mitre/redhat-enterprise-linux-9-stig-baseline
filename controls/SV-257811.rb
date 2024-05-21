@@ -5,7 +5,7 @@ control 'SV-257811' do
 '
   desc 'check', %q(Verify RHEL 9 restricts usage of ptrace to descendant processes with the following commands:
 
-$ sysctl kernel.yama.ptrace_scope
+$ sudo sysctl kernel.yama.ptrace_scope
 
 kernel.yama.ptrace_scope = 1
 
@@ -26,10 +26,10 @@ The system configuration files need to be reloaded for the changes to take effec
 $ sudo sysctl --system'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61552r925418_chk'
+  tag check_id: 'C-61552r942978_chk'
   tag severity: 'medium'
   tag gid: 'V-257811'
-  tag rid: 'SV-257811r925420_rule'
+  tag rid: 'SV-257811r942979_rule'
   tag stig_id: 'RHEL-09-213080'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61476r925419_fix'
@@ -37,4 +37,33 @@ $ sudo sysctl --system'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001082']
   tag nist: ['CM-6 b', 'SC-2']
+  tag 'host'
+
+  only_if('Control not applicable within a container', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  parameter = 'kernel.yama.ptrace_scope'
+  value = 1
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+    end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+      end
+    end
+  end
 end

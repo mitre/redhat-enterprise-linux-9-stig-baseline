@@ -21,14 +21,29 @@ Reload the daemon for this change to take effect.
 $ sudo systemctl daemon-reload'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61556r925430_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257815'
   tag rid: 'SV-257815r925432_rule'
   tag stig_id: 'RHEL-09-213100'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61480r925431_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
+  tag legacy: []
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  s = systemd_service('systemd-coredump.socket')
+
+  describe.one do
+    describe s do
+      its('params.LoadState') { should eq 'masked' }
+    end
+    describe s do
+      its('params.LoadState') { should eq 'not-found' }
+    end
+  end
 end

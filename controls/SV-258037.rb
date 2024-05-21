@@ -31,14 +31,22 @@ Add or edit the following line in /etc/usbguard/usbguard-daemon.conf
 AuditBackend=LinuxAudit'
   impact 0.3
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61778r926096_chk'
   tag severity: 'low'
+  tag gtitle: 'SRG-OS-000062-GPOS-00031'
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258037'
   tag rid: 'SV-258037r926098_rule'
   tag stig_id: 'RHEL-09-291025'
-  tag gtitle: 'SRG-OS-000062-GPOS-00031'
   tag fix_id: 'F-61702r926097_fix'
-  tag 'documentable'
   tag cci: ['CCI-000169']
   tag nist: ['AU-12 a']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  describe parse_config_file('/etc/usbguard/usbguard-daemon.conf') do
+    its('AuditBackend') { should cmp 'LinuxAudit' }
+  end
 end

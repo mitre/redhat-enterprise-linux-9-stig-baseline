@@ -31,14 +31,24 @@ FragmentPath=/etc/systemd/system/tftp.service
 ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61693r925841_chk'
   tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257952'
   tag rid: 'SV-257952r925843_rule'
   tag stig_id: 'RHEL-09-252055'
-  tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61617r925842_fix'
-  tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  if input('tftp_required')
+    describe package('tftp-server') do
+      it { should be_installed }
+    end
+  else
+    describe package('tftp-server') do
+      it { should_not be_installed }
+    end
+  end
 end

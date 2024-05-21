@@ -35,4 +35,23 @@ If a package was not used to install the SELinux policy for a given device class
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !virtualization.system.eql?('docker')
+  }
+
+  exempt_device_files = input('exempt_device_files')
+
+  device_labeled_files = command("find #{input('device_file_locations').join(' ')} -context *:device_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - exempt_device_files
+  unlabeled_files = command("find #{input('device_file_locations').join(' ')} -context *:unlabeled_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - exempt_device_files
+
+  describe 'All device files' do
+    it 'should not be incorrectly labeled as device_t' do
+      expect(device_labeled_files).to be_empty, "Device files incorrectly labeled as device_t:\n\t- #{device_labeled_files.join("\n\t- ")}"
+    end
+    it 'should not be incorrectly labeled as unlabeled_t' do
+      expect(unlabeled_files).to be_empty, "Device files incorrectly labeled as unlabeled_t:\n\t- #{unlabeled_files.join("\n\t- ")}"
+    end
+  end
 end
