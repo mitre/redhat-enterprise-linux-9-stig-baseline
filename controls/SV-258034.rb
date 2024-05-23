@@ -29,15 +29,35 @@ blacklist usb-storage'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
+
+  config_files = command('find /etc/modprobe.conf /etc/modprobe.d/* -print0').stdout.split("\0")
+  blacklisted = config_files.any? do |c| 
+    params = parse_config_file(c, comment_char: '#', multiple_values: true, 
+      assignment_regex: /^(\S+)\s+(\S+)$/).params
+    params.include?('blacklist') and params['blacklist'].include?('usb-storage')
+  end
+
   if input('usb_storage_required') == true
     describe kernel_module('usb_storage') do
       it { should_not be_disabled }
       it { should_not be_blacklisted }
     end
+
+    describe 'usb_storage' do
+      it 'is configured to be blacklisted' do
+        expect(blacklisted).to eq(false)
+      end
+    end
   else
     describe kernel_module('usb_storage') do
       it { should be_disabled }
       it { should be_blacklisted }
+    end
+
+    describe 'usb_storage' do
+      it 'is configured to be blacklisted' do
+        expect(blacklisted).to eq(true)
+      end
     end
   end
 end
