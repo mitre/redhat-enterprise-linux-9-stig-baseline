@@ -39,12 +39,12 @@ Reboot the system for the settings to take effect.'
     end
 
     config_files = command('find /etc/modprobe.conf /etc/modprobe.d/* -print0').stdout.split("\0")
-    blacklisted = config_files.any? do |c| 
-      params = parse_config_file(c, comment_char: '#', multiple_values: true, 
-        assignment_regex: /^(\S+)\s+(\S+)$/).params
+    blacklisted = config_files.any? do |c|
+      params = parse_config_file(c, comment_char: '#', multiple_values: true,
+                                    assignment_regex: /^(\S+)\s+(\S+)$/).params
       params.include?('blacklist') and params['blacklist'].include?('bluetooth')
     end
-  
+
     describe 'bluetooth' do
       it 'is configured to be blacklisted' do
         expect(blacklisted).to eq(true)

@@ -36,11 +36,11 @@ blacklist can'
   config_files = command('find /etc/modprobe.conf /etc/modprobe.d/* -print0').stdout.split("\0")
   describe 'can' do
     it 'is configured to be blacklisted' do
-      expect(config_files.any? do |c| 
-        params = parse_config_file(c, 
-          comment_char: '#', 
-          multiple_values: true, 
-          assignment_regex: /^(\S+)\s+(\S+)$/).params
+      expect(config_files.any? do |c|
+        params = parse_config_file(c,
+                                   comment_char: '#',
+                                   multiple_values: true,
+                                   assignment_regex: /^(\S+)\s+(\S+)$/).params
         params.include?('blacklist') and params['blacklist'].include?('can')
       end).to eq(true)
     end
