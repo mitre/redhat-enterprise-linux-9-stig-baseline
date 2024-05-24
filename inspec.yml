@@ -129,6 +129,18 @@ inputs:
     type: String
     value: '0740'
 
+  # SV-257889
+  - name: exempt_ini_files
+    description: List of initialization files that are exempt from permissions checks
+    type: Array
+    value: [] 
+    
+  # SV-257889
+  - name: alternate_ini_file_dirs
+    description: List of directories, other than a user's homedir, to search for initialization files
+    type: Array
+    value: []
+
   # SV-258157
   - name: alert_method
     description: 'The method used to provide real-time information to the ISSO or AO'
