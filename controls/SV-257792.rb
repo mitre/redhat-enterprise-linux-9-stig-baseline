@@ -44,13 +44,21 @@ GRUB_CMDLINE_LINUX="vsyscall=none"'
     !virtualization.system.eql?('docker')
   }
 
-  grub_stdout = command('grubby --info=ALL').stdout
-  setting = /vsyscall\s*=\s*none/
+  if input('vsyscall_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  else
 
-  describe 'GRUB config' do
-    it 'should disable vsyscall' do
-      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
-      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
+    grub_stdout = command('grubby --info=ALL').stdout
+    setting = /vsyscall\s*=\s*none/
+
+    describe 'GRUB config' do
+      it 'should disable vsyscall' do
+        expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
+        expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
+      end
     end
   end
 end

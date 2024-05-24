@@ -45,26 +45,34 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  parameter = 'net.ipv6.conf.all.accept_ra'
-  value = 0
-  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
-
-  describe kernel_parameter(parameter) do
-    its('value') { should eq value }
-  end
-
-  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
-
-  correct_result = search_results.any? { |line| line.match(regexp) }
-  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
-
-  describe 'Kernel config files' do
-    it "should configure '#{parameter}'" do
-      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+  if input('accept_ra_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
-    unless incorrect_results.nil?
-      it 'should not have incorrect or conflicting setting(s) in the config files' do
-        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+  else
+
+    parameter = 'net.ipv6.conf.all.accept_ra'
+    value = 0
+    regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+    describe kernel_parameter(parameter) do
+      its('value') { should eq value }
+    end
+
+    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+    correct_result = search_results.any? { |line| line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+    describe 'Kernel config files' do
+      it "should configure '#{parameter}'" do
+        expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+      end
+      unless incorrect_results.nil?
+        it 'should not have incorrect or conflicting setting(s) in the config files' do
+          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+        end
       end
     end
   end
