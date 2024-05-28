@@ -190,7 +190,7 @@ inputs:
     value: 60
 
   # SV-257843
-  - name: separate_filesystem_exempt
+  - name: exempt_separate_filesystem
     description: "The system manages file system useage, LVM/XFS etc. or is managed by the service provider"
     type: Boolean
     value: false
@@ -214,7 +214,7 @@ inputs:
     value: true
 
   # SV-257879
-  - name: data_at_rest_exempt
+  - name: exempt_data_at_rest
     description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
     type: Boolean
     value: false
@@ -283,7 +283,7 @@ inputs:
       - administrator
 
   # SV-258042, SV-258052, SV-257890, SV-258053, SV-258044, SV-258050, SV-258051, SV-258105
-  - name: exempt_home_users
+  - name: home_users_exemptions
     description: Users exempt from home directory-based controls in array format
     type: Array
     value:
@@ -951,7 +951,7 @@ inputs:
       - /dev
 
   # SV-257932
-  - name: exempt_device_files
+  - name: device_files_exemptions
     description: Full filepaths of files that are exempt from device file checks if the target host is a virtual machine
     type: Array
     value:

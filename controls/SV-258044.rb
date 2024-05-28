@@ -39,12 +39,12 @@ If the account is for an application, the requirement for a umask less restricti
     !virtualization.system.eql?('docker')
   }
 
-  exempt_home_users = input('exempt_home_users')
+  home_users_exemptions = input('home_users_exemptions')
   expected_mode = input('modes_for_shells')['default_umask']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
-  iusers = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
+  iusers = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !home_users_exemptions.include?(user) }
 
   if !iusers.users.nil? && !iusers.users.empty?
 

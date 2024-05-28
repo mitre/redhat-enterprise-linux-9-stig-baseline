@@ -32,7 +32,7 @@ directory owned by the application, it must be documented with the ISSO.'
 
   findings = {}
   users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.entries.each do |user_info|
-    next if input('exempt_home_users').include?(user_info.username.to_s)
+    next if input('home_users_exemptions').include?(user_info.username.to_s)
 
     grep_results = command("grep -i path= --exclude=\".bash_history\" #{user_info.home}/.*").stdout.split("\n")
     grep_results.each do |result|

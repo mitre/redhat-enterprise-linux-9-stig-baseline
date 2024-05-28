@@ -27,7 +27,7 @@ passwd -x 60 [user]'
   value = input('pass_max_days')
 
   bad_users = users.where { uid >= 1000 }.where { value > 60 or maxdays.negative? }.usernames
-  in_scope_users = bad_users - input('exempt_home_users')
+  in_scope_users = bad_users - input('home_users_exemptions')
 
   describe 'Users are not be able' do
     it "to retain passwords for more then #{value} day(s)" do
