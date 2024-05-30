@@ -29,11 +29,16 @@ $ sudo grubby --update-kernel=ALL --remove-args=noexec'
     !virtualization.system.eql?('docker')
   }
 
-  dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout.match(/:\s+(\S+)$/).captures.first
+  dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout
 
   describe 'The no-execution bit flag' do
     it 'should be set in kernel messages' do
-      expect(dmesg_nx_conf).to eq('active'), "dmesg does not show NX protection set to 'active'"
+      expect(dmesg_nx_conf).to_not eq(''), "dmesg does not set ExecShield"
+    end
+    if !dmesg.nx_conf.empty?
+      it 'should be active' do
+        expect(dmesg_nx_conf).to eq('active'), "dmesg does not show ExecShield set to 'active'"
+      end
     end
   end
 end
