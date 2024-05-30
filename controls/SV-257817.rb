@@ -37,7 +37,7 @@ $ sudo grubby --update-kernel=ALL --remove-args=noexec'
     end
     if !dmesg.nx_conf.empty?
       it 'should be active' do
-        expect(dmesg_nx_conf).to eq('active'), "dmesg does not show ExecShield set to 'active'"
+        expect(dmesg_nx_conf.match(/:\s+(\S+)$/).captures.first).to eq('active'), "dmesg does not show ExecShield set to 'active'"
       end
     end
   end
