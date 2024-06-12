@@ -34,7 +34,7 @@ $ sudo chmod 0750 /home/wadea'
     !virtualization.system.eql?('docker')
   }
 
-  exempt_home_users = input('home_users_exemptions')
+  home_users_exemptions = input('home_users_exemptions')
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
