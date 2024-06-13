@@ -27,7 +27,13 @@ $ sudo dnf remove quagga'
   tag nist: ['CM-6 b']
   tag 'host', 'container'
 
-  describe package('quagga') do
-    it { should_not be_installed }
+  if input('quagga_required')
+    describe package('quagga') do
+      it { should be_installed }
+    end
+  else
+    describe package('quagga') do
+      it { should_not be_installed }
+    end
   end
 end

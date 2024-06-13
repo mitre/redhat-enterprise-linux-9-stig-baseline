@@ -829,17 +829,21 @@ inputs:
     type: Boolean
     value: false
 
-    # SV-230560
   # SV-257833
   - name: iprutils_required
     description: Set to true if there is a documented requirement for the target system to use iprutils
     type: Boolean
     value: false
   
-    # SV-230561
   # SV-257834
   - name: tuned_required
     description: Set to true if there is a documented requirement for the target system to use tuned
+    type: Boolean
+    value: false
+
+  # SV-257836
+  - name: quagga_required
+    description: Set to true if there is a documented requirement for the target system to use quagga
     type: Boolean
     value: false
 
@@ -1023,8 +1027,92 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257970
+  # SV-257970, SV-257974
   - name: forwarding
     description: Set to true if there is a requirement for this system to be able forward packets that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257792
+  - name: vsyscall_required
+    description: Set to true if there is a requirement for this system to allow virtual system calls that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257803
+  - name: storing_core_dumps_required
+    description: Set to true if there is a requirement for this system to store core dumps that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257812
+  - name: core_dumps_required
+    description: Set to true if there is a requirement for this system to enable core dumps that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257804
+  - name: atm_required
+    description: Set to true if there is a requirement for this system to enable the Asynchronous Transfer Mode kernel module that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257805
+  - name: can_required
+    description: Set to true if there is a requirement for this system to enable the Controller Area Network kernel module that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257806
+  - name: firewire_required
+    description: Set to true if there is a requirement for this system to enable the FireWire kernel module that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257807
+  - name: sctp_required
+    description: Set to true if there is a requirement for this system to enable the Stream Control Transmission Protocol (SCTP) kernel module that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257808
+  - name: tipc_required
+    description: Set to true if there is a requirement for this system to enable the Transparent Inter Process Communication (TIPC) kernel module that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257880
+  - name: cramfs_required
+    description: Set to true if there is a requirement for this system to enable the Compressed ROM/RAM file system (cramfs) that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-258039
+  - name: bluetooth_required
+    description: Set to true if there is a requirement for this system to enable Bluetooth that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257971, SV-257975
+  - name: accept_ra_required
+    description: Set to true if there is a requirement for this system to accept router advertisements that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-258007
+  - name: x11_forwarding_required
+    description: Set to true if there is a requirement for this system to enable X11 forwarding that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-258014
+  - name: gui_automount_required
+    description: Set to true if there is a requirement for this system to enable graphical user interface automount function that is documented with the ISSO
+    type: Boolean
+    value: false
+
+  # SV-258014
+  - name: gui_autorun_required
+    description: Set to true if there is a requirement for this system to enable graphical user interface autorun function that is documented with the ISSO
     type: Boolean
     value: false
