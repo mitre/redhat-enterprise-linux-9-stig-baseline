@@ -29,7 +29,7 @@ $ sudo chmod 755 [DIRECTORY]'
     !virtualization.system.eql?('docker')
   }
 
-  mode_for_libs = input('mode_for_libsmakethisonefail')
+  mode_for_libs = input('mode_for_libs')
 
   overly_permissive_libs = input('system_libraries').select { |lib|
     file(lib).more_permissive_than?(mode_for_libs)
