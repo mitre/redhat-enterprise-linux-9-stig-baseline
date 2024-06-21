@@ -30,7 +30,7 @@ If users home directory is not defined, this is a finding."
     !virtualization.system.eql?('docker')
   }
 
-  exempt_users = input('exempt_home_users')
+  exempt_users = input('home_users_exemptions')
   ignore_shells = input('non_interactive_shells').join('|')
   actvite_users_without_homedir = users.where { !shell.match(ignore_shells) && home.nil? }.entries
 
