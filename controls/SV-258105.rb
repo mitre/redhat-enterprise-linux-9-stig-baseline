@@ -29,7 +29,7 @@ $ sudo passwd -n 1 [user]'
   # TODO: add inputs for a frequecny
 
   bad_users = users.where { uid >= 1000 }.where { mindays < 1 }.usernames
-  in_scope_users = bad_users - input('exempt_home_users')
+  in_scope_users = bad_users - input('home_users_exemptions')
 
   describe 'Users should not' do
     it 'be able to change their password more then once a 24 hour period' do
