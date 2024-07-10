@@ -1,0 +1,68 @@
+---
+platforms:
+  - name: rhel-9
+    transport:
+      username: "<%= ENV['VCENTER_TEMPLATE_BASE_IMAGE_USER'] %>"
+      password: "<%= ENV['VCENTER_TEMPLATE_BASE_IMAGE_PASSWORD'] %>"
+
+driver:
+  name: vcenter
+  vcenter_username: "<%= ENV['VCENTER_UN'] %>"
+  vcenter_password: "<%= ENV['VCENTER_PW'] %>"
+  vcenter_host: "<%= ENV['VCENTER_HOST'] %>"
+  vcenter_disable_ssl_verify: true # disable SSL check -- self-signed certificate in VCenter at present
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/local/bin
+  # require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  requirements_collection_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+suites:
+  - name: hardened
+    driver:
+      template: "<%= ENV['VCENTER_TEMPLATE'] %>"
+      datacenter: "<%= ENV['VCENTER_DATACENTER'] %>"
+      benchmark: true
+      resource_pool: Primary
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        # echo "+++ Refreshing DNF package cache +++"
+        # sudo dnf -y clean all
+        echo ""
+        echo "+++ Updating DNF Packages +++"
+        sudo dnf -y update --nogpgcheck --nobest
+        echo ""
+        echo "+++ Installing needed packages for workflow and utility +++\n\n"
+        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
+        echo ""
+        echo "+++ Installing Python 3.9 and Ansible +++\n\n"
+        export PATH=/usr/local/bin:$PATH
+        sudo dnf -y install python3-pip
+        sudo python3 -m pip install ansible jmespath
+        echo ""
+        echo "+++ Updating the user to keep sudo working after hardening phase +++\n\n"
+        sudo chage -d $(( $( date +%s ) / 86400 )) user
+        echo ""
+        echo "+++ updating user sudo config for hardening phase +++\n\n"
+        sudo chmod 600 /etc/sudoers && sudo chmod 400 /etc/sudoers
+        sudo dnf -y install git
+
+transport:
+  name: ssh
+  # username: "<%= ENV['VCENTER_TEMPLATE_BASE_IMAGE_USER'] %>"
+  # password: "<%= ENV['VCENTER_TEMPLATE_BASE_IMAGE_PASSWORD'] %>"
+  #https://github.com/neillturner/kitchen-ansible/issues/295
+  max_ssh_sessions: 2
