@@ -41,10 +41,10 @@ If a package was not used to install the SELinux policy for a given device class
     !virtualization.system.eql?('docker')
   }
 
-  device_files_exemptions = input('device_files_exemptions')
+  exempt_from_device_file_checks = input('exempt_from_device_file_checks')
 
-  device_labeled_files = command("find #{input('device_file_locations').join(' ')} -context *:device_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - device_files_exemptions
-  unlabeled_files = command("find #{input('device_file_locations').join(' ')} -context *:unlabeled_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - device_files_exemptions
+  device_labeled_files = command("find #{input('device_file_locations').join(' ')} -context *:device_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - exempt_from_device_file_checks
+  unlabeled_files = command("find #{input('device_file_locations').join(' ')} -context *:unlabeled_t:* \( -type c -o -type b \) -printf \"%p\t%Z\n\"").stdout.split("\n") - exempt_from_device_file_checks
 
   describe 'All device files' do
     it 'should not be incorrectly labeled as device_t' do

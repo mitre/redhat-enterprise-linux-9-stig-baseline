@@ -32,12 +32,12 @@ $ sudo chmod 0750 /home/wadea)
     !virtualization.system.eql?('docker')
   }
 
-  home_users_exemptions = input('home_users_exemptions')
+  exempt_home_users = input('exempt_home_users')
   expected_mode = input('expected_modes')['home_dirs']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 
-  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !home_users_exemptions.include?(user) }
+  iuser_entries = passwd.where { uid.to_i >= uid_min && shell !~ /nologin/ && !exempt_home_users.include?(user) }
 
   if !iuser_entries.users.nil? && !iuser_entries.users.empty?
     failing_homedirs = iuser_entries.homes.select { |home|
