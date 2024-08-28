@@ -40,7 +40,7 @@ include "/etc/crypto-policies/back-ends/bind.config";'
     !virtualization.system.eql?('docker')
   }
   only_if('This control is Not Applicable since bind is not installed', impact: 0.0) {
-    !package('bind').installed?
+    package('bind').installed?
   }
 
   describe file('/etc/named.conf') do

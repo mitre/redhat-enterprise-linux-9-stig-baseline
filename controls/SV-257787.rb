@@ -55,7 +55,7 @@ Confirm password:'
     it { should exist }
   end
 
-  if grubfile.exist? && grub_userfile.exist?
+  if file(grubfile).exist? && file(grub_userfile).exist?
     password_set = file(grubfile).content.lines.select { |line| line.match(/password_pbkdf2\s+\w+\s+\$\{\w+\}/) }
 
     describe 'The GRUB bootloader superuser password' do
