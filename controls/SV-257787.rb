@@ -44,14 +44,14 @@ Confirm password:'
     !virtualization.system.eql?('docker')
   end
 
-  grubfile = file(input('grub_conf_path'))
-  grub_userfile = file(input('grub_user_conf_path'))
+  grubfile = input('grub_conf_path')
+  grub_userfile = input('grub_user_conf_path')
 
-  describe grubfile do
+  describe file(grubfile) do
     it { should exist }
   end
 
-  describe grub_userfile do
+  describe file(grub_userfile) do
     it { should exist }
   end
 

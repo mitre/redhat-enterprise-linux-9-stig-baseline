@@ -5,14 +5,15 @@ copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
 version: 1.2.0
-inspec_version: ">= 6.0"
+# NOTE: for testing with test-kitchen, put back to ">= 6.0" when finished
+inspec_version: ">= 5.0"
 
 supports:
   - platform-name: redhat
     release: 9.*
 
 ### INPUTS ###
-# Inputs are variables that can be referenced by any control in the profile, 
+# Inputs are variables that can be referenced by any control in the profile,
 # and are defined and given a default value in this file.
 
 # By default, each parameter is set to exactly comply with the STIG baseline
@@ -21,7 +22,7 @@ supports:
 
 # For example, control SV-230379 checks that only 'necessary accounts' exist
 # on the system. The list of 'necessary' accounts depends on the function of
-# the system, and you will likely need to add approved accounts to the 
+# the system, and you will likely need to add approved accounts to the
 # 'known_system_accounts' input. Also, depending on your local organizational
 # security policy, you may need to deviate from the STIG on some controls to
 # make the test profile 'stricter' or 'looser.'
@@ -133,8 +134,8 @@ inputs:
   - name: exempt_ini_files
     description: List of initialization files that are exempt from permissions checks
     type: Array
-    value: [] 
-    
+    value: []
+
   # SV-257889
   - name: alternate_ini_file_dirs
     description: List of directories, other than a user's homedir, to search for initialization files
@@ -330,7 +331,7 @@ inputs:
   - name: unapproved_ssl_tls_versions
     description:
     type: Array
-    value: 
+    value:
       - -VERS-DTLS0.9
       - -VERS-SSL3.0
       - -VERS-TLS1.0
@@ -834,7 +835,7 @@ inputs:
     description: Set to true if there is a documented requirement for the target system to use iprutils
     type: Boolean
     value: false
-  
+
   # SV-257834
   - name: tuned_required
     description: Set to true if there is a documented requirement for the target system to use tuned
@@ -963,7 +964,7 @@ inputs:
   - name: device_file_locations
     description: Directories where device files live
     type: Array
-    value: 
+    value:
       - /dev
 
   # SV-257932
@@ -987,7 +988,7 @@ inputs:
   - name: approved_openssh_server_conf
     description: Config values expected for openssh server (order matters, so these values are comma-delimited strings and not arrays)
     type: Hash
-    value: 
+    value:
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512
 
