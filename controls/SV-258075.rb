@@ -34,7 +34,7 @@ umask 077'
 
   file = '/etc/profile'
 
-  expected_umask = input('permissions_for_shells')[:profile_umask]
+  expected_umask = input('modes_for_shells')[:profile_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 
