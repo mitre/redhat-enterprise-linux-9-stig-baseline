@@ -48,8 +48,7 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   end
 
   bind_grep = command('grep include /etc/named.conf').stdout.lines.map(&:strip)
-
-  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config$}i) }
+  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config}i) }
 
   describe 'Bind config file' do
     it 'should include system-wide crypto policies' do
