@@ -64,7 +64,7 @@ Confirm password:'
       end
 
       grub_envar = password_set.first.match(/\$\{(?<grub_pw_envar>\w+)\}/).captures.first
-      password_encrypted = file(grub_userfile).content.match(/#{grub_envar}=grub.pbkdf2/)
+      password_encrypted = file(grub_userfile).content.match?(/#{grub_envar}=grub.pbkdf2/)
       it "should be encrypted in the user config file (\'#{grub_userfile}\')" do
         expect(password_encrypted).to eq(true), "GRUB password environment variable not set to an encrypted value in \'#{grub_userfile}\'"
       end

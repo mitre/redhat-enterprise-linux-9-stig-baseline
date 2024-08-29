@@ -982,6 +982,9 @@ inputs:
       protocols: []
       services:
         - ssh
+        # TODO: Do we need below?
+        - cockpit
+        - dhcpv6-client
 
   # SV-257991, SV-257990, SV-257989
   - name: approved_openssh_server_conf
