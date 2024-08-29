@@ -29,7 +29,7 @@ crypt_style = sha512'
   tag nist: ['IA-5 (1) (c)']
   tag 'host', 'container'
 
-  describe parse_config_file('/etc/libuser.conf') do
-    its('crypt_style') { should match('sha512') }
+  describe file('/etc/libuser.conf') do
+    its('content') { should match(/^crypt_style\s*=\s*sha512/) }
   end
 end
