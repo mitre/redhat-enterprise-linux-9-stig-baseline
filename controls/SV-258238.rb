@@ -30,9 +30,10 @@ A reboot is required for the changes to take effect.'
   tag 'host'
   tag 'container'
 
-  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.upcase.strip.split(':')
   unapproved_versions = input('unapproved_ssl_tls_versions').map(&:upcase)
-  failing_versions = unapproved_versions - gnutls
+  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.upcase #.strip.split('=').map(&:strip)
+
+  failing_versions = unapproved_versions.select { |version| gnutls.include?(version) }
 
   describe 'GnuTLS' do
     it 'should disable unapproved SSL/TLS versions' do

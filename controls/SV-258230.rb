@@ -41,11 +41,11 @@ Reboot the system for the changes to take effect.'
       its('stdout.strip') { should match(/FIPS mode is enabled/) }
     end
 
-    grub_config = command('grub2-editenv - list').stdout
-
-    describe parse_config(grub_config) do
-      its('kernelopts') { should match(/fips=1/) }
-    end
+    # Control does not include this. Good to have? Required?
+    # grub_config = command('grub2-editenv - list').stdout
+    # describe parse_config(grub_config) do
+    #  its('kernelopts') { should match(/fips=1/) }
+    # end
 
     describe file('/proc/sys/crypto/fips_enabled') do
       its('content.strip') { should cmp '1' }
