@@ -126,7 +126,7 @@ inputs:
 
   # SV-257889 TODO: fold this into expected_system_file_mode
   - name: initialization_file_mode
-    description: All initialization files (.bash_profile etc) should have permissions equal to or less than this octet
+    description: All initialization files (.bash_profile etc) should each have a mode equal to or less than this octet
     type: String
     value: '0740'
 
@@ -203,7 +203,7 @@ inputs:
     value: 60
 
   # SV-257843
-  - name: separate_filesystem_exempt
+  - name: exempt_separate_filesystem
     description: "The system manages file system useage, LVM/XFS etc. or is managed by the service provider"
     type: Boolean
     value: false
@@ -227,7 +227,7 @@ inputs:
     value: true
 
   # SV-257879
-  - name: data_at_rest_exempt
+  - name: exempt_data_at_rest
     description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
     type: Boolean
     value: false
@@ -315,7 +315,7 @@ inputs:
       - "/bin/true"
 
   # SV-258046
-  - name: interactive_system_account_exemptions
+  - name: exempt_interactive_system_accounts
     description: System accounts that are exempt from the non-interactive shell requirement
     type: Array
     value:
@@ -597,8 +597,8 @@ inputs:
     value: "no"
 
   # SV-258072, SV-258073, SV-258044, SV-258074, SV-258075
-  - name: permissions_for_shells
-    description: Define default permissions for logon and non-logon shells.
+  - name: modes_for_shells
+    description: Define default modes for logon and non-logon shells.
     type: Hash
     value:
       default_umask: "077"
@@ -607,8 +607,8 @@ inputs:
       profile_umask: "077"
 
   # SV-257883
-  - name: permissions_for_libs
-    description: Define default permissions for system libraries
+  - name: mode_for_libs
+    description: Define default mode for system libraries
     type: String
     value: "0755"
 
@@ -967,7 +967,7 @@ inputs:
       - /dev
 
   # SV-257932
-  - name: exempt_device_files
+  - name: exempt_from_device_file_checks
     description: Full filepaths of files that are exempt from device file checks if the target host is a virtual machine
     type: Array
     value:
