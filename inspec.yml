@@ -893,6 +893,7 @@ inputs:
       '/usr/bin/mount'                : 'privileged-mount',
       '/usr/bin/umount'               : 'privileged-mount',
       'mount'                         : 'privileged-mount',
+      'umount'                         : 'privileged-umount',
       '/usr/sbin/unix_update'         : 'privileged-unix-update',
       '/usr/sbin/postdrop'            : 'privileged-unix-update',
       '/usr/sbin/postqueue'           : 'privileged-unix-update',
@@ -940,9 +941,7 @@ inputs:
       '/usr/sbin/poweroff'            : 'privileged-poweroff',
       '/usr/sbin/reboot'              : 'privileged-reboot',
       '/usr/sbin/shutdown'            : 'privileged-shutdown',
-      '/usr/bin/umount'              : 'privileged-mount',
       'umount2'                       : 'perm_mod',
-      '/var/log/faillock'             : 'logins',
       '/var/log/tallylog'             : 'logins'
     }
 
