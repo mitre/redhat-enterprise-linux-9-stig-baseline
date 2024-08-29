@@ -35,13 +35,13 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe parse_config_file('/etc/audit/auditd.conf') do
       its('overflow_action') { should match(/syslog$|single$|halt$/i) }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

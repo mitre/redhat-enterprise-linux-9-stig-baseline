@@ -41,7 +41,7 @@ A reboot is required for the changes to take effect.'
 
   approved_macs = input('approved_openssh_server_conf')['macs']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
   opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
   actual_macs = opensshserver_conf['macs'].join(',')

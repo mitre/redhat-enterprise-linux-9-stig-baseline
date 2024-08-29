@@ -39,7 +39,7 @@ enforce_for_root'
 
   setting = 'enforce_for_root'
 
-  # Note: -s to supress if no files
+  # NOTE: -s to supress if no files
   # Note: -h to just have occurances and ignore filename
   setting_check = command("grep -sh #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*").stdout.strip.match(/^#{setting}$/)
   describe 'The root account' do

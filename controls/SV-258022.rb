@@ -52,14 +52,14 @@ Add the following setting to prevent nonprivileged users from modifying it:
     !virtualization.system.eql?('docker')
   }
 
-  if !package('gnome-desktop3').installed?
+  if package('gnome-desktop3').installed?
+    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
+    end
+  else
     impact 0.0
     describe 'The GNOME desktop is not installed, this control is Not Applicable.' do
       skip 'The GNOME desktop is not installed, this control is Not Applicable.'
-    end
-  else
-    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
-      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
     end
   end
 end
