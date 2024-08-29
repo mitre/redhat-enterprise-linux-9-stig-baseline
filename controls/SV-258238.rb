@@ -31,7 +31,7 @@ A reboot is required for the changes to take effect.'
   tag 'container'
 
   unapproved_versions = input('unapproved_ssl_tls_versions').map(&:upcase)
-  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.upcase #.strip.split('=').map(&:strip)
+  gnutls = file('/etc/crypto-policies/back-ends/gnutls.config').content.upcase # .strip.split('=').map(&:strip)
 
   failing_versions = unapproved_versions.select { |version| gnutls.include?(version) }
 

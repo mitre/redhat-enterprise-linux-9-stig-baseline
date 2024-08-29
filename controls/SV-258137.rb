@@ -45,13 +45,13 @@ If any of the audit tools listed above do not have a corresponding line, ask the
     !virtualization.system.eql?('docker')
   }
 
-  audit_tools = %w[/usr/sbin/auditctl
+  audit_tools = %w(/usr/sbin/auditctl
                    /usr/sbin/auditd
                    /usr/sbin/ausearch
                    /usr/sbin/aureport
                    /usr/sbin/autrace
                    /usr/sbin/rsyslogd
-                   /usr/sbin/augenrules]
+                   /usr/sbin/augenrules)
 
   if package('aide').installed?
     audit_tools.each do |tool|
