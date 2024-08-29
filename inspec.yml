@@ -332,7 +332,7 @@ inputs:
     description:
     type: Array
     value:
-      - TLS0.9
+      - DTLS0.9
       - SSL3.0
       - TLS1.0
       - TLS1.1
