@@ -36,7 +36,7 @@ A reboot is required for the changes to take effect.'
   # NOTE: The STIG baseline for this requirement is concerned with the OpenSSH server, but asks for
   # a check against the openssh.config file, which is used for the client.
   #
-  # We assume that the requirements for OpenSSH *server* should be checking the 
+  # We assume that the requirements for OpenSSH *server* should be checking the
   # values in the opensshserver.conf file (as opposed to openssh.conf for client),
   # and these tests has been written accordingly.
   #
