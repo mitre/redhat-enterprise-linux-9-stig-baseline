@@ -38,7 +38,7 @@ A reboot is required for the changes to take effect.'
   #
   # We assume that the requirements for OpenSSH *server* should be checking the 
   # values in the opensshserver.conf file (as opposed to openssh.conf for client),
-  #  and these tests has been written accordingly.
+  # and these tests has been written accordingly.
   #
   # This means that test logic may not match the STIG check text at this time.
 
