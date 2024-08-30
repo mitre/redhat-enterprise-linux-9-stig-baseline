@@ -32,8 +32,15 @@ A reboot is required for the changes to take effect.'
   tag 'host'
   tag 'container-conditional'
 
-  # NOTE: At time of writing, the STIG baseline calls for two different values for the MACs option in the openssh.config file.
-  # SV-257990 calls for one set of MACs and SV-257991 calls for a mutually exclusive set.
+  # NOTE: This requirement as written is mutually exclusive with SV-257990.
+  #
+  # The STIG baseline calls for two different values for the MACs option in the openssh.config file.
+  #
+  # We assume that the requirements for OpenSSH *server* should be checking the 
+  # values in the opensshserver.conf file (as opposed to openssh.conf for client),
+  #  and these tests has been written accordingly.
+  #
+  # This means that test logic may not match the STIG check text at this time.
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
