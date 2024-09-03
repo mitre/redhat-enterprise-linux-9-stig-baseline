@@ -33,15 +33,6 @@ A reboot is required for the changes to take effect.'
   tag 'host'
   tag 'container-conditional'
 
-  # NOTE: The STIG baseline for this requirement is concerned with the OpenSSH server, but asks for
-  # a check against the openssh.config file, which is used for the client.
-  #
-  # We assume that the requirements for OpenSSH *server* should be checking the
-  # values in the opensshserver.conf file (as opposed to openssh.conf for client),
-  # and these tests has been written accordingly.
-  #
-  # This means that test logic may not match the STIG check text at this time.
-
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
   }

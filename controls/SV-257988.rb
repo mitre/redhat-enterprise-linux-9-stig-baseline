@@ -43,15 +43,16 @@ $ sudo dnf reinstall openssh-clients'
     it { should exist }
   end
 
-  sshd_grep = command('grep Include /etc/ssh/sshd_config  /etc/ssh/sshd_config.d/*').stdout.lines.map(&:strip)
+  # NOTE: -s to supress if no files
+  sshd_grep = command('grep -s Include /etc/ssh/sshd_config  /etc/ssh/sshd_config.d/*').stdout.lines.map(&:strip)
 
-  star_dot_conf = sshd_grep.any? { |line| line.match?(%r{Include /etc/ssh/sshd_config.d/\*\.conf$}i) }
-  opensshserver_config = sshd_grep.any? { |line| line.match?(%r{Include /etc/crypto-policies/back-ends/openssh\.config$}i) }
+  star_dot_conf = sshd_grep.any? { |line| line.match?(%r{Include /etc/ssh/sshd_config.d/\*\.conf}i) }
+  opensshserver_config = sshd_grep.any? { |line| line.match?(%r{Include /etc/crypto-policies/back-ends/opensshserver\.config}i) }
 
   describe 'SSHD config files' do
     it 'should include system-wide crypto policies' do
       expect(star_dot_conf).to eq(true), 'SSHD conf files do not include /etc/ssh/sshd_config.d/*.conf'
-      expect(opensshserver_config).to eq(true), 'SSHD conf files do not include /etc/crypto-policies/back-ends/openssh.config'
+      expect(opensshserver_config).to eq(true), 'SSHD conf files do not include /etc/crypto-policies/back-ends/opensshserver.config'
     end
   end
 end
