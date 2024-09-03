@@ -746,7 +746,7 @@ inputs:
   - name: mail_package
     description: Command that is used to send email messages
     type: String
-    value: mailx
+    value: s-nail
 
   # SV-257819
   - name: rpm_gpg_file
@@ -760,7 +760,7 @@ inputs:
     type: Hash
     value:
       "release key 2": "567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51"
-      "auxiliary key": "6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792"
+      "auxiliary key": "7E46 2425 8C40 6535 D56D  6F13 5054 E4A4 5A63 40B3"
 
   # SV-258068, SV-258077
   - name: stop_idle_session_sec
@@ -992,7 +992,7 @@ inputs:
     type: Hash
     value:
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
-      macs: hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512
+      macs: hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,umac-128@openssh.com,hmac-sha2-512
 
   # SV-257990, SV-257989
   - name: approved_openssh_client_conf
