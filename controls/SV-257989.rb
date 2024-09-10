@@ -39,8 +39,8 @@ A reboot is required for the changes to take effect.'
 
   approved_ciphers = input('approved_openssh_server_conf')['ciphers']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
-  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
   actual_ciphers = opensshserver_conf['ciphers'].join(',')
 

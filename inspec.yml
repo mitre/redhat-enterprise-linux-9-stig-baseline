@@ -5,14 +5,15 @@ copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
 version: 1.2.0
-inspec_version: ">= 6.0"
+# NOTE: for testing with test-kitchen, put back to ">= 6.0" when finished
+inspec_version: ">= 5.0"
 
 supports:
   - platform-name: redhat
     release: 9.*
 
 ### INPUTS ###
-# Inputs are variables that can be referenced by any control in the profile, 
+# Inputs are variables that can be referenced by any control in the profile,
 # and are defined and given a default value in this file.
 
 # By default, each parameter is set to exactly comply with the STIG baseline
@@ -21,7 +22,7 @@ supports:
 
 # For example, control SV-230379 checks that only 'necessary accounts' exist
 # on the system. The list of 'necessary' accounts depends on the function of
-# the system, and you will likely need to add approved accounts to the 
+# the system, and you will likely need to add approved accounts to the
 # 'known_system_accounts' input. Also, depending on your local organizational
 # security policy, you may need to deviate from the STIG on some controls to
 # make the test profile 'stricter' or 'looser.'
@@ -133,8 +134,8 @@ inputs:
   - name: exempt_ini_files
     description: List of initialization files that are exempt from permissions checks
     type: Array
-    value: [] 
-    
+    value: []
+
   # SV-257889
   - name: alternate_ini_file_dirs
     description: List of directories, other than a user's homedir, to search for initialization files
@@ -330,12 +331,12 @@ inputs:
   - name: unapproved_ssl_tls_versions
     description:
     type: Array
-    value: 
-      - -VERS-DTLS0.9
-      - -VERS-SSL3.0
-      - -VERS-TLS1.0
-      - -VERS-TLS1.1
-      - -VERS-DTLS1.0
+    value:
+      - DTLS0.9
+      - SSL3.0
+      - TLS1.0
+      - TLS1.1
+      - DTLS1.0
 
   # SV-258054
   - name: unsuccessful_attempts
@@ -745,7 +746,7 @@ inputs:
   - name: mail_package
     description: Command that is used to send email messages
     type: String
-    value: mailx
+    value: s-nail
 
   # SV-257819
   - name: rpm_gpg_file
@@ -759,7 +760,7 @@ inputs:
     type: Hash
     value:
       "release key 2": "567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51"
-      "auxiliary key": "6A6A A7C9 7C88 90AE C6AE  BFE2 F76F 66C3 D408 2792"
+      "auxiliary key": "7E46 2425 8C40 6535 D56D  6F13 5054 E4A4 5A63 40B3"
 
   # SV-258068, SV-258077
   - name: stop_idle_session_sec
@@ -834,7 +835,7 @@ inputs:
     description: Set to true if there is a documented requirement for the target system to use iprutils
     type: Boolean
     value: false
-  
+
   # SV-257834
   - name: tuned_required
     description: Set to true if there is a documented requirement for the target system to use tuned
@@ -892,6 +893,7 @@ inputs:
       '/usr/bin/mount'                : 'privileged-mount',
       '/usr/bin/umount'               : 'privileged-mount',
       'mount'                         : 'privileged-mount',
+      'umount'                         : 'privileged-umount',
       '/usr/sbin/unix_update'         : 'privileged-unix-update',
       '/usr/sbin/postdrop'            : 'privileged-unix-update',
       '/usr/sbin/postqueue'           : 'privileged-unix-update',
@@ -939,9 +941,7 @@ inputs:
       '/usr/sbin/poweroff'            : 'privileged-poweroff',
       '/usr/sbin/reboot'              : 'privileged-reboot',
       '/usr/sbin/shutdown'            : 'privileged-shutdown',
-      '/usr/bin/umount'              : 'privileged-mount',
       'umount2'                       : 'perm_mod',
-      '/var/log/faillock'             : 'logins',
       '/var/log/tallylog'             : 'logins'
     }
 
@@ -963,7 +963,7 @@ inputs:
   - name: device_file_locations
     description: Directories where device files live
     type: Array
-    value: 
+    value:
       - /dev
 
   # SV-257932
@@ -982,14 +982,26 @@ inputs:
       protocols: []
       services:
         - ssh
+        # TODO: Do we need below?
+        - cockpit
+        - dhcpv6-client
 
-  # SV-257991, SV-257990, SV-257989
+  # SV-257991, SV-257989
   - name: approved_openssh_server_conf
     description: Config values expected for openssh server (order matters, so these values are comma-delimited strings and not arrays)
     type: Hash
-    value: 
+    value:
+      ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
+      macs: hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,umac-128@openssh.com,hmac-sha2-512
+
+  # SV-257990, SV-257989
+  - name: approved_openssh_client_conf
+    description: Config values expected for openssh client (order matters, so these values are comma-delimited strings and not arrays)
+    type: Hash
+    value:
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512
+
 
   # SV-258100, SV-258099
   - name: password_hash_rounds

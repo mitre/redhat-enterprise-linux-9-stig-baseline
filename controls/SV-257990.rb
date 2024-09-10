@@ -37,16 +37,16 @@ A reboot is required for the changes to take effect.'
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
   }
 
-  approved_macs = input('approved_openssh_server_conf')['macs']
+  approved_macs = input('approved_openssh_client_conf')['macs']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
-  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
+  openssh_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
-  actual_macs = opensshserver_conf['macs'].join(',')
+  actual_macs = openssh_conf['macs'].join(',')
 
-  describe 'OpenSSH server configuration' do
+  describe 'OpenSSH client configuration' do
     it 'implement approved MACs' do
-      expect(actual_macs).to eq(approved_macs), "OpenSSH server cipher configuration actual value:\n\t#{actual_macs}\ndoes not match the expected value:\n\t#{approved_macs}"
+      expect(actual_macs).to eq(approved_macs), "OpenSSH client cipher configuration actual value:\n\t#{actual_macs}\ndoes not match the expected value:\n\t#{approved_macs}"
     end
   end
 end

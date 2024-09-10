@@ -9,11 +9,11 @@ Cryptographic mechanisms used for protecting the integrity of information includ
 RHEL 9 incorporates system-wide crypto policies by default. The SSH configuration file has no effect on the ciphers, MACs, or algorithms unless specifically defined in the /etc/sysconfig/sshd file. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/opensshserver.config file.'
   desc 'check', 'Verify SSH client is configured to use only ciphers employing FIPS 140-3 approved algorithms with the following command:
 
-$ sudo grep -i macs /etc/crypto-policies/back-ends/openssh.config
+$ sudo grep -i macs /etc/crypto-policies/back-ends/opensshserver.conf
 MACs hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512
 
-If the MACs entries in the "openssh.config" file have any hashes other than "hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512", the order differs from the example above, they are missing, or commented out, this is a finding.'
-  desc 'fix', 'Configure the RHEL 9 SSH client to use only MACs employing FIPS 140-3 approved algorithms by updating the "/etc/crypto-policies/back-ends/openssh.config" file with the following line:
+If the MACs entries in the "opensshserver.conf" file have any hashes other than "hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512", the order differs from the example above, they are missing, or commented out, this is a finding.'
+  desc 'fix', 'Configure the RHEL 9 SSH client to use only MACs employing FIPS 140-3 approved algorithms by updating the "/etc/crypto-policies/back-ends/opensshserver.conf" file with the following line:
 
 MACs hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512
 
@@ -32,8 +32,15 @@ A reboot is required for the changes to take effect.'
   tag 'host'
   tag 'container-conditional'
 
-  # NOTE: At time of writing, the STIG baseline calls for two different values for the MACs option in the openssh.config file.
-  # SV-257990 calls for one set of MACs and SV-257991 calls for a mutually exclusive set.
+  # NOTE: This requirement as written is mutually exclusive with SV-257990.
+  #
+  # The STIG baseline calls for two different values for the MACs option in the openssh.config file.
+  #
+  # We assume that the requirements for OpenSSH *server* should be checking the
+  # values in the opensshserver.conf file (as opposed to openssh.conf for client),
+  # and these tests has been written accordingly.
+  #
+  # This means that test logic may not match the STIG check text at this time.
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
@@ -41,7 +48,7 @@ A reboot is required for the changes to take effect.'
 
   approved_macs = input('approved_openssh_server_conf')['macs']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
   opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
   actual_macs = opensshserver_conf['macs'].join(',')

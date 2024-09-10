@@ -33,7 +33,7 @@ $ sudo newaliases'
   tag nist: ['AU-5 a']
   tag 'host', 'container'
 
-  options = { "assignment_regex": /^(\S+):\s*(\S+)/ }
+  options = { assignment_regex: /^(\S+):\s*(\S+)/ }
 
   describe parse_config_file('/etc/aliases', options) do
     its('postmaster') { should cmp 'root' }

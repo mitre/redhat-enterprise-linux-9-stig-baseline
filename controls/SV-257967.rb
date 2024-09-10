@@ -43,7 +43,7 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  parameter = 'net.ipv4.icmp_ignore_bogus_error_response'
+  parameter = 'net.ipv4.icmp_ignore_bogus_error_responses'
   value = 1
   regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
