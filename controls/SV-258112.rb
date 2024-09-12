@@ -1,6 +1,6 @@
 control 'SV-258112' do
   title 'RHEL 9 must require the change of at least eight characters when passwords are changed.'
-  desc 'Use of a complex password helps to increase the time and resources required to compromise the password. Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks. 
+  desc 'Use of a complex password helps to increase the time and resources required to compromise the password. Password complexity, or strength, is a measure of the effectiveness of a password in resisting attempts at guessing and brute-force attacks.
 
 Password complexity is one factor of several that determines how long it takes to crack a password. The more complex the password, the greater the number of possible combinations that need to be tested before the password is compromised. Requiring a minimum number of different characters during password changes ensures that newly changed passwords will not resemble previously compromised ones. Note that passwords changed on compromised systems will still be compromised.'
   desc 'check', 'Verify the value of the "difok" option in "/etc/security/pwquality.conf" with the following command:
