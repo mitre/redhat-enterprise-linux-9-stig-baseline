@@ -34,7 +34,7 @@ If any of the audit tools listed above do not have a corresponding line, ask the
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag gid: 'V-258137'
-  tag rid: 'SV-258137r943021_rule'
+  tag rid: 'SV-258137r991557_rule'
   tag stig_id: 'RHEL-09-651025'
   tag fix_id: 'F-61802r943020_fix'
   tag cci: ['CCI-001496', 'CCI-001493', 'CCI-001494', 'CCI-001495']

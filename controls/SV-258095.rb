@@ -24,7 +24,7 @@ account required pam_faillock.so'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258095'
-  tag rid: 'SV-258095r926272_rule'
+  tag rid: 'SV-258095r958388_rule'
   tag stig_id: 'RHEL-09-611030'
   tag fix_id: 'F-61760r926271_fix'
   tag cci: ['CCI-000044']

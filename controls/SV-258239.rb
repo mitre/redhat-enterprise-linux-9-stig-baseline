@@ -25,7 +25,7 @@ Edit the "/etc/pki/tls/openssl.cnf" and add or modify the following line:
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-258239'
-  tag rid: 'SV-258239r926704_rule'
+  tag rid: 'SV-258239r991554_rule'
   tag stig_id: 'RHEL-09-672035'
   tag fix_id: 'F-61904r926703_fix'
   tag cci: ['CCI-001453']

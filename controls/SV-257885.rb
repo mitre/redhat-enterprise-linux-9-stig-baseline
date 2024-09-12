@@ -18,7 +18,7 @@ $ sudo chmod 0755 /var/log'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257885'
-  tag rid: 'SV-257885r925642_rule'
+  tag rid: 'SV-257885r958566_rule'
   tag stig_id: 'RHEL-09-232025'
   tag fix_id: 'F-61550r925641_fix'
   tag cci: ['CCI-001314']

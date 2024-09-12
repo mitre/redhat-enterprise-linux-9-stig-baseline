@@ -32,7 +32,7 @@ Replace [name server 1] and [name server 2] with the IPs of two different DNS re
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257948'
-  tag rid: 'SV-257948r925831_rule'
+  tag rid: 'SV-257948r991589_rule'
   tag stig_id: 'RHEL-09-252035'
   tag fix_id: 'F-61613r925830_fix'
   tag cci: ['CCI-000366']

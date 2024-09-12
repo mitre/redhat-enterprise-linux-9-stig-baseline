@@ -25,7 +25,7 @@ $ systemctl enable --now fapolicyd'
   tag gtitle: 'SRG-OS-000370-GPOS-00155'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-258090'
-  tag rid: 'SV-258090r926257_rule'
+  tag rid: 'SV-258090r958808_rule'
   tag stig_id: 'RHEL-09-433015'
   tag fix_id: 'F-61755r926256_fix'
   tag cci: ['CCI-001764', 'CCI-001774']

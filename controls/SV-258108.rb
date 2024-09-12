@@ -22,11 +22,11 @@ PASS_MIN_LEN 15'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-258108'
-  tag rid: 'SV-258108r926311_rule'
+  tag rid: 'SV-258108r997094_rule'
   tag stig_id: 'RHEL-09-611095'
   tag fix_id: 'F-61773r926310_fix'
-  tag cci: ['CCI-000205']
-  tag nist: ['IA-5 (1) (a)']
+  tag cci: ['CCI-000205', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

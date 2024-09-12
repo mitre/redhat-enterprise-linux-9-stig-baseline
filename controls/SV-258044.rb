@@ -28,7 +28,7 @@ If the account is for an application, the requirement for a umask less restricti
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258044'
-  tag rid: 'SV-258044r926119_rule'
+  tag rid: 'SV-258044r991589_rule'
   tag stig_id: 'RHEL-09-411025'
   tag fix_id: 'F-61709r926118_fix'
   tag cci: ['CCI-000366']

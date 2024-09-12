@@ -22,7 +22,7 @@ If availability has been determined to be more important, and this decision is d
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag gid: 'V-258154'
-  tag rid: 'SV-258154r926449_rule'
+  tag rid: 'SV-258154r958426_rule'
   tag stig_id: 'RHEL-09-653025'
   tag fix_id: 'F-61819r926448_fix'
   tag cci: ['CCI-000140']

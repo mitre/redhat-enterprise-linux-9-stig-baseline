@@ -18,7 +18,7 @@ $ sudo chmod 0640 /var/log/messages'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257886'
-  tag rid: 'SV-257886r925645_rule'
+  tag rid: 'SV-257886r958566_rule'
   tag stig_id: 'RHEL-09-232030'
   tag fix_id: 'F-61551r925644_fix'
   tag cci: ['CCI-001314']

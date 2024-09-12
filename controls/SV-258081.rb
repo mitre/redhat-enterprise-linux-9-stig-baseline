@@ -30,7 +30,7 @@ $ sudo dnf install policycoreutils'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258081'
-  tag rid: 'SV-258081r926230_rule'
+  tag rid: 'SV-258081r991589_rule'
   tag stig_id: 'RHEL-09-431025'
   tag fix_id: 'F-61746r926229_fix'
   tag cci: ['CCI-001084', 'CCI-000366']

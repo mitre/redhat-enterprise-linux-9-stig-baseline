@@ -16,7 +16,7 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag check_id: 'C-61601r925565_chk'
   tag severity: 'medium'
   tag gid: 'V-257860'
-  tag rid: 'SV-257860r925567_rule'
+  tag rid: 'SV-257860r958804_rule'
   tag stig_id: 'RHEL-09-231095'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61525r925566_fix'

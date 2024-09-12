@@ -16,7 +16,7 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
   tag check_id: 'C-61610r925592_chk'
   tag severity: 'medium'
   tag gid: 'V-257869'
-  tag rid: 'SV-257869r925594_rule'
+  tag rid: 'SV-257869r958804_rule'
   tag stig_id: 'RHEL-09-231140'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61534r925593_fix'

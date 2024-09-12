@@ -29,7 +29,7 @@ $ActionSendStreamDriverAuthMode x509/name'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258146'
-  tag rid: 'SV-258146r926425_rule'
+  tag rid: 'SV-258146r958754_rule'
   tag stig_id: 'RHEL-09-652040'
   tag fix_id: 'F-61811r926424_fix'
   tag cci: ['CCI-001851']

@@ -14,7 +14,7 @@ If the "/var/tmp" file system is mounted without the "nosuid" option, this is a 
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257878'
-  tag rid: 'SV-257878r925621_rule'
+  tag rid: 'SV-257878r958804_rule'
   tag stig_id: 'RHEL-09-231185'
   tag fix_id: 'F-61543r925620_fix'
   tag cci: ['CCI-001764']

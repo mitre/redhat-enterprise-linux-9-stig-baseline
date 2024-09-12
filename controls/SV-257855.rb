@@ -16,7 +16,7 @@ If the system is mounting file systems via NFS and the "noexec" option is missin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257855'
-  tag rid: 'SV-257855r925552_rule'
+  tag rid: 'SV-257855r991589_rule'
   tag stig_id: 'RHEL-09-231070'
   tag fix_id: 'F-61520r925551_fix'
   tag cci: ['CCI-000366']

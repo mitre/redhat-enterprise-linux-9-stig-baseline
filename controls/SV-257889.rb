@@ -24,7 +24,7 @@ $ sudo chmod 0740 /home/wadea/.<INIT_FILE>'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257889'
-  tag rid: 'SV-257889r925654_rule'
+  tag rid: 'SV-257889r991589_rule'
   tag stig_id: 'RHEL-09-232045'
   tag fix_id: 'F-61554r925653_fix'
   tag cci: ['CCI-000366']

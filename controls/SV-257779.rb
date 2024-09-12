@@ -49,7 +49,7 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
   tag gid: 'V-257779'
-  tag rid: 'SV-257779r925324_rule'
+  tag rid: 'SV-257779r958390_rule'
   tag stig_id: 'RHEL-09-211020'
   tag fix_id: 'F-61444r925323_fix'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']

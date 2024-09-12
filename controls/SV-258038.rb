@@ -26,7 +26,7 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258038'
-  tag rid: 'SV-258038r943052_rule'
+  tag rid: 'SV-258038r958820_rule'
   tag stig_id: 'RHEL-09-291030'
   tag fix_id: 'F-61703r926100_fix'
   tag cci: ['CCI-001958']

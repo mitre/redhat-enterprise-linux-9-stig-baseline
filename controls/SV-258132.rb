@@ -26,7 +26,7 @@ $ sudo systemctl restart sssd.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000068-GPOS-00036'
   tag gid: 'V-258132'
-  tag rid: 'SV-258132r926383_rule'
+  tag rid: 'SV-258132r958452_rule'
   tag stig_id: 'RHEL-09-631015'
   tag fix_id: 'F-61797r926382_fix'
   tag cci: ['CCI-000187']

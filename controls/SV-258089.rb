@@ -27,7 +27,7 @@ $ sudo dnf install fapolicyd'
   tag gtitle: 'SRG-OS-000370-GPOS-00155'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-258089'
-  tag rid: 'SV-258089r926254_rule'
+  tag rid: 'SV-258089r958808_rule'
   tag stig_id: 'RHEL-09-433010'
   tag fix_id: 'F-61754r926253_fix'
   tag cci: ['CCI-001764', 'CCI-001774']

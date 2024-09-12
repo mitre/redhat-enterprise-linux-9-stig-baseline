@@ -25,7 +25,7 @@ $ sudo chown root /var/log/audit'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
   tag gid: 'V-258166'
-  tag rid: 'SV-258166r926485_rule'
+  tag rid: 'SV-258166r958434_rule'
   tag stig_id: 'RHEL-09-653085'
   tag fix_id: 'F-61831r926484_fix'
   tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']

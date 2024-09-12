@@ -19,10 +19,10 @@ $ sudo dnf install tmux'
   tag gtitle: 'SRG-OS-000030-GPOS-00011'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258063'
-  tag rid: 'SV-258063r926176_rule'
+  tag rid: 'SV-258063r997079_rule'
   tag stig_id: 'RHEL-09-412010'
   tag fix_id: 'F-61728r926175_fix'
-  tag cci: ['CCI-000056', 'CCI-000058']
+  tag cci: ['CCI-000056', 'CCI-000058', 'CCI-000057']
   tag nist: ['AC-11 b', 'AC-11 a']
   tag 'host'
 

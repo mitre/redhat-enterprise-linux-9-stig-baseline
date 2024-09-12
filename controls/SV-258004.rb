@@ -1,13 +1,13 @@
 control 'SV-258004' do
   title 'RHEL 9 SSH daemon must not allow Kerberos authentication.'
   desc "Kerberos authentication for SSH is often implemented using Generic Security Service Application Program Interface (GSSAPI). If Kerberos is enabled through SSH, the SSH daemon provides a means of access to the system's Kerberos implementation. Vulnerabilities in the system's Kerberos implementations may be subject to exploitation."
-  desc 'check', 'Verify the SSH daemon does not allow Kerberos authentication with the following command:
+  desc 'check', %q(Verify the SSH daemon does not allow Kerberos authentication with the following command:
 
-$ sudo grep -i kerberosauth  /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
+$ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*kerberosauthentication'
 
 KerberosAuthentication no
 
-If the value is returned as "yes", the returned line is commented out, no output is returned, and the use of Kerberos authentication has not been documented with the information system security officer (ISSO), this is a finding.'
+If the value is returned as "yes", the returned line is commented out, no output is returned, and the use of Kerberos authentication has not been documented with the information system security officer (ISSO), this is a finding.)
   desc 'fix', 'Configure the SSH daemon to not allow Kerberos authentication.
 
 Add the following line in "/etc/ssh/sshd_config", or uncomment the line and set the value to "no":
@@ -22,7 +22,7 @@ $ sudo systemctl restart sshd.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000364-GPOS-00151'
   tag gid: 'V-258004'
-  tag rid: 'SV-258004r925999_rule'
+  tag rid: 'SV-258004r958796_rule'
   tag stig_id: 'RHEL-09-255140'
   tag fix_id: 'F-61669r925998_fix'
   tag cci: ['CCI-000366', 'CCI-001813']

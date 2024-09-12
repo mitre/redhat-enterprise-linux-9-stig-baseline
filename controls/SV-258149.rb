@@ -31,7 +31,7 @@ If there is no evidence that the audit logs are being offloaded to another syste
   tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258149'
-  tag rid: 'SV-258149r926434_rule'
+  tag rid: 'SV-258149r959008_rule'
   tag stig_id: 'RHEL-09-652055'
   tag fix_id: 'F-61814r926433_fix'
   tag cci: ['CCI-001851', 'CCI-000366']

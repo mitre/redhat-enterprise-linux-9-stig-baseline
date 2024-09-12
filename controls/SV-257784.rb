@@ -27,7 +27,7 @@ file:
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag gid: 'V-257784'
-  tag rid: 'SV-257784r925339_rule'
+  tag rid: 'SV-257784r958726_rule'
   tag stig_id: 'RHEL-09-211045'
   tag fix_id: 'F-61449r925338_fix'
   tag cci: ['CCI-000366', 'CCI-002235']

@@ -24,7 +24,7 @@ $ sudo systemctl restart sshd.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258000'
-  tag rid: 'SV-258000r925987_rule'
+  tag rid: 'SV-258000r991589_rule'
   tag stig_id: 'RHEL-09-255120'
   tag fix_id: 'F-61665r925986_fix'
   tag cci: ['CCI-000366']

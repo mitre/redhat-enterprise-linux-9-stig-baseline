@@ -16,7 +16,7 @@ $ sudo dnf remove sendmail'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257827'
-  tag rid: 'SV-257827r925468_rule'
+  tag rid: 'SV-257827r991589_rule'
   tag stig_id: 'RHEL-09-215020'
   tag fix_id: 'F-61492r925467_fix'
   tag cci: ['CCI-000381', 'CCI-000366']

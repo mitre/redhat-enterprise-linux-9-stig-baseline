@@ -21,7 +21,7 @@ Establish rate-limiting rules based on organization-defined types of DoS attacks
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000420-GPOS-00186'
   tag gid: 'V-257939'
-  tag rid: 'SV-257939r925804_rule'
+  tag rid: 'SV-257939r958902_rule'
   tag stig_id: 'RHEL-09-251030'
   tag fix_id: 'F-61604r925803_fix'
   tag cci: ['CCI-002385']

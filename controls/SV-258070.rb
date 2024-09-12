@@ -19,7 +19,7 @@ audit'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258070'
-  tag rid: 'SV-258070r926197_rule'
+  tag rid: 'SV-258070r958388_rule'
   tag stig_id: 'RHEL-09-412045'
   tag fix_id: 'F-61735r926196_fix'
   tag cci: ['CCI-000044']

@@ -16,7 +16,7 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257852'
-  tag rid: 'SV-257852r925543_rule'
+  tag rid: 'SV-257852r991589_rule'
   tag stig_id: 'RHEL-09-231055'
   tag fix_id: 'F-61517r925542_fix'
   tag cci: ['CCI-000366']

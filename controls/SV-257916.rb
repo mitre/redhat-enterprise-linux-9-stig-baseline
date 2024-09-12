@@ -18,7 +18,7 @@ $ sudo chown root /var/log/messages'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257916'
-  tag rid: 'SV-257916r925735_rule'
+  tag rid: 'SV-257916r958566_rule'
   tag stig_id: 'RHEL-09-232180'
   tag fix_id: 'F-61581r925734_fix'
   tag cci: ['CCI-001314']

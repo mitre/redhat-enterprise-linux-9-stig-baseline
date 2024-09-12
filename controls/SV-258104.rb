@@ -22,11 +22,11 @@ PASS_MIN_DAYS 1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-258104'
-  tag rid: 'SV-258104r926299_rule'
+  tag rid: 'SV-258104r997090_rule'
   tag stig_id: 'RHEL-09-611075'
   tag fix_id: 'F-61769r926298_fix'
-  tag cci: ['CCI-000198']
-  tag nist: ['IA-5 (1) (d)']
+  tag cci: ['CCI-000198', 'CCI-004066']
+  tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

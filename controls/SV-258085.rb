@@ -28,7 +28,7 @@ Defaults !runaspw'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258085'
-  tag rid: 'SV-258085r943063_rule'
+  tag rid: 'SV-258085r991589_rule'
   tag stig_id: 'RHEL-09-432020'
   tag fix_id: 'F-61750r926241_fix'
   tag cci: ['CCI-002227', 'CCI-000366']

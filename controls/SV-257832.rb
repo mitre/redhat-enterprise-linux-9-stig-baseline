@@ -20,7 +20,7 @@ $ sudo dnf remove gssproxy'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257832'
-  tag rid: 'SV-257832r925483_rule'
+  tag rid: 'SV-257832r958478_rule'
   tag stig_id: 'RHEL-09-215045'
   tag fix_id: 'F-61497r925482_fix'
   tag cci: ['CCI-000381', 'CCI-000366']

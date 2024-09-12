@@ -26,11 +26,11 @@ The recommendation is 35 days, but a lower value is acceptable.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000118-GPOS-00060'
   tag gid: 'V-258049'
-  tag rid: 'SV-258049r926134_rule'
+  tag rid: 'SV-258049r997078_rule'
   tag stig_id: 'RHEL-09-411050'
   tag fix_id: 'F-61714r926133_fix'
-  tag cci: ['CCI-000795']
-  tag nist: ['IA-4 e']
+  tag cci: ['CCI-000795', 'CCI-003627', 'CCI-003628']
+  tag nist: ['IA-4 e', 'AC-2 (3) (a)', 'AC-2 (3) (b)']
   tag 'host'
   tag 'container'
 

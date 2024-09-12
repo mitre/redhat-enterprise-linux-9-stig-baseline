@@ -28,7 +28,7 @@ blacklist cramfs'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257880'
-  tag rid: 'SV-257880r942957_rule'
+  tag rid: 'SV-257880r958478_rule'
   tag stig_id: 'RHEL-09-231195'
   tag fix_id: 'F-61545r942956_fix'
   tag cci: ['CCI-000381']

@@ -35,7 +35,7 @@ $ sudo dconf update)
   tag check_id: 'C-61768r926066_chk'
   tag severity: 'medium'
   tag gid: 'V-258027'
-  tag rid: 'SV-258027r926068_rule'
+  tag rid: 'SV-258027r958404_rule'
   tag stig_id: 'RHEL-09-271085'
   tag gtitle: 'SRG-OS-000031-GPOS-00012'
   tag fix_id: 'F-61692r926067_fix'

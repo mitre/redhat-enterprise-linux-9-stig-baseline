@@ -20,7 +20,7 @@ $ sudo dnf remove telnet-server'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257831'
-  tag rid: 'SV-257831r925480_rule'
+  tag rid: 'SV-257831r958478_rule'
   tag stig_id: 'RHEL-09-215040'
   tag fix_id: 'F-61496r925479_fix'
   tag cci: ['CCI-000381']

@@ -35,7 +35,7 @@ AuditBackend=LinuxAudit'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258037'
-  tag rid: 'SV-258037r926098_rule'
+  tag rid: 'SV-258037r958442_rule'
   tag stig_id: 'RHEL-09-291025'
   tag fix_id: 'F-61702r926097_fix'
   tag cci: ['CCI-000169']

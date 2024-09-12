@@ -18,7 +18,7 @@ If AIDE is installed, ensure the "sha512" rule is present on all uncommented fil
   tag check_id: 'C-61877r926393_chk'
   tag severity: 'medium'
   tag gid: 'V-258136'
-  tag rid: 'SV-258136r926395_rule'
+  tag rid: 'SV-258136r991589_rule'
   tag stig_id: 'RHEL-09-651020'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61801r926394_fix'

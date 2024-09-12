@@ -1,8 +1,6 @@
 control 'SV-257811' do
   title 'RHEL 9 must restrict usage of ptrace to descendant processes.'
-  desc 'Unrestricted usage of ptrace allows compromised binaries to run ptrace on other processes of the user. Like this, the attacker can steal sensitive information from the target processes (e.g., SSH sessions, web browser, etc.) without any additional assistance from the user (i.e., without resorting to phishing).
-
-'
+  desc 'Unrestricted usage of ptrace allows compromised binaries to run ptrace on other processes of the user. Like this, the attacker can steal sensitive information from the target processes (e.g., SSH sessions, web browser, etc.) without any additional assistance from the user (i.e., without resorting to phishing).'
   desc 'check', %q(Verify RHEL 9 restricts usage of ptrace to descendant processes with the following commands:
 
 $ sudo sysctl kernel.yama.ptrace_scope
@@ -29,7 +27,7 @@ $ sudo sysctl --system'
   tag check_id: 'C-61552r942978_chk'
   tag severity: 'medium'
   tag gid: 'V-257811'
-  tag rid: 'SV-257811r942979_rule'
+  tag rid: 'SV-257811r958514_rule'
   tag stig_id: 'RHEL-09-213080'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag fix_id: 'F-61476r925419_fix'

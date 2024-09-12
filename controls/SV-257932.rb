@@ -28,7 +28,7 @@ If a package was not used to install the SELinux policy for a given device class
   tag check_id: 'C-61673r925781_chk'
   tag severity: 'medium'
   tag gid: 'V-257932'
-  tag rid: 'SV-257932r925783_rule'
+  tag rid: 'SV-257932r991589_rule'
   tag stig_id: 'RHEL-09-232260'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61597r925782_fix'

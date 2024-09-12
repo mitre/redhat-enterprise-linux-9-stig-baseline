@@ -23,14 +23,15 @@ $ rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
   tag check_id: 'C-61564r925454_chk'
   tag severity: 'medium'
   tag gid: 'V-257823'
-  tag rid: 'SV-257823r925456_rule'
+  tag rid: 'SV-257823r991589_rule'
   tag stig_id: 'RHEL-09-214030'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61488r925455_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   misconfigured_files = command("rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != \"c\"'").stdout.strip.split("\n")
 

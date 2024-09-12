@@ -23,11 +23,11 @@ $ sudo dnf install usbguard'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258035'
-  tag rid: 'SV-258035r926092_rule'
+  tag rid: 'SV-258035r997117_rule'
   tag stig_id: 'RHEL-09-291015'
   tag fix_id: 'F-61700r926091_fix'
-  tag cci: ['CCI-001958']
-  tag nist: ['IA-3']
+  tag cci: ['CCI-001958', 'CCI-003959']
+  tag nist: ['IA-3', 'CM-7 (9) (b)']
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {

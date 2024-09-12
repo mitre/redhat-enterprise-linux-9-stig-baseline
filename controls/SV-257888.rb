@@ -20,14 +20,15 @@ chmod 0700 [cron configuration directory]'
   tag check_id: 'C-61629r925649_chk'
   tag severity: 'medium'
   tag gid: 'V-257888'
-  tag rid: 'SV-257888r925651_rule'
+  tag rid: 'SV-257888r991589_rule'
   tag stig_id: 'RHEL-09-232040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61553r925650_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   cron_dirs = command('find /etc/cron* -type d').stdout.split("\n")
   mode = input('expected_modes')['cron_dirs']

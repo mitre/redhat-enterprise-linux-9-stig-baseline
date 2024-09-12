@@ -16,7 +16,7 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257851'
-  tag rid: 'SV-257851r925540_rule'
+  tag rid: 'SV-257851r958804_rule'
   tag stig_id: 'RHEL-09-231050'
   tag fix_id: 'F-61516r925539_fix'
   tag cci: ['CCI-000366', 'CCI-001764']

@@ -16,7 +16,7 @@ If the system is mounting file systems via NFS and the "nosuid" option is missin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257856'
-  tag rid: 'SV-257856r925555_rule'
+  tag rid: 'SV-257856r991589_rule'
   tag stig_id: 'RHEL-09-231075'
   tag fix_id: 'F-61521r925554_fix'
   tag cci: ['CCI-000366']

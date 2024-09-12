@@ -28,9 +28,9 @@ blacklist sctp'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257807'
-  tag rid: 'SV-257807r925408_rule'
+  tag rid: 'SV-257807r958478_rule'
   tag stig_id: 'RHEL-09-213060'
-  tag fix_id: 'F-61472r925407_fix'
+  tag fix_id: 'F-61472r952165_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
   tag 'host'

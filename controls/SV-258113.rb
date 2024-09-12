@@ -20,11 +20,11 @@ maxclassrepeat = 4'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000072-GPOS-00040'
   tag gid: 'V-258113'
-  tag rid: 'SV-258113r926326_rule'
+  tag rid: 'SV-258113r997098_rule'
   tag stig_id: 'RHEL-09-611120'
   tag fix_id: 'F-61778r926325_fix'
-  tag cci: ['CCI-000195']
-  tag nist: ['IA-5 (1) (b)']
+  tag cci: ['CCI-000195', 'CCI-004066']
+  tag nist: ['IA-5 (1) (b)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

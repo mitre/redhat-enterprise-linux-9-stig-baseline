@@ -26,13 +26,13 @@ password required pam_pwquality.so retry=3'
   tag check_id: 'C-61832r926258_chk'
   tag severity: 'medium'
   tag gid: 'V-258091'
-  tag rid: 'SV-258091r926260_rule'
+  tag rid: 'SV-258091r997083_rule'
   tag stig_id: 'RHEL-09-611010'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag fix_id: 'F-61756r926259_fix'
   tag 'documentable'
-  tag cci: ['CCI-000366', 'CCI-000192']
-  tag nist: ['CM-6 b', 'IA-5 (1) (a)']
+  tag cci: ['CCI-000366', 'CCI-000192', 'CCI-004066']
+  tag nist: ['CM-6 b', 'IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
 
   only_if('This control is Not Applicable for containers', impact: 0.0) do

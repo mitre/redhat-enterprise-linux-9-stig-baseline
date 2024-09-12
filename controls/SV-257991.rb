@@ -7,13 +7,13 @@ Remote access (e.g., RDP) is access to DOD nonpublic information systems by an a
 Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash.
 
 RHEL 9 incorporates system-wide crypto policies by default. The SSH configuration file has no effect on the ciphers, MACs, or algorithms unless specifically defined in the /etc/sysconfig/sshd file. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/opensshserver.config file.'
-  desc 'check', 'Verify SSH client is configured to use only ciphers employing FIPS 140-3 approved algorithms with the following command:
+  desc 'check', 'Verify SSH server is configured to use only ciphers employing FIPS 140-3 approved algorithms with the following command:
 
-$ sudo grep -i macs /etc/crypto-policies/back-ends/opensshserver.conf
+$ sudo grep -i macs /etc/crypto-policies/back-ends/openssh.config
 MACs hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512
 
-If the MACs entries in the "opensshserver.conf" file have any hashes other than "hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512", the order differs from the example above, they are missing, or commented out, this is a finding.'
-  desc 'fix', 'Configure the RHEL 9 SSH client to use only MACs employing FIPS 140-3 approved algorithms by updating the "/etc/crypto-policies/back-ends/opensshserver.conf" file with the following line:
+If the MACs entries in the "openssh.config" file have any hashes other than "hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512", the order differs from the example above, or they are missing or commented out, this is a finding.'
+  desc 'fix', 'Configure the RHEL 9 SSH server to use only MACs employing FIPS 140-3 approved algorithms by updating the "/etc/crypto-policies/back-ends/openssh.config" file with the following line:
 
 MACs hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512
 
@@ -24,9 +24,9 @@ A reboot is required for the changes to take effect.'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-257991'
-  tag rid: 'SV-257991r925960_rule'
+  tag rid: 'SV-257991r991554_rule'
   tag stig_id: 'RHEL-09-255075'
-  tag fix_id: 'F-61656r925959_fix'
+  tag fix_id: 'F-61656r952187_fix'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
   tag 'host'

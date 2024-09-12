@@ -16,7 +16,7 @@ This requirement applies to RHEL 9 with software libraries that are accessible a
   tag check_id: 'C-61664r925754_chk'
   tag severity: 'medium'
   tag gid: 'V-257923'
-  tag rid: 'SV-257923r925756_rule'
+  tag rid: 'SV-257923r991560_rule'
   tag stig_id: 'RHEL-09-232215'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61588r925755_fix'

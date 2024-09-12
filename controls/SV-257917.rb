@@ -18,7 +18,7 @@ $ sudo chgrp root /var/log/messages'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257917'
-  tag rid: 'SV-257917r925738_rule'
+  tag rid: 'SV-257917r958566_rule'
   tag stig_id: 'RHEL-09-232185'
   tag fix_id: 'F-61582r925737_fix'
   tag cci: ['CCI-001314']

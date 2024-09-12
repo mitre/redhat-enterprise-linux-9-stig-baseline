@@ -14,7 +14,7 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257848'
-  tag rid: 'SV-257848r925531_rule'
+  tag rid: 'SV-257848r991589_rule'
   tag stig_id: 'RHEL-09-231035'
   tag fix_id: 'F-61513r925530_fix'
   tag cci: ['CCI-000366']

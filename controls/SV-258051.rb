@@ -19,7 +19,7 @@ If users home directory is not defined, this is a finding."
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258051'
-  tag rid: 'SV-258051r926140_rule'
+  tag rid: 'SV-258051r991589_rule'
   tag stig_id: 'RHEL-09-411060'
   tag fix_id: 'F-61716r926139_fix'
   tag cci: ['CCI-000366']

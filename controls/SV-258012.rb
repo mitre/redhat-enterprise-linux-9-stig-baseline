@@ -35,7 +35,7 @@ $ sudo dconf update'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
   tag gid: 'V-258012'
-  tag rid: 'SV-258012r926023_rule'
+  tag rid: 'SV-258012r958390_rule'
   tag stig_id: 'RHEL-09-271010'
   tag fix_id: 'F-61677r926022_fix'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']

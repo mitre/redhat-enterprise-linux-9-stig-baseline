@@ -33,7 +33,7 @@ records, a new partition with sufficient space will need be to be created.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag gid: 'V-258155'
-  tag rid: 'SV-258155r926452_rule'
+  tag rid: 'SV-258155r958752_rule'
   tag stig_id: 'RHEL-09-653030'
   tag fix_id: 'F-61820r926451_fix'
   tag cci: ['CCI-001849', 'CCI-001851']

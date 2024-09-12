@@ -4,9 +4,7 @@ control 'SV-258242' do
 
 Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash.
 
-RHEL 9 incorporates system-wide crypto policies by default. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/ directory.
-
-'
+RHEL 9 incorporates system-wide crypto policies by default. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/ directory.'
   desc 'check', %q(Verify that BIND uses the system crypto policy with the following command:
 
 Note: If the "bind" package is not installed, this requirement is Not Applicable.
@@ -26,7 +24,7 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   tag check_id: 'C-61983r926711_chk'
   tag severity: 'medium'
   tag gid: 'V-258242'
-  tag rid: 'SV-258242r926713_rule'
+  tag rid: 'SV-258242r958908_rule'
   tag stig_id: 'RHEL-09-672050'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag fix_id: 'F-61907r926712_fix'

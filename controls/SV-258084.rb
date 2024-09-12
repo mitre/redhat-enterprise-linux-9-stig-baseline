@@ -24,11 +24,11 @@ Defaults timestamp_timeout=0'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag gid: 'V-258084'
-  tag rid: 'SV-258084r943061_rule'
+  tag rid: 'SV-258084r997080_rule'
   tag stig_id: 'RHEL-09-432015'
   tag fix_id: 'F-61749r926238_fix'
-  tag cci: ['CCI-002038']
-  tag nist: ['IA-11']
+  tag cci: ['CCI-002038', 'CCI-004895']
+  tag nist: ['IA-11', 'SC-11 b']
   tag 'host'
   tag 'container-conditional'
 

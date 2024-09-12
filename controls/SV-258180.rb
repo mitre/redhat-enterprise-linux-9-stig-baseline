@@ -6,9 +6,7 @@ Audit records can be generated from various components within the information sy
 
 When a user logs on, the auid is set to the uid of the account being authenticated. Daemons are not user sessions and have the loginuid set to -1. The auid representation is an unsigned 32-bit integer, which equals 4294967295. The audit system interprets -1, 4294967295, and "unset" in the same way.
 
-The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.
-
-'
+The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
   desc 'check', 'Verify that RHEL 9 is configured to audit the execution of the "umount" command with the following command:
 
 $ sudo auditctl -l | grep umount
@@ -26,7 +24,7 @@ The audit daemon must be restarted for the changes to take effect.'
   tag check_id: 'C-61921r926525_chk'
   tag severity: 'medium'
   tag gid: 'V-258180'
-  tag rid: 'SV-258180r926527_rule'
+  tag rid: 'SV-258180r958412_rule'
   tag stig_id: 'RHEL-09-654030'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag fix_id: 'F-61845r926526_fix'

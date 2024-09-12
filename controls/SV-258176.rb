@@ -32,7 +32,7 @@ The audit daemon must be restarted for the changes to take effect.'
   tag gtitle: 'SRG-OS-000326-GPOS-00126'
   tag satisfies: ['SRG-OS-000326-GPOS-00126', 'SRG-OS-000327-GPOS-00127']
   tag gid: 'V-258176'
-  tag rid: 'SV-258176r926515_rule'
+  tag rid: 'SV-258176r958730_rule'
   tag stig_id: 'RHEL-09-654010'
   tag fix_id: 'F-61841r926514_fix'
   tag cci: ['CCI-002233', 'CCI-002234']

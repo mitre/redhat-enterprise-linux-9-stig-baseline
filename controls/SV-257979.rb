@@ -32,7 +32,7 @@ $ systemctl enable --now sshd'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag satisfies: ['SRG-OS-000423-GPOS-00187', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000425-GPOS-00189', 'SRG-OS-000426-GPOS-00190']
   tag gid: 'V-257979'
-  tag rid: 'SV-257979r925924_rule'
+  tag rid: 'SV-257979r958908_rule'
   tag stig_id: 'RHEL-09-255015'
   tag fix_id: 'F-61644r925923_fix'
   tag cci: ['CCI-002418', 'CCI-002420', 'CCI-002421', 'CCI-002422']

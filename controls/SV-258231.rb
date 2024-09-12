@@ -21,11 +21,11 @@ until the passwords can be regenerated with SHA-512.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258231'
-  tag rid: 'SV-258231r926680_rule'
+  tag rid: 'SV-258231r997114_rule'
   tag stig_id: 'RHEL-09-671015'
   tag fix_id: 'F-61896r926679_fix'
-  tag cci: ['CCI-000196', 'CCI-000803']
-  tag nist: ['IA-5 (1) (c)', 'IA-7']
+  tag cci: ['CCI-000196', 'CCI-000803', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-7', 'IA-5 (1) (d)']
   tag 'host'
   tag 'container'
 

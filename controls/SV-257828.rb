@@ -16,14 +16,15 @@ $ sudo dnf remove nfs-utils'
   tag check_id: 'C-61569r925469_chk'
   tag severity: 'medium'
   tag gid: 'V-257828'
-  tag rid: 'SV-257828r925471_rule'
+  tag rid: 'SV-257828r958478_rule'
   tag stig_id: 'RHEL-09-215025'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61493r925470_fix'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe package('nfs-utils') do
     it { should_not be_installed }

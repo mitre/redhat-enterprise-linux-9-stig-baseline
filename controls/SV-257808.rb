@@ -21,7 +21,7 @@ blacklist tipc'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257808'
-  tag rid: 'SV-257808r925411_rule'
+  tag rid: 'SV-257808r958478_rule'
   tag stig_id: 'RHEL-09-213065'
   tag fix_id: 'F-61473r925410_fix'
   tag cci: ['CCI-000381']

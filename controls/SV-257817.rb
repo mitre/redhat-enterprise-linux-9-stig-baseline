@@ -18,7 +18,7 @@ $ sudo grubby --update-kernel=ALL --remove-args=noexec'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'
   tag gid: 'V-257817'
-  tag rid: 'SV-257817r925438_rule'
+  tag rid: 'SV-257817r958928_rule'
   tag stig_id: 'RHEL-09-213110'
   tag fix_id: 'F-61482r925437_fix'
   tag cci: ['CCI-002824']

@@ -16,11 +16,11 @@ passwd -x 60 [user]'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258042'
-  tag rid: 'SV-258042r926113_rule'
+  tag rid: 'SV-258042r997077_rule'
   tag stig_id: 'RHEL-09-411015'
   tag fix_id: 'F-61707r926112_fix'
-  tag cci: ['CCI-000199']
-  tag nist: ['IA-5 (1) (d)']
+  tag cci: ['CCI-000199', 'CCI-004066']
+  tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

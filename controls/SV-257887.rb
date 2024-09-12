@@ -28,7 +28,7 @@ Replace "[audit_tool]" with each audit tool that has a more permissive mode than
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag gid: 'V-257887'
-  tag rid: 'SV-257887r925648_rule'
+  tag rid: 'SV-257887r991557_rule'
   tag stig_id: 'RHEL-09-232035'
   tag fix_id: 'F-61552r925647_fix'
   tag cci: ['CCI-001493']

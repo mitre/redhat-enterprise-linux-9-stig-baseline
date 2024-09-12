@@ -19,11 +19,11 @@ $ sudo sed -i '/NOPASSWD/ s/^/# /g' /etc/sudoers /etc/sudoers.d/*)
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-258106'
-  tag rid: 'SV-258106r926305_rule'
+  tag rid: 'SV-258106r997092_rule'
   tag stig_id: 'RHEL-09-611085'
   tag fix_id: 'F-61771r926304_fix'
-  tag cci: ['CCI-002038']
-  tag nist: ['IA-11']
+  tag cci: ['CCI-002038', 'CCI-004895']
+  tag nist: ['IA-11', 'SC-11 b']
   tag 'host'
   tag 'container-conditional'
 

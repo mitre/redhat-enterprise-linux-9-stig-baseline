@@ -16,7 +16,7 @@ If the /boot file system does not have the "nosuid" option set, this is a findin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257861'
-  tag rid: 'SV-257861r925570_rule'
+  tag rid: 'SV-257861r958804_rule'
   tag stig_id: 'RHEL-09-231100'
   tag fix_id: 'F-61526r925569_fix'
   tag cci: ['CCI-000366', 'CCI-001764']

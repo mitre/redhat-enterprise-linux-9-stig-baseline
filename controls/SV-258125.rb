@@ -18,13 +18,13 @@ $ sudo systemctl enable --now pcscd'
   tag check_id: 'C-61866r926360_chk'
   tag severity: 'medium'
   tag gid: 'V-258125'
-  tag rid: 'SV-258125r926362_rule'
+  tag rid: 'SV-258125r997109_rule'
   tag stig_id: 'RHEL-09-611180'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag fix_id: 'F-61790r926361_fix'
   tag 'documentable'
-  tag cci: ['CCI-001948']
-  tag nist: ['IA-2 (11)']
+  tag cci: ['CCI-001948', 'CCI-004046']
+  tag nist: ['IA-2 (11)', 'IA-2 (6) (a)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

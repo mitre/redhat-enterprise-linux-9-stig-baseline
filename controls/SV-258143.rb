@@ -35,14 +35,15 @@ $ sudo systemctl restart rsyslog.service'
   tag check_id: 'C-61884r926414_chk'
   tag severity: 'medium'
   tag gid: 'V-258143'
-  tag rid: 'SV-258143r926416_rule'
+  tag rid: 'SV-258143r991589_rule'
   tag stig_id: 'RHEL-09-652025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61808r926415_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   if input('log_aggregator')
     describe 'N/A' do

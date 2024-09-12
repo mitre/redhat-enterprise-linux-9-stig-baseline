@@ -18,11 +18,11 @@ ocredit = -1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000266-GPOS-00101'
   tag gid: 'V-258109'
-  tag rid: 'SV-258109r926314_rule'
+  tag rid: 'SV-258109r997095_rule'
   tag stig_id: 'RHEL-09-611100'
   tag fix_id: 'F-61774r926313_fix'
-  tag cci: ['CCI-001619']
-  tag nist: ['IA-5 (1) (a)']
+  tag cci: ['CCI-001619', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

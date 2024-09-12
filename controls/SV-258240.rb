@@ -27,7 +27,7 @@ A reboot is required for the changes to take effect.'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
   tag gid: 'V-258240'
-  tag rid: 'SV-258240r926707_rule'
+  tag rid: 'SV-258240r991554_rule'
   tag stig_id: 'RHEL-09-672040'
   tag fix_id: 'F-61905r926706_fix'
   tag cci: ['CCI-001453']

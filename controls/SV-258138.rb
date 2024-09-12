@@ -18,7 +18,7 @@ If AIDE is installed, ensure the "acl" rule is present on all uncommented file a
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258138'
-  tag rid: 'SV-258138r926401_rule'
+  tag rid: 'SV-258138r991589_rule'
   tag stig_id: 'RHEL-09-651030'
   tag fix_id: 'F-61803r926400_fix'
   tag cci: ['CCI-000366']

@@ -18,11 +18,11 @@ SHA_CRYPT_MIN_ROUNDS 5000'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258119'
-  tag rid: 'SV-258119r926344_rule'
+  tag rid: 'SV-258119r997104_rule'
   tag stig_id: 'RHEL-09-611150'
   tag fix_id: 'F-61784r926343_fix'
-  tag cci: ['CCI-000196', 'CCI-000803']
-  tag nist: ['IA-5 (1) (c)', 'IA-7']
+  tag cci: ['CCI-000196', 'CCI-000803', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-7', 'IA-5 (1) (d)']
   tag 'host'
   tag 'container'
 

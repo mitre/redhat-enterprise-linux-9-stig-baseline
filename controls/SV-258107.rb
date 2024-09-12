@@ -26,11 +26,11 @@ minlen = 15'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-258107'
-  tag rid: 'SV-258107r926308_rule'
+  tag rid: 'SV-258107r997093_rule'
   tag stig_id: 'RHEL-09-611090'
   tag fix_id: 'F-61772r926307_fix'
-  tag cci: ['CCI-000205']
-  tag nist: ['IA-5 (1) (a)']
+  tag cci: ['CCI-000205', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

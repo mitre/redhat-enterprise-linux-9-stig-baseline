@@ -20,14 +20,15 @@ $ sudo sed -i 's/gpgcheck\s*=.*/gpgcheck=1/g' /etc/yum.repos.d/*)
   tag check_id: 'C-61563r925451_chk'
   tag severity: 'high'
   tag gid: 'V-257822'
-  tag rid: 'SV-257822r925453_rule'
+  tag rid: 'SV-257822r997055_rule'
   tag stig_id: 'RHEL-09-214025'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61487r925452_fix'
   tag 'documentable'
-  tag cci: ['CCI-001749']
-  tag nist: ['CM-5 (3)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001749', 'CCI-003992']
+  tag nist: ['CM-5 (3)', 'CM-14']
+  tag 'host'
+  tag 'container'
 
   repo_def_files = command('ls /etc/yum.repos.d/*.repo').stdout.split("\n")
 

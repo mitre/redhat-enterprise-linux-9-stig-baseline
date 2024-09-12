@@ -16,7 +16,7 @@ If no line is returned, this is a finding.'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag gid: 'V-257847'
-  tag rid: 'SV-257847r925528_rule'
+  tag rid: 'SV-257847r958752_rule'
   tag stig_id: 'RHEL-09-231030'
   tag fix_id: 'F-61512r925527_fix'
   tag cci: ['CCI-000366', 'CCI-001849']

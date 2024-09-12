@@ -39,10 +39,10 @@ $ sudo dconf update)
   tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258021'
-  tag rid: 'SV-258021r926050_rule'
+  tag rid: 'SV-258021r997073_rule'
   tag stig_id: 'RHEL-09-271055'
   tag fix_id: 'F-61686r926049_fix'
-  tag cci: ['CCI-000056', 'CCI-000058']
+  tag cci: ['CCI-000056', 'CCI-000058', 'CCI-000057']
   tag nist: ['AC-11 b', 'AC-11 a']
   tag 'host'
 

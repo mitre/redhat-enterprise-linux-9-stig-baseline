@@ -18,7 +18,7 @@ space_left  = 25%'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-258156'
-  tag rid: 'SV-258156r926455_rule'
+  tag rid: 'SV-258156r971542_rule'
   tag stig_id: 'RHEL-09-653035'
   tag fix_id: 'F-61821r926454_fix'
   tag cci: ['CCI-001855']

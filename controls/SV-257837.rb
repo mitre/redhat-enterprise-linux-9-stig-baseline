@@ -23,7 +23,7 @@ $ sudo systemctl set-default multi-user.target'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257837'
-  tag rid: 'SV-257837r925498_rule'
+  tag rid: 'SV-257837r991589_rule'
   tag stig_id: 'RHEL-09-215070'
   tag fix_id: 'F-61502r925497_fix'
   tag cci: ['CCI-000366']

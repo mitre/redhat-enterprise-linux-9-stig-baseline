@@ -18,7 +18,7 @@ $ sudo chown root /var/log'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257914'
-  tag rid: 'SV-257914r925729_rule'
+  tag rid: 'SV-257914r958566_rule'
   tag stig_id: 'RHEL-09-232170'
   tag fix_id: 'F-61579r925728_fix'
   tag cci: ['CCI-001314']

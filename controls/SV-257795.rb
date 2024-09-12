@@ -28,7 +28,7 @@ GRUB_CMDLINE_LINUX="pti=on"'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-257795'
-  tag rid: 'SV-257795r925372_rule'
+  tag rid: 'SV-257795r958928_rule'
   tag stig_id: 'RHEL-09-212050'
   tag fix_id: 'F-61460r925371_fix'
   tag cci: ['CCI-000381', 'CCI-002824']

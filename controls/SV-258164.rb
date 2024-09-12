@@ -20,7 +20,7 @@ The audit daemon must be restarted for the changes to take effect.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
   tag gid: 'V-258164'
-  tag rid: 'SV-258164r926479_rule'
+  tag rid: 'SV-258164r958442_rule'
   tag stig_id: 'RHEL-09-653075'
   tag fix_id: 'F-61829r926478_fix'
   tag cci: ['CCI-000366', 'CCI-000169']

@@ -43,7 +43,7 @@ $ sudo chmod 0400 $log_file.*'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
   tag gid: 'V-258167'
-  tag rid: 'SV-258167r926488_rule'
+  tag rid: 'SV-258167r958434_rule'
   tag stig_id: 'RHEL-09-653090'
   tag fix_id: 'F-61832r926487_fix'
   tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']

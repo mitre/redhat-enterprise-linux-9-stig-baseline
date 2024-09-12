@@ -1,8 +1,6 @@
 control 'SV-258014' do
   title 'RHEL 9 must disable the graphical user interface automount function unless required.'
-  desc 'Automatically mounting file systems permits easy introduction of unknown devices, thereby facilitating malicious activity.
-
-'
+  desc 'Automatically mounting file systems permits easy introduction of unknown devices, thereby facilitating malicious activity.'
   desc 'check', 'Verify RHEL 9 disables the graphical user interface automount function with the following command:
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -29,7 +27,7 @@ $ sudo dconf update'
   tag check_id: 'C-61755r926027_chk'
   tag severity: 'medium'
   tag gid: 'V-258014'
-  tag rid: 'SV-258014r926029_rule'
+  tag rid: 'SV-258014r958498_rule'
   tag stig_id: 'RHEL-09-271020'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61679r926028_fix'

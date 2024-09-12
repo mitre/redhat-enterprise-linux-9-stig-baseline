@@ -18,13 +18,13 @@ $ sudo dnf install pcsc-lite'
   tag check_id: 'C-61865r926357_chk'
   tag severity: 'medium'
   tag gid: 'V-258124'
-  tag rid: 'SV-258124r926359_rule'
+  tag rid: 'SV-258124r997108_rule'
   tag stig_id: 'RHEL-09-611175'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag fix_id: 'F-61789r926358_fix'
   tag 'documentable'
-  tag cci: ['CCI-001948']
-  tag nist: ['IA-2 (11)']
+  tag cci: ['CCI-001948', 'CCI-004046']
+  tag nist: ['IA-2 (11)', 'IA-2 (6) (a)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

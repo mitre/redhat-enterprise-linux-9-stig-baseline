@@ -20,14 +20,15 @@ crypt_style = sha512'
   tag check_id: 'C-61857r926333_chk'
   tag severity: 'medium'
   tag gid: 'V-258116'
-  tag rid: 'SV-258116r926335_rule'
+  tag rid: 'SV-258116r997101_rule'
   tag stig_id: 'RHEL-09-611135'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag fix_id: 'F-61781r926334_fix'
   tag 'documentable'
-  tag cci: ['CCI-000196']
-  tag nist: ['IA-5 (1) (c)']
-  tag 'host', 'container'
+  tag cci: ['CCI-000196', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
 
   describe parse_config_file('/etc/libuser.conf') do
     its('defaults.crypt_style') { should cmp 'sha512' }

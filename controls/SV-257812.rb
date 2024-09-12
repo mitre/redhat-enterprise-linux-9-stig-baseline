@@ -20,7 +20,7 @@ ProcessSizeMax=0'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257812'
-  tag rid: 'SV-257812r925423_rule'
+  tag rid: 'SV-257812r991589_rule'
   tag stig_id: 'RHEL-09-213085'
   tag fix_id: 'F-61477r925422_fix'
   tag cci: ['CCI-000366']

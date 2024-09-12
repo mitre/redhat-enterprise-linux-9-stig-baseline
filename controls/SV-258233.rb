@@ -22,11 +22,11 @@ password sufficient pam_unix.so sha512'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258233'
-  tag rid: 'SV-258233r926686_rule'
+  tag rid: 'SV-258233r997115_rule'
   tag stig_id: 'RHEL-09-671025'
   tag fix_id: 'F-61898r926685_fix'
-  tag cci: ['CCI-000803', 'CCI-000196']
-  tag nist: ['IA-7', 'IA-5 (1) (c)']
+  tag cci: ['CCI-000803', 'CCI-000196', 'CCI-004062']
+  tag nist: ['IA-7', 'IA-5 (1) (c)', 'IA-5 (1) (d)']
   tag 'host'
   tag 'container'
 

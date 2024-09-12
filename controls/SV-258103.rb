@@ -22,11 +22,11 @@ dcredit = -1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000071-GPOS-00039'
   tag gid: 'V-258103'
-  tag rid: 'SV-258103r926296_rule'
+  tag rid: 'SV-258103r997089_rule'
   tag stig_id: 'RHEL-09-611070'
   tag fix_id: 'F-61768r926295_fix'
-  tag cci: ['CCI-000194']
-  tag nist: ['IA-5 (1) (a)']
+  tag cci: ['CCI-000194', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

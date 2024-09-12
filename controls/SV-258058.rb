@@ -27,7 +27,7 @@ $ sudo userdel  <unauthorized_user>'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258058'
-  tag rid: 'SV-258058r926161_rule'
+  tag rid: 'SV-258058r991589_rule'
   tag stig_id: 'RHEL-09-411095'
   tag fix_id: 'F-61723r926160_fix'
   tag cci: ['CCI-000366']

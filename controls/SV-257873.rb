@@ -16,7 +16,7 @@ If the "/var/log/audit" file system is mounted without the "nodev" option, this 
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257873'
-  tag rid: 'SV-257873r925606_rule'
+  tag rid: 'SV-257873r958804_rule'
   tag stig_id: 'RHEL-09-231160'
   tag fix_id: 'F-61538r925605_fix'
   tag cci: ['CCI-001764']

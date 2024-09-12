@@ -25,7 +25,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   tag gtitle: 'SRG-OS-000405-GPOS-00184'
   tag satisfies: ['SRG-OS-000185-GPOS-00079', 'SRG-OS-000404-GPOS-00183', 'SRG-OS-000405-GPOS-00184']
   tag gid: 'V-257879'
-  tag rid: 'SV-257879r925624_rule'
+  tag rid: 'SV-257879r958872_rule'
   tag stig_id: 'RHEL-09-231190'
   tag fix_id: 'F-61544r925623_fix'
   tag cci: ['CCI-001199', 'CCI-002475', 'CCI-002476']

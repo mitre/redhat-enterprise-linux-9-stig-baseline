@@ -16,14 +16,15 @@ $ sudo chmod 0600 /etc/crontab'
   tag check_id: 'C-61674r925784_chk'
   tag severity: 'medium'
   tag gid: 'V-257933'
-  tag rid: 'SV-257933r925786_rule'
+  tag rid: 'SV-257933r991589_rule'
   tag stig_id: 'RHEL-09-232265'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61598r925785_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   system_file = '/etc/crontab'
 
