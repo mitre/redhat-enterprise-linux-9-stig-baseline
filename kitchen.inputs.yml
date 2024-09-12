@@ -1,5 +1,4 @@
----
-disable_slow_controls: false
+disable_slow_controls: true
 disconnected_system: false
 data_at_rest_exempt: false
 skip_mount_tmp:
