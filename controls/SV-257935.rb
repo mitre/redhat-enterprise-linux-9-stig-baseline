@@ -24,7 +24,7 @@ $ sudo dnf install firewalld'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257935'
-  tag rid: 'SV-257935r928954_rule'
+  tag rid: 'SV-257935r958480_rule'
   tag stig_id: 'RHEL-09-251010'
   tag fix_id: 'F-61600r925791_fix'
   tag cci: ['CCI-002314', 'CCI-000366', 'CCI-000382', 'CCI-002322']

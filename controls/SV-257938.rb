@@ -4,9 +4,7 @@ control 'SV-257938' do
 
 Operating systems are capable of providing a wide variety of functions and services. Some of the functions and services provided by default may not be necessary to support essential organizational operations. Additionally, it is sometimes convenient to provide multiple services from a single component (e.g., VPN and IPS); however, doing so increases risk over limiting the services provided by one component.
 
-To support the requirements and principles of least functionality, the operating system must support the organizational requirements, providing only essential capabilities and limiting the use of ports, protocols, and/or services to only those required, authorized, and approved to conduct official business.
-
-'
+To support the requirements and principles of least functionality, the operating system must support the organizational requirements, providing only essential capabilities and limiting the use of ports, protocols, and/or services to only those required, authorized, and approved to conduct official business.'
   desc 'check', 'Inspect the list of enabled firewall ports and verify they are configured correctly by running the following command:
 
 $ sudo firewall-cmd --list-all
@@ -26,7 +24,7 @@ $ sudo firewall-cmd --permanent --add-service=service_name'
   tag check_id: 'C-61679r925799_chk'
   tag severity: 'medium'
   tag gid: 'V-257938'
-  tag rid: 'SV-257938r925801_rule'
+  tag rid: 'SV-257938r958480_rule'
   tag stig_id: 'RHEL-09-251025'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag fix_id: 'F-61603r925800_fix'

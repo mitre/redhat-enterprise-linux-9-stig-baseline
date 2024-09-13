@@ -20,7 +20,7 @@ $ sudo ln -s /etc/crypto-policies/back-ends/krb5.config /usr/share/crypto-polici
   tag check_id: 'C-61978r926696_chk'
   tag severity: 'medium'
   tag gid: 'V-258237'
-  tag rid: 'SV-258237r926698_rule'
+  tag rid: 'SV-258237r971535_rule'
   tag stig_id: 'RHEL-09-672025'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag fix_id: 'F-61902r926697_fix'

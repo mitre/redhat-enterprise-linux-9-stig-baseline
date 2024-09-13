@@ -6,9 +6,7 @@ Detecting such changes and providing an automated response can help avoid uninte
 
 Notifications provided by information systems include messages to local computer consoles, and/or hardware indications, such as lights.
 
-This capability must take into account operational requirements for availability for selecting an appropriate response. The organization may choose to shut down or restart the information system upon security function anomaly detection.
-
-"
+This capability must take into account operational requirements for availability for selecting an appropriate response. The organization may choose to shut down or restart the information system upon security function anomaly detection."
   desc 'check', 'Verify that RHEL 9 routinely executes a file integrity scan for changes to the system baseline. The command used in the example will use a daily occurrence.
 
 Check the cron directories for scripts controlling the execution and notification of results of the file integrity application. For example, if AIDE is installed on the system, use the following commands:
@@ -41,7 +39,7 @@ $ sudo more /etc/cron.daily/aide
   tag check_id: 'C-61876r926390_chk'
   tag severity: 'medium'
   tag gid: 'V-258135'
-  tag rid: 'SV-258135r926392_rule'
+  tag rid: 'SV-258135r958794_rule'
   tag stig_id: 'RHEL-09-651015'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61800r926391_fix'

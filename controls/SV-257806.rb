@@ -17,7 +17,7 @@ blacklist firewire-core'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257806'
-  tag rid: 'SV-257806r942955_rule'
+  tag rid: 'SV-257806r958478_rule'
   tag stig_id: 'RHEL-09-213055'
   tag fix_id: 'F-61471r942954_fix'
   tag cci: ['CCI-000381']

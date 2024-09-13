@@ -14,7 +14,7 @@ $ sudo chown <user> <file>'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257931'
-  tag rid: 'SV-257931r925780_rule'
+  tag rid: 'SV-257931r991589_rule'
   tag stig_id: 'RHEL-09-232255'
   tag fix_id: 'F-61596r925779_fix'
   tag cci: ['CCI-000366']

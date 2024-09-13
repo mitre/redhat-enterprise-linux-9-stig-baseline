@@ -16,7 +16,7 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257777'
-  tag rid: 'SV-257777r925318_rule'
+  tag rid: 'SV-257777r991589_rule'
   tag stig_id: 'RHEL-09-211010'
   tag fix_id: 'F-61442r925317_fix'
   tag cci: ['CCI-000366']

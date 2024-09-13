@@ -18,7 +18,7 @@ Edit the file /etc/dnf/dnf.conf by adding or editing the following line:
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000437-GPOS-00194'
   tag gid: 'V-257824'
-  tag rid: 'SV-257824r925459_rule'
+  tag rid: 'SV-257824r958936_rule'
   tag stig_id: 'RHEL-09-214035'
   tag fix_id: 'F-61489r925458_fix'
   tag cci: ['CCI-002617']

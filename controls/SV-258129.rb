@@ -20,14 +20,15 @@ ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue'
   tag check_id: 'C-61870r926372_chk'
   tag severity: 'medium'
   tag gid: 'V-258129'
-  tag rid: 'SV-258129r926374_rule'
+  tag rid: 'SV-258129r958472_rule'
   tag stig_id: 'RHEL-09-611200'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-61794r926373_fix'
   tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe ini('/usr/lib/systemd/system/rescue.service') do
     its('Service.ExecStart') { should match %r{^-/usr/lib/systemd/systemd-sulogin-shell rescue$} }

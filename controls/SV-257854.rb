@@ -16,7 +16,7 @@ If the system is mounting file systems via NFS and the "nodev" option is missing
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257854'
-  tag rid: 'SV-257854r925549_rule'
+  tag rid: 'SV-257854r991589_rule'
   tag stig_id: 'RHEL-09-231065'
   tag fix_id: 'F-61519r925548_fix'
   tag cci: ['CCI-000366']

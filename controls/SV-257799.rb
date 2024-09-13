@@ -32,11 +32,11 @@ $ sudo sysctl --system'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257799'
-  tag rid: 'SV-257799r942969_rule'
+  tag rid: 'SV-257799r997051_rule'
   tag stig_id: 'RHEL-09-213020'
   tag fix_id: 'F-61464r925383_fix'
-  tag cci: ['CCI-001749', 'CCI-000366']
-  tag nist: ['CM-5 (3)', 'CM-6 b']
+  tag cci: ['CCI-001749', 'CCI-000366', 'CCI-003992']
+  tag nist: ['CM-5 (3)', 'CM-6 b', 'CM-14']
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {

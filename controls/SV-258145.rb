@@ -1,8 +1,6 @@
 control 'SV-258145' do
   title 'RHEL 9 must be configured to offload audit records onto a different system from the system being audited via syslog.'
-  desc 'The auditd service does not include the ability to send audit records to a centralized server for management directly. However, it can use a plug-in for audit event multiplexor (audispd) to pass audit records to the local syslog server.
-
-'
+  desc 'The auditd service does not include the ability to send audit records to a centralized server for management directly. However, it can use a plug-in for audit event multiplexor (audispd) to pass audit records to the local syslog server.'
   desc 'check', 'Verify RHEL 9 is configured use the audisp-remote syslog service with the following command:
 
 $ sudo grep active /etc/audit/plugins.d/syslog.conf
@@ -20,7 +18,7 @@ The audit daemon must be restarted for changes to take effect.'
   tag check_id: 'C-61886r926420_chk'
   tag severity: 'medium'
   tag gid: 'V-258145'
-  tag rid: 'SV-258145r926422_rule'
+  tag rid: 'SV-258145r958754_rule'
   tag stig_id: 'RHEL-09-652035'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag fix_id: 'F-61810r926421_fix'

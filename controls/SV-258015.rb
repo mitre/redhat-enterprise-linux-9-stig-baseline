@@ -1,8 +1,6 @@
 control 'SV-258015' do
   title 'RHEL 9 must prevent a user from overriding the disabling of the graphical user interface automount function.'
-  desc 'A nonprivileged account is any operating system account with authorizations of a nonprivileged user.
-
-'
+  desc 'A nonprivileged account is any operating system account with authorizations of a nonprivileged user.'
   desc 'check', %q(Verify RHEL 9 disables ability of the user to override the graphical user interface automount setting.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -36,7 +34,7 @@ $ sudo dconf update'
   tag check_id: 'C-61756r926030_chk'
   tag severity: 'medium'
   tag gid: 'V-258015'
-  tag rid: 'SV-258015r926032_rule'
+  tag rid: 'SV-258015r958498_rule'
   tag stig_id: 'RHEL-09-271025'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61680r926031_fix'

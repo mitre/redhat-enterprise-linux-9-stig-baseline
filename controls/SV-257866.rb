@@ -16,7 +16,7 @@ If the "/tmp" file system is mounted without the "nodev" option, this is a findi
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257866'
-  tag rid: 'SV-257866r925585_rule'
+  tag rid: 'SV-257866r958804_rule'
   tag stig_id: 'RHEL-09-231125'
   tag fix_id: 'F-61531r925584_fix'
   tag cci: ['CCI-001764']

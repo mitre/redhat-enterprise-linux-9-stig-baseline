@@ -1,8 +1,6 @@
 control 'SV-258241' do
   title 'RHEL 9 must implement a system-wide encryption policy.'
-  desc 'Centralized cryptographic policies simplify applying secure ciphers across an operating system and the applications that run on that operating system. Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data.
-
-'
+  desc 'Centralized cryptographic policies simplify applying secure ciphers across an operating system and the applications that run on that operating system. Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data.'
   desc 'check', 'Verify that the RHEL 9 cryptography policy has been configured correctly with the following commands:
 
 $ sudo update-crypto-policies --show
@@ -26,7 +24,7 @@ Reboot the system for the changes to take effect.'
   tag check_id: 'C-61982r926708_chk'
   tag severity: 'medium'
   tag gid: 'V-258241'
-  tag rid: 'SV-258241r926710_rule'
+  tag rid: 'SV-258241r987791_rule'
   tag stig_id: 'RHEL-09-672045'
   tag gtitle: 'SRG-OS-000396-GPOS-00176'
   tag fix_id: 'F-61906r926709_fix'

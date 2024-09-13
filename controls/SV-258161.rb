@@ -21,7 +21,7 @@ option:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000039-GPOS-00017'
   tag gid: 'V-258161'
-  tag rid: 'SV-258161r926470_rule'
+  tag rid: 'SV-258161r958416_rule'
   tag stig_id: 'RHEL-09-653060'
   tag fix_id: 'F-61826r926469_fix'
   tag cci: ['CCI-001851', 'CCI-000132']

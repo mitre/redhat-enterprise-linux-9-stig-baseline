@@ -22,7 +22,7 @@ $ sudo systemctl restart rsyslog.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag gid: 'V-258144'
-  tag rid: 'SV-258144r926419_rule'
+  tag rid: 'SV-258144r958406_rule'
   tag stig_id: 'RHEL-09-652030'
   tag fix_id: 'F-61809r926418_fix'
   tag cci: ['CCI-000067']

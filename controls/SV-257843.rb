@@ -14,7 +14,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257843'
-  tag rid: 'SV-257843r925516_rule'
+  tag rid: 'SV-257843r991589_rule'
   tag stig_id: 'RHEL-09-231010'
   tag fix_id: 'F-61508r925515_fix'
   tag cci: ['CCI-000366']

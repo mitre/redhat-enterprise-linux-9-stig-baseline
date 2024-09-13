@@ -24,7 +24,7 @@ rm -f /etc/*.keytab'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000120-GPOS-00061'
   tag gid: 'V-258130'
-  tag rid: 'SV-258130r926377_rule'
+  tag rid: 'SV-258130r971535_rule'
   tag stig_id: 'RHEL-09-611205'
   tag fix_id: 'F-61795r926376_fix'
   tag cci: ['CCI-000803']

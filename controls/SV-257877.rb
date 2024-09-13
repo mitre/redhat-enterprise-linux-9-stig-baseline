@@ -14,7 +14,7 @@ If the "/var/tmp" file system is mounted without the "noexec" option, this is a 
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257877'
-  tag rid: 'SV-257877r925618_rule'
+  tag rid: 'SV-257877r958804_rule'
   tag stig_id: 'RHEL-09-231180'
   tag fix_id: 'F-61542r925617_fix'
   tag cci: ['CCI-001764']

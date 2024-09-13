@@ -28,7 +28,7 @@ $ sudo dnf remove iprutils'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257833'
-  tag rid: 'SV-257833r925486_rule'
+  tag rid: 'SV-257833r958478_rule'
   tag stig_id: 'RHEL-09-215050'
   tag fix_id: 'F-61498r925485_fix'
   tag cci: ['CCI-000366', 'CCI-000381']

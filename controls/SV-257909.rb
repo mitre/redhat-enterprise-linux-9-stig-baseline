@@ -16,14 +16,15 @@ $ sudo chgrp root /etc/passwd-'
   tag check_id: 'C-61650r925712_chk'
   tag severity: 'medium'
   tag gid: 'V-257909'
-  tag rid: 'SV-257909r925714_rule'
+  tag rid: 'SV-257909r991589_rule'
   tag stig_id: 'RHEL-09-232145'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61574r925713_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/passwd-') do
     it { should exist }
