@@ -2,7 +2,7 @@
 
 The Redhat Enterprise Linux 9.X Security Technical Implementation Guide (RHEL9.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 9.x System to Department of Defense (DoD) requirements.
 
-- Profile Version: `1.2.0`
+- Profile Version: `1.2.2`
 - RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r2
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.

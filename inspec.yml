@@ -4,7 +4,7 @@ maintainer: MITRE SAF Team
 copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
-version: 1.2.1
+version: 1.2.2
 # NOTE: for testing with test-kitchen, put back to ">= 6.0" when finished
 inspec_version: ">= 5.0"
 
