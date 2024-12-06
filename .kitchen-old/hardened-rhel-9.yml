@@ -1,0 +1,7 @@
+auto_security_group_id: sg-0169159e9de3298a7
+auto_key_id: kitchen-hardenedrhel9-alippold-MM282990PC-2024-09-10T18:48:08Z-f4i80mj9
+ssh_key: "/Users/alippold/github/mitre/redhat-enterprise-linux-9-stig-baseline/.kitchen/hardened-rhel-9.pem"
+server_id: i-012cf05e027786ca0
+hostname: 18.208.181.ssh -i .kitchen/hardened-rhel-9.pem -F /dev/null -vvvvv -p 22 \ -o UserKnownHostsFile=/dev/null \ -o Compression=no \ -o ServerAliveInterval=60 \ -o ConnectTimeout=15 \ -o PreferredAuthentications=none,publickey \ -o StrictHostKeyChecking=no \ maintuser@18.208.181.5757
+last_action: setup
+last_error: Kitchen::ActionFailed

@@ -1,12 +1,11 @@
----
 platforms:
-  - name: rhel-9
+- name: rhel-9
 
 driver:
   name: ec2
   subnet_id: "<%= ENV['SAF_PIPELINE_SUBNET'] %>"
   security_group_ids:
-    - "<%= ENV['SAF_PIPELINE_SG'] %>"
+  - "<%= ENV['SAF_PIPELINE_SG'] %>"
   metadata_options:
     http_tokens: required
     http_put_response_hop_limit: 1
@@ -32,39 +31,39 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 suites:
-  - name: disa-hardened
-    provisioner:
-      playbook: spec/ansible/disa/site.yml
-    driver:
-      tags:
-        Name: Hardened-<%= ENV['USER'] %>
-        CreatedBy: test-kitchen
+- name: disa-hardened
+  provisioner:
+    playbook: spec/ansible/disa/site.yml
+  driver:
+    tags:
+      Name: Hardened-<%= ENV['USER'] %>
+      CreatedBy: test-kitchen
 
 lifecycle:
   pre_converge:
-    - remote: |
-        # echo "+++ Refreshing DNF package cache +++"
-        # sudo dnf -y clean all
-        echo ""
-        echo "+++ Updating DNF Packages +++"
-        sudo dnf -y update --nogpgcheck --nobest
-        echo ""
-        echo "+++ Installing needed packages for workflow and utility +++\n\n"
-        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
-        echo ""
-        echo "+++ Installing Python 3.9 and Ansible +++\n\n"
-        export PATH=/usr/local/bin:$PATH
-        sudo dnf -y install python3.9
-        sudo dnf -y install python3-pip
-        sudo update-alternatives --set python3 /usr/bin/python3.9
-        sudo python3 -m pip install ansible jmespath
-        echo ""
-        echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
-        sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
-        echo ""
-        echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
-        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
-        sudo dnf -y install git
+  - remote: |
+      # echo "+++ Refreshing DNF package cache +++"
+      # sudo dnf -y clean all
+      echo ""
+      echo "+++ Updating DNF Packages +++"
+      sudo dnf -y update --nogpgcheck --nobest
+      echo ""
+      echo "+++ Installing needed packages for workflow and utility +++\n\n"
+      sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
+      echo ""
+      echo "+++ Installing Python 3.9 and Ansible +++\n\n"
+      export PATH=/usr/local/bin:$PATH
+      sudo dnf -y install python3.9
+      sudo dnf -y install python3-pip
+      sudo update-alternatives --set python3 /usr/bin/python3.9
+      sudo python3 -m pip install ansible jmespath
+      echo ""
+      echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
+      sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
+      echo ""
+      echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
+      sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+      sudo dnf -y install git
 
 #https://github.com/neillturner/kitchen-ansible/issues/295
 transport:

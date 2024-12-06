@@ -19,6 +19,8 @@ driver:
   skip_cost_warning: true
   privileged: true
   instance_initiated_shutdown_behavior: terminate
+  # aws_ssh_key_type: ed25519
+  # aws_ssh_key_id: 'ed-key'
 
 provisioner:
   name: ansible_playbook
@@ -82,3 +84,4 @@ transport:
   #https://github.com/neillturner/kitchen-ansible/issues/295
   max_ssh_sessions: 2
   username: maintuser
+  # ssh_key: ~/.ssh/ed-key.pem
