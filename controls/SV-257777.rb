@@ -45,7 +45,7 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
     /^9\.7/ => 'April 30, 2026',
     /^9\.8/ => 'May 31, 2028',
     /^9\.9/ => 'April 30, 2027',
-    /^9\.10/ => 'May 31, 2032',
+    /^9\.10/ => 'May 31, 2032'
   }.find { |k, _v| k.match(release) }&.last
 
   describe "The release \"#{release}\"" do
