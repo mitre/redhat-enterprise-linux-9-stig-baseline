@@ -27,7 +27,7 @@ $ tmux source-file /etc/tmux.conf'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
   tag gid: 'V-258065'
-  tag rid: 'SV-258065r926182_rule'
+  tag rid: 'SV-258065r958400_rule'
   tag stig_id: 'RHEL-09-412020'
   tag fix_id: 'F-61730r926181_fix'
   tag cci: ['CCI-000056']

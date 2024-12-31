@@ -16,14 +16,15 @@ Edit the file "/etc/passwd" and ensure that every user's GID is a valid GID.)
   tag check_id: 'C-61789r926129_chk'
   tag severity: 'medium'
   tag gid: 'V-258048'
-  tag rid: 'SV-258048r926131_rule'
+  tag rid: 'SV-258048r958482_rule'
   tag stig_id: 'RHEL-09-411045'
   tag gtitle: 'SRG-OS-000104-GPOS-00051'
   tag fix_id: 'F-61713r926130_fix'
   tag 'documentable'
   tag cci: ['CCI-000764']
   tag nist: ['IA-2']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
   interactive_users = passwd.where { uid.to_i >= 1000 && !shell.match(ignore_shells) }.users

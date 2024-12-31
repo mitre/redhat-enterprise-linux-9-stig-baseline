@@ -14,7 +14,7 @@ $ sudo rm /[path]/[to]/[file]/.shosts'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257956'
-  tag rid: 'SV-257956r925855_rule'
+  tag rid: 'SV-257956r991589_rule'
   tag stig_id: 'RHEL-09-252075'
   tag fix_id: 'F-61621r925854_fix'
   tag cci: ['CCI-000366']

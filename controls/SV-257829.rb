@@ -18,14 +18,15 @@ $ sudo dnf remove ypserv'
   tag check_id: 'C-61570r925472_chk'
   tag severity: 'medium'
   tag gid: 'V-257829'
-  tag rid: 'SV-257829r925474_rule'
+  tag rid: 'SV-257829r958478_rule'
   tag stig_id: 'RHEL-09-215030'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag fix_id: 'F-61494r925473_fix'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe package('ypserv') do
     it { should_not be_installed }

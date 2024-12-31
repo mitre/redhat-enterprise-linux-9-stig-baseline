@@ -17,11 +17,11 @@ pam_cert_auth = True'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055', 'SRG-OS-000375-GPOS-00160']
   tag gid: 'V-258122'
-  tag rid: 'SV-258122r926353_rule'
+  tag rid: 'SV-258122r997106_rule'
   tag stig_id: 'RHEL-09-611165'
   tag fix_id: 'F-61787r926352_fix'
-  tag cci: ['CCI-000765', 'CCI-001948']
-  tag nist: ['IA-2 (1)', 'IA-2 (11)']
+  tag cci: ['CCI-000765', 'CCI-001948', 'CCI-004046', 'CCI-004047']
+  tag nist: ['IA-2 (1)', 'IA-2 (11)', 'IA-2 (6) (a)', 'IA-2 (6) (b)']
   tag 'host'
 
   only_if('If the System Administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.', impact: 0.0) {

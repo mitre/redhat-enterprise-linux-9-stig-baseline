@@ -18,7 +18,7 @@ $ sudo chgrp root /var/log'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257915'
-  tag rid: 'SV-257915r925732_rule'
+  tag rid: 'SV-257915r958566_rule'
   tag stig_id: 'RHEL-09-232175'
   tag fix_id: 'F-61580r925731_fix'
   tag cci: ['CCI-001314']

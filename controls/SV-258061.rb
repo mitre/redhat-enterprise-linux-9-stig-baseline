@@ -12,14 +12,15 @@ If the system has duplicate GIDs, this is a finding.'
   tag check_id: 'C-61802r926168_chk'
   tag severity: 'medium'
   tag gid: 'V-258061'
-  tag rid: 'SV-258061r926170_rule'
+  tag rid: 'SV-258061r958482_rule'
   tag stig_id: 'RHEL-09-411110'
   tag gtitle: 'SRG-OS-000104-GPOS-00051'
   tag fix_id: 'F-61726r926169_fix'
   tag 'documentable'
   tag cci: ['CCI-000764']
   tag nist: ['IA-2']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   duplicate_gids = command('cut -d : -f 3 /etc/group | uniq -d').stdout.strip.split
 

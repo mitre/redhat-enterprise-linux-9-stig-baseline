@@ -24,14 +24,15 @@ gpgcheck=1'
   tag check_id: 'C-61561r925445_chk'
   tag severity: 'high'
   tag gid: 'V-257820'
-  tag rid: 'SV-257820r925447_rule'
+  tag rid: 'SV-257820r997053_rule'
   tag stig_id: 'RHEL-09-214015'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61485r925446_fix'
   tag 'documentable'
-  tag cci: ['CCI-001749']
-  tag nist: ['CM-5 (3)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001749', 'CCI-003992']
+  tag nist: ['CM-5 (3)', 'CM-14']
+  tag 'host'
+  tag 'container'
 
   describe 'DNF configuration should enforce GPG signature checking' do
     subject { parse_config_file('/etc/dnf/dnf.conf').params['main'] }

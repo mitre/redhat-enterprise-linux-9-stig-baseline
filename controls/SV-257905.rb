@@ -16,14 +16,15 @@ $ sudo chgrp root /etc/gshadow-'
   tag check_id: 'C-61646r925700_chk'
   tag severity: 'medium'
   tag gid: 'V-257905'
-  tag rid: 'SV-257905r925702_rule'
+  tag rid: 'SV-257905r991589_rule'
   tag stig_id: 'RHEL-09-232125'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61570r925701_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/gshadow-') do
     it { should exist }

@@ -19,7 +19,7 @@ file not group-owned by "root" or a required system account.
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257919'
-  tag rid: 'SV-257919r925744_rule'
+  tag rid: 'SV-257919r991560_rule'
   tag stig_id: 'RHEL-09-232195'
   tag fix_id: 'F-61584r925743_fix'
   tag cci: ['CCI-001499']

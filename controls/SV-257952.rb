@@ -34,7 +34,7 @@ ExecStart=/usr/sbin/in.tftpd -s /var/lib/tftpboot'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257952'
-  tag rid: 'SV-257952r925843_rule'
+  tag rid: 'SV-257952r991589_rule'
   tag stig_id: 'RHEL-09-252055'
   tag fix_id: 'F-61617r925842_fix'
   tag cci: ['CCI-000366']

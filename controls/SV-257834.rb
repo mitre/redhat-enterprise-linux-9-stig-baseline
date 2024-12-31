@@ -31,7 +31,7 @@ $ sudo dnf remove tuned'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257834'
-  tag rid: 'SV-257834r925489_rule'
+  tag rid: 'SV-257834r958478_rule'
   tag stig_id: 'RHEL-09-215055'
   tag fix_id: 'F-61499r925488_fix'
   tag cci: ['CCI-000366', 'CCI-000381']

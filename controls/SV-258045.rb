@@ -13,7 +13,7 @@ If output is produced and the accounts listed are interactive user accounts, thi
   tag gtitle: 'SRG-OS-000104-GPOS-00051'
   tag satisfies: ['SRG-OS-000104-GPOS-00051', 'SRG-OS-000121-GPOS-00062', 'SRG-OS-000042-GPOS-00020']
   tag gid: 'V-258045'
-  tag rid: 'SV-258045r926122_rule'
+  tag rid: 'SV-258045r958482_rule'
   tag stig_id: 'RHEL-09-411030'
   tag fix_id: 'F-61710r926121_fix'
   tag cci: ['CCI-000764', 'CCI-000135', 'CCI-000804']

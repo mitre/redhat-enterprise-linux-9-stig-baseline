@@ -69,7 +69,7 @@ AIDE found NO differences between database and filesystem. Looks okay!!
   tag check_id: 'C-61875r926387_chk'
   tag severity: 'medium'
   tag gid: 'V-258134'
-  tag rid: 'SV-258134r926389_rule'
+  tag rid: 'SV-258134r958794_rule'
   tag stig_id: 'RHEL-09-651010'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61799r926388_fix'

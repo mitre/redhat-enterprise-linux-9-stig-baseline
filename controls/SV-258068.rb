@@ -1,8 +1,6 @@
 control 'SV-258068' do
   title 'RHEL 9 must automatically exit interactive command shell user sessions after 15 minutes of inactivity.'
-  desc 'Terminating an idle interactive command shell user session within a short time period reduces the window of opportunity for unauthorized personnel to take control of it when left unattended in a virtual terminal or physical console.
-
-'
+  desc 'Terminating an idle interactive command shell user session within a short time period reduces the window of opportunity for unauthorized personnel to take control of it when left unattended in a virtual terminal or physical console.'
   desc 'check', %q(Verify RHEL 9 is configured to exit interactive command shell user sessions after 15 minutes of inactivity or less with the following command:
 
 $ sudo grep -i tmout /etc/profile /etc/profile.d/*.sh
@@ -22,7 +20,7 @@ declare -xr TMOUT=900'
   tag check_id: 'C-61809r926189_chk'
   tag severity: 'medium'
   tag gid: 'V-258068'
-  tag rid: 'SV-258068r926191_rule'
+  tag rid: 'SV-258068r970703_rule'
   tag stig_id: 'RHEL-09-412035'
   tag gtitle: 'SRG-OS-000163-GPOS-00072'
   tag fix_id: 'F-61733r926190_fix'
@@ -30,7 +28,8 @@ declare -xr TMOUT=900'
   tag 'documentable'
   tag cci: ['CCI-000057', 'CCI-001133']
   tag nist: ['AC-11 a', 'SC-10']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   stop_idle_session_sec = input('stop_idle_session_sec')
 

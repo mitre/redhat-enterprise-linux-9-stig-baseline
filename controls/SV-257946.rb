@@ -16,7 +16,7 @@ port 0'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257946'
-  tag rid: 'SV-257946r925825_rule'
+  tag rid: 'SV-257946r958480_rule'
   tag stig_id: 'RHEL-09-252025'
   tag fix_id: 'F-61611r925824_fix'
   tag cci: ['CCI-000381', 'CCI-000382']

@@ -19,7 +19,7 @@ set -g lock-after-time 900'
   tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012']
   tag gid: 'V-258066'
-  tag rid: 'SV-258066r926185_rule'
+  tag rid: 'SV-258066r958402_rule'
   tag stig_id: 'RHEL-09-412025'
   tag fix_id: 'F-61731r926184_fix'
   tag cci: ['CCI-000057', 'CCI-000060']

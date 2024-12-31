@@ -39,7 +39,7 @@ fi'
   tag gtitle: 'SRG-OS-000031-GPOS-00012'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011', 'SRG-OS-000031-GPOS-00012']
   tag gid: 'V-258064'
-  tag rid: 'SV-258064r943016_rule'
+  tag rid: 'SV-258064r958404_rule'
   tag stig_id: 'RHEL-09-412015'
   tag fix_id: 'F-61729r926178_fix'
   tag cci: ['CCI-000056', 'CCI-000060']

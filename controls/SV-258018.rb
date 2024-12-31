@@ -25,7 +25,7 @@ AutomaticLoginEnable=false'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00229'
   tag gid: 'V-258018'
-  tag rid: 'SV-258018r926041_rule'
+  tag rid: 'SV-258018r991591_rule'
   tag stig_id: 'RHEL-09-271040'
   tag fix_id: 'F-61683r926040_fix'
   tag cci: ['CCI-000366']

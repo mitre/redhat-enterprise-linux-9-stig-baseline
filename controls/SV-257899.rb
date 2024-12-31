@@ -16,14 +16,15 @@ $ sudo chgrp root /etc/group'
   tag check_id: 'C-61640r925682_chk'
   tag severity: 'medium'
   tag gid: 'V-257899'
-  tag rid: 'SV-257899r925684_rule'
+  tag rid: 'SV-257899r991589_rule'
   tag stig_id: 'RHEL-09-232095'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61564r925683_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/group') do
     it { should exist }

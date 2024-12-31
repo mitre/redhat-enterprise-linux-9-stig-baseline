@@ -16,7 +16,7 @@ If any system-wide shared library directory is not owned by root, this is a find
   tag check_id: 'C-61663r925751_chk'
   tag severity: 'medium'
   tag gid: 'V-257922'
-  tag rid: 'SV-257922r925753_rule'
+  tag rid: 'SV-257922r991560_rule'
   tag stig_id: 'RHEL-09-232210'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag fix_id: 'F-61587r925752_fix'

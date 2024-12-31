@@ -1,8 +1,6 @@
 control 'SV-258236' do
   title 'RHEL 9 crypto policy must not be overridden.'
-  desc 'Centralized cryptographic policies simplify applying secure ciphers across an operating system and the applications that run on that operating system. Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data.
-
-'
+  desc 'Centralized cryptographic policies simplify applying secure ciphers across an operating system and the applications that run on that operating system. Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data.'
   desc 'check', 'Verify that RHEL 9 custom crypto policies are loaded correctly.
 
 List all of the crypto backends configured on the system.
@@ -34,7 +32,7 @@ The system must be rebooted to make the changes to take effect.'
   tag check_id: 'C-61977r926693_chk'
   tag severity: 'medium'
   tag gid: 'V-258236'
-  tag rid: 'SV-258236r926695_rule'
+  tag rid: 'SV-258236r987791_rule'
   tag stig_id: 'RHEL-09-672020'
   tag gtitle: 'SRG-OS-000396-GPOS-00176'
   tag fix_id: 'F-61901r926694_fix'
