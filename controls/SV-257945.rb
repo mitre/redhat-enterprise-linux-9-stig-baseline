@@ -41,41 +41,50 @@ server [ntp.server.name] iburst maxpoll 16'
     !virtualization.system.eql?('docker')
   }
 
-  time_sources = ntp_conf('/etc/chrony.conf').server
+  # Get inputs
+  authoritative_timeservers = [input('authoritative_timeservers')].flatten
+  match_all_authoritative_timeservers_enabled = input('match_all_authoritative_timeservers_enabled')
 
-  # Cover case when a single server is defined and resource returns a string and not an array
-  time_sources = [time_sources] if time_sources.is_a? String
+  # Get the system server values
+  # Converts to array if only one value present
+  time_sources = [chrony_conf.server].flatten
 
+  # Get and map maxpoll values to an array
   unless time_sources.nil?
+    # Map max poll values only
     max_poll_values = time_sources.map { |val|
       val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
     }
+
+    # Map server values only
+    server_values = time_sources.map { |val|
+      val.split.first
+    }
   end
 
-  # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
-
-  describe ntp_conf('/etc/chrony.conf') do
+  # Verify the "chrony.conf" file is configured to a time source by running the following command:
+  describe chrony_conf do
     its('server') { should_not be_nil }
   end
 
-  unless ntp_conf('/etc/chrony.conf').server.nil?
-    if ntp_conf('/etc/chrony.conf').server.is_a? String
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server') { should match input('authoritative_timeserver') }
-      end
-    end
-
-    if ntp_conf('/etc/chrony.conf').server.is_a? Array
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server.join') { should match input('authoritative_timeserver') }
-      end
-    end
-  end
-  # All time sources must contain valid maxpoll entries
   unless time_sources.nil?
-    describe 'chronyd maxpoll values (99=maxpoll absent)' do
-      subject { max_poll_values }
-      it { should all be < 17 }
+    # Verify the chrony.conf file is configured to at least one authoritative DoD time source
+    # Check for valid maxpoll value <17
+    describe 'chrony.conf' do
+      # authoritative_timeservers_exact specifies whether to verify all inputted timeservers or just one
+      if match_all_authoritative_timeservers_enabled
+        it 'should include all specified valid timeservers' do
+          expect(authoritative_timeservers.all? { |input|
+                   server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+                 }).to be true
+        end
+      else
+        it 'should include at least one valid timeserver' do
+          expect(authoritative_timeservers.any? { |input|
+            server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+          }).to be true
+        end
+      end
     end
   end
 end
