@@ -58,7 +58,7 @@ server [ntp.server.name] iburst maxpoll 16'
 
     # Map server values only
     server_values = time_sources.map { |val|
-      val.split(' ').first
+      val.split.first
     }
   end
 
