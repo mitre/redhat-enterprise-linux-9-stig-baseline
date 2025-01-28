@@ -338,11 +338,23 @@ inputs:
       - TLS1.1
       - DTLS1.0
 
+  # SV-257810, SV-257957, SV-257958, SV-257959, SV-257960, SV-257961, SV-257962, SV-257963, SV-257964, SV-257965, SV-257966, SV-257967, SV-257968, SV-257969, SV-257970
+  - name: ipv4_enabled
+    description: Set to 'true' if IPv4 is enabled on the system.
+    type: Boolean
+    value: true
+
   # SV-258054
   - name: unsuccessful_attempts
     description: The number of allowed failed login attempts
     type: Numeric
     value: 3
+
+  # SV-257971, SV-257972, SV-257973, SV-257973, SV-257974, SV-257975, SV-257976, SV-257977
+  - name: ipv6_enabled
+    description: Set to 'true' if IPv6 is enabled on the system.
+    type: Boolean
+    value: true
 
   # SV-258039
   - name: bluetooth_installed

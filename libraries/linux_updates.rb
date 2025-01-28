@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 # copyright: 2016, Christoph Hartmann
 # copyright: 2016, Dominik Richter

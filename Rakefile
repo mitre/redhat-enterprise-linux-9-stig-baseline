@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # !/usr/bin/env rake
 
 require 'rake/testtask'

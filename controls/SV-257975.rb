@@ -50,6 +50,11 @@ $ sudo sysctl --system'
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
+  elsif input('ipv6_enabled') == false
+    impact 0.0
+    describe 'IPv6 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv6 is disabled on the system, this requirement is Not Applicable.'
+    end
   else
 
     parameter = 'net.ipv6.conf.default.accept_ra'
