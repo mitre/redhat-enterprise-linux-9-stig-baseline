@@ -325,7 +325,7 @@ inputs:
   - name: user_accounts
     description: Accounts of known managed users
     type: Array
-    value: ["vagrant"]
+    value: []
 
   # SV-258238
   - name: unapproved_ssl_tls_versions
