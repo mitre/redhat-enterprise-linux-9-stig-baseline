@@ -40,7 +40,9 @@ server [ntp.server.name] iburst maxpoll 16'
     !virtualization.system.eql?('docker')
   }
 
-  time_sources = ntp_conf('/etc/chrony.conf').server
+  # Get inputs
+  authoritative_timeservers = [input('authoritative_timeservers')].flatten
+  match_all_authoritative_timeservers_enabled = input('match_all_authoritative_timeservers_enabled')
 
   # Get the system server values (might be part of a pool)
   # Converts to array if only one value present
@@ -48,9 +50,16 @@ server [ntp.server.name] iburst maxpoll 16'
   time_sources = [chrony_conf.server].flatten if chrony_conf.server
   time_sources += chrony_conf.pool if chrony_conf.pool
 
+  # Get and map maxpoll values to an array
   unless time_sources.nil?
+    # Map max poll values only
     max_poll_values = time_sources.map { |val|
       val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
+    }
+
+    # Map server values only
+    server_values = time_sources.map { |val|
+      val.split.first
     }
   end
 
@@ -64,24 +73,24 @@ server [ntp.server.name] iburst maxpoll 16'
       end
   end
 
-  unless ntp_conf('/etc/chrony.conf').server.nil?
-    if ntp_conf('/etc/chrony.conf').server.is_a? String
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server') { should match input('authoritative_timeserver') }
-      end
-    end
-
-    if ntp_conf('/etc/chrony.conf').server.is_a? Array
-      describe ntp_conf('/etc/chrony.conf') do
-        its('server.join') { should match input('authoritative_timeserver') }
-      end
-    end
-  end
-  # All time sources must contain valid maxpoll entries
   unless time_sources.nil?
-    describe 'chronyd maxpoll values (99=maxpoll absent)' do
-      subject { max_poll_values }
-      it { should all be < 17 }
+    # Verify the chrony.conf file is configured to at least one authoritative DoD time source
+    # Check for valid maxpoll value <17
+    describe 'chrony.conf' do
+      # authoritative_timeservers_exact specifies whether to verify all inputted timeservers or just one
+      if match_all_authoritative_timeservers_enabled
+        it 'should include all specified valid timeservers' do
+          expect(authoritative_timeservers.all? { |input|
+                   server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+                 }).to be true
+        end
+      else
+        it 'should include at least one valid timeserver' do
+          expect(authoritative_timeservers.any? { |input|
+            server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+          }).to be true
+        end
+      end
     end
   end
 end
