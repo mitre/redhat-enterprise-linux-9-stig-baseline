@@ -19,7 +19,7 @@ $ sudo systemctl mask --now ctrl-alt-del.target'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag gid: 'V-257785'
-  tag rid: 'SV-257785r925342_rule'
+  tag rid: 'SV-257785r958726_rule'
   tag stig_id: 'RHEL-09-211050'
   tag fix_id: 'F-61450r925341_fix'
   tag cci: ['CCI-000366', 'CCI-002235']

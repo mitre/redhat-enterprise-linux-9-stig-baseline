@@ -16,7 +16,7 @@ $ sudo dnf remove vsftpd'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000074-GPOS-00042'
   tag gid: 'V-257826'
-  tag rid: 'SV-257826r925465_rule'
+  tag rid: 'SV-257826r987796_rule'
   tag stig_id: 'RHEL-09-215015'
   tag fix_id: 'F-61491r925464_fix'
   tag cci: ['CCI-000366', 'CCI-000197', 'CCI-000381']

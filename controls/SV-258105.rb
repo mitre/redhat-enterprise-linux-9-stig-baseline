@@ -18,11 +18,11 @@ $ sudo passwd -n 1 [user]'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-258105'
-  tag rid: 'SV-258105r926302_rule'
+  tag rid: 'SV-258105r997091_rule'
   tag stig_id: 'RHEL-09-611080'
   tag fix_id: 'F-61770r926301_fix'
-  tag cci: ['CCI-000198']
-  tag nist: ['IA-5 (1) (d)']
+  tag cci: ['CCI-000198', 'CCI-004066']
+  tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

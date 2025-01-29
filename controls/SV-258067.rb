@@ -13,7 +13,7 @@ If any output is produced, this is a finding.'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag satisfies: ['SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011', 'SRG-OS-000324-GPOS-00125']
   tag gid: 'V-258067'
-  tag rid: 'SV-258067r926188_rule'
+  tag rid: 'SV-258067r958726_rule'
   tag stig_id: 'RHEL-09-412030'
   tag fix_id: 'F-61732r926187_fix'
   tag cci: ['CCI-000056', 'CCI-002235']

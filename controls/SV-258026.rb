@@ -37,7 +37,7 @@ Add the following setting to prevent nonprivileged users from modifying it:
   tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258026'
-  tag rid: 'SV-258026r926065_rule'
+  tag rid: 'SV-258026r958402_rule'
   tag stig_id: 'RHEL-09-271080'
   tag fix_id: 'F-61691r926064_fix'
   tag cci: ['CCI-000057']

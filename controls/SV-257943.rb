@@ -18,14 +18,15 @@ $ sudo dnf install chrony'
   tag check_id: 'C-61684r925814_chk'
   tag severity: 'medium'
   tag gid: 'V-257943'
-  tag rid: 'SV-257943r925816_rule'
+  tag rid: 'SV-257943r997065_rule'
   tag stig_id: 'RHEL-09-252010'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag fix_id: 'F-61608r925815_fix'
   tag 'documentable'
-  tag cci: ['CCI-001891']
-  tag nist: ['AU-8 (1) (a)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001891', 'CCI-004923']
+  tag nist: ['AU-8 (1) (a)', 'SC-45 (1) (a)']
+  tag 'host'
+  tag 'container'
 
   describe package('chrony') do
     it { should be_installed }

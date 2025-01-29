@@ -17,7 +17,7 @@ blacklist can'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257805'
-  tag rid: 'SV-257805r925402_rule'
+  tag rid: 'SV-257805r958478_rule'
   tag stig_id: 'RHEL-09-213050'
   tag fix_id: 'F-61470r925401_fix'
   tag cci: ['CCI-000381']

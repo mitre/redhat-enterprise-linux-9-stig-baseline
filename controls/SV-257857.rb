@@ -15,7 +15,7 @@ file systems that are associated with removable media.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257857'
-  tag rid: 'SV-257857r925558_rule'
+  tag rid: 'SV-257857r991589_rule'
   tag stig_id: 'RHEL-09-231080'
   tag fix_id: 'F-61522r925557_fix'
   tag cci: ['CCI-000366']

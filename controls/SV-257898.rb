@@ -16,14 +16,15 @@ $ sudo chown root /etc/group'
   tag check_id: 'C-61639r925679_chk'
   tag severity: 'medium'
   tag gid: 'V-257898'
-  tag rid: 'SV-257898r925681_rule'
+  tag rid: 'SV-257898r991589_rule'
   tag stig_id: 'RHEL-09-232090'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61563r925680_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/group') do
     it { should exist }

@@ -2,9 +2,7 @@ control 'SV-258013' do
   title 'RHEL 9 must prevent a user from overriding the banner-message-enable setting for the graphical user interface.'
   desc 'Display of a standardized and approved use notification before granting access to the operating system ensures privacy and security notification verbiage used is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
-For U.S. Government systems, system use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
-
-'
+For U.S. Government systems, system use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.'
   desc 'check', 'Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -42,7 +40,7 @@ $ sudo dconf update'
   tag check_id: 'C-61754r926024_chk'
   tag severity: 'medium'
   tag gid: 'V-258013'
-  tag rid: 'SV-258013r926026_rule'
+  tag rid: 'SV-258013r958390_rule'
   tag stig_id: 'RHEL-09-271015'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag fix_id: 'F-61678r926025_fix'

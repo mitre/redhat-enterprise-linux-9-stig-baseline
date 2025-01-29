@@ -30,14 +30,15 @@ Do not perform the steps in this section on the root account. Doing so will caus
   tag check_id: 'C-61787r926123_chk'
   tag severity: 'medium'
   tag gid: 'V-258046'
-  tag rid: 'SV-258046r926125_rule'
+  tag rid: 'SV-258046r991589_rule'
   tag stig_id: 'RHEL-09-411035'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61711r926124_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
   non_interactive_shells = passwd.where { uid.to_i < 1000 && !shell.match(ignore_shells) }.users - input('exempt_interactive_system_accounts')
