@@ -9,7 +9,7 @@ version: 1.2.2
 inspec_version: ">= 5.0"
 
 supports:
-  - platform-name: redhat
+  - platform-family: redhat
     release: 9.*
 
 ### INPUTS ###
