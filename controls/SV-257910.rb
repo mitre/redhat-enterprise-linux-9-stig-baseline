@@ -16,14 +16,15 @@ $ sudo chown root /etc/shadow'
   tag check_id: 'C-61651r925715_chk'
   tag severity: 'medium'
   tag gid: 'V-257910'
-  tag rid: 'SV-257910r925717_rule'
+  tag rid: 'SV-257910r991589_rule'
   tag stig_id: 'RHEL-09-232150'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61575r925716_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/shadow') do
     it { should exist }

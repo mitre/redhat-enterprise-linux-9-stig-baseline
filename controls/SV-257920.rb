@@ -20,7 +20,7 @@ owned by "root".
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257920'
-  tag rid: 'SV-257920r925747_rule'
+  tag rid: 'SV-257920r991560_rule'
   tag stig_id: 'RHEL-09-232200'
   tag fix_id: 'F-61585r925746_fix'
   tag cci: ['CCI-001499']

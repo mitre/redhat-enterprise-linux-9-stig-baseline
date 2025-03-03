@@ -16,14 +16,15 @@ $ sudo chown root /etc/passwd'
   tag check_id: 'C-61647r925703_chk'
   tag severity: 'medium'
   tag gid: 'V-257906'
-  tag rid: 'SV-257906r925705_rule'
+  tag rid: 'SV-257906r991589_rule'
   tag stig_id: 'RHEL-09-232130'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61571r925704_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/passwd') do
     it { should exist }

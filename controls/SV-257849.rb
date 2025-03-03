@@ -18,7 +18,7 @@ $ sudo systemctl mask --now autofs.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag gid: 'V-257849'
-  tag rid: 'SV-257849r925534_rule'
+  tag rid: 'SV-257849r958498_rule'
   tag stig_id: 'RHEL-09-231040'
   tag fix_id: 'F-61514r925533_fix'
   tag cci: ['CCI-000778', 'CCI-000366', 'CCI-001958']

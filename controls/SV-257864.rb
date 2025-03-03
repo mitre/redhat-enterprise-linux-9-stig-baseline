@@ -14,7 +14,7 @@ If the /dev/shm file system is mounted without the "noexec" option, this is a fi
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257864'
-  tag rid: 'SV-257864r925579_rule'
+  tag rid: 'SV-257864r958804_rule'
   tag stig_id: 'RHEL-09-231115'
   tag fix_id: 'F-61529r925578_fix'
   tag cci: ['CCI-001764']

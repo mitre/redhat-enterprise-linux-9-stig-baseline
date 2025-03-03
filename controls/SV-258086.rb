@@ -19,11 +19,11 @@ $ sudo sed -i '/\!authenticate/ s/^/# /g' /etc/sudoers /etc/sudoers.d/*)
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-258086'
-  tag rid: 'SV-258086r943065_rule'
+  tag rid: 'SV-258086r997081_rule'
   tag stig_id: 'RHEL-09-432025'
   tag fix_id: 'F-61751r926244_fix'
-  tag cci: ['CCI-002038']
-  tag nist: ['IA-11']
+  tag cci: ['CCI-002038', 'CCI-004895']
+  tag nist: ['IA-11', 'SC-11 b']
   tag 'host'
   tag 'container-conditional'
 

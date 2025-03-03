@@ -1,8 +1,6 @@
 control 'SV-258017' do
   title 'RHEL 9 must prevent a user from overriding the disabling of the graphical user interface autorun function.'
-  desc 'Techniques used to address this include protocols using nonces (e.g., numbers generated for a specific one-time use) or challenges (e.g., TLS, WS_Security). Additional techniques include time-synchronous or challenge-response one-time authenticators.
-
-'
+  desc 'Techniques used to address this include protocols using nonces (e.g., numbers generated for a specific one-time use) or challenges (e.g., TLS, WS_Security). Additional techniques include time-synchronous or challenge-response one-time authenticators.'
   desc 'check', %q(Verify RHEL 9 disables ability of the user to override the graphical user interface autorun setting.
 
 Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
@@ -36,7 +34,7 @@ $ sudo dconf update'
   tag check_id: 'C-61758r926036_chk'
   tag severity: 'medium'
   tag gid: 'V-258017'
-  tag rid: 'SV-258017r926038_rule'
+  tag rid: 'SV-258017r958498_rule'
   tag stig_id: 'RHEL-09-271035'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61682r926037_fix'

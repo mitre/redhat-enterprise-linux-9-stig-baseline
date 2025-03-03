@@ -16,7 +16,7 @@ $ sudo systemctl enable --now rsyslog'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258142'
-  tag rid: 'SV-258142r926413_rule'
+  tag rid: 'SV-258142r991589_rule'
   tag stig_id: 'RHEL-09-652020'
   tag fix_id: 'F-61807r926412_fix'
   tag cci: ['CCI-000366']

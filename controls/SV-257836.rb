@@ -18,14 +18,15 @@ $ sudo dnf remove quagga'
   tag check_id: 'C-61577r925493_chk'
   tag severity: 'medium'
   tag gid: 'V-257836'
-  tag rid: 'SV-257836r925495_rule'
+  tag rid: 'SV-257836r991589_rule'
   tag stig_id: 'RHEL-09-215065'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61501r925494_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   if input('quagga_required')
     describe package('quagga') do

@@ -30,11 +30,11 @@ server [ntp.server.name] iburst maxpoll 16'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag satisfies: ['SRG-OS-000355-GPOS-00143', 'SRG-OS-000356-GPOS-00144', 'SRG-OS-000359-GPOS-00146']
   tag gid: 'V-257945'
-  tag rid: 'SV-257945r925822_rule'
+  tag rid: 'SV-257945r997067_rule'
   tag stig_id: 'RHEL-09-252020'
   tag fix_id: 'F-61610r925821_fix'
-  tag cci: ['CCI-001891', 'CCI-001890', 'CCI-002046']
-  tag nist: ['AU-8 (1) (a)', 'AU-8 b', 'AU-8 (1) (b)']
+  tag cci: ['CCI-001891', 'CCI-001890', 'CCI-002046', 'CCI-004923', 'CCI-004926']
+  tag nist: ['AU-8 (1) (a)', 'AU-8 b', 'AU-8 (1) (b)', 'SC-45 (1) (a)', 'SC-45 (1) (b)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

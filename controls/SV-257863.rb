@@ -16,7 +16,7 @@ If the /dev/shm file system is mounted without the "nodev" option, this is a fin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257863'
-  tag rid: 'SV-257863r925576_rule'
+  tag rid: 'SV-257863r958804_rule'
   tag stig_id: 'RHEL-09-231110'
   tag fix_id: 'F-61528r925575_fix'
   tag cci: ['CCI-001764']

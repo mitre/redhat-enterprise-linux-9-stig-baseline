@@ -18,11 +18,11 @@ password required pam_pwquality.so'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag gid: 'V-258097'
-  tag rid: 'SV-258097r926278_rule'
+  tag rid: 'SV-258097r997084_rule'
   tag stig_id: 'RHEL-09-611040'
   tag fix_id: 'F-61762r926277_fix'
-  tag cci: ['CCI-000192', 'CCI-000366', 'CCI-000193']
-  tag nist: ['IA-5 (1) (a)', 'CM-6 b']
+  tag cci: ['CCI-000192', 'CCI-000366', 'CCI-000193', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'CM-6 b', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

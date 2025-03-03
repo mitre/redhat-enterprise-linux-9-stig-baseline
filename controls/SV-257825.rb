@@ -18,14 +18,15 @@ $ sudo dnf install subscription-manager'
   tag check_id: 'C-61566r925460_chk'
   tag severity: 'medium'
   tag gid: 'V-257825'
-  tag rid: 'SV-257825r925462_rule'
+  tag rid: 'SV-257825r997056_rule'
   tag stig_id: 'RHEL-09-215010'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61490r925461_fix'
   tag 'documentable'
-  tag cci: ['CCI-001749']
-  tag nist: ['CM-5 (3)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001749', 'CCI-003992']
+  tag nist: ['CM-5 (3)', 'CM-14']
+  tag 'host'
+  tag 'container'
 
   describe package('subscription-manager') do
     it { should be_installed }

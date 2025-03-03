@@ -30,7 +30,7 @@ offline_credentials_expiration = 1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000383-GPOS-00166'
   tag gid: 'V-258133'
-  tag rid: 'SV-258133r926386_rule'
+  tag rid: 'SV-258133r958828_rule'
   tag stig_id: 'RHEL-09-631020'
   tag fix_id: 'F-61798r926385_fix'
   tag cci: ['CCI-002007']

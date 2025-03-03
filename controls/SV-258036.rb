@@ -20,11 +20,11 @@ $ sudo systemctl enable --now usbguard'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258036'
-  tag rid: 'SV-258036r926095_rule'
+  tag rid: 'SV-258036r997118_rule'
   tag stig_id: 'RHEL-09-291020'
   tag fix_id: 'F-61701r926094_fix'
-  tag cci: ['CCI-001958']
-  tag nist: ['IA-3']
+  tag cci: ['CCI-001958', 'CCI-003959']
+  tag nist: ['IA-3', 'CM-7 (9) (b)']
   tag 'host'
 
   only_if('This requirement does not apply to containers', impact: 0.0) {

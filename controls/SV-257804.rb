@@ -17,7 +17,7 @@ blacklist atm'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257804'
-  tag rid: 'SV-257804r925399_rule'
+  tag rid: 'SV-257804r958478_rule'
   tag stig_id: 'RHEL-09-213045'
   tag fix_id: 'F-61469r925398_fix'
   tag cci: ['CCI-000381']

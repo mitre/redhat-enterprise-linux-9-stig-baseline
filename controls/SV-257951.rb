@@ -18,7 +18,7 @@ $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'"
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257951'
-  tag rid: 'SV-257951r925840_rule'
+  tag rid: 'SV-257951r991589_rule'
   tag stig_id: 'RHEL-09-252050'
   tag fix_id: 'F-61616r925839_fix'
   tag cci: ['CCI-000366']

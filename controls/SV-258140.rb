@@ -18,7 +18,7 @@ $ sudo dnf install rsyslogd'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag gid: 'V-258140'
-  tag rid: 'SV-258140r926407_rule'
+  tag rid: 'SV-258140r959008_rule'
   tag stig_id: 'RHEL-09-652010'
   tag fix_id: 'F-61805r926406_fix'
   tag cci: ['CCI-000366', 'CCI-000154', 'CCI-001851']

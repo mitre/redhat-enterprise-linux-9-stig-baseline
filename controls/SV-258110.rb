@@ -18,7 +18,7 @@ dictcheck=1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00225'
   tag gid: 'V-258110'
-  tag rid: 'SV-258110r926317_rule'
+  tag rid: 'SV-258110r991587_rule'
   tag stig_id: 'RHEL-09-611105'
   tag fix_id: 'F-61775r926316_fix'
   tag cci: ['CCI-000366']

@@ -1,6 +1,6 @@
 control 'SV-258123' do
   title 'RHEL 9 must implement certificate status checking for multifactor authentication.'
-  desc 'Using an authentication device, such as a DOD Common Access Card (CAC) or token that is separate from the information system, ensures that even if the information system is compromised, credentials stored on the authentication device will not be affected.
+  desc 'Using an authentication device, such as a DOD common access card (CAC) or token that is separate from the information system, ensures that even if the information system is compromised, credentials stored on the authentication device will not be affected.
 
 Multifactor solutions that require devices separate from information systems gaining access include, for example, hardware tokens providing time-based or challenge-response authenticators and smart cards such as the U.S. Government Personal Identity Verification (PIV) card and the DOD CAC.
 
@@ -34,11 +34,11 @@ $ sudo systemctl restart sssd.service'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag satisfies: ['SRG-OS-000375-GPOS-00160', 'SRG-OS-000377-GPOS-00162']
   tag gid: 'V-258123'
-  tag rid: 'SV-258123r926356_rule'
+  tag rid: 'SV-258123r997107_rule'
   tag stig_id: 'RHEL-09-611170'
   tag fix_id: 'F-61788r926355_fix'
-  tag cci: ['CCI-001948', 'CCI-001954']
-  tag nist: ['IA-2 (11)', 'IA-2 (12)']
+  tag cci: ['CCI-001948', 'CCI-001954', 'CCI-004046']
+  tag nist: ['IA-2 (11)', 'IA-2 (12)', 'IA-2 (6) (a)']
   tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
