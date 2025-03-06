@@ -71,13 +71,7 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle f
   issuer_dn_expected = root_ca_file['issuer_dn'] # Extract the expected issuer DN
   subject_dn_expected = root_ca_file['subject_dn'] # Extract the expected subject DN
   # quick check to see if the designated Root CA is present; fail if it is not
-  if !file(root_ca_file_path).exist?
-
-    describe file(root_ca_file_path) do
-      it { should exist }
-    end
-
-  else
+  if file(root_ca_file_path).exist?
     # Check the Root CA's validity and details
 
     describe 'The Root CA' do
@@ -98,5 +92,11 @@ Obtain a valid copy of the DoD root CA file from the PKI CA certificate bundle f
         expect(subject.validity_in_days).to be > 0
       end
     end
+  else
+
+    describe file(root_ca_file_path) do
+      it { should exist }
+    end
+
   end
 end
