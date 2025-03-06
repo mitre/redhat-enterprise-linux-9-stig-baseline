@@ -427,8 +427,12 @@ inputs:
   # SV-258131
   - name: root_ca_file
     description: Path to an accepted trust anchor certificate file (DoD)
-    type: String
-    value: "/etc/sssd/pki/sssd_auth_ca_db.pem"
+    type: Hash
+    value:
+      path: "/etc/sssd/pki/sssd_auth_ca_db.pem" # https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/unclass-certificates_pkcs7_DoD.zip'
+      issuer_dn: '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3'
+      subject_dn: '/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3'
+
 
   # SV-258054
   - name: unsuccessful_attempts
