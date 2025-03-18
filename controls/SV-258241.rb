@@ -40,7 +40,8 @@ Reboot the system for the changes to take effect.'
     !virtualization.system.eql?('docker')
   }
 
-  describe command('update-crypto-policies --show') do
-    its('stdout') { should match(/FIPS/) }
+  describe 'System-wide crypto policy' do
+    subject { command('update-crypto-policies --show').stdout.strip }
+    it { should eq input('system_wide_crypto_policy') }
   end
 end
