@@ -220,7 +220,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257782, SV-258230
+  # SV-257782, SV-258230, SV-258236, SV-258237
   - name: use_fips
     description: "'(boolean)' Set to true if the system is required to use FIPS Encryption"
     type: Boolean
