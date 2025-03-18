@@ -227,10 +227,16 @@ inputs:
     value: true
 
   # SV-257879
-  - name: exempt_data_at_rest
+  - name: data_at_rest_exempt
     description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
     type: Boolean
     value: false
+
+  # SV-230254
+  - name: system_wide_crypto_policy
+    description: The system wide crypto policy
+    type: String
+    value: 'FIPS'
 
   # SV-258093, SV-258092
   - name: min_reuse_generations
