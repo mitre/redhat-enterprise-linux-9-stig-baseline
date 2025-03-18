@@ -72,11 +72,11 @@ The system must be rebooted to make the changes to take effect.'
         failing_crypto_policies[service] = link_path
       end
     end
-  end
 
-  describe 'Crypto policies' do
-    it 'should link to the correct libriries' do
-      expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
+    describe 'Crypto policies' do
+      it 'should link to the correct libriries' do
+        expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
+      end
     end
   end
 end
