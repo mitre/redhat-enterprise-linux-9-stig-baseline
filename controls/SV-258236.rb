@@ -48,21 +48,29 @@ The system must be rebooted to make the changes to take effect.'
     !virtualization.system.eql?('docker')
   }
 
-  crypto_policies_dir = '/etc/crypto-policies/back-ends'
-  expected_link_path_dir = '/usr/share/crypto-policies/FIPS'
-
-  crypto_policies = command("ls -l #{crypto_policies_dir} | awk \'{ print $9 }\'").stdout.strip.split("\n")
-
-  failing_crypto_policies = {}
-
-  crypto_policies.each do |crypto_policy|
-    service = "#{crypto_policies_dir}/#{crypto_policy}"
-    link_path = file(service).link_path
-
-    if link_path.nil?
-      failing_crypto_policies[service] = 'No link path found'
-    elsif !link_path.match?(/^#{expected_link_path_dir}/)
-      failing_crypto_policies[service] = link_path
+  if input('use_fips') == false
+    impact 0.0
+    describe 'This control is Not Applicable as FIPS is not required for this system' do
+      skip 'This control is Not Applicable as FIPS is not required for this system'
+    end
+  else
+    
+    crypto_policies_dir = '/etc/crypto-policies/back-ends'
+    expected_link_path_dir = '/usr/share/crypto-policies/FIPS'
+  
+    crypto_policies = command("ls -l #{crypto_policies_dir} | awk \'{ print $9 }\'").stdout.strip.split("\n")
+  
+    failing_crypto_policies = {}
+  
+    crypto_policies.each do |crypto_policy|
+      service = "#{crypto_policies_dir}/#{crypto_policy}"
+      link_path = file(service).link_path
+  
+      if link_path.nil?
+        failing_crypto_policies[service] = 'No link path found'
+      elsif !link_path.match?(/^#{expected_link_path_dir}/)
+        failing_crypto_policies[service] = link_path
+      end
     end
   end
 
