@@ -45,7 +45,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   end
 
   # TODO: This should really have a resource
-  if input('exempt_data_at_rest') == true
+  if input('data_at_rest_exempt') == true
     impact 0.0
     describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `exempt_data_at_rest` input.')
   elsif all_args.empty?
