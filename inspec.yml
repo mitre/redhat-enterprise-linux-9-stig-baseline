@@ -445,7 +445,7 @@ inputs:
     type: Numeric
     value: 3
 
-  # SV-258023
+  # SV-258023, SV-258068
   - name: system_inactivity_timeout
     description: Maximum system inactivity timeout (time in seconds).
     type: Numeric
@@ -797,7 +797,7 @@ inputs:
       "release key 2": "567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51"
       "auxiliary key": "7E46 2425 8C40 6535 D56D  6F13 5054 E4A4 5A63 40B3"
 
-  # SV-258068, SV-258077
+  # SV-258077
   - name: stop_idle_session_sec
     description: Number of seconds the system can be idle before session timeout
     type: Numeric
