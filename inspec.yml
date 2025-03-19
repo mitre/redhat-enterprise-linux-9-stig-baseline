@@ -411,7 +411,7 @@ inputs:
     description: Timeserver(s) used in /etc/chrony.conf
     type: Array
     value: ["0.us.pool.ntp.mil"]
-  
+
   # SV-230484
   - name: match_all_authoritative_timeservers_enabled
     description: Specify that all timeservers in authoritative_timeservers must be present and valid
@@ -874,6 +874,12 @@ inputs:
   # SV-257834
   - name: tuned_required
     description: Set to true if there is a documented requirement for the target system to use tuned
+    type: Boolean
+    value: false
+
+  # SV-258004
+  - name: kerberos_required
+    description: Set to true if there is a documented requirement for the target system to use Kerberos auth
     type: Boolean
     value: false
 
