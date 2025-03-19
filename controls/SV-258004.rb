@@ -33,7 +33,9 @@ $ sudo systemctl restart sshd.service'
     !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
   }
 
+  use_kerberos = input('kerberos_required') ? 'yes' : 'no'
+
   describe sshd_config do
-    its('KerberosAuthentication') { should cmp 'no' }
+    its('KerberosAuthentication') { should cmp use_kerberos }
   end
 end
