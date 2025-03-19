@@ -30,7 +30,7 @@ declare -xr TMOUT=600'
   tag 'host'
   tag 'container'
 
-  stop_idle_session_sec = input('stop_idle_session_sec')
+  stop_idle_session_sec = input('system_inactivity_timeout')
 
   tmout_lines = command('grep -i tmout /etc/profile /etc/profile.d/*.sh').stdout.strip
   tmout_value = tmout_lines.match(/^[^#]+TMOUT\s*=\s*(\d+)/i)
