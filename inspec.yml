@@ -446,7 +446,7 @@ inputs:
   - name: system_inactivity_timeout
     description: Maximum system inactivity timeout (time in seconds).
     type: Numeric
-    value: 900
+    value: 600
 
   # SV-258049
   - name: days_of_inactivity
@@ -530,7 +530,7 @@ inputs:
   - name: system_activity_timeout
     description: The expected maximum delay in seconds before the system will lock the session
     type: Numeric
-    value: 900
+    value: 600
 
   # SV-258060
   - name: log_directory
