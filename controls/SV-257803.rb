@@ -50,7 +50,7 @@ $ sudo sysctl --system'
   else
 
     parameter = 'kernel.core_pattern'
-    value = 1
+    value = '|/bin/false'
     regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
     describe kernel_parameter(parameter) do
