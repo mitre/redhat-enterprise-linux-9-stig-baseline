@@ -31,7 +31,7 @@ If the command does not produce output, this is a finding.'
 if [ "$PS1" ]; then
     parent=$(ps -o ppid= -p $$)
     name=$(ps -o comm= -p $parent)
-    case "$name" in sshd|login) tmux ;; esac
+    case "$name" in (sshd|login) tmux ;; esac
 fi'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'

@@ -220,17 +220,23 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257782, SV-258230
+  # SV-257782, SV-258230, SV-258236, SV-258237
   - name: use_fips
     description: "'(boolean)' Set to true if the system is required to use FIPS Encryption"
     type: Boolean
     value: true
 
   # SV-257879
-  - name: exempt_data_at_rest
+  - name: data_at_rest_exempt
     description: "'(boolean) Set to true if the system is exempt from using Data at Rest"
     type: Boolean
     value: false
+
+  # SV-258241
+  - name: system_wide_crypto_policy
+    description: The system wide crypto policy
+    type: String
+    value: 'FIPS'
 
   # SV-258093, SV-258092
   - name: min_reuse_generations
@@ -405,7 +411,7 @@ inputs:
     description: Timeserver(s) used in /etc/chrony.conf
     type: Array
     value: ["0.us.pool.ntp.mil"]
-  
+
   # SV-230484
   - name: match_all_authoritative_timeservers_enabled
     description: Specify that all timeservers in authoritative_timeservers must be present and valid
@@ -439,11 +445,11 @@ inputs:
     type: Numeric
     value: 3
 
-  # SV-258023
+  # SV-258023, SV-258068
   - name: system_inactivity_timeout
     description: Maximum system inactivity timeout (time in seconds).
     type: Numeric
-    value: 900
+    value: 600
 
   # SV-258049
   - name: days_of_inactivity
@@ -527,7 +533,7 @@ inputs:
   - name: system_activity_timeout
     description: The expected maximum delay in seconds before the system will lock the session
     type: Numeric
-    value: 900
+    value: 600
 
   # SV-258060
   - name: log_directory
@@ -783,7 +789,7 @@ inputs:
       "release key 2": "567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51"
       "auxiliary key": "7E46 2425 8C40 6535 D56D  6F13 5054 E4A4 5A63 40B3"
 
-  # SV-258068, SV-258077
+  # SV-258077
   - name: stop_idle_session_sec
     description: Number of seconds the system can be idle before session timeout
     type: Numeric
@@ -860,6 +866,12 @@ inputs:
   # SV-257834
   - name: tuned_required
     description: Set to true if there is a documented requirement for the target system to use tuned
+    type: Boolean
+    value: false
+
+  # SV-258004
+  - name: kerberos_required
+    description: Set to true if there is a documented requirement for the target system to use Kerberos auth
     type: Boolean
     value: false
 
