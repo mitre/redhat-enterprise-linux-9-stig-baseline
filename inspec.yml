@@ -801,7 +801,7 @@ inputs:
   - name: stop_idle_session_sec
     description: Number of seconds the system can be idle before session timeout
     type: Numeric
-    value: 600
+    value: 900
 
   # SV-258071
   - name: login_prompt_delay
