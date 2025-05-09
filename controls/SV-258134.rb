@@ -3,13 +3,13 @@ control 'SV-258134' do
   desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.'
   desc 'check', %q(Verify that RHEL 9 has the Advanced Intrusion Detection Environment (AIDE) package installed with the following command:
 
-$ sudo dnf list --installed aide
+$ dnf list --installed aide
 
 Example output:
 
 aide.x86_64          0.16.100.el9
 
-If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system.
+If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system. 
 
 If there is no application installed to perform integrity checks, this is a finding.
 
@@ -66,10 +66,10 @@ AIDE found NO differences between database and filesystem. Looks okay!!
 ...'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61875r926387_chk'
+  tag check_id: 'C-61875r1045264_chk'
   tag severity: 'medium'
   tag gid: 'V-258134'
-  tag rid: 'SV-258134r926389_rule'
+  tag rid: 'SV-258134r1045265_rule'
   tag stig_id: 'RHEL-09-651010'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61799r926388_fix'

@@ -5,7 +5,7 @@ control 'SV-258139' do
 Extended attributes in file systems are used to contain arbitrary data and file metadata with security implications.'
   desc 'check', 'Verify that AIDE is configured to verify extended attributes with the following command:
 
-$ grep xattrs /etc/aide.conf
+$ sudo grep xattrs /etc/aide.conf
 
 All= p+i+n+u+g+s+m+S+sha512+acl+xattrs+selinux
 
@@ -20,7 +20,7 @@ uncommented file and directory selection lists.'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258139'
-  tag rid: 'SV-258139r926404_rule'
+  tag rid: 'SV-258139r1045276_rule'
   tag stig_id: 'RHEL-09-651035'
   tag fix_id: 'F-61804r926403_fix'
   tag cci: ['CCI-000366']

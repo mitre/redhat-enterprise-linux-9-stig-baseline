@@ -7,29 +7,31 @@ Using more hashing rounds makes password cracking attacks more difficult.
 '
   desc 'check', 'Verify the number of rounds for the password hashing algorithm is configured with the following command:
 
-$ sudo grep rounds /etc/pam.d/password-auth
+$ grep rounds /etc/pam.d/password-auth
 
-password sufficient pam_unix.so sha512 rounds=5000
+password sufficient pam_unix.so sha512 rounds=100000
 
-If a matching line is not returned or "rounds" is less than "5000", this a finding.'
-  desc 'fix', 'Configure Red Hat Enterprise Linux 9 to use 5000 hashing rounds for hashing passwords.
+If a matching line is not returned or "rounds" is less than "100000", this a finding.'
+  desc 'fix', 'Configure RHEL 9 to use 100000 hashing rounds for hashing passwords.
 
-Add or modify the following line in "/etc/pam.d/password-auth" and set "rounds" to "5000".
+Add or modify the following line in "/etc/pam.d/password-auth" and set "rounds" to "100000".
 
-password sufficient pam_unix.so sha512 rounds=5000'
+password sufficient pam_unix.so sha512 rounds=100000
+
+Note: Running authselect will overwrite this value unless a custom authselect policy is created.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61840r926282_chk'
+  tag check_id: 'C-61840r1045196_chk'
   tag severity: 'medium'
   tag gid: 'V-258099'
-  tag rid: 'SV-258099r926284_rule'
+  tag rid: 'SV-258099r1045198_rule'
   tag stig_id: 'RHEL-09-611050'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
-  tag fix_id: 'F-61764r926283_fix'
+  tag fix_id: 'F-61764r1045197_fix'
   tag satisfies: ['SRG-OS-000073-GPOS-00041', 'SRG-OS-000120-GPOS-00061']
   tag 'documentable'
-  tag cci: ['CCI-000196', 'CCI-000803']
-  tag nist: ['IA-5 (1) (c)', 'IA-7']
+  tag cci: ['CCI-000196', 'CCI-000803', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-7', 'IA-5 (1) (d)']
   tag 'host'
   tag 'container'
 

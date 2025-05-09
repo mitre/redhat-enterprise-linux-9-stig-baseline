@@ -18,7 +18,7 @@ $ sudo chmod 755 [DIRECTORY]'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257883'
-  tag rid: 'SV-257883r925636_rule'
+  tag rid: 'SV-257883r991560_rule'
   tag stig_id: 'RHEL-09-232015'
   tag fix_id: 'F-61548r925635_fix'
   tag cci: ['CCI-001499']
@@ -29,14 +29,14 @@ $ sudo chmod 755 [DIRECTORY]'
     !virtualization.system.eql?('docker')
   }
 
-  mode_for_libs = input('mode_for_libs')
+  permissions_for_libs = input('permissions_for_libs')
 
   overly_permissive_libs = input('system_libraries').select { |lib|
-    file(lib).more_permissive_than?(mode_for_libs)
+    file(lib).more_permissive_than?(permissions_for_libs)
   }
 
   describe 'System libraries' do
-    it "should not have modes set higher than #{mode_for_libs}" do
+    it "should not have permissions set higher than #{permissions_for_libs}" do
       fail_msg = "Overly permissive system libraries:\n\t- #{overly_permissive_libs.join("\n\t- ")}"
       expect(overly_permissive_libs).to be_empty, fail_msg
     end

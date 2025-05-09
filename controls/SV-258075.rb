@@ -22,7 +22,7 @@ umask 077'
   tag check_id: 'C-61816r926210_chk'
   tag severity: 'medium'
   tag gid: 'V-258075'
-  tag rid: 'SV-258075r926212_rule'
+  tag rid: 'SV-258075r991590_rule'
   tag stig_id: 'RHEL-09-412070'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag fix_id: 'F-61740r926211_fix'
@@ -30,11 +30,12 @@ umask 077'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   file = '/etc/profile'
 
-  expected_umask = input('modes_for_shells')[:profile_umask]
+  expected_umask = input('permissions_for_shells')[:profile_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 

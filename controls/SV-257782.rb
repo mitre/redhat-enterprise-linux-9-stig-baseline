@@ -24,7 +24,7 @@ $ sudo systemctl enable --now rngd'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257782'
-  tag rid: 'SV-257782r942961_rule'
+  tag rid: 'SV-257782r991589_rule'
   tag stig_id: 'RHEL-09-211035'
   tag fix_id: 'F-61447r925332_fix'
   tag cci: ['CCI-000366']

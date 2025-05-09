@@ -16,9 +16,9 @@ If the /boot/efi file system does not have the "nosuid" option set, this is a fi
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257862'
-  tag rid: 'SV-257862r925573_rule'
+  tag rid: 'SV-257862r1051265_rule'
   tag stig_id: 'RHEL-09-231105'
-  tag fix_id: 'F-61527r925572_fix'
+  tag fix_id: 'F-61527r1051264_fix'
   tag cci: ['CCI-000366', 'CCI-001764']
   tag nist: ['CM-6 b', 'CM-7 (2)']
   tag 'host'

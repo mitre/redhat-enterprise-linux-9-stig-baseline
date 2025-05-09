@@ -7,9 +7,8 @@ control 'SV-258073' do
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/csh.cshrc" file, the Severity is raised to a CAT I.
 
-$ grep umask /etc/csh.cshrc
+$ grep umask /etc/csh.cshrc 
 
-umask 077
 umask 077
 
 If the value for the "umask" parameter is not "077", or the "umask" parameter is missing or is commented out, this is a finding.'
@@ -20,10 +19,10 @@ Add or edit the lines for the "umask" parameter in the "/etc/csh.cshrc" file to 
 umask 077'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61814r926204_chk'
+  tag check_id: 'C-61814r1045156_chk'
   tag severity: 'medium'
   tag gid: 'V-258073'
-  tag rid: 'SV-258073r926206_rule'
+  tag rid: 'SV-258073r1045157_rule'
   tag stig_id: 'RHEL-09-412060'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag fix_id: 'F-61738r926205_fix'
@@ -31,11 +30,12 @@ umask 077'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   file = '/etc/csh.cshrc'
 
-  expected_umask = input('modes_for_shells')[:cshrc_umask]
+  expected_umask = input('permissions_for_shells')[:cshrc_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 

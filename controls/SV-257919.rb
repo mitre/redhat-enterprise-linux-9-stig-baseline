@@ -5,9 +5,9 @@ control 'SV-257919' do
 This requirement applies to RHEL 9 with software libraries that are accessible and configurable, as in the case of interpreted languages. Software libraries also include privileged programs that execute with escalated privileges.'
   desc 'check', 'Verify the system commands contained in the following directories are group-owned by "root", or a required system account, with the following command:
 
-$ sudo find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -group root -exec ls -l {} \\;
+$ sudo find -L /bin /sbin /usr/bin /usr/sbin /usr/libexec /usr/local/bin /usr/local/sbin ! -group root -exec stat -L -c "%G %n" {} \\;
 
-If any system commands are returned and is not group-owned by a required system account, this is a finding.'
+If any system commands are returned and are not group-owned by a required system account, this is a finding.'
   desc 'fix', 'Configure the system commands to be protected from unauthorized access.
 
     Run the following command, replacing "[FILE]" with any system command
@@ -19,7 +19,7 @@ file not group-owned by "root" or a required system account.
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257919'
-  tag rid: 'SV-257919r925744_rule'
+  tag rid: 'SV-257919r1044979_rule'
   tag stig_id: 'RHEL-09-232195'
   tag fix_id: 'F-61584r925743_fix'
   tag cci: ['CCI-001499']

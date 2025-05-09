@@ -3,7 +3,7 @@ control 'SV-258141' do
   desc 'The rsyslog-gnutls package provides Transport Layer Security (TLS) support for the rsyslog daemon, which enables secure remote logging.'
   desc 'check', 'Verify that RHEL 9 has the rsyslog-gnutls package installed with the following command:
 
-$ sudo dnf list --installed rsyslog-gnutls
+$ dnf list --installed rsyslog-gnutls
 
 Example output:
 
@@ -18,7 +18,7 @@ $ sudo dnf install rsyslog-gnutls'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258141'
-  tag rid: 'SV-258141r926410_rule'
+  tag rid: 'SV-258141r1045280_rule'
   tag stig_id: 'RHEL-09-652015'
   tag fix_id: 'F-61806r926409_fix'
   tag cci: ['CCI-000366', 'CCI-000803']
@@ -29,13 +29,13 @@ $ sudo dnf install rsyslog-gnutls'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') == ''
-    describe package('rsyslog-gnutls') do
-      it { should be_installed }
-    end
-  else
+  if input('alternative_logging_method') != ''
     describe 'manual check' do
       skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe package('rsyslog-gnutls') do
+      it { should be_installed }
     end
   end
 end

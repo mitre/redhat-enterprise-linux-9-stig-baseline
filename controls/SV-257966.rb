@@ -34,7 +34,7 @@ $ sudo sysctl --system'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257966'
-  tag rid: 'SV-257966r942995_rule'
+  tag rid: 'SV-257966r991589_rule'
   tag stig_id: 'RHEL-09-253055'
   tag fix_id: 'F-61631r925884_fix'
   tag cci: ['CCI-000366']
@@ -49,29 +49,22 @@ $ sudo sysctl --system'
   value = 1
   regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
-  if input('ipv4_enabled') == false
-    impact 0.0
-    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
-      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
-  else
-    describe kernel_parameter(parameter) do
-      its('value') { should eq value }
-    end
-
-    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
-
-    correct_result = search_results.any? { |line| line.match(regexp) }
-    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
-
-    describe 'Kernel config files' do
-      it "should configure '#{parameter}'" do
-        expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
-      end
-      unless incorrect_results.nil?
-        it 'should not have incorrect or conflicting setting(s) in the config files' do
-          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
-        end
+    unless incorrect_results.nil?
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end
     end
   end

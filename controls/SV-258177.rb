@@ -11,8 +11,8 @@ The system call rules are loaded into a matching engine that intercepts each sys
 
 $ sudo auditctl -l | grep chmod
 
--a always,exit -F arch=b32 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=unset -k perm_mod
--a always,exit -F arch=b64 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=unset -k perm_mod
+-a always,exit -F arch=b32 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=-1 -F key=perm_mod
+-a always,exit -F arch=b64 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=-1 -F key=perm_mod
 
 If both the "b32" and "b64" audit rules are not defined for the "chmod", "fchmod", and "fchmodat" system calls, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "chmod", "fchmod", and "fchmodat" syscalls.
@@ -20,19 +20,20 @@ If both the "b32" and "b64" audit rules are not defined for the "chmod", "fchmod
 Add or update the following rules in "/etc/audit/rules.d/audit.rules":
 
 -a always,exit -F arch=b32 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=unset -k perm_mod
-
 -a always,exit -F arch=b64 -S chmod,fchmod,fchmodat -F auid>=1000 -F auid!=unset -k perm_mod
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000064-GPOS-00033', 'SRG-OS-000466-GPOS-00210', 'SRG-OS-000458-GPOS-00203']
   tag gid: 'V-258177'
-  tag rid: 'SV-258177r926518_rule'
+  tag rid: 'SV-258177r1045316_rule'
   tag stig_id: 'RHEL-09-654015'
-  tag fix_id: 'F-61842r926517_fix'
+  tag fix_id: 'F-61842r1045315_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
   tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'

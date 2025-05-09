@@ -19,11 +19,13 @@ DOD has defined the list of events for which RHEL 9 will provide an audit record
 4) All kernel module load, unload, and restart actions.'
   desc 'check', 'To verify that Linux Audit logging is enabled for the USBGuard daemon with the following command:
 
-$ sudo grep AuditBackend /etc/usbguard/usbguard-daemon.conf
+$ sudo grep AuditBackend /etc/usbguard/usbguard-daemon.conf 
 
-AuditBackend=LinuxAudit
+AuditBackend=LinuxAudit 
 
-If "AuditBackend" is not set to "LinuxAudit", this is a finding.'
+If "AuditBackend" is not set to "LinuxAudit", this is a finding.
+
+If the system is virtual machine with no virtual or physical USB peripherals attached, this is not a finding.'
   desc 'fix', 'Configure RHEL 9 USBGuard AuditBackend to use the audit system.
 
 Add or edit the following line in /etc/usbguard/usbguard-daemon.conf
@@ -35,7 +37,7 @@ AuditBackend=LinuxAudit'
   tag gtitle: 'SRG-OS-000062-GPOS-00031'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258037'
-  tag rid: 'SV-258037r926098_rule'
+  tag rid: 'SV-258037r1014863_rule'
   tag stig_id: 'RHEL-09-291025'
   tag fix_id: 'F-61702r926097_fix'
   tag cci: ['CCI-000169']

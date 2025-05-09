@@ -20,7 +20,7 @@ session required pam_lastlog.so showfailed'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258076'
-  tag rid: 'SV-258076r926215_rule'
+  tag rid: 'SV-258076r991589_rule'
   tag stig_id: 'RHEL-09-412075'
   tag fix_id: 'F-61741r926214_fix'
   tag cci: ['CCI-000366', 'CCI-000052']

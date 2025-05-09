@@ -11,23 +11,25 @@ The system call rules are loaded into a matching engine that intercepts each sys
 
 $ sudo auditctl -l | grep timestamp
 
--a always,exit -F path=/usr/sbin/pam_timestamp_check -F perm=x -F auid>=1000 -F auid!=unset -k privileged-pam_timestamp_check
+-a always,exit -S all -F path=/usr/sbin/pam_timestamp_check -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-pam_timestamp_check
 
 If the command does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "pam_timestamp_check" command by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
 
 -a always,exit -F path=/usr/sbin/pam_timestamp_check -F perm=x -F auid>=1000 -F auid!=unset -k privileged-pam_timestamp_check
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258197'
-  tag rid: 'SV-258197r926578_rule'
+  tag rid: 'SV-258197r1045376_rule'
   tag stig_id: 'RHEL-09-654115'
-  tag fix_id: 'F-61862r926577_fix'
+  tag fix_id: 'F-61862r1045375_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
   tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'

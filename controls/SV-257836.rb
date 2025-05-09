@@ -5,35 +5,30 @@ control 'SV-257836' do
 If there is no need to make the router software available, removing it provides a safeguard against its activation.'
   desc 'check', 'Verify that the quagga package is not installed with the following command:
 
-$ sudo dnf list --installed quagga
+$ dnf list --installed quagga
 
 Error: No matching Packages to list
 
-If the "quagga" package is installed, and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
+If the "quagga" package is installed and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'Remove the quagga package with the following command:
 
 $ sudo dnf remove quagga'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61577r925493_chk'
+  tag check_id: 'C-61577r1044907_chk'
   tag severity: 'medium'
   tag gid: 'V-257836'
-  tag rid: 'SV-257836r925495_rule'
+  tag rid: 'SV-257836r1044908_rule'
   tag stig_id: 'RHEL-09-215065'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61501r925494_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
-  if input('quagga_required')
-    describe package('quagga') do
-      it { should be_installed }
-    end
-  else
-    describe package('quagga') do
-      it { should_not be_installed }
-    end
+  describe package('quagga') do
+    it { should_not be_installed }
   end
 end

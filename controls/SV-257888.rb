@@ -1,33 +1,30 @@
 control 'SV-257888' do
-  title 'RHEL 9 cron configuration directories must have a mode of 0700 or less permissive.'
-  desc 'Service configuration files enable or disable features of their respective services that if configured incorrectly can lead to insecure and vulnerable configurations. Therefore, service configuration files should have the correct access rights to prevent unauthorized changes.'
-  desc 'check', 'Verify the permissions of the cron directories with the following command:
+  title 'RHEL 9 permissions of cron configuration files and directories must not be modified from the operating system defaults.'
+  desc 'If the permissions of cron configuration files or directories are modified from the operating system defaults, it may be possible for individuals to insert unauthorized cron jobs that perform unauthorized actions, including potentially escalating privileges.'
+  desc 'check', %q(Run the following command to verify that the owner, group, and mode of cron configuration files and directories match the operating system defaults:
 
-$ find /etc/cron* -type d | xargs stat -c "%a %n"
+$ rpm --verify cronie crontabs | awk '! ($2 == "c" && $1 ~ /^.\..\.\.\.\..\./) {print $0}'
 
-700 /etc/cron.d
-700 /etc/cron.daily
-700 /etc/cron.hourly
-700 /etc/cron.monthly
-700 /etc/cron.weekly
+If the command returns any output, this is a finding.)
+  desc 'fix', 'Run the following commands to restore the permissions of cron configuration files and directories to the operating system defaults:
 
-If any cron configuration directory is more permissive than "700", this is a finding.'
-  desc 'fix', 'Configure any RHEL 9 cron configuration directory with a mode more permissive than "0700" as follows:
-
-chmod 0700 [cron configuration directory]'
+$ sudo dnf reinstall cronie crontabs
+$ rpm --setugids cronie crontabs
+$ rpm --setperms cronie crontabs'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61629r925649_chk'
+  tag check_id: 'C-61629r1069376_chk'
   tag severity: 'medium'
   tag gid: 'V-257888'
-  tag rid: 'SV-257888r925651_rule'
+  tag rid: 'SV-257888r1069378_rule'
   tag stig_id: 'RHEL-09-232040'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61553r925650_fix'
+  tag fix_id: 'F-61553r1069377_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   cron_dirs = command('find /etc/cron* -type d').stdout.split("\n")
   mode = input('expected_modes')['cron_dirs']

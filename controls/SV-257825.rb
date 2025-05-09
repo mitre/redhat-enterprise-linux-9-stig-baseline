@@ -3,7 +3,7 @@ control 'SV-257825' do
   desc 'The Red Hat Subscription Manager application manages software subscriptions and software repositories for installed software products on the local system. It communicates with backend servers, such as the Red Hat Customer Portal or an on-premise instance of Subscription Asset Manager, to register the local system and grant access to software resources determined by the subscription entitlement.'
   desc 'check', 'Verify that RHEL 9 subscription-manager package is installed with the following command:
 
-$ sudo dnf list --installed subscription-manager
+$ dnf list --installed subscription-manager
 
 Example output:
 
@@ -15,17 +15,18 @@ If the "subscription-manager" package is not installed, this is a finding.'
 $ sudo dnf install subscription-manager'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61566r925460_chk'
+  tag check_id: 'C-61566r1044887_chk'
   tag severity: 'medium'
   tag gid: 'V-257825'
-  tag rid: 'SV-257825r925462_rule'
+  tag rid: 'SV-257825r1044888_rule'
   tag stig_id: 'RHEL-09-215010'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61490r925461_fix'
   tag 'documentable'
-  tag cci: ['CCI-001749']
-  tag nist: ['CM-5 (3)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001749', 'CCI-003992']
+  tag nist: ['CM-5 (3)', 'CM-14']
+  tag 'host'
+  tag 'container'
 
   describe package('subscription-manager') do
     it { should be_installed }

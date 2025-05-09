@@ -34,7 +34,7 @@ $ sudo sysctl --system'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257969'
-  tag rid: 'SV-257969r942999_rule'
+  tag rid: 'SV-257969r991589_rule'
   tag stig_id: 'RHEL-09-253070'
   tag fix_id: 'F-61634r925893_fix'
   tag cci: ['CCI-000366']
@@ -48,11 +48,6 @@ $ sudo sysctl --system'
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  elsif input('ipv4_enabled') == false
-    impact 0.0
-    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
-      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
     end
   else
 

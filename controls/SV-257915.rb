@@ -5,9 +5,9 @@ control 'SV-257915' do
 The structure and content of error messages must be carefully considered by the organization and development team. The extent to which the information system is able to identify and handle error conditions is guided by organizational policy and operational requirements."
   desc 'check', 'Verify the "/var/log" directory is group-owned by root with the following command:
 
-$ ls -ld /var/log
+$ stat -c "%G %n" /var/log
 
-drwxr-xr-x. 16 root root 4096 July 11 11:34 /var/log
+root /var/log
 
 If "/var/log" does not have a group owner of "root", this is a finding.'
   desc 'fix', 'Configure the group owner of the directory "/var/log" to "root" by running the following command:
@@ -18,7 +18,7 @@ $ sudo chgrp root /var/log'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257915'
-  tag rid: 'SV-257915r925732_rule'
+  tag rid: 'SV-257915r1044971_rule'
   tag stig_id: 'RHEL-09-232175'
   tag fix_id: 'F-61580r925731_fix'
   tag cci: ['CCI-001314']

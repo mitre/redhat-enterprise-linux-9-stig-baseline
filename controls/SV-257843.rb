@@ -14,7 +14,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257843'
-  tag rid: 'SV-257843r925516_rule'
+  tag rid: 'SV-257843r991589_rule'
   tag stig_id: 'RHEL-09-231010'
   tag fix_id: 'F-61508r925515_fix'
   tag cci: ['CCI-000366']
@@ -29,7 +29,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
   root_device = etc_fstab.where { mount_point == '/' }.device_name
 
-  if input('exempt_separate_filesystem')
+  if input('separate_filesystem_exempt')
     impact 0.0
     describe 'This system is not required to have separate filesystems for each mount point' do
       skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'

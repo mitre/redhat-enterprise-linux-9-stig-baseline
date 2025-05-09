@@ -11,7 +11,7 @@ $ sudo grep -i firewallbackend /etc/firewalld/firewalld.conf
 FirewallBackend=nftables
 
 If the "nftables" is not set as the "FirewallBackend" default, this is a finding.'
-  desc 'fix', 'Configure "nftables" to be the default "firewallbackend" for "firewalld" by adding or editing the following line in "etc/firewalld/firewalld.conf":
+  desc 'fix', 'Configure "nftables" to be the default "firewallbackend" for "firewalld" by adding or editing the following line in "/etc/firewalld/firewalld.conf":
 
 FirewallBackend=nftables
 
@@ -21,9 +21,9 @@ Establish rate-limiting rules based on organization-defined types of DoS attacks
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000420-GPOS-00186'
   tag gid: 'V-257939'
-  tag rid: 'SV-257939r925804_rule'
+  tag rid: 'SV-257939r1044997_rule'
   tag stig_id: 'RHEL-09-251030'
-  tag fix_id: 'F-61604r925803_fix'
+  tag fix_id: 'F-61604r1044996_fix'
   tag cci: ['CCI-002385']
   tag nist: ['SC-5', 'SC-5 a']
   tag 'host'

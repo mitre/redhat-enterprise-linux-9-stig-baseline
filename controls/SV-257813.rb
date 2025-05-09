@@ -18,7 +18,7 @@ Storage=none'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257813'
-  tag rid: 'SV-257813r925426_rule'
+  tag rid: 'SV-257813r991589_rule'
   tag stig_id: 'RHEL-09-213090'
   tag fix_id: 'F-61478r925425_fix'
   tag cci: ['CCI-000366']
@@ -30,15 +30,7 @@ Storage=none'
     !virtualization.system.eql?('docker')
   }
 
-  if input('storing_core_dumps_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  else
-
-    describe parse_config_file('/etc/systemd/coredump.conf') do
-      its('Coredump.Storage') { should cmp 'none' }
-    end
+  describe parse_config_file('/etc/systemd/coredump.conf') do
+    its('Coredump.Storage') { should cmp 'none' }
   end
 end

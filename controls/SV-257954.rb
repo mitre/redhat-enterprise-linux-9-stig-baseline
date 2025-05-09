@@ -7,7 +7,7 @@ control 'SV-257954' do
 
 Check that the libreswan service package is installed with the following command:
 
-$ sudo dnf list --installed libreswan
+$ dnf list --installed libreswan
 
 Example output:
 
@@ -19,10 +19,10 @@ If the "libreswan" package is not installed, this is a finding.'
 $ sudo dnf install libreswan'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61695r925847_chk'
+  tag check_id: 'C-61695r1045007_chk'
   tag severity: 'medium'
   tag gid: 'V-257954'
-  tag rid: 'SV-257954r925849_rule'
+  tag rid: 'SV-257954r1045008_rule'
   tag stig_id: 'RHEL-09-252065'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61619r925848_fix'
@@ -30,7 +30,8 @@ $ sudo dnf install libreswan'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-000803']
   tag nist: ['CM-6 b', 'IA-7']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe package('libreswan') do
     it { should be_installed }

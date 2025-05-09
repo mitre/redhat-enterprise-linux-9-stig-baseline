@@ -24,7 +24,7 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258162'
-  tag rid: 'SV-258162r926473_rule'
+  tag rid: 'SV-258162r958754_rule'
   tag stig_id: 'RHEL-09-653065'
   tag fix_id: 'F-61827r926472_fix'
   tag cci: ['CCI-001851']
@@ -35,13 +35,13 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') == ''
-    describe parse_config_file('/etc/audit/auditd.conf') do
-      its('overflow_action') { should match(/syslog$|single$|halt$/i) }
-    end
-  else
+  if input('alternative_logging_method') != ''
     describe 'manual check' do
       skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
+    describe parse_config_file('/etc/audit/auditd.conf') do
+      its('overflow_action') { should match(/syslog$|single$|halt$/i) }
     end
   end
 end

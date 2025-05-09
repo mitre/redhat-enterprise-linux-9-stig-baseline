@@ -7,7 +7,7 @@ Note: If a separate file system has not been created for the user home directori
 
 $ mount | grep /home
 
-tmpfs on /home type tmpfs (rw,nodev,nosuid,noexec,seclabel)
+tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
 
 If the "/home" file system is mounted without the "nosuid" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/home" directory.'
@@ -16,7 +16,7 @@ If the "/home" file system is mounted without the "nosuid" option, this is a fin
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257851'
-  tag rid: 'SV-257851r925540_rule'
+  tag rid: 'SV-257851r1044932_rule'
   tag stig_id: 'RHEL-09-231050'
   tag fix_id: 'F-61516r925539_fix'
   tag cci: ['CCI-000366', 'CCI-001764']

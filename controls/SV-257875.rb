@@ -14,7 +14,7 @@ If the "/var/log/audit" file system is mounted without the "nosuid" option, this
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257875'
-  tag rid: 'SV-257875r925612_rule'
+  tag rid: 'SV-257875r958804_rule'
   tag stig_id: 'RHEL-09-231170'
   tag fix_id: 'F-61540r925611_fix'
   tag cci: ['CCI-001764']

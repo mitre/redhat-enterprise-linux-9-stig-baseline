@@ -11,7 +11,9 @@ $ grep "^password.*pam_unix.so.*sha512" /etc/pam.d/password-auth
 
 password sufficient pam_unix.so sha512
 
-If "sha512" is missing, or the line is commented out, this is a finding.'
+If "sha512" is missing, or the line is commented out, this is a finding.
+
+If the system administrator (SA) can demonstrate that the required configuration is contained in a PAM configuration file included or substacked from the system-auth file, this is not a finding.'
   desc 'fix', 'Configure RHEL 9 to use a FIPS 140-3 approved cryptographic hashing algorithm for system authentication.
 
 Edit/modify the following line in the "/etc/pam.d/password-auth" file to include the sha512 option for pam_unix.so:
@@ -22,11 +24,11 @@ password sufficient pam_unix.so sha512'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258233'
-  tag rid: 'SV-258233r926686_rule'
+  tag rid: 'SV-258233r1015136_rule'
   tag stig_id: 'RHEL-09-671025'
   tag fix_id: 'F-61898r926685_fix'
-  tag cci: ['CCI-000803', 'CCI-000196']
-  tag nist: ['IA-7', 'IA-5 (1) (c)']
+  tag cci: ['CCI-000803', 'CCI-000196', 'CCI-004062']
+  tag nist: ['IA-7', 'IA-5 (1) (c)', 'IA-5 (1) (d)']
   tag 'host'
   tag 'container'
 

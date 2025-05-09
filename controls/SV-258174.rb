@@ -39,7 +39,7 @@ $ sudo newaliases'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'
   tag gid: 'V-258174'
-  tag rid: 'SV-258174r926509_rule'
+  tag rid: 'SV-258174r958424_rule'
   tag stig_id: 'RHEL-09-653125'
   tag fix_id: 'F-61839r926508_fix'
   tag cci: ['CCI-000139']

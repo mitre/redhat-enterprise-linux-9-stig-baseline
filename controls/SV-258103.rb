@@ -7,14 +7,14 @@ Password complexity is one factor of several that determines how long it takes t
 
 Check the value for "dcredit" with the following command:
 
-$ sudo grep dcredit /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf
+$ grep dcredit /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
 
 /etc/security/pwquality.conf:dcredit = -1
 
 If the value of "dcredit" is a positive number or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity by requiring at least one numeric character be used by setting the "dcredit" option.
 
-Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
+Add or update the following line in the "/etc/security/pwquality.conf" file or a configuration file in the "/etc/security/pwquality.conf.d/" directory to contain the "dcredit" parameter:
 
 dcredit = -1'
   impact 0.5
@@ -22,11 +22,11 @@ dcredit = -1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000071-GPOS-00039'
   tag gid: 'V-258103'
-  tag rid: 'SV-258103r926296_rule'
+  tag rid: 'SV-258103r1045210_rule'
   tag stig_id: 'RHEL-09-611070'
-  tag fix_id: 'F-61768r926295_fix'
-  tag cci: ['CCI-000194']
-  tag nist: ['IA-5 (1) (a)']
+  tag fix_id: 'F-61768r1045209_fix'
+  tag cci: ['CCI-000194', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

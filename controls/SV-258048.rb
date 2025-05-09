@@ -5,25 +5,26 @@ control 'SV-258048' do
 
 Check that the interactive users have a valid GID with the following command:
 
-$ sudo pwck -qr
+$ sudo pwck -r
 
-If the system has any interactive users with duplicate GIDs, this is a finding.'
+If pwck reports "no group" for any interactive user, this is a finding.'
   desc 'fix', %q(Configure the system so that all GIDs are referenced in "/etc/passwd" are defined in "/etc/group".
 
 Edit the file "/etc/passwd" and ensure that every user's GID is a valid GID.)
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61789r926129_chk'
+  tag check_id: 'C-61789r1069379_chk'
   tag severity: 'medium'
   tag gid: 'V-258048'
-  tag rid: 'SV-258048r926131_rule'
+  tag rid: 'SV-258048r1069380_rule'
   tag stig_id: 'RHEL-09-411045'
   tag gtitle: 'SRG-OS-000104-GPOS-00051'
   tag fix_id: 'F-61713r926130_fix'
   tag 'documentable'
   tag cci: ['CCI-000764']
   tag nist: ['IA-2']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   ignore_shells = input('non_interactive_shells').join('|')
   interactive_users = passwd.where { uid.to_i >= 1000 && !shell.match(ignore_shells) }.users

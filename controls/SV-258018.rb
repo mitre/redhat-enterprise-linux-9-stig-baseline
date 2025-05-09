@@ -2,15 +2,14 @@ control 'SV-258018' do
   title 'RHEL 9 must not allow unattended or automatic logon via the graphical user interface.'
   desc 'Failure to restrict system access to authenticated users negatively
 impacts operating system security.'
-  desc 'check', 'Verify RHEL 9 does not allow an unattended or automatic logon to the system via a graphical user interface.
+  desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
+Verify RHEL 9 does not allow an unattended or automatic logon to the system via a graphical user interface.
 
 Check for the value of the "AutomaticLoginEnable" in the "/etc/gdm/custom.conf" file with the following command:
 
 $  grep -i automaticlogin /etc/gdm/custom.conf
 
-[daemon]
 AutomaticLoginEnable=false
 
 If the value of "AutomaticLoginEnable" is not set to "false", this is a finding.'
@@ -25,7 +24,7 @@ AutomaticLoginEnable=false'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00229'
   tag gid: 'V-258018'
-  tag rid: 'SV-258018r926041_rule'
+  tag rid: 'SV-258018r1045090_rule'
   tag stig_id: 'RHEL-09-271040'
   tag fix_id: 'F-61683r926040_fix'
   tag cci: ['CCI-000366']

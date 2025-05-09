@@ -18,7 +18,7 @@ or higher power savings modes to adapt to the current usage. The tuned package
 is not needed for normal OS operations.'
   desc 'check', 'Verify that the tuned package is not installed with the following command:
 
-$ sudo dnf list --installed tuned
+$ dnf list --installed tuned
 
 Error: No matching Packages to list
 
@@ -31,7 +31,7 @@ $ sudo dnf remove tuned'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257834'
-  tag rid: 'SV-257834r925489_rule'
+  tag rid: 'SV-257834r1044904_rule'
   tag stig_id: 'RHEL-09-215055'
   tag fix_id: 'F-61499r925488_fix'
   tag cci: ['CCI-000366', 'CCI-000381']

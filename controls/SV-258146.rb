@@ -13,11 +13,13 @@ x509/certvalid - certificate validation only
 x509/name - certificate validation and subject name authentication'
   desc 'check', %q(Verify RHEL 9 authenticates the remote logging server for offloading audit logs with the following command:
 
-$ sudo grep -i '$ActionSendStreamDriverAuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+$ grep -i 'StreamDriver[\.]*AuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
- /etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name
+/etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name 
 
-If the value of the "$ActionSendStreamDriverAuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media.
+If the variable name "StreamDriverAuthMode" is present in an omfwd statement block, this is not a finding. However, if the "StreamDriverAuthMode" variable is in a module block, this is a finding.
+
+If the value of the "$ActionSendStreamDriverAuthMode or StreamDriver.AuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media. 
 
 If there is no evidence that the transfer of the audit logs being offloaded to another system or media is encrypted, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to authenticate the remote logging server for offloading audit logs by setting the following option in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf":
@@ -29,7 +31,7 @@ $ActionSendStreamDriverAuthMode x509/name'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258146'
-  tag rid: 'SV-258146r926425_rule'
+  tag rid: 'SV-258146r1045288_rule'
   tag stig_id: 'RHEL-09-652040'
   tag fix_id: 'F-61811r926424_fix'
   tag cci: ['CCI-001851']
@@ -40,16 +42,16 @@ $ActionSendStreamDriverAuthMode x509/name'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') == ''
+  if input('alternative_logging_method') != ''
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
+    end
+  else
     describe 'rsyslog configuration' do
       subject {
         command("grep -i '^\$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
-    end
-  else
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

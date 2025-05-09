@@ -27,7 +27,7 @@ $ sudo dconf update'
   tag check_id: 'C-61757r926033_chk'
   tag severity: 'medium'
   tag gid: 'V-258016'
-  tag rid: 'SV-258016r926035_rule'
+  tag rid: 'SV-258016r958804_rule'
   tag stig_id: 'RHEL-09-271030'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61681r926034_fix'
@@ -40,24 +40,16 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  if input('gui_autorun_required')
+  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+  if no_gui
     impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+      skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-
-    no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
-
-    if no_gui
-      impact 0.0
-      describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-        skip 'A GUI desktop is not installed, this control is Not Applicable.'
-      end
-    else
-      describe command('gsettings get org.gnome.desktop.media-handling autorun-never') do
-        its('stdout.strip') { should cmp 'true' }
-      end
+    describe command('gsettings get org.gnome.desktop.media-handling autorun-never') do
+      its('stdout.strip') { should cmp 'true' }
     end
   end
 end

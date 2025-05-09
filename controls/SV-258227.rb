@@ -14,7 +14,7 @@ $ sudo grep "\\-f" /etc/audit/audit.rules
 If the value for "-f" is not "2", and availability is not documented as an overriding concern, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to shut down when auditing failures occur.
 
-Add the following line to the bottom of the /etc/audit/audit.rules file:
+Add the following line to the bottom of the /etc/audit/rules.d/audit.rules file:
 
 -f 2'
   impact 0.5
@@ -22,10 +22,10 @@ Add the following line to the bottom of the /etc/audit/audit.rules file:
   tag check_id: 'C-61968r926666_chk'
   tag severity: 'medium'
   tag gid: 'V-258227'
-  tag rid: 'SV-258227r926668_rule'
+  tag rid: 'SV-258227r1014992_rule'
   tag stig_id: 'RHEL-09-654265'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'
-  tag fix_id: 'F-61892r926667_fix'
+  tag fix_id: 'F-61892r1014991_fix'
   tag satisfies: ['SRG-OS-000046-GPOS-00022', 'SRG-OS-000047-GPOS-00023']
   tag 'documentable'
   tag cci: ['CCI-000139', 'CCI-000140']

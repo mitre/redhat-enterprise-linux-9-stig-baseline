@@ -24,14 +24,14 @@ If necessary, create a "wheel" group and add administrative users to the group.)
   tag check_id: 'C-61829r926249_chk'
   tag severity: 'medium'
   tag gid: 'V-258088'
-  tag rid: 'SV-258088r926251_rule'
+  tag rid: 'SV-258088r1050789_rule'
   tag stig_id: 'RHEL-09-432035'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag fix_id: 'F-61753r926250_fix'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000312-GPOS-00123']
   tag 'documentable'
-  tag cci: ['CCI-002038', 'CCI-002165']
-  tag nist: ['IA-11', 'AC-3 (4)']
+  tag cci: ['CCI-002038', 'CCI-002165', 'CCI-004895']
+  tag nist: ['IA-11', 'AC-3 (4)', 'SC-11 b']
   tag 'host'
   tag 'container'
 

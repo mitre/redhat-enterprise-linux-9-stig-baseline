@@ -5,7 +5,8 @@ control 'SV-257845' do
 
 $ mount | grep /var
 
-UUID=c274f65f-c5b5-4481-b007-bee96feb8b05 /var xfs noatime 1 2
+/dev/mapper/rootvg-varlv on /var type xfs (rw,relatime,seclabel,attr2,inode64,logbufs=8,logbsize=32k,noquota)
+Note: Options displayed for mount may differ.
 
 If a separate entry for "/var" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var" path onto a separate file system.'
@@ -14,7 +15,7 @@ If a separate entry for "/var" is not in use, this is a finding.'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257845'
-  tag rid: 'SV-257845r925522_rule'
+  tag rid: 'SV-257845r1044920_rule'
   tag stig_id: 'RHEL-09-231020'
   tag fix_id: 'F-61510r925521_fix'
   tag cci: ['CCI-000366']

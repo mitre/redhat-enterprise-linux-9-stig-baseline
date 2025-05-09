@@ -3,7 +3,7 @@ control 'SV-257841' do
   desc '"rng-tools" provides hardware random number generator tools, such as those used in the formation of x509/PKI certificates.'
   desc 'check', 'Verify that RHEL 9 has the rng-tools package installed with the following command:
 
-$ sudo dnf list --installed rng-tools
+$ dnf list --installed rng-tools
 
 Example output:
 
@@ -18,7 +18,7 @@ $ sudo dnf install rng-tools'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257841'
-  tag rid: 'SV-257841r925510_rule'
+  tag rid: 'SV-257841r1044914_rule'
   tag stig_id: 'RHEL-09-215090'
   tag fix_id: 'F-61506r925509_fix'
   tag cci: ['CCI-000366']

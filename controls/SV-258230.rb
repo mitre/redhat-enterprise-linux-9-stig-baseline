@@ -19,7 +19,7 @@ Reboot the system for the changes to take effect.'
   tag gtitle: 'SRG-OS-000033-GPOS-00014'
   tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000125-GPOS-00065', 'SRG-OS-000396-GPOS-00176', 'SRG-OS-000423-GPOS-00187', 'SRG-OS-000478-GPOS-00223']
   tag gid: 'V-258230'
-  tag rid: 'SV-258230r926677_rule'
+  tag rid: 'SV-258230r958408_rule'
   tag stig_id: 'RHEL-09-671010'
   tag fix_id: 'F-61895r926676_fix'
   tag cci: ['CCI-000068', 'CCI-000877', 'CCI-002418', 'CCI-002450']
@@ -39,6 +39,16 @@ Reboot the system for the changes to take effect.'
   else
     describe command('fips-mode-setup --check') do
       its('stdout.strip') { should match(/FIPS mode is enabled/) }
+    end
+
+    grub_config = command('grub2-editenv - list').stdout
+
+    describe parse_config(grub_config) do
+      its('kernelopts') { should match(/fips=1/) }
+    end
+
+    describe file('/proc/sys/crypto/fips_enabled') do
+      its('content.strip') { should cmp '1' }
     end
   end
 end

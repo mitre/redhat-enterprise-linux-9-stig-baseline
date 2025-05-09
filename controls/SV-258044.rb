@@ -14,7 +14,7 @@ Check all local interactive user initialization files for interactive users with
 
 Note: The example is for a system that is configured to create users home directories in the "/home" directory.
 
-# grep -ri umask /home/
+$ sudo find /home -maxdepth 2 -type f -name ".[^.]*" -exec grep -iH -d skip --exclude=.bash_history umask {} \\;
 
 /home/wadea/.bash_history:grep -i umask /etc/bashrc /etc/csh.cshrc /etc/profile
 /home/wadea/.bash_history:grep -i umask /etc/login.defs
@@ -28,7 +28,7 @@ If the account is for an application, the requirement for a umask less restricti
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258044'
-  tag rid: 'SV-258044r926119_rule'
+  tag rid: 'SV-258044r1045135_rule'
   tag stig_id: 'RHEL-09-411025'
   tag fix_id: 'F-61709r926118_fix'
   tag cci: ['CCI-000366']
@@ -40,7 +40,7 @@ If the account is for an application, the requirement for a umask less restricti
   }
 
   exempt_home_users = input('exempt_home_users')
-  expected_mode = input('modes_for_shells')['default_umask']
+  expected_mode = input('permissions_for_shells')['default_umask']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 

@@ -16,7 +16,7 @@ $ sudo chgrp root /boot/grub2/grub.cfg'
   tag check_id: 'C-61531r925355_chk'
   tag severity: 'medium'
   tag gid: 'V-257790'
-  tag rid: 'SV-257790r925357_rule'
+  tag rid: 'SV-257790r991589_rule'
   tag stig_id: 'RHEL-09-212025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61455r925356_fix'
@@ -29,7 +29,7 @@ $ sudo chgrp root /boot/grub2/grub.cfg'
     !virtualization.system.eql?('docker')
   }
 
-  grubfile = input('grub_conf_path')
+  grubfile = file(input('grub_conf_path'))
 
   describe file(grubfile) do
     it { should exist }

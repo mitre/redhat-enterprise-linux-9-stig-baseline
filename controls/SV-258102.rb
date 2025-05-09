@@ -7,14 +7,14 @@ Password complexity is one factor of several that determines how long it takes t
 
 Check the value for "lcredit" with the following command:
 
-$ sudo grep lcredit /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf
+$ grep lcredit /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
 
 /etc/security/pwquality.conf:lcredit = -1
 
 If the value of "lcredit" is a positive number or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity by requiring at least one lowercase character be used by setting the "lcredit" option.
 
-Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
+Add or update the following line in the "/etc/security/pwquality.conf" file or a configuration file in the "/etc/security/pwquality.conf.d/" directory to contain the "lcredit" parameter:
 
 lcredit = -1'
   impact 0.5
@@ -22,11 +22,11 @@ lcredit = -1'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000070-GPOS-00038'
   tag gid: 'V-258102'
-  tag rid: 'SV-258102r926293_rule'
+  tag rid: 'SV-258102r1045207_rule'
   tag stig_id: 'RHEL-09-611065'
-  tag fix_id: 'F-61767r926292_fix'
-  tag cci: ['CCI-000193']
-  tag nist: ['IA-5 (1) (a)']
+  tag fix_id: 'F-61767r1045206_fix'
+  tag cci: ['CCI-000193', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

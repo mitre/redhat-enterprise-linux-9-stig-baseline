@@ -17,7 +17,7 @@ CREATE_HOME yes'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258043'
-  tag rid: 'SV-258043r926116_rule'
+  tag rid: 'SV-258043r991589_rule'
   tag stig_id: 'RHEL-09-411020'
   tag fix_id: 'F-61708r926115_fix'
   tag cci: ['CCI-000366']

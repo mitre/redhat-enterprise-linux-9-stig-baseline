@@ -16,7 +16,7 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257777'
-  tag rid: 'SV-257777r925318_rule'
+  tag rid: 'SV-257777r991589_rule'
   tag stig_id: 'RHEL-09-211010'
   tag fix_id: 'F-61442r925317_fix'
   tag cci: ['CCI-000366']
@@ -35,17 +35,10 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   # https://access.redhat.com/support/policy/updates/errata/#Life_Cycle_Dates
 
   EOMS_DATE = {
-    /^9\.0/ => 'May 31, 2024',
+    /^9\.0/ => '31 May 2024',
     /^9\.1/ => 'April 1, 2023',
     /^9\.2/ => 'May 31, 2025',
-    /^9\.3/ => 'April 30, 2024',
-    /^9\.4/ => 'May 31, 2026',
-    /^9\.5/ => 'April 30, 2025',
-    /^9\.6/ => 'May 31, 2027',
-    /^9\.7/ => 'April 30, 2026',
-    /^9\.8/ => 'May 31, 2028',
-    /^9\.9/ => 'April 30, 2027',
-    /^9\.10/ => 'May 31, 2032'
+    /^9\.4/ => 'May 31, 2026'
   }.find { |k, _v| k.match(release) }&.last
 
   describe "The release \"#{release}\"" do

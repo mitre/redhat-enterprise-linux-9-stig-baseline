@@ -26,7 +26,7 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   tag check_id: 'C-61983r926711_chk'
   tag severity: 'medium'
   tag gid: 'V-258242'
-  tag rid: 'SV-258242r926713_rule'
+  tag rid: 'SV-258242r958908_rule'
   tag stig_id: 'RHEL-09-672050'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag fix_id: 'F-61907r926712_fix'
@@ -39,16 +39,14 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  only_if('This control is Not Applicable since bind is not installed', impact: 0.0) {
-    package('bind').installed?
-  }
 
   describe file('/etc/named.conf') do
     it { should exist }
   end
 
   bind_grep = command('grep include /etc/named.conf').stdout.lines.map(&:strip)
-  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config}i) }
+
+  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config$}i) }
 
   describe 'Bind config file' do
     it 'should include system-wide crypto policies' do

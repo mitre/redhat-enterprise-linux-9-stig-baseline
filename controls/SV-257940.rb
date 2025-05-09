@@ -32,7 +32,7 @@ $ sudo firewall-cmd --reload"
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257940'
-  tag rid: 'SV-257940r925807_rule'
+  tag rid: 'SV-257940r958480_rule'
   tag stig_id: 'RHEL-09-251035'
   tag fix_id: 'F-61605r925806_fix'
   tag cci: ['CCI-000382']

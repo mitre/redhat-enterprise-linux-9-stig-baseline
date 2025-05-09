@@ -5,23 +5,25 @@ control 'SV-258212' do
 
 $ sudo auditctl -l | grep poweroff
 
--a always,exit -F path=/usr/sbin/poweroff -F perm=x -F auid>=1000 -F auid!=unset -k privileged-poweroff
+-a always,exit -S all -F path=/usr/sbin/poweroff -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-poweroff
 
 If the command does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure the audit system to generate an audit event for any successful/unsuccessful uses of the "poweroff" command by adding or updating the following rule in the "/etc/audit/rules.d/audit.rules" file:
 
 -a always,exit -F path=/usr/sbin/poweroff -F perm=x -F auid>=1000 -F auid!=unset -k privileged-poweroff
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61953r926621_chk'
+  tag check_id: 'C-61953r1045419_chk'
   tag severity: 'medium'
   tag gid: 'V-258212'
-  tag rid: 'SV-258212r926623_rule'
+  tag rid: 'SV-258212r1045421_rule'
   tag stig_id: 'RHEL-09-654190'
   tag gtitle: 'SRG-OS-000477-GPOS-00222'
-  tag fix_id: 'F-61877r926622_fix'
+  tag fix_id: 'F-61877r1045420_fix'
   tag 'documentable'
   tag cci: ['CCI-000172']
   tag nist: ['AU-12 c']

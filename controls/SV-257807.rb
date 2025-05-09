@@ -14,23 +14,24 @@ several streams of messages within one connection. Disabling SCTP protects the
 system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the sctp kernel module with the following command:
 
-$ sudo grep -r sctp /etc/modprobe.conf /etc/modprobe.d/*
+$ grep -r sctp /etc/modprobe.conf /etc/modprobe.d/* 
 
+install sctp /bin/false
 blacklist sctp
 
-If the command does not return any output, or the line is commented out, and use of sctp is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'To configure the system to prevent the sctp kernel module from being loaded, add the following line to the file  /etc/modprobe.d/sctp.conf (or create sctp.conf if it does not exist):
+If the command does not return any output, or the lines are commented out, and use of sctp is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
+  desc 'fix', 'To configure the system to prevent the sctp kernel module from being loaded, add the following lines to the file  /etc/modprobe.d/sctp.conf (or create sctp.conf if it does not exist):
 
-install sctp/bin/false
+install sctp /bin/false
 blacklist sctp'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257807'
-  tag rid: 'SV-257807r925408_rule'
+  tag rid: 'SV-257807r1044862_rule'
   tag stig_id: 'RHEL-09-213060'
-  tag fix_id: 'F-61472r925407_fix'
+  tag fix_id: 'F-61472r1044861_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
   tag 'host'
@@ -38,17 +39,8 @@ blacklist sctp'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-
-  if input('sctp_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  else
-
-    describe kernel_module('sctp') do
-      it { should be_disabled }
-      it { should be_blacklisted }
-    end
+  describe kernel_module('sctp') do
+    it { should be_disabled }
+    it { should be_blacklisted }
   end
 end

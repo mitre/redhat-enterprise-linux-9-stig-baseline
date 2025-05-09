@@ -7,14 +7,14 @@ $ mount | grep /dev/shm
 
 tmpfs on /dev/shm type tmpfs (rw,nodev,nosuid,noexec,seclabel)
 
-If the /dev/shm file system is mounted without the "noexec" option, this is a finding.'
+If the /dev/shm file system is mounted without the "nosuid" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/dev/shm" file system.'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257865'
-  tag rid: 'SV-257865r925582_rule'
+  tag rid: 'SV-257865r1044946_rule'
   tag stig_id: 'RHEL-09-231120'
   tag fix_id: 'F-61530r925581_fix'
   tag cci: ['CCI-001764']

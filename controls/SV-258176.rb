@@ -10,31 +10,33 @@ from insider threats and the advanced persistent threat.'
 
 $ sudo auditctl -l | grep execve
 
--a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv
--a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -F key=execpriv
+-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -F key=execpriv
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -F key=execpriv
+-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -F key=execpriv
 
 If the command does not return all lines, or the lines are commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to audit the execution of the "execve" system call.
 
 Add or update the following file system rules to "/etc/audit/rules.d/audit.rules":
 
--a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv 
 -a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv
--a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv 
+-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv 
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000326-GPOS-00126'
   tag satisfies: ['SRG-OS-000326-GPOS-00126', 'SRG-OS-000327-GPOS-00127']
   tag gid: 'V-258176'
-  tag rid: 'SV-258176r926515_rule'
+  tag rid: 'SV-258176r1045313_rule'
   tag stig_id: 'RHEL-09-654010'
-  tag fix_id: 'F-61841r926514_fix'
+  tag fix_id: 'F-61841r1045312_fix'
   tag cci: ['CCI-002233', 'CCI-002234']
   tag nist: ['AC-6 (8)', 'AC-6 (9)']
   tag 'host'

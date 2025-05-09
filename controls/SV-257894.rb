@@ -16,14 +16,15 @@ $ sudo chmod 0000 /etc/gshadow-'
   tag check_id: 'C-61635r925667_chk'
   tag severity: 'medium'
   tag gid: 'V-257894'
-  tag rid: 'SV-257894r925669_rule'
+  tag rid: 'SV-257894r991589_rule'
   tag stig_id: 'RHEL-09-232070'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61559r925668_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   system_file = '/etc/gshadow-'
 

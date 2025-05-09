@@ -11,11 +11,12 @@ Setting the kernel.perf_event_paranoid kernel parameter to "2" prevents attacker
 
 Check the status of the kernel.perf_event_paranoid kernel parameter.
 
-$ sudo sysctl kernel.perf_event_paranoid
+$ sysctl kernel.perf_event_paranoid
 
 kernel.perf_event_paranoid = 2
 
 If "kernel.perf_event_paranoid" is not set to "2" or is missing, this is a finding.
+
 Check that the configuration files are present to enable this kernel parameter.
 
 $ sudo /usr/lib/systemd/systemd-sysctl --cat-config  | egrep -v '^(#|;)' | grep -F kernel.perf_event_paranoid | tail -1
@@ -37,7 +38,7 @@ $ sudo sysctl --system'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag gid: 'V-257798'
-  tag rid: 'SV-257798r942967_rule'
+  tag rid: 'SV-257798r1044849_rule'
   tag stig_id: 'RHEL-09-213015'
   tag fix_id: 'F-61463r925380_fix'
   tag cci: ['CCI-001090', 'CCI-001082']

@@ -1,13 +1,15 @@
 control 'SV-257849' do
   title 'RHEL 9 file system automount function must be disabled unless required.'
   desc 'An authentication process resists replay attacks if it is impractical to achieve a successful authentication by recording and replaying a previous authentication message.'
-  desc 'check', 'Verify that RHEL 9 file system automount function has been disabled with the following command:
+  desc 'check', 'Note: If the autofs service is not installed, this requirement is Not Applicable.
 
-$ sudo systemctl is-enabled  autofs
+Verify that the RHEL 9 file system automount function has been disabled with the following command:
+
+$ systemctl is-enabled  autofs
 
 masked
 
-If the returned value is not "masked", "disabled", "Failed to get unit file state for autofs.service for autofs", or "enabled", and is not documented as operational requirement with the information system security officer ISSO, this is a finding.'
+If the returned value is not "masked", "disabled", or "Failed to get unit file state for autofs.service for autofs" and is not documented as an operational requirement with the information system security officer (ISSO), this is a finding.'
   desc 'fix', 'Configure RHEL 9 to disable the ability to automount devices.
 
 The autofs service can be disabled with the following command:
@@ -18,7 +20,7 @@ $ sudo systemctl mask --now autofs.service'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag gid: 'V-257849'
-  tag rid: 'SV-257849r925534_rule'
+  tag rid: 'SV-257849r1044928_rule'
   tag stig_id: 'RHEL-09-231040'
   tag fix_id: 'F-61514r925533_fix'
   tag cci: ['CCI-000778', 'CCI-000366', 'CCI-001958']

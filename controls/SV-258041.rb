@@ -20,11 +20,11 @@ PASS_MAX_DAYS 60'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258041'
-  tag rid: 'SV-258041r926110_rule'
+  tag rid: 'SV-258041r1038967_rule'
   tag stig_id: 'RHEL-09-411010'
   tag fix_id: 'F-61706r926109_fix'
-  tag cci: ['CCI-000199']
-  tag nist: ['IA-5 (1) (d)']
+  tag cci: ['CCI-000199', 'CCI-004066']
+  tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

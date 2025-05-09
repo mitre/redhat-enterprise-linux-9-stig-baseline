@@ -16,14 +16,15 @@ $ sudo chmod 0644 /etc/passwd'
   tag check_id: 'C-61636r925670_chk'
   tag severity: 'medium'
   tag gid: 'V-257895'
-  tag rid: 'SV-257895r925672_rule'
+  tag rid: 'SV-257895r991589_rule'
   tag stig_id: 'RHEL-09-232075'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61560r925671_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   system_file = '/etc/passwd'
 

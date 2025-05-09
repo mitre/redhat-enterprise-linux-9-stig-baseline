@@ -9,25 +9,27 @@ When a user logs on, the auid is set to the uid of the account being authenticat
 The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
   desc 'check', %q(Verify RHEL 9 generates audit records for all account creations, modifications, disabling, and termination events that affect "/etc/gshadow" with the following command:
 
-$ sudo auditctl -l | egrep '(/usr/bin/passwd)'
+$ sudo auditctl -l | egrep '(/usr/bin/passwd)' 
 
--a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=unset -k privileged-passwd
+-a always,exit -S all -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-passwd
 
 If the command does not return a line, or the line is commented out, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "passwd" command by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
 
 -a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=unset -k privileged-passwd
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258198'
-  tag rid: 'SV-258198r926581_rule'
+  tag rid: 'SV-258198r1045379_rule'
   tag stig_id: 'RHEL-09-654120'
-  tag fix_id: 'F-61863r926580_fix'
+  tag fix_id: 'F-61863r1045378_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
   tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'

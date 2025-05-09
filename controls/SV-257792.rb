@@ -30,7 +30,7 @@ GRUB_CMDLINE_LINUX="vsyscall=none"'
   tag check_id: 'C-61533r925361_chk'
   tag severity: 'medium'
   tag gid: 'V-257792'
-  tag rid: 'SV-257792r925363_rule'
+  tag rid: 'SV-257792r1044842_rule'
   tag stig_id: 'RHEL-09-212035'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61457r925362_fix'
@@ -44,21 +44,13 @@ GRUB_CMDLINE_LINUX="vsyscall=none"'
     !virtualization.system.eql?('docker')
   }
 
-  if input('vsyscall_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  else
+  grub_stdout = command('grubby --info=ALL').stdout
+  setting = /vsyscall\s*=\s*none/
 
-    grub_stdout = command('grubby --info=ALL').stdout
-    setting = /vsyscall\s*=\s*none/
-
-    describe 'GRUB config' do
-      it 'should disable vsyscall' do
-        expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
-        expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
-      end
+  describe 'GRUB config' do
+    it 'should disable vsyscall' do
+      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
+      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
     end
   end
 end

@@ -24,7 +24,7 @@ $ sudo systemctl daemon-reload'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257815'
-  tag rid: 'SV-257815r925432_rule'
+  tag rid: 'SV-257815r991589_rule'
   tag stig_id: 'RHEL-09-213100'
   tag fix_id: 'F-61480r925431_fix'
   tag cci: ['CCI-000366']
@@ -36,22 +36,14 @@ $ sudo systemctl daemon-reload'
     !virtualization.system.eql?('docker')
   }
 
-  if input('core_dumps_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+  s = systemd_service('systemd-coredump.socket')
+
+  describe.one do
+    describe s do
+      its('params.LoadState') { should eq 'masked' }
     end
-  else
-
-    s = systemd_service('systemd-coredump.socket')
-
-    describe.one do
-      describe s do
-        its('params.LoadState') { should eq 'masked' }
-      end
-      describe s do
-        its('params.LoadState') { should eq 'not-found' }
-      end
+    describe s do
+      its('params.LoadState') { should eq 'not-found' }
     end
   end
 end

@@ -18,14 +18,15 @@ $ sudo systemctl enable --now chronyd'
   tag check_id: 'C-61685r925817_chk'
   tag severity: 'medium'
   tag gid: 'V-257944'
-  tag rid: 'SV-257944r925819_rule'
+  tag rid: 'SV-257944r1038944_rule'
   tag stig_id: 'RHEL-09-252015'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag fix_id: 'F-61609r925818_fix'
   tag 'documentable'
-  tag cci: ['CCI-001891']
-  tag nist: ['AU-8 (1) (a)']
-  tag 'host', 'container'
+  tag cci: ['CCI-001891', 'CCI-004923']
+  tag nist: ['AU-8 (1) (a)', 'SC-45 (1) (a)']
+  tag 'host'
+  tag 'container'
 
   describe service('chronyd') do
     it { should be_enabled }

@@ -19,7 +19,7 @@ by the ISSO and documented.
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257941'
-  tag rid: 'SV-257941r925810_rule'
+  tag rid: 'SV-257941r991589_rule'
   tag stig_id: 'RHEL-09-251040'
   tag fix_id: 'F-61606r925809_fix'
   tag cci: ['CCI-000366']

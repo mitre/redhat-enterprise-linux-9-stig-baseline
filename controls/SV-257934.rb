@@ -16,14 +16,15 @@ $ sudo chmod 0000 /etc/shadow'
   tag check_id: 'C-61675r925787_chk'
   tag severity: 'medium'
   tag gid: 'V-257934'
-  tag rid: 'SV-257934r925789_rule'
+  tag rid: 'SV-257934r991589_rule'
   tag stig_id: 'RHEL-09-232270'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61599r925788_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   system_file = '/etc/shadow'
 

@@ -1,20 +1,18 @@
 control 'SV-257981' do
   title 'RHEL 9 must display the Standard Mandatory DOD Notice and Consent Banner before granting local or remote access to the system via a SSH logon.'
   desc 'The warning message reinforces policy awareness during the logon process and facilitates possible legal action against attackers. Alternatively, systems whose ownership should not be obvious should ensure usage of a banner that does not provide easy attribution.'
-  desc 'check', 'Verify any SSH connection to the operating system displays the Standard Mandatory DOD Notice and Consent Banner before granting access to the system.
+  desc 'check', "Verify that any SSH connection to the operating system displays the Standard Mandatory DOD Notice and Consent Banner before granting access to the system.
 
-Check for the location of the banner file being used with the following command:
+Check for the location of the banner file currently being used with the following command:
 
-$ sudo grep -ir banner /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*
+$ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\\r' | tr '\\n' ' ' | xargs sudo grep -iH '^\\s*banner'
 
 banner /etc/issue
 
-This command will return the banner keyword and the name of the file that contains the SSH banner (in this case "/etc/issue").
-
-If the line is commented out, this is a finding.'
+If the line is commented out or if the file is missing, this is a finding."
   desc 'fix', 'Configure RHEL 9 to display the Standard Mandatory DOD Notice and Consent Banner before granting access to the system via ssh.
 
-Edit the "/etc/ssh/sshd_config" file to uncomment the banner keyword and configure it to point to a file that will contain the logon banner (this file may be named differently or be in a different location if using a version of SSH that is provided by a third-party vendor).
+Edit the "etc/ssh/sshd_config" file or a file in "/etc/ssh/sshd_config.d" to uncomment the banner keyword and configure it to point to a file that will contain the logon banner (this file may be named differently or be in a different location if using a version of SSH that is provided by a third-party vendor).
 
 An example configuration line is:
 
@@ -25,9 +23,9 @@ Banner /etc/issue'
   tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag satisfies: ['SRG-OS-000023-GPOS-00006', 'SRG-OS-000228-GPOS-00088']
   tag gid: 'V-257981'
-  tag rid: 'SV-257981r943028_rule'
+  tag rid: 'SV-257981r1045019_rule'
   tag stig_id: 'RHEL-09-255025'
-  tag fix_id: 'F-61646r925929_fix'
+  tag fix_id: 'F-61646r1045018_fix'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
   tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 3']
   tag 'host'

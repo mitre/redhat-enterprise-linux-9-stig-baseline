@@ -9,39 +9,38 @@ Password complexity is one factor of several that determines how long it takes t
 
 Check if root user is required to use complex passwords with the following command:
 
-$ grep enforce_for_root /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf
+$ grep enforce_for_root /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
 
 /etc/security/pwquality.conf:enforce_for_root
 
 If "enforce_for_root" is commented or missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity on the root account.
 
-Add or update the following line in /etc/security/pwquality.conf:
+Add or update the following line in the "/etc/security/pwquality.conf" file or a configuration file in the "/etc/security/pwquality.conf.d/" directory to contain the "enforce_for_root" parameter:
 
 enforce_for_root'
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61842r926288_chk'
+  tag check_id: 'C-61842r1045202_chk'
   tag severity: 'medium'
   tag gid: 'V-258101'
-  tag rid: 'SV-258101r926290_rule'
+  tag rid: 'SV-258101r1045204_rule'
   tag stig_id: 'RHEL-09-611060'
   tag gtitle: 'SRG-OS-000072-GPOS-00040'
-  tag fix_id: 'F-61766r926289_fix'
+  tag fix_id: 'F-61766r1045203_fix'
   tag satisfies: ['SRG-OS-000072-GPOS-00040', 'SRG-OS-000071-GPOS-00039', 'SRG-OS-000070-GPOS-00038', 'SRG-OS-000266-GPOS-00101', 'SRG-OS-000078-GPOS-00046', 'SRG-OS-000480-GPOS-00225', 'SRG-OS-000069-GPOS-00037']
   tag 'documentable'
-  tag cci: ['CCI-000192', 'CCI-000193', 'CCI-000194', 'CCI-000195', 'CCI-000205', 'CCI-000366', 'CCI-001619']
-  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (a)', 'IA-5 (1) (a)', 'IA-5 (1) (b)', 'IA-5 (1) (a)', 'CM-6 b', 'IA-5 (1) (a)']
+  tag cci: ['CCI-000192', 'CCI-000193', 'CCI-000194', 'CCI-000195', 'CCI-000205', 'CCI-000366', 'CCI-001619', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (b)', 'CM-6 b', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 
-  # TODO: use this pattern on the rest of the pwquality.conf settings (current implementation for the other ones dont account for multiple conf files)
+  # TODO: use this pattern on the rest of the pwquality.conf settings (current implementation for the other ones dont account for multiple conmf files)
 
   setting = 'enforce_for_root'
 
-  # NOTE: -s to supress if no files
-  # Note: -h to just have occurances and ignore filename
-  setting_check = command("grep -sh #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*").stdout.strip.match(/^#{setting}$/)
+  setting_check = command("grep #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf").stdout.strip.match(/^:+#{setting}$/)
+
   describe 'The root account' do
     it 'should enforce password complexity rules' do
       expect(setting_check).to_not be_nil, "'#{setting}' not found (or commented out) in conf file(s)"

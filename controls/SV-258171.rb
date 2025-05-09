@@ -8,11 +8,11 @@ it more difficult to establish, correlate, and investigate the events relating
 to an incident or identify those responsible for one."
   desc 'check', 'Verify that the files in directory "/etc/audit/rules.d/" and "/etc/audit/auditd.conf" file have a mode of "0640" or less permissive with the following command:
 
-# stat -c "%a %n"  /etc/audit/rules.d/*.rules
+$ sudo find /etc/audit/rules.d/ /etc/audit/audit.rules /etc/audit/auditd.conf -type f -exec stat -c "%a %n" {} \\;
 
-640 /etc/audit/rules.d/audit.rules
-
-If the files in the "/etc/audit/rules.d/" directory or the "/etc/audit/auditd.conf" file have a mode more permissive than "0640", this is a finding.'
+600 /etc/audit/rules.d/audit.rules
+640 /etc/audit/audit.rules
+640 /etc/audit/auditd.conf'
   desc 'fix', 'Configure the files in directory "/etc/audit/rules.d/" and the
 "/etc/audit/auditd.conf" file to have a mode of "0640" with the following
 commands:
@@ -25,7 +25,7 @@ commands:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000063-GPOS-00032'
   tag gid: 'V-258171'
-  tag rid: 'SV-258171r943057_rule'
+  tag rid: 'SV-258171r1045308_rule'
   tag stig_id: 'RHEL-09-653110'
   tag fix_id: 'F-61836r926499_fix'
   tag cci: ['CCI-000171']

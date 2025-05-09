@@ -22,16 +22,19 @@ $ sudo chown root [cron config file]'
   tag check_id: 'C-61667r925763_chk'
   tag severity: 'medium'
   tag gid: 'V-257926'
-  tag rid: 'SV-257926r925765_rule'
+  tag rid: 'SV-257926r991589_rule'
   tag stig_id: 'RHEL-09-232230'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61591r925764_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
-  failing_crontabs = command('find /etc/cron* ! -user root -print0').stdout.split("\0")
+  crontabs = command('stat -c "%U %n" /etc/cron*').stdout.split("\n")
+
+  failing_crontabs = crontabs.reject { |c| file(c.split[1]).owned_by?('root') }
 
   describe 'Crontabs' do
     it 'should be owned by root' do
