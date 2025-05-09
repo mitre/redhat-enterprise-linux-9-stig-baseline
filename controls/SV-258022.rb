@@ -54,5 +54,9 @@ $ sudo dconf update'
     describe 'The GNOME desktop is not installed, this control is Not Applicable.' do
       skip 'The GNOME desktop is not installed, this control is Not Applicable.'
     end
+  else
+    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
+      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
+    end
   end
 end

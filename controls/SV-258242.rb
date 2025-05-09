@@ -36,16 +36,14 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  only_if('This control is Not Applicable since bind is not installed', impact: 0.0) {
-    package('bind').installed?
-  }
 
   describe file('/etc/named.conf') do
     it { should exist }
   end
 
   bind_grep = command('grep include /etc/named.conf').stdout.lines.map(&:strip)
-  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config}i) }
+
+  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config$}i) }
 
   describe 'Bind config file' do
     it 'should include system-wide crypto policies' do

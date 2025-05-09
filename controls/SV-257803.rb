@@ -41,10 +41,22 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  if input('storing_core_dumps_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+  parameter = 'kernel.core_pattern'
+  value = 1
+  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+
+  describe kernel_parameter(parameter) do
+    its('value') { should eq value }
+  end
+
+  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+  correct_result = search_results.any? { |line| line.match(regexp) }
+  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+  describe 'Kernel config files' do
+    it "should configure '#{parameter}'" do
+      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
     end
   else
 

@@ -29,15 +29,7 @@ Storage=none'
     !virtualization.system.eql?('docker')
   }
 
-  if input('storing_core_dumps_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  else
-
-    describe parse_config_file('/etc/systemd/coredump.conf') do
-      its('Coredump.Storage') { should cmp 'none' }
-    end
+  describe parse_config_file('/etc/systemd/coredump.conf') do
+    its('Coredump.Storage') { should cmp 'none' }
   end
 end

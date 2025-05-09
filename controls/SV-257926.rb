@@ -31,7 +31,9 @@ $ sudo chown root [cron config file]'
   tag 'host'
   tag 'container'
 
-  failing_crontabs = command('find /etc/cron* ! -user root -print0').stdout.split("\0")
+  crontabs = command('stat -c "%U %n" /etc/cron*').stdout.split("\n")
+
+  failing_crontabs = crontabs.reject { |c| file(c.split[1]).owned_by?('root') }
 
   describe 'Crontabs' do
     it 'should be owned by root' do

@@ -32,7 +32,7 @@ umask 077'
 
   file = '/etc/bashrc'
 
-  expected_umask = input('modes_for_shells')[:bashrc_umask]
+  expected_umask = input('permissions_for_shells')[:bashrc_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 

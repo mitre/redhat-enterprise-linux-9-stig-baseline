@@ -28,9 +28,9 @@ UMASK 077'
   tag 'host'
   tag 'container'
 
-  modes_for_shells = input('modes_for_shells')
+  permissions_for_shells = input('permissions_for_shells')
 
   describe login_defs do
-    its('UMASK') { should cmp modes_for_shells['default_umask'] }
+    its('UMASK') { should cmp permissions_for_shells['default_umask'] }
   end
 end

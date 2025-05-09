@@ -54,7 +54,7 @@ records, a new partition with sufficient space will need be to be created.'
 
   # Fetch partition sizes in 1K blocks for consistency
   partition_info = command("df -B 1K #{audit_log_dir}").stdout.split("\n")
-  partition_sz_arr = partition_info.last.gsub(/\s+/m, ' ').strip.split
+  partition_sz_arr = partition_info.last.gsub(/\s+/m, ' ').strip.split(' ')
 
   # Get unused space percentage
   percentage_space_unused = (100 - partition_sz_arr[4].to_i)

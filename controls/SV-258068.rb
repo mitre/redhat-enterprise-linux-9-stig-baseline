@@ -30,7 +30,7 @@ declare -xr TMOUT=600'
   tag 'host'
   tag 'container'
 
-  system_inactivity_timeout = input('system_inactivity_timeout')
+  stop_idle_session_sec = input('stop_idle_session_sec')
 
   tmout_lines = command('grep -i tmout /etc/profile /etc/profile.d/*.sh').stdout.strip
   tmout_value = tmout_lines.match(/^[^#]+TMOUT\s*=\s*(\d+)/i)
@@ -40,8 +40,8 @@ declare -xr TMOUT=600'
       expect(tmout_value).to_not be_nil, 'No TMOUT value set in /etc/profile or /etc/profile.d/*.sh'
     end
     unless tmout_value.nil?
-      it "should exit after #{system_inactivity_timeout} seconds of inactivity" do
-        expect(tmout_value.captures.first.to_i).to be <= system_inactivity_timeout
+      it "should exit after #{stop_idle_session_sec} seconds of inactivity" do
+        expect(tmout_value.captures.first.to_i).to be <= stop_idle_session_sec
       end
     end
   end

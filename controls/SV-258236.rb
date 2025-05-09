@@ -63,35 +63,27 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
     !virtualization.system.eql?('docker')
   }
 
-  if input('use_fips') == false
-    impact 0.0
-    describe 'This control is Not Applicable as FIPS is not required for this system' do
-      skip 'This control is Not Applicable as FIPS is not required for this system'
+  crypto_policies_dir = '/etc/crypto-policies/back-ends'
+  expected_link_path_dir = '/usr/share/crypto-policies/FIPS'
+
+  crypto_policies = command("ls -l #{crypto_policies_dir} | awk \'{ print $9 }\'").stdout.strip.split("\n")
+
+  failing_crypto_policies = {}
+
+  crypto_policies.each do |crypto_policy|
+    service = "#{crypto_policies_dir}/#{crypto_policy}"
+    link_path = file(service).link_path
+
+    if link_path.nil?
+      failing_crypto_policies[service] = 'No link path found'
+    elsif !link_path.match?(/^#{expected_link_path_dir}/)
+      failing_crypto_policies[service] = link_path
     end
-  else
+  end
 
-    crypto_policies_dir = '/etc/crypto-policies/back-ends'
-    expected_link_path_dir = '/usr/share/crypto-policies/FIPS'
-
-    crypto_policies = command("ls -l #{crypto_policies_dir} | awk \'{ print $9 }\'").stdout.strip.split("\n")
-
-    failing_crypto_policies = {}
-
-    crypto_policies.each do |crypto_policy|
-      service = "#{crypto_policies_dir}/#{crypto_policy}"
-      link_path = file(service).link_path
-
-      if link_path.nil?
-        failing_crypto_policies[service] = 'No link path found'
-      elsif !link_path.match?(/^#{expected_link_path_dir}/)
-        failing_crypto_policies[service] = link_path
-      end
-    end
-
-    describe 'Crypto policies' do
-      it 'should link to the correct libriries' do
-        expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
-      end
+  describe 'Crypto policies' do
+    it 'should link to the correct libriries' do
+      expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
     end
   end
 end

@@ -28,14 +28,7 @@ $ sudo ln -s /etc/crypto-policies/back-ends/krb5.config /usr/share/crypto-polici
   tag nist: ['IA-7']
   tag 'host'
 
-  if input('use_fips') == false
-    impact 0.0
-    describe 'This control is Not Applicable as FIPS is not required for this system' do
-      skip 'This control is Not Applicable as FIPS is not required for this system'
-    end
-  else
-    describe file('/etc/crypto-policies/back-ends/krb5.config') do
-      its('link_path') { should match(%r{/usr/share/crypto-policies/FIPS}) }
-    end
+  describe file('/etc/crypto-policies/back-ends/krb5.config') do
+    its('link_path') { should match(%r{/usr/share/crypto-policies/FIPS}) }
   end
 end

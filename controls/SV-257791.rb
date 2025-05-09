@@ -28,7 +28,7 @@ $ sudo chown root /boot/grub2/grub.cfg'
     !virtualization.system.eql?('docker')
   }
 
-  grubfile = input('grub_conf_path')
+  grubfile = file(input('grub_conf_path'))
 
   describe file(grubfile) do
     it { should exist }

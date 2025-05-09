@@ -32,13 +32,12 @@ enforce_for_root'
   tag 'host'
   tag 'container'
 
-  # TODO: use this pattern on the rest of the pwquality.conf settings (current implementation for the other ones dont account for multiple conf files)
+  # TODO: use this pattern on the rest of the pwquality.conf settings (current implementation for the other ones dont account for multiple conmf files)
 
   setting = 'enforce_for_root'
 
-  # NOTE: -s to supress if no files
-  # Note: -h to just have occurances and ignore filename
-  setting_check = command("grep -sh #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*").stdout.strip.match(/^#{setting}$/)
+  setting_check = command("grep #{setting} /etc/security/pwquality.conf /etc/security/pwquality.conf/*.conf").stdout.strip.match(/^:+#{setting}$/)
+
   describe 'The root account' do
     it 'should enforce password complexity rules' do
       expect(setting_check).to_not be_nil, "'#{setting}' not found (or commented out) in conf file(s)"

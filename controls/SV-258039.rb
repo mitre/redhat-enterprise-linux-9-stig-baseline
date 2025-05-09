@@ -33,17 +33,9 @@ Reboot the system for the settings to take effect.'
   }
 
   if input('bluetooth_installed')
-    if input('bluetooth_required')
-      impact 0.0
-      describe 'N/A' do
-        skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-      end
-    else
-
-      describe kernel_module('bluetooth') do
-        it { should be_disabled }
-        it { should be_blacklisted }
-      end
+    describe kernel_module('bluetooth') do
+      it { should be_disabled }
+      it { should be_blacklisted }
     end
   else
     impact 0.0

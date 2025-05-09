@@ -50,37 +50,23 @@ Obtain a valid copy of the DOD root CA file from the PKI CA certificate bundle f
     !input('smart_card_enabled')
   }
 
-  root_ca_file = input('root_ca_file') # This gets the entire hash from input
-  root_ca_file_path = root_ca_file['path'] # Extract the path for file operations
-  issuer_dn_expected = root_ca_file['issuer_dn'] # Extract the expected issuer DN
-  subject_dn_expected = root_ca_file['subject_dn'] # Extract the expected subject DN
-  # quick check to see if the designated Root CA is present; fail if it is not
-  if file(root_ca_file_path).exist?
-    # Check the Root CA's validity and details
+  root_ca_file = input('root_ca_file')
+  describe file(root_ca_file) do
+    it { should exist }
+  end
 
-    describe 'The Root CA' do
-      subject { x509_certificate(root_ca_file_path) }
-
-      # Verify that the issuer_dn matches the expected issuer DN
+  describe 'Ensure the RootCA is a DoD-issued certificate with a valid date' do
+    if file(root_ca_file).exist?
+      subject { x509_certificate(root_ca_file) }
       it 'has the correct issuer_dn' do
-        expect(subject.issuer_dn).to match(issuer_dn_expected) # Match the expected issuer DN
+        expect(subject.issuer_dn).to match('/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3')
       end
-
-      # Verify that the subject_dn matches the expected subject DN
       it 'has the correct subject_dn' do
-        expect(subject.subject_dn).to match(subject_dn_expected) # Match the expected subject DN
+        expect(subject.subject_dn).to match('/C=US/O=U.S. Government/OU=DoD/OU=PKI/CN=DoD Root CA 3')
       end
-
-      # Ensure that the certificate is valid (i.e., it hasn't expired)
-      it 'has not expired' do
+      it 'is valid' do
         expect(subject.validity_in_days).to be > 0
       end
     end
-  else
-
-    describe file(root_ca_file_path) do
-      it { should exist }
-    end
-
   end
 end

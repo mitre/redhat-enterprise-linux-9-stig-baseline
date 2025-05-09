@@ -38,16 +38,16 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
 
   peripherals_package = input('peripherals_package')
 
-  if peripherals_package == 'usbguard'
-    describe command('usbguard list-rules') do
-      its('stdout') { should_not be_empty }
-      its('exit_status') { should eq 0 }
-    end
-  else
+  if peripherals_package != 'usbguard'
     describe 'Non-standard package' do
       it 'is handling peripherals' do
         expect(peripherals_package).to exist
       end
+    end
+  else
+    describe command('usbguard list-rules') do
+      its('stdout') { should_not be_empty }
+      its('exit_status') { should eq 0 }
     end
   end
 end
