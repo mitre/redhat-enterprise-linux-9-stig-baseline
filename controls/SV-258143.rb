@@ -3,7 +3,7 @@ control 'SV-258143' do
   desc "Unintentionally running a rsyslog server accepting remote messages puts the system at increased risk. Malicious rsyslog messages sent to the server could exploit vulnerabilities in the server software itself, could introduce misleading information into the system's logs, or could fill the system's storage leading to a denial of service.
 
 If the system is intended to be a log aggregation server, its use must be documented with the information system security officer (ISSO)."
-  desc 'check', %q(Verify that RHEL 9 is not configured to receive remote logs using rsyslog with the following commands:
+  desc 'check', %q{Verify that RHEL 9 is not configured to receive remote logs using rsyslog with the following commands:
 
 $ grep -i modload /etc/rsyslog.conf /etc/rsyslog.d/*
 
@@ -33,7 +33,7 @@ Note: An error about no files or directories from the above commands may be retu
 
 If any modules are being loaded in the "/etc/rsyslog.conf" file or in the "/etc/rsyslog.d" subdirectories, ask to see the documentation for the system being used for log aggregation. 
 
-If the documentation does not exist or does not specify the server as a log aggregation system, this is a finding.)
+If the documentation does not exist or does not specify the server as a log aggregation system, this is a finding.}
   desc 'fix', 'Configure RHEL 9 to not receive remote logs using rsyslog.
 
 Remove the lines in /etc/rsyslog.conf and any files in the /etc/rsyslog.d directory that match any of the following:

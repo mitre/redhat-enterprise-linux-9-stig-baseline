@@ -41,4 +41,13 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag 'documentable'
   tag cci: ['CCI-001453']
   tag nist: ['AC-17 (2)']
+
+  only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
+    !virtualization.system.eql?('docker') || file('/etc/ssh/sshd_config').exist?
+  }
+
+  describe file('/etc/crypto-policies/back-ends/openssh.config') do
+    it { should exist }
+    its('content') { should match /^MACs\s+hmac-sha2-256-etm@openssh\.com,hmac-sha2-512-etm@openssh\.com,hmac-sha2-256,hmac-sha2-512$/ }
+  end
 end

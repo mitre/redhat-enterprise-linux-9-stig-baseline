@@ -13,7 +13,7 @@ UDP *.* @remotesystemname
 TCP *.* @@remotesystemname
 RELP *.* :omrelp:remotesystemname:2514
 Note that a port number was given as there is no standard port for RELP.'
-  desc 'check', %q(Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
+  desc 'check', %q{Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
 
 $ grep -i 'type="omfwd"' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
@@ -24,7 +24,7 @@ If a remote server is not configured, or the line is commented out, ask the syst
 If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to offload audit records onto a different system or media from the system being audited via TCP using rsyslog by specifying the remote logging server in "/etc/rsyslog.conf"" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
 
-*.* @@[remoteloggingserver]:[port]"'
+*.* @@[remoteloggingserver]:[port]"'}
   impact 0.5
   ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'

@@ -28,4 +28,8 @@ $ sudo dnf install postfix'
   tag 'documentable'
   tag cci: ['CCI-000015']
   tag nist: ['AC-2 (1)']
+
+  describe package('postfix') do
+    it { should be_installed }
+  end
 end

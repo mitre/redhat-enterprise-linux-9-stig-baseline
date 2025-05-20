@@ -14,17 +14,17 @@ The RHEL8 STIG Profile uses the [InSpec](https://github.com/inspec/inspec) open-
 Table of Contents
 =================
 
-* [RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-9x-security-technical-implementation-guide-inspec-profile)
-   * [RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)](#redhat-9x-enterprise-linux-security-technical-implementation-guide-rhel9-stig)
-* [Getting Started and Intended Usage](#getting-started-and-intended-usage)
-   * [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
-   * [Environment Aware Testing](#environment-aware-testing)
-   * [Tailoring to Your Environment](#tailoring-to-your-environment)
-* [Running the Profile](#running-the-profile)
-   * [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
-   * [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
-   * [Different Run Options](#different-run-options)
-* [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
+- [RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-9x-security-technical-implementation-guide-inspec-profile)
+  - [RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)](#redhat-9x-enterprise-linux-security-technical-implementation-guide-rhel9-stig)
+- [Getting Started and Intended Usage](#getting-started-and-intended-usage)
+  - [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
+  - [Environment Aware Testing](#environment-aware-testing)
+  - [Tailoring to Your Environment](#tailoring-to-your-environment)
+- [Running the Profile](#running-the-profile)
+  - [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
+  - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
+  - [Different Run Options](#different-run-options)
+- [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
 
 ## RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)
 
@@ -76,7 +76,7 @@ This profile uses InSpec Inputs to make the tests more flexible. You are able to
 
 #### **_Do not change the inputs in the `inspec.yml` file_**
 
-The `inputs` configured in the `inspec.yml` file are **profile definition and defaults for the profile** and not for the user. InSpec provides two ways to adjust the profiles inputs at run-time that do not require modifiying `inspec.yml` itself. This is because automated profiles like this one are frequently run from a script, inside a pipeline or some kind of task scheduler. Such automation usually works by running the profile directly from its source (i.e. this repository), which means the runner will not have access to the `inspec.yml`.
+The `inputs` configured in the `inspec.yml` file are **profile definition and defaults for the profile** and not for the user. InSpec provides two ways to adjust the profiles inputs at run-time that do not require modifiying `inspec.yml` itself. This is because automated profiles like this one are frequently run from a script, inside a pipeline or some   nd of task scheduler. Such automation usually works by running the profile directly from its source (i.e. this repository), which means the runner will not have access to the `inspec.yml`.
 
 To tailor the tested values for your deployment or organizationally defined values, **_you may update the inputs_**.
 
@@ -150,11 +150,12 @@ You can deploy your own instances of Heimdall-Lite or Heimdall Server easily via
 
 # Authors
 
-Defense Information Systems Agency (DISA) https://www.disa.mil/
+Defense Information Systems Agency (DISA) <https://www.disa.mil/>
 
-STIG support by DISA Risk Management Team and Cyber Exchange https://public.cyber.mil/
+STIG support by DISA Risk Management Team and Cyber Exchange <https://public.cyber.mil/>
 
-MITRE Security Automation Framework Team https://saf.mitre.org
+MITRE Security Automation Framework Team <https://saf.mitre.org>
 
 ### NOTICE
-DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
+
+DISA STIGs are published by DISA IASE, see: <https://iase.disa.mil/Pages/privacy_policy.aspx>

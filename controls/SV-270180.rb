@@ -52,4 +52,14 @@ permissive = 0'
   tag 'documentable'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
+
+  describe file('/etc/fapolicyd/fapolicyd.conf') do
+    its('content') {should include 'permissive = 0'}
+  end
+
+  describe file('/etc/fapolicyd/compiled.rules') do
+    its('content') { should include 'allow exe=/usr/bin/python3.7 : ftype=text/x-python' }
+    its('content') { should include 'deny_audit perm=any pattern=ld_so : all' }
+    its('content') { should include 'deny perm=any all : all' }
+  end
 end
