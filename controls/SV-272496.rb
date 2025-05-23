@@ -48,4 +48,8 @@ Remove any configurations that conflict with the above from the following locati
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
     !virtualization.system.eql?('docker')
   end
+
+  describe command('grep -r sysadm_r /etc/sudoers /etc/sudoers.d') do
+    skip
+  end
 end
