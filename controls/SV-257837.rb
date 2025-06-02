@@ -30,9 +30,16 @@ $ sudo systemctl set-default multi-user.target'
   tag 'host'
   tag 'container'
 
-  input('remove_xorg_x11_server_packages').each do |p|
-    describe package(p) do
-      it { should_not be_installed }
+  if input('gui_required')
+    impact 0.0
+    describe 'skip' do
+      skip 'A GUI is indicated as a requirement for this system. This control is Not Applicable.'
+    end
+  else
+    input('remove_xorg_x11_server_packages').each do |p|
+      describe package(p) do
+        it { should_not be_installed }
+      end
     end
   end
 end
