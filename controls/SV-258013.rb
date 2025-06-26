@@ -67,7 +67,7 @@ $ sudo dconf update'
 
     profile = command('grep system-db /etc/dconf/profile/user').stdout.strip.match(/:(\S+)$/)[1]
 
-    describe command("grep ^banner-message-enable /etc/dconf/db/#{profile}.d/*") do
+    describe command("grep -r ^banner-message-enable /etc/dconf/db/#{profile}.d/*") do
       its('stdout.strip') { should match(%r{^/org/gnome/login-screen/banner-message-enable}) }
     end
   end

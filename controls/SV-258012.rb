@@ -55,7 +55,7 @@ $ sudo dconf update'
     end
   else
     describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should cmp 'banner-message-enable=true' }
+      its('stdout.strip') { should match /banner-message-enable=true/ }
     end
   end
 end
