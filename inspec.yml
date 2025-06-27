@@ -735,6 +735,14 @@ inputs:
       nodev: false
       nosuid: false
       noexec: false
+      
+  - name: mount_var_options
+    description: rhel_09_231140 - RHEL 9 must mount /var with the (nodev|nosuid|noexec) option.
+    type: Hash
+    value:
+      nodev: true
+      nosuid: true
+      noexec: true
 
   # SV-257780
   - name: skip_endpoint_security_tool
