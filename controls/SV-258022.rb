@@ -54,7 +54,7 @@ Add the following setting to prevent nonprivileged users from modifying it:
 
   if package('gnome-desktop3').installed?
     describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
-      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-enabled' }
+      its('stdout.split') { should match r%(/org/gnome/desktop/screensaver/lock-enabled) }
     end
   else
     impact 0.0
