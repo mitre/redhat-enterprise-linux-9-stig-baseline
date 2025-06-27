@@ -58,7 +58,7 @@ Add the following setting to prevent nonprivileged users from modifying it:
   else
     describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
       it 'checks if idle delay is set' do
-        expect(subject.stdout.split).to match %r(/org/gnome/desktop/session/idle-delay), 'The idle delay is not set. Please ensure it is set.'
+        expect(subject.stdout.strip).to match(%r(/org/gnome/desktop/session/idle-delay)), 'The idle delay is not set. Please ensure it is set.'
       end
     end
   end
