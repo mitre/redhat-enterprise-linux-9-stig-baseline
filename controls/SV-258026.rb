@@ -44,7 +44,7 @@ $ sudo dconf update'
 
   if package('gnome-desktop3').installed?
     describe command('grep -i lock-delay /etc/dconf/db/local.d/locks/*') do
-      its('stdout.split') { should include '/org/gnome/desktop/screensaver/lock-delay' }
+      its('stdout.strip') { should match %r{/org/gnome/desktop/screensaver/lock-delay/} }
     end
   else
     impact 0.0

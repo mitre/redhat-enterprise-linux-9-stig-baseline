@@ -41,10 +41,10 @@ jobs:
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
 
-      - name: Set short git commit SHA
+      - name: Generate Short Commit SHA
         id: vars
         run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          calculatedSha=$(git rev-parse --short HEAD)
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
 
       - name: Confirm git commit SHA output
