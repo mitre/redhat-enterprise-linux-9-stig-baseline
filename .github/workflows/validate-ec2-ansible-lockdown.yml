@@ -13,7 +13,7 @@ jobs:
     env:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
-      KITCHEN_LOCAL_YAML: kitchen.ec2.yml
+      KITCHEN_LOCAL_YAML: kitchen.ec2.ansible-lockdown.yml
       # SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
       # SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       DEPLOYMENT: "ec2"
@@ -72,7 +72,7 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ec2-${{ env.PLATFORM }}
+        run: bundle exec kitchen test --destroy=always
 
       - name: Save our ${{ matrix.suite }} results summary
         continue-on-error: true
@@ -92,7 +92,11 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }},${{ matrix.suite }},${{ env.DEPLOYMENT }},${{ env.HARDENING_SOURCE }},${{ env.PLATFORM }}" \
+            -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}"\
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
