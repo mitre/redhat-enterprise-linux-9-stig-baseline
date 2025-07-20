@@ -72,7 +72,7 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}
 
       - name: Save our ${{ matrix.suite }} results summary
         continue-on-error: true
