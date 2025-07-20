@@ -13,7 +13,7 @@ jobs:
     env:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
-      KITCHEN_LOCAL_YAML: kitchen.disa.ec2.yml
+      KITCHEN_LOCAL_YAML: kitchen.ec2.disa.yml
       # SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
       # SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       DEPLOYMENT: "ec2"
@@ -72,7 +72,7 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}
+        run: bundle exec kitchen test --destroy=always
 
       - name: Save our ${{ matrix.suite }} results summary
         continue-on-error: true
