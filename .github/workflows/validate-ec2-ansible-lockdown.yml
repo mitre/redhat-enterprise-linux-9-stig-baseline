@@ -1,4 +1,4 @@
-name: EC2 Testing Matrix
+name: EC2 Ansible Lockdown Testing Matrix
 
 on:
   pull_request:
