@@ -32,7 +32,8 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 suites:
-  - name: hardened-ec2-disa
+  - name: hardened-ec2-disa-rhel-9
+${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}
     provisioner:
       playbook: spec/ansible/disa/site.yml
     driver:

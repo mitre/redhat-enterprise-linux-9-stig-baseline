@@ -1,4 +1,4 @@
-name: DISA Hardened EC2 Testing Matrix
+name: Hardened EC2 DISA Testing Matrix
 
 on:
   pull_request:

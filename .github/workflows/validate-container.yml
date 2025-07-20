@@ -16,6 +16,8 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
       PLATFORM: "ubi9"
+      DEPLOYMENT: "container"
+      HARDENING_SOURCE: "iron-bank"
       HARDENED_CONTAINER_IMAGE: "registry1.dso.mil/ironbank/redhat/ubi/ubi9"
       VANILLA_CONTAINER_IMAGE: "registry.access.redhat.com/ubi9/ubi:9.3-1610"
     strategy:
