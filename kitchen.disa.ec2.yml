@@ -32,12 +32,12 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 suites:
-  - name: disa-hardened
+  - name: hardened-ec2-disa
     provisioner:
       playbook: spec/ansible/disa/site.yml
     driver:
       tags:
-        Name: Hardened-<%= ENV['USER'] %>
+        Name: Hardened-DISA-<%= ENV['USER'] %>
         CreatedBy: test-kitchen
 
 lifecycle:
