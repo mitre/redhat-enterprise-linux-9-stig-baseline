@@ -54,8 +54,8 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    describe command('grep ^banner-message-enable /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should match /banner-message-enable=true/ }
+    describe command('grep banner-message-enable /etc/dconf/db/local.d/*') do
+      its('stdout.strip') { should match(/banner-message-enable=true/) }
     end
   end
 end
