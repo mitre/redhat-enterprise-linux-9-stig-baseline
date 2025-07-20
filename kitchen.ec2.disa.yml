@@ -33,7 +33,6 @@ provisioner:
 
 suites:
   - name: hardened-ec2-disa-rhel-9
-${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}
     provisioner:
       playbook: spec/ansible/disa/site.yml
     driver:
