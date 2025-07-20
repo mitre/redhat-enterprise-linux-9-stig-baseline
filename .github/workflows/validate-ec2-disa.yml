@@ -22,7 +22,7 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
-        suite: ["disa-hardened"]
+        suite: ["hardened"]
       fail-fast: false
     steps:
       - name: add needed packages
