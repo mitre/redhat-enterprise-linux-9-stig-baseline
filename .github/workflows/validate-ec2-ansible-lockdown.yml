@@ -2,9 +2,6 @@ name: EC2 Ansible Lockdown Testing Matrix
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   validate:
@@ -40,13 +37,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Clone full repository so we can push
-        run: git fetch --prune --unshallow
-
       - name: Generate Short Commit SHA
         id: vars
         run: |
-          calculatedSha=$(git rev-parse --short HEAD)
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
 
       - name: Confirm git commit SHA output

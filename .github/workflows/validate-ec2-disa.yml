@@ -2,9 +2,6 @@ name: EC2 DISA Testing Matrix
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   validate:
@@ -46,7 +43,7 @@ jobs:
       - name: Generate Short Commit SHA
         id: vars
         run: |
-          calculatedSha=$(git rev-parse --short HEAD)
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
 
       - name: Confirm git commit SHA output
