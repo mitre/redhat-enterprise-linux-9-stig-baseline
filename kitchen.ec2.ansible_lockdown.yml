@@ -33,7 +33,7 @@ provisioner:
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 suites:
-  - name: vanilla-ec2
+  - name: vanilla
     provisioner:
       playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
     driver:
@@ -41,7 +41,7 @@ suites:
         Name: Vanilla-EC2-Ansible-Lockdown-<%= ENV['USER'] %>
         CreatedBy: test-kitchen
 
-  - name: hardened-ec2-ansible-lockdown
+  - name: hardened
     provisioner:
       playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
     driver:
