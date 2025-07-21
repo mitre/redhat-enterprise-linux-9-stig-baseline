@@ -13,7 +13,7 @@ jobs:
     env:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
-      KITCHEN_LOCAL_YAML: kitchen.ec2.ansible-lockdown.yml
+      KITCHEN_LOCAL_YAML: kitchen.ec2.ansible_lockdown.yml
       # SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
       # SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       DEPLOYMENT: "ec2"
