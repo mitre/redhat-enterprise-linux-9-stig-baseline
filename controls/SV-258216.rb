@@ -47,6 +47,8 @@ The audit daemon must be restarted for the changes to take effect.'
         expect(audit_rule.list.uniq).to cmp 'exit'
         if os.arch.match(/aarch64/)
           expect(audit_rule.arch.uniq).to cmp 'b32'
+        elsif os.arch.match(/aarch64/)
+          expect(audit_rule.arch.uniq).to cmp 'b32'
         elsif os.arch.match(/64/)
           expect(audit_rule.arch.uniq).to include('b32', 'b64')
         else
