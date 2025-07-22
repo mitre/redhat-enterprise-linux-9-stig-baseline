@@ -4,9 +4,9 @@ platforms:
 
 driver:
   name: ec2
-  subnet_id: "<%= ENV['SAF_PIPELINE_SUBNET'] %>"
-  security_group_ids:
-    - "<%= ENV['SAF_PIPELINE_SG'] %>"
+  # subnet_id: "<%= ENV['SAF_PIPELINE_SUBNET'] %>"
+  # security_group_ids:
+  #   - "<%= ENV['SAF_PIPELINE_SG'] %>"
   metadata_options:
     http_tokens: required
     http_put_response_hop_limit: 1
@@ -26,27 +26,18 @@ provisioner:
   ansible_binary_path: /usr/local/bin
   # require_pip3: true
   ansible_verbose: true
-  roles_path: spec/ansible/roles
+  roles_path: spec/ansible/disa/roles
   galaxy_ignore_certs: true
-  requirements_path: spec/ansible/roles/requirements.yml
-  requirements_collection_path: spec/ansible/roles/requirements.yml
+  #requirements_path: spec/ansible/disa/roles/requirements.yml
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 suites:
-  - name: vanilla
-    provisioner:
-      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
-    driver:
-      tags:
-        Name: Vanilla-<%= ENV['USER'] %>
-        CreatedBy: test-kitchen
-
   - name: hardened
     provisioner:
-      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+      playbook: spec/ansible/disa/site.yml
     driver:
       tags:
-        Name: Hardened-<%= ENV['USER'] %>
+        Name: Hardened EC2 DISA <%= ENV['USER'] %>
         CreatedBy: test-kitchen
 
 lifecycle:
@@ -63,7 +54,9 @@ lifecycle:
         echo ""
         echo "+++ Installing Python 3.9 and Ansible +++\n\n"
         export PATH=/usr/local/bin:$PATH
+        sudo dnf -y install python3.9
         sudo dnf -y install python3-pip
+        sudo update-alternatives --set python3 /usr/bin/python3.9
         sudo python3 -m pip install ansible jmespath
         echo ""
         echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
@@ -72,10 +65,8 @@ lifecycle:
         echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
         sudo dnf -y install git
-        echo "+++ add cinc-auditor for local shell +++\n\n"
-        curl -L https://omnitruck.cinc.sh/install.sh | sudo bash -s -- -P cinc-auditor
 
+#https://github.com/neillturner/kitchen-ansible/issues/295
 transport:
   name: ssh
-  #https://github.com/neillturner/kitchen-ansible/issues/295
   max_ssh_sessions: 2

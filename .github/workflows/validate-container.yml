@@ -2,9 +2,6 @@ name: UBI9 Testing Matrix
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   validate:
@@ -16,6 +13,8 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
       PLATFORM: "ubi9"
+      DEPLOYMENT: "container"
+      HARDENING_SOURCE: "iron-bank"
       HARDENED_CONTAINER_IMAGE: "registry1.dso.mil/ironbank/redhat/ubi/ubi9"
       VANILLA_CONTAINER_IMAGE: "registry.access.redhat.com/ubi9/ubi:9.3-1610"
     strategy:
@@ -28,7 +27,7 @@ jobs:
           sudo apt-get update
           sudo apt -y install jq
 
-      - name: Login to Docker Hub
+      - name: Login to registry
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.SAF_IRONBANK_REGISTRY }}
@@ -70,7 +69,7 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}
 
       - name: Save our ${{ matrix.suite }} results summary
         continue-on-error: true
@@ -90,7 +89,11 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }},${{ matrix.suite }},${{ env.DEPLOYMENT }},${{ env.HARDENING_SOURCE }},${{ env.PLATFORM }}" \
+            -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" \
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
