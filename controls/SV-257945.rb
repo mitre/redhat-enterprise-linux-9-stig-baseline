@@ -65,8 +65,13 @@ server [ntp.server.name] iburst maxpoll 16'
   end
 
   # Verify the "chrony.conf" file is configured to a time source by running the following command:
-  describe chrony_conf do
-    its('server') { should_not be_nil }
+  describe.one do 
+      describe chrony_conf do
+          its('server') { should_not be_nil }
+      end
+      describe chrony_conf do
+          its('pool') { should_not be_nil }
+      end
   end
 
   unless time_sources.nil?
