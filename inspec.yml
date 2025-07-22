@@ -331,7 +331,7 @@ inputs:
   - name: user_accounts
     description: Accounts of known managed users
     type: Array
-    value: ["vagrant"]
+    value: []
 
   # SV-258238
   - name: unapproved_ssl_tls_versions
@@ -750,6 +750,14 @@ inputs:
       nodev: false
       nosuid: false
       noexec: false
+      
+  - name: mount_var_options
+    description: rhel_09_231140 - RHEL 9 must mount /var with the (nodev|nosuid|noexec) option.
+    type: Hash
+    value:
+      nodev: true
+      nosuid: true
+      noexec: true
 
   # SV-257780
   - name: skip_endpoint_security_tool

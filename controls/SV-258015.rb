@@ -61,7 +61,7 @@ $ sudo dconf update'
 
     profile = command('grep system-db /etc/dconf/profile/user').stdout.strip.match(/:(\S+)$/)[1]
 
-    describe command("grep ^automount-open /etc/dconf/db/#{profile}.d/locks/*") do
+    describe command("grep automount-open /etc/dconf/db/#{profile}.d/locks/*") do
       its('stdout.strip') { should match(%r{^/org/gnome/desktop/media-handling/automount-open}) }
     end
   end

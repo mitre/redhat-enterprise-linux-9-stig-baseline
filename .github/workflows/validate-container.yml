@@ -1,10 +1,7 @@
-name: DISA Hardened EC2 Testing Matrix
+name: UBI9 Testing Matrix
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   validate:
@@ -13,27 +10,29 @@ jobs:
     env:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
-      KITCHEN_LOCAL_YAML: kitchen.disa.ec2.yml
-      SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
-      SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
-      PLATFORM: "rhel-9"
+      KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
+      PLATFORM: "ubi9"
+      DEPLOYMENT: "container"
+      HARDENING_SOURCE: "iron-bank"
+      HARDENED_CONTAINER_IMAGE: "registry1.dso.mil/ironbank/redhat/ubi/ubi9"
+      VANILLA_CONTAINER_IMAGE: "registry.access.redhat.com/ubi9/ubi:9.3-1610"
     strategy:
       matrix:
-        suite: ["disa-hardened"]
+        suite: ["vanilla", "hardened"]
       fail-fast: false
     steps:
       - name: add needed packages
         run: |
           sudo apt-get update
-          sudo apt-get -y install jq
+          sudo apt -y install jq
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Login to registry
+        uses: docker/login-action@v3
         with:
-          aws-access-key-id: ${{ secrets.SAF_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.SAF_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.SAF_AWS_REGION }}
+          registry: ${{ secrets.SAF_IRONBANK_REGISTRY }}
+          username: ${{ secrets.SAF_IRONBANK_CLI_USERNAME }}
+          password: ${{ secrets.SAF_IRONBANK_CLI_TOKEN }}
 
       - name: Check out repository
         uses: actions/checkout@v4
@@ -41,7 +40,7 @@ jobs:
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
 
-      - name: Set short git commit SHA
+      - name: Generate Short Commit SHA
         id: vars
         run: |
           calculatedSha=$(git rev-parse --short ${{ github.sha }})
@@ -70,7 +69,7 @@ jobs:
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}
 
       - name: Save our ${{ matrix.suite }} results summary
         continue-on-error: true
@@ -90,7 +89,11 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ matrix.suite }}-${{ env.DEPLOYMENT }}-${{ env.HARDENING_SOURCE }}-${{ env.PLATFORM }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }},${{ matrix.suite }},${{ env.DEPLOYMENT }},${{ env.HARDENING_SOURCE }},${{ env.PLATFORM }}" \
+            -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" \
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
@@ -109,4 +112,4 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.2
         with:
-          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ubi9_${{ matrix.suite }}.threshold.yml"

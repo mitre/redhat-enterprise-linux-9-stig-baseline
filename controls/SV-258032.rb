@@ -50,7 +50,7 @@ $ sudo dconf update'
     end
   else
     describe command('grep logout /etc/dconf/db/local.d/locks/*') do
-      its('stdout.strip') { should cmp match(%r{^/org/gnome/settings-daemon/plugins/media-keys/logout}) }
+      its('stdout.strip') { should match %r{/org/gnome/settings-daemon/plugins/media-keys/logout} }
     end
   end
 end
