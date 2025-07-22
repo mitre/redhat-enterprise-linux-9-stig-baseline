@@ -31,8 +31,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.SAF_IRONBANK_REGISTRY }}
-          username: ${{ secrets.IB_UN }}
-          password: ${{ secrets.IB_PW }}
+          username: ${{ secrets.SAF_IRONBANK_CLI_USERNAME }}
+          password: ${{ secrets.SAF_IRONBANK_CLI_TOKEN }}
 
       - name: Check out repository
         uses: actions/checkout@v4
