@@ -36,7 +36,7 @@ supports:
 ###
 
 inputs:
-  # SV-258085, SV-258106, SV-258084, SV-258087, SV-258086
+  # SV-258084, SV-258085, SV-258086, SV-258087, SV-258106
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
     type: Array
@@ -50,7 +50,7 @@ inputs:
     type: Array
     value: []
 
-  # SV-258003, SV-257996
+  # SV-257996, SV-258003
   - name: sshd_config_values
     description: 'The agreed sshd server config values for the organization'
     type: Hash
@@ -86,7 +86,6 @@ inputs:
     type: String
     value: '0644'
 
-
   # SV-258000
   - name: ssh_private_key_mode
     description: All private ssh keyfiles on the filesystem should be equal or less permissive than this octet
@@ -105,7 +104,7 @@ inputs:
     type: String
     value: '0755'
 
-  # SV-257894, SV-257890, SV-257933, SV-257891, SV-258172, SV-257895, SV-257892, SV-257896, SV-257897, SV-257934, SV-257893, SV-257999, SV-257888
+  # SV-257888, SV-257890, SV-257891, SV-257892, SV-257893, SV-257894, SV-257895, SV-257896, SV-257897, SV-257933, SV-257934, SV-257999, SV-258172
   - name: expected_modes
     description: Expected modes of system files and/or directories
     type: Hash
@@ -148,7 +147,7 @@ inputs:
     type: String
     value: email
 
-  # SV-258038, SV-258035
+  # SV-258035, SV-258038
   - name: peripherals_package
     description: "The name of the package used to managed connected peripherals"
     type: String
@@ -160,7 +159,7 @@ inputs:
     type: String
     value: "usbguard"
 
-  # SV-257978, SV-258003, SV-257987, SV-257996
+  # SV-257978, SV-257987, SV-257996, SV-258003
   - name: allow_container_openssh_server
     description: "If the OpenSSH Server has been approved outside standard container guidance to default transprots"
     type: Boolean
@@ -202,7 +201,7 @@ inputs:
     type: Numeric
     value: 1
 
-  # SV-258042, SV-258041
+  # SV-258041, SV-258042
   - name: pass_max_days
     description: "The maximum password lifetime restriction in days"
     type: Numeric
@@ -214,7 +213,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-258062, SV-257931, SV-257930, SV-257778
+  # SV-257778, SV-257930, SV-257931, SV-258062
   - name: disable_slow_controls
     description: Controls that are known to consistently have long run times can be disabled with this attribute
     type: Boolean
@@ -244,19 +243,13 @@ inputs:
     type: String
     value: 'FIPS'
 
-  # SV-258093, SV-258092
-  - name: min_reuse_generations
-    description: Number of reuse generations
-    type: Numeric
-    value: 5
-
   # SV-258091
   - name: min_retry
     description: Number of permitted password retries
     type: Numeric
     value: 3
 
-  # SV-258108, SV-258107
+  # SV-258107
   - name: pass_min_len
     description: Minimum number of characters for a new password
     type: Numeric
@@ -286,7 +279,7 @@ inputs:
     type: Numeric
     value: 10
 
-  # SV-257789, SV-257787, SV-257791, SV-257790
+  # SV-257787, SV-257789, SV-257790, SV-257791, 
   - name: grub_conf_path
     description: Grub config filepath
     type: String
@@ -307,14 +300,14 @@ inputs:
       - admin
       - administrator
 
-  # SV-258042, SV-258052, SV-257890, SV-258053, SV-258044, SV-258050, SV-258051, SV-258105
+  # SV-257890, SV-258042, SV-258044, SV-258050, SV-258051, SV-258052, SV-258053, SV-258105
   - name: exempt_home_users
     description: Users exempt from home directory-based controls in array format
     type: Array
     value:
       - root
 
-  # SV-258048, SV-257843, SV-258046, SV-258050, SV-258051, SV-257889
+  # SV-257843, SV-257889, SV-258046, SV-258048, SV-258050, SV-258051
   - name: non_interactive_shells
     description: These shells do not allow a user to login
     type: Array
@@ -338,17 +331,6 @@ inputs:
     description: Accounts of known managed users
     type: Array
     value: []
-
-  # SV-258238
-  - name: unapproved_ssl_tls_versions
-    description:
-    type: Array
-    value:
-      - DTLS0.9
-      - SSL3.0
-      - TLS1.0
-      - TLS1.1
-      - DTLS1.0
 
   # SV-257810, SV-257957, SV-257958, SV-257959, SV-257960, SV-257961, SV-257962, SV-257963, SV-257964, SV-257965, SV-257966, SV-257967, SV-257968, SV-257969, SV-257970
   - name: ipv4_enabled
@@ -400,31 +382,31 @@ inputs:
       - systemd-bus-proxy
       - systemd-network
 
-  # SV-258019, SV-257838, SV-258126, SV-258122, SV-258133, SV-258124, SV-258125, SV-258131, SV-258121
+  # SV-257838, SV-258019, SV-258121, SV-258122, SV-258124, SV-258125, SV-258126, SV-258131, SV-258133
   - name: smart_card_enabled
     description: Smart card status of the system
     type: Boolean
     value: false
 
-  # SV-258136, SV-258134, SV-258135
+  # SV-258134, SV-258135, SV-258136
   - name: file_integrity_tool
     description: Name of tool
     type: String
     value: "aide"
 
-  # SV-230484
+  # SV-257945
   - name: authoritative_timeservers
     description: Timeserver(s) used in /etc/chrony.conf
     type: Array
     value: ["0.us.pool.ntp.mil"]
 
-  # SV-230484
+  # SV-257945
   - name: match_all_authoritative_timeservers_enabled
     description: Specify that all timeservers in authoritative_timeservers must be present and valid
     type: Boolean
     value: true
 
-  # SV-257859, SV-257858, SV-257857
+  # SV-257858, SV-257857, SV-257859
   - name: non_removable_media_fs
     description: File systems listed in /etc/fstab which are not removable media devices
     type: Array
@@ -600,7 +582,7 @@ inputs:
       - xorg-x11-server-utils
       - xorg-x11-server-Xwayland
 
-  # SV-257781
+  # SV-257781, SV-257837
   - name: gui_required
     description: Set to true if there is a documented requirement for the target system to have a graphical user interface enabled
     type: Boolean
@@ -624,7 +606,7 @@ inputs:
       - SINGLE
       - HALT
 
-  # SV-258158
+  # SV-258158, SV-258159
   - name: admin_space_left
     description: The percentage of space left on the audit storage volume that will trigger the system to take action
     type: String
@@ -654,7 +636,7 @@ inputs:
     type: String
     value: "no"
 
-  # SV-258072, SV-258073, SV-258044, SV-258074, SV-258075
+  # SV-258044, SV-258072, SV-258073, SV-258074, SV-258075
   - name: modes_for_shells
     description: Define default modes for logon and non-logon shells.
     type: Hash
@@ -670,7 +652,7 @@ inputs:
     type: String
     value: "0755"
 
-  # SV-257884, SV-257923, SV-257922, SV-257921, SV-257920, SV-257883
+  # SV-257883, SV-257884, SV-257920, SV-257921, SV-257922, SV-257923
   - name: system_libraries
     description: Define system libraries which should have strict permissions enforced
     type: Array
@@ -680,7 +662,7 @@ inputs:
       - /usr/lib
       - /usr/lib64
 
-  # SV-257919, SV-257918, SV-257882
+  # SV-257882, SV-257918, SV-257919
   - name: system_command_dirs
     description: Directories containing system command executables
     type: Array
@@ -693,7 +675,7 @@ inputs:
       - /usr/local/bin
       - /usr/local/sbin
 
-  # SV-257887
+  # SV-257887, SV-257924, SV-257925, SV-258137
   - name: audit_tools
     description: Paths to tools related to audit function
     tpye: Array
@@ -733,13 +715,13 @@ inputs:
     value:
       - root
 
-  # SV-258090, SV-258089
+  #  SV-258089, SV-258090
   - name: use_fapolicyd
     description: Whether to use fapolicyd, similar to SELinux whitelisting
     type: Boolean
     value: true
 
-  # SV-258095, SV-258122, SV-258094, SV-258093, SV-258233, SV-258100, SV-258097, SV-258092, SV-258099, SV-258098
+  # SV-258092, SV-258093, SV-258094, SV-258095, SV-258097, SV-258098, SV-258099, SV-258100, SV-258122, SV-258233
   - name: pam_auth_files
     description: THe pam.d auth paths
     type: Hash
@@ -773,7 +755,7 @@ inputs:
         - dhcpv6-client
         - ssh
 
-  # SV-257869, SV-257868, SV-257867, SV-257866
+  # SV-257866, SV-257867, SV-257868, SV-257869
   - name: mount_tmp_options
     description: rhel_08_04012[3-5] - RHEL 9 must mount /tmp with the (nodev|nosuid|noexec) option.
     type: Hash
@@ -789,12 +771,6 @@ inputs:
       nodev: true
       nosuid: true
       noexec: true
-
-  # SV-257780
-  - name: skip_endpoint_security_tool
-    description: rhel_08_010001 - The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
-    type: Boolean
-    value: false
 
   # SV-258080
   - name: non_default_tally_dir
@@ -840,7 +816,7 @@ inputs:
     type: Numeric
     value: 4
 
-  # SV-258149, SV-258147, SV-258146, SV-258150
+  #  SV-258146, SV-258147, SV-258149, SV-258150
   - name: logging_conf_files
     description: Configuration files for the logging service
     type: Array
@@ -848,13 +824,13 @@ inputs:
       - /etc/rsyslog.conf
       - /etc/rsyslog.d/*.conf
 
-  # SV-258174
+  # SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162, SV-258174
   - name: alternative_logging
     description: Flag to indicate that a non-standard logging method is in use (instead of auditd and other built-in OS logging features)
     type: Boolean
     value: false
 
-  # SV-258149, SV-258147, SV-258156, SV-258162, SV-258146, SV-258141, SV-258140
+  # SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162
   - name: alternative_logging_method
     description: Alternative tool for logging (instead of auditd and other built-in OS logging features) - leave blank if using default OS tools
     type: String
@@ -878,13 +854,13 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257952, SV-257835
+  # SV-257835
   - name: tftp_required
     description: Set to true if there is a documented requirement for the target system to use TFTP
     type: Boolean
     value: false
 
-  # SV-257826
+  # SV-257826, SV-257835
   - name: ftp_required
     description: Set to true if there is a documented requirement for the target system to use FTP
     type: Boolean
@@ -920,7 +896,6 @@ inputs:
     type: Boolean
     value: false
 
-    # SV-230640
   # SV-257935
   - name: alternate_firewall_tool
     description: Alternate firewall tool (other than firewalld) in use for the system - leave blank if using default OS tools
@@ -938,7 +913,7 @@ inputs:
   # If you need to override these values, do so via adding the desired key/value to
   # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
   # directly will lose the values for any key you do not explictly define.
-  # SV-258179, SV-258178, SV-258194, SV-258205, SV-258221, SV-258215, SV-258184, SV-258177, SV-258201, SV-258190, SV-258180, SV-258211, SV-258225, SV-258191, SV-258200, SV-258210, SV-258181, SV-258224, SV-258204, SV-258195, SV-258220, SV-258185, SV-258214, SV-258176, SV-258203, SV-258192, SV-258182, SV-258213, SV-258196, SV-258207, SV-258223, SV-258217, SV-258186, SV-258206, SV-258197, SV-258222, SV-258187, SV-258216, SV-258193, SV-258202, SV-258212, SV-258183, SV-258226, SV-258198, SV-258209, SV-258219, SV-258188, SV-258208, SV-258199, SV-258189, SV-258218
+  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226
   - name: audit_rule_keynames
     description: The audit rules to be applied to the system
     type: Hash
@@ -1025,7 +1000,7 @@ inputs:
   # {
   #   'execve': 'my_org_specific_keyname_for_auditing_execve'
   # }
-  # SV-258179, SV-258178, SV-258194, SV-258205, SV-258221, SV-258215, SV-258184, SV-258177, SV-258201, SV-258190, SV-258180, SV-258211, SV-258225, SV-258191, SV-258200, SV-258210, SV-258181, SV-258224, SV-258204, SV-258195, SV-258220, SV-258185, SV-258214, SV-258176, SV-258203, SV-258192, SV-258182, SV-258213, SV-258196, SV-258207, SV-258223, SV-258217, SV-258186, SV-258206, SV-258197, SV-258222, SV-258187, SV-258216, SV-258193, SV-258202, SV-258212, SV-258183, SV-258226, SV-258198, SV-258209, SV-258219, SV-258188, SV-258208, SV-258199, SV-258189, SV-258218
+  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226
   - name: audit_rule_keynames_overrides
     description: The audit rules to be applied to the system
     type: Hash
@@ -1045,20 +1020,7 @@ inputs:
     value:
       - /dev/vmci
 
-  # SV-257938
-  - name: approved_ppsm_clsa
-    description: Defines allowed ports, protocols, and services as defined in the approved site or program Ports, Protocols, and Services Management Component Local Service Assessment (PPSM CLSA)
-    type: Hash
-    value:
-      ports: []
-      protocols: []
-      services:
-        - ssh
-        # TODO: Do we need below?
-        - cockpit
-        - dhcpv6-client
-
-  # SV-257991, SV-257989
+  # SV-257989, SV-257991
   - name: approved_openssh_server_conf
     description: Config values expected for openssh server (order matters, so these values are comma-delimited strings and not arrays)
     type: Hash
@@ -1066,7 +1028,7 @@ inputs:
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,umac-128@openssh.com,hmac-sha2-512
 
-  # SV-257990, SV-257989
+  # SV-257989
   - name: approved_openssh_client_conf
     description: Config values expected for openssh client (order matters, so these values are comma-delimited strings and not arrays)
     type: Hash
@@ -1074,8 +1036,7 @@ inputs:
       ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,hmac-sha2-256,hmac-sha2-512-etm@openssh.com,hmac-sha2-512
 
-
-  # SV-258100, SV-258099
+  # SV-258099, SV-258100 
   - name: password_hash_rounds
     description: Number of rounds for hashing passwords
     type: Numeric
@@ -1112,7 +1073,7 @@ inputs:
     value: false
 
   # SV-257970, SV-257974
-  - name: forwarding
+  - name: packet_forwarding
     description: Set to true if there is a requirement for this system to be able forward packets that is documented with the ISSO
     type: Boolean
     value: false

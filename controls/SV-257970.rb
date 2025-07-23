@@ -45,7 +45,7 @@ $ sudo sysctl --system'
     !input('network_router')
   }
 
-  if input('forwarding')
+  if input('packet_forwarding')
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
