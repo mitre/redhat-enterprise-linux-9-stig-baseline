@@ -49,7 +49,11 @@ Remove any configurations that conflict with the above from the following locati
     !virtualization.system.eql?('docker')
   end
 
-  describe command('grep -r sysadm_r /etc/sudoers /etc/sudoers.d') do
-    skip
+  output = command('grep -r sysadm_r /etc/sudoers /etc/sudoers.d').stdout.strip
+
+  describe 'The sudoers SELinux context rule' do
+    it 'should match the expected SELinux role and type for privileged access' do
+      expect(output).to match(/^\s*%[\w-]+\s+ALL=\(ALL\)\s+TYPE=sysadm_t\s+ROLE=sysadm_r\s+ALL/), 'No matching sudoers rule found that elevates to sysadm_t/sysadm_r'
+    end
   end
 end

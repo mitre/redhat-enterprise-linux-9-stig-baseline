@@ -276,4 +276,8 @@ approved_tunnels: []
 # Is the target expected to be a virtual machine
 virtual_machine: true
 
+# SV-257978
 allow_container_openssh_server: false
+
+# SV-257978
+physical_protections_employed: false

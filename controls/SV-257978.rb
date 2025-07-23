@@ -44,9 +44,9 @@ $ sudo dnf install openssh-server'
 
   openssh_present = package('openssh-server').installed?
 
-  only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !openssh_present)
-  }
+  only_if('This requirement is Not Applicable in a container without OpenSSH installed or when physical protections are employed', impact: 0.0) do
+    !((virtualization.system.eql?('docker') && !openssh_present) || input('physical_protections_employed'))
+  end
 
   if input('allow_container_openssh_server') == false
     describe 'In a container Environment' do
@@ -55,9 +55,9 @@ $ sudo dnf install openssh-server'
       end
     end
   else
-    describe 'In a machine environment' do
-      it 'the OpenSSH Server should be installed' do
-        expect(package('openssh-server').installed?).to eq(true), 'the OpenSSH Server is not installed'
+    describe 'OpenSSH Server package' do
+      it 'should be installed' do
+        expect(package('openssh-server').installed?).to eq(true), 'OpenSSH Server is not installed'
       end
     end
   end

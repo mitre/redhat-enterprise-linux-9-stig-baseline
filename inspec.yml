@@ -166,6 +166,12 @@ inputs:
     type: Boolean
     value: false
 
+  # SV-257978
+  - name: physical_protections_employed
+    descrption: "If physical means of protection are employed, then logical means (cryptography) do not have to be employed, and vice versa."
+    type: Boolean
+    value: true
+
   # SV-258113
   - name: maxclassrepeat
     description: "The maximum number of repeating characters of the same character class for passwords"
