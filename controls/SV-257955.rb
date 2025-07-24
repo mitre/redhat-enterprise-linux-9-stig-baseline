@@ -23,7 +23,7 @@ $ sudo rm /[path]/[to]/[file]/shosts.equiv'
 
   shosts_files = command('find / -xdev -xautofs -name shosts.equiv').stdout.strip.split("\n")
 
-  describe 'The RHEL8 filesystem' do
+describe 'The filesystem' do
     it 'should not have any shosts.equiv files present' do
       expect(shosts_files).to be_empty, "Discovered shosts files:\n\t- #{shosts_files.join("\n\t- ")}"
     end

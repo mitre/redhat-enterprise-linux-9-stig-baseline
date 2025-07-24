@@ -34,7 +34,7 @@ $ sudo chown <user> <file>'
       failing_files += command("find / -xdev -xautofs -fstype #{fs} -nouser").stdout.strip.split("\n")
     end
 
-    describe 'All files on RHEL 8' do
+    describe 'All local files and directories' do
       it 'should have an owner' do
         expect(failing_files).to be_empty, "Files with no owner:\n\t- #{failing_files.join("\n\t- ")}"
       end
