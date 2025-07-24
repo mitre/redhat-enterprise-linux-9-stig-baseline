@@ -24,7 +24,6 @@ If the "iprutils" package is installed and is not documented with the informatio
 
 $ sudo dnf remove iprutils'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257833'

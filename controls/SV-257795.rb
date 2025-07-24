@@ -22,7 +22,6 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 
 GRUB_CMDLINE_LINUX="pti=on"'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-257795'

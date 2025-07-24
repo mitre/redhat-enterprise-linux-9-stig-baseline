@@ -25,7 +25,6 @@ auth required pam_faillock.so preauth
 auth required pam_faillock.so authfail
 account required pam_faillock.so'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']

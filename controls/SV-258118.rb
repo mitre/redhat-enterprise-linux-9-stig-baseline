@@ -10,7 +10,6 @@ If any occurrences of "pam_succeed_if" are returned, this is a finding.'
 
 Remove any occurrences of " pam_succeed_if " in the  "/etc/pam.d/sudo" file.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61859r926339_chk'
   tag severity: 'medium'
   tag gid: 'V-258118'

@@ -34,7 +34,6 @@ Restart the SSH daemon for the settings to take effect.
 
 $ sudo systemctl restart sshd.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag satisfies: ['SRG-OS-000033-GPOS-00014', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000423-GPOS-00187']

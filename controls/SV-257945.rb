@@ -25,7 +25,6 @@ If the parameter "server" is not set or is not set to an authoritative DOD time 
 
 server [ntp.server.name] iburst maxpoll 16'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag satisfies: ['SRG-OS-000355-GPOS-00143', 'SRG-OS-000356-GPOS-00144', 'SRG-OS-000359-GPOS-00146']
@@ -45,9 +44,11 @@ server [ntp.server.name] iburst maxpoll 16'
   authoritative_timeservers = [input('authoritative_timeservers')].flatten
   match_all_authoritative_timeservers_enabled = input('match_all_authoritative_timeservers_enabled')
 
-  # Get the system server values
+  # Get the system server values (might be part of a pool)
   # Converts to array if only one value present
-  time_sources = [chrony_conf.server].flatten
+  time_sources = []
+  time_sources = [chrony_conf.server].flatten if chrony_conf.server
+  time_sources += chrony_conf.pool if chrony_conf.pool
 
   # Get and map maxpoll values to an array
   unless time_sources.nil?
@@ -63,8 +64,13 @@ server [ntp.server.name] iburst maxpoll 16'
   end
 
   # Verify the "chrony.conf" file is configured to a time source by running the following command:
-  describe chrony_conf do
-    its('server') { should_not be_nil }
+  describe.one do 
+      describe chrony_conf do
+          its('server') { should_not be_nil }
+      end
+      describe chrony_conf do
+          its('pool') { should_not be_nil }
+      end
   end
 
   unless time_sources.nil?

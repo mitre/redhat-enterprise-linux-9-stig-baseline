@@ -46,7 +46,6 @@ Setting system policy to FIPS
 
 Note: Systemwide crypto policies are applied on application startup. It is recommended to restart the system for the change of policies to fully take place.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61977r1051251_chk'
   tag severity: 'high'
   tag gid: 'V-258236'
@@ -57,7 +56,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag satisfies: ['SRG-OS-000396-GPOS-00176', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174']
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
-  tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag nist: ['SC-13 b', 'MA-4 (6)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

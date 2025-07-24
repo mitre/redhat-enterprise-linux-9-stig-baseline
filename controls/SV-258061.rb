@@ -8,7 +8,6 @@ control 'SV-258061' do
 If the system has duplicate GIDs, this is a finding.'
   desc 'fix', 'Edit the file "/etc/group" and provide each group that has a duplicate GID with a unique GID.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61802r926168_chk'
   tag severity: 'medium'
   tag gid: 'V-258061'

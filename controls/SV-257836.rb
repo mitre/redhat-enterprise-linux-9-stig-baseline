@@ -14,7 +14,6 @@ If the "quagga" package is installed and is not documented with the information 
 
 $ sudo dnf remove quagga'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61577r1044907_chk'
   tag severity: 'medium'
   tag gid: 'V-257836'
@@ -28,7 +27,13 @@ $ sudo dnf remove quagga'
   tag 'host'
   tag 'container'
 
-  describe package('quagga') do
-    it { should_not be_installed }
+  if input('quagga_required')
+    describe package('quagga') do
+      it { should be_installed }
+    end
+  else
+    describe package('quagga') do
+      it { should_not be_installed }
+    end
   end
 end

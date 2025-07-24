@@ -20,7 +20,6 @@ Then, run the following command:
 
 $ sudo newaliases'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61694r925844_chk'
   tag severity: 'medium'
   tag gid: 'V-257953'
@@ -34,7 +33,7 @@ $ sudo newaliases'
   tag 'host'
   tag 'container'
 
-  options = { "assignment_regex": /^(\S+):\s*(\S+)/ }
+  options = { assignment_regex: /^(\S+):\s*(\S+)/ }
 
   describe parse_config_file('/etc/aliases', options) do
     its('postmaster') { should cmp 'root' }

@@ -14,7 +14,6 @@ If the value of the "space_left" keyword is not set to 25 percent of the storage
 
 space_left  = 25%'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-258156'
@@ -29,13 +28,13 @@ space_left  = 25%'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe auditd_conf do
       its('space_left.to_i') { should cmp >= input('audit_storage_threshold') }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

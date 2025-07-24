@@ -18,7 +18,6 @@ Note: The example will be for the wadea user, who has a home directory of "/home
 
 $ sudo chmod 0740 /home/wadea/.<INIT_FILE>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257889'
@@ -36,12 +35,14 @@ $ sudo chmod 0740 /home/wadea/.<INIT_FILE>'
   ignore_shells = input('non_interactive_shells').join('|')
 
   homedirs = users.where { !shell.match(ignore_shells) && (uid >= 1000 || uid.zero?) }.homes
-  ifiles = command("find #{homedirs.join(' ')} -xdev -maxdepth 1 -name '.*' -type f").stdout.split("\n")
+  alternate_ini_file_dirs = input('alternate_ini_file_dirs')
+  ifiles = command("find #{homedirs.join(' ')} #{alternate_ini_file_dirs.join(' ')} -xdev -maxdepth 1 -name '.*' -type f -print0").stdout.split("\0")
 
+  exempt_ini_files = input('exempt_ini_files')
   expected_mode = input('initialization_file_mode')
-  failing_files = ifiles.select { |ifile| file(ifile).more_permissive_than?(expected_mode) }
+  failing_files = ifiles.select { |ifile| !exempt_ini_files.include?(ifile) && file(ifile).more_permissive_than?(expected_mode) }
 
-  describe 'All RHEL 8 local initialization files' do
+  describe 'All RHEL 9 local initialization files' do
     it "must have mode '#{expected_mode}' or less permissive" do
       expect(failing_files).to be_empty, "Failing files:\n\t- #{failing_files.join("\n\t- ")}"
     end

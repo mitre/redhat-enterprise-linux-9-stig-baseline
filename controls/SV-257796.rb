@@ -26,7 +26,6 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 
 GRUB_CMDLINE_LINUX="audit=1"'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000473-GPOS-00218', 'SRG-OS-000254-GPOS-00095']

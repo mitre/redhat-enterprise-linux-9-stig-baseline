@@ -27,7 +27,6 @@ If the "tuned" package is installed and is not documented with the information s
 
 $ sudo dnf remove tuned'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257834'

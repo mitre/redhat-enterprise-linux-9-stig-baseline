@@ -1,8 +1,6 @@
 control 'SV-258088' do
   title 'RHEL 9 must restrict the use of the "su" command.'
-  desc 'The "su" program allows to run commands with a substitute user and group ID. It is commonly used to run commands as the root user. Limiting access to such commands is considered a good security practice.
-
-'
+  desc 'The "su" program allows to run commands with a substitute user and group ID. It is commonly used to run commands as the root user. Limiting access to such commands is considered a good security practice.'
   desc 'check', 'Verify that RHEL 9 requires uses to be members of the "wheel" group with the following command:
 
 $ grep pam_wheel /etc/pam.d/su
@@ -20,7 +18,6 @@ $ sed '/^[[:space:]]*#[[:space:]]*auth[[:space:]]\+required[[:space:]]\+pam_whee
 
 If necessary, create a "wheel" group and add administrative users to the group.)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61829r926249_chk'
   tag severity: 'medium'
   tag gid: 'V-258088'

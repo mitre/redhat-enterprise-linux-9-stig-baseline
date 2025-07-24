@@ -12,7 +12,6 @@ If any results are returned that are not associated with a system account, this 
 
 passwd -x 60 [user]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258042'

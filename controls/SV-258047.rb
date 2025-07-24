@@ -39,7 +39,6 @@ control 'SV-258047' do
 
     $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000123-GPOS-00064'
   tag gid: 'V-258047'

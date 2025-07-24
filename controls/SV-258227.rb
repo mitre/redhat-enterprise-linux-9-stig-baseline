@@ -2,9 +2,7 @@ control 'SV-258227' do
   title 'RHEL 9 must take appropriate action when a critical audit processing failure occurs.'
   desc 'It is critical for the appropriate personnel to be aware if a system is at risk of failing to process audit logs as required. Without this notification, the security personnel may be unaware of an impending failure of the audit capability, and system operation may be adversely affected.
 
-Audit processing failures include software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded.
-
-'
+Audit processing failures include software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded.'
   desc 'check', 'Verify the audit service is configured to panic on a critical error with the following command:
 
 $ sudo grep "\\-f" /etc/audit/audit.rules
@@ -18,7 +16,6 @@ Add the following line to the bottom of the /etc/audit/rules.d/audit.rules file:
 
 -f 2'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61968r926666_chk'
   tag severity: 'medium'
   tag gid: 'V-258227'

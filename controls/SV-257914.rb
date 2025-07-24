@@ -14,7 +14,6 @@ If "/var/log" does not have an owner of "root", this is a finding.'
 
 $ sudo chown root /var/log'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257914'

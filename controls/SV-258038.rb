@@ -22,7 +22,6 @@ Note: This command must be run from a root shell and will create an allow list f
 
 Note: Enabling and starting usbguard without properly configuring it for an individual system will immediately prevent any access over a usb device such as a keyboard or mouse.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258038'
@@ -39,16 +38,16 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
 
   peripherals_package = input('peripherals_package')
 
-  if peripherals_package != 'usbguard'
+  if peripherals_package == 'usbguard'
+    describe command('usbguard list-rules') do
+      its('stdout') { should_not be_empty }
+      its('exit_status') { should eq 0 }
+    end
+  else
     describe 'Non-standard package' do
       it 'is handling peripherals' do
         expect(peripherals_package).to exist
       end
-    end
-  else
-    describe command('usbguard list-rules') do
-      its('stdout') { should_not be_empty }
-      its('exit_status') { should eq 0 }
     end
   end
 end

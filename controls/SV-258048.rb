@@ -12,7 +12,6 @@ If pwck reports "no group" for any interactive user, this is a finding.'
 
 Edit the file "/etc/passwd" and ensure that every user's GID is a valid GID.)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61789r1069379_chk'
   tag severity: 'medium'
   tag gid: 'V-258048'

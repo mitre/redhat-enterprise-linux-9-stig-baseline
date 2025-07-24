@@ -14,7 +14,6 @@ If the "rng-tools" package is not installed, this is a finding.'
 
 $ sudo dnf install rng-tools'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257841'

@@ -14,7 +14,6 @@ If the chronyd service is not active, this is a finding.'
 
 $ sudo systemctl enable --now chronyd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61685r925817_chk'
   tag severity: 'medium'
   tag gid: 'V-257944'

@@ -18,7 +18,6 @@ If any crontab is not owned by root, this is a finding.'
 
 $ sudo chown root [cron config file]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61667r925763_chk'
   tag severity: 'medium'
   tag gid: 'V-257926'
@@ -32,9 +31,7 @@ $ sudo chown root [cron config file]'
   tag 'host'
   tag 'container'
 
-  crontabs = command('stat -c "%U %n" /etc/cron*').stdout.split("\n")
-
-  failing_crontabs = crontabs.reject { |c| file(c.split[1]).owned_by?('root') }
+  failing_crontabs = command('find /etc/cron* ! -user root -print0').stdout.split("\0")
 
   describe 'Crontabs' do
     it 'should be owned by root' do

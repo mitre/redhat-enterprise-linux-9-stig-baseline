@@ -14,7 +14,6 @@ If "/var/log/messages" does not have a mode of "0640" or less permissive, this i
 
 $ sudo chmod 0640 /var/log/messages'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257886'

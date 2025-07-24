@@ -46,7 +46,6 @@ $ sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
 Using the steps listed in the Check Text, confirm the newly imported keys show as installed on the system and verify their fingerprints match vendor values.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61560r925442_chk'
   tag severity: 'medium'
   tag gid: 'V-257819'

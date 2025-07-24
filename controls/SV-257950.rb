@@ -18,7 +18,6 @@ Verify any returned results are documented with the ISSO.
 If the IPsec tunnels are active and not approved, this is a finding.'
   desc 'fix', 'Remove all unapproved tunnels from the system, or document them with the ISSO.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61691r1045005_chk'
   tag severity: 'medium'
   tag gid: 'V-257950'

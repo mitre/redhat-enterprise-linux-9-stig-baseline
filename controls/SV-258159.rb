@@ -18,7 +18,6 @@ admin_space_left_action = single
 
 The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61900r926462_chk'
   tag severity: 'medium'
   tag gid: 'V-258159'

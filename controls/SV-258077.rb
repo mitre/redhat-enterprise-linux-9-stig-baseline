@@ -16,7 +16,6 @@ The "logind" service must be restarted for the changes to take effect. To restar
 
 $ sudo systemctl restart systemd-logind'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61818r926216_chk'
   tag severity: 'medium'
   tag gid: 'V-258077'

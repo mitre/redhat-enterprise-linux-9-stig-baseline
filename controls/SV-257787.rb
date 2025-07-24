@@ -27,7 +27,6 @@ $ sudo grub2-setpassword
 Enter password:
 Confirm password:'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61528r1044835_chk'
   tag severity: 'medium'
   tag gid: 'V-257787'
@@ -44,18 +43,18 @@ Confirm password:'
     !virtualization.system.eql?('docker')
   end
 
-  grubfile = file(input('grub_conf_path'))
-  grub_userfile = file(input('grub_user_conf_path'))
+  grubfile = input('grub_conf_path')
+  grub_userfile = input('grub_user_conf_path')
 
-  describe grubfile do
+  describe file(grubfile) do
     it { should exist }
   end
 
-  describe grub_userfile do
+  describe file(grub_userfile) do
     it { should exist }
   end
 
-  if grubfile.exist? && grub_userfile.exist?
+  if file(grubfile).exist? && file(grub_userfile).exist?
     password_set = file(grubfile).content.lines.select { |line| line.match(/password_pbkdf2\s+\w+\s+\$\{\w+\}/) }
 
     describe 'The GRUB bootloader superuser password' do
@@ -64,7 +63,7 @@ Confirm password:'
       end
 
       grub_envar = password_set.first.match(/\$\{(?<grub_pw_envar>\w+)\}/).captures.first
-      password_encrypted = file(grub_userfile).content.match(/#{grub_envar}=grub.pbkdf2/)
+      password_encrypted = file(grub_userfile).content.match?(/#{grub_envar}=grub.pbkdf2/)
       it "should be encrypted in the user config file (\'#{grub_userfile}\')" do
         expect(password_encrypted).to eq(true), "GRUB password environment variable not set to an encrypted value in \'#{grub_userfile}\'"
       end

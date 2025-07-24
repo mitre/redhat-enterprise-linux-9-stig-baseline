@@ -14,7 +14,6 @@ If the "rsyslog-gnutls" package is not installed, this is a finding.'
 
 $ sudo dnf install rsyslog-gnutls'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258141'
@@ -29,13 +28,13 @@ $ sudo dnf install rsyslog-gnutls'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe package('rsyslog-gnutls') do
       it { should be_installed }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

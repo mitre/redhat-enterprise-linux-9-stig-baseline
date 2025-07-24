@@ -20,7 +20,6 @@ Add or update the following line in the [main] section of the /etc/dnf/dnf.conf 
 
 gpgcheck=1'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61561r1044877_chk'
   tag severity: 'high'
   tag gid: 'V-257820'

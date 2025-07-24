@@ -1,8 +1,6 @@
 control 'SV-258121' do
   title 'RHEL 9 must use the common access card (CAC) smart card driver.'
-  desc 'Smart card login provides two-factor authentication stronger than that provided by a username and password combination. Smart cards leverage public key infrastructure to provide and verify credentials. Configuring the smart card driver in use by the organization helps to prevent users from using unauthorized smart cards.
-
-'
+  desc 'Smart card login provides two-factor authentication stronger than that provided by a username and password combination. Smart cards leverage public key infrastructure to provide and verify credentials. Configuring the smart card driver in use by the organization helps to prevent users from using unauthorized smart cards.'
   desc 'check', 'Verify that RHEL loads the CAC driver with the following command:
 
 $ sudo opensc-tool --get-conf-entry app:default:card_driver cac
@@ -18,7 +16,6 @@ Restart the pcscd service to apply the changes:
 
 $ sudo systemctl restart pcscd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61862r1045241_chk'
   tag severity: 'medium'
   tag gid: 'V-258121'

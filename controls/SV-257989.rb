@@ -29,7 +29,6 @@ Setting system policy to FIPS
 
 Note: Systemwide crypto policies are applied on application startup. It is recommended to restart the system for the change of policies to fully take place.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
@@ -48,8 +47,8 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
 
   approved_ciphers = input('approved_openssh_server_conf')['ciphers']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
-  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
   actual_ciphers = opensshserver_conf['ciphers'].join(',')
 

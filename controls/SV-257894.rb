@@ -12,7 +12,6 @@ If a value of "0" is not returned, this is a finding.'
 
 $ sudo chmod 0000 /etc/gshadow-'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61635r925667_chk'
   tag severity: 'medium'
   tag gid: 'V-257894'

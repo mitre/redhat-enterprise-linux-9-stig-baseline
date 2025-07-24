@@ -16,7 +16,6 @@ Add or modify the following line in the "/usr/lib/systemd/system/rescue.service"
 
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61870r926372_chk'
   tag severity: 'medium'
   tag gid: 'V-258129'

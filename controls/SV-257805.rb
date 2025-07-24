@@ -14,7 +14,6 @@ If the command does not return any output, or the lines are commented out, and u
 install can /bin/false
 blacklist can'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257805'
@@ -29,8 +28,16 @@ blacklist can'
     !virtualization.system.eql?('docker')
   }
 
-  describe kernel_module('can') do
-    it { should be_disabled }
-    it { should be_blacklisted }
+  if input('can_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  else
+
+    describe kernel_module('can') do
+      it { should be_disabled }
+      it { should be_blacklisted }
+    end
   end
 end

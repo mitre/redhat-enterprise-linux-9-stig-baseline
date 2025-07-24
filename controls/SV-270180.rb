@@ -40,7 +40,6 @@ Once it is determined the allow list is built correctly, set the "fapolicyd" to 
 
 permissive = 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-74213r1045180_chk'
   tag severity: 'medium'
   tag gid: 'V-270180'

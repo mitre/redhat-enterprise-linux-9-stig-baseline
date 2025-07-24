@@ -18,7 +18,6 @@ Set the sticky bit on all world-writable directories using the command, replace 
 
 $ chmod a+t [World-Writable Directory]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-257929'

@@ -20,7 +20,6 @@ If the "firewall" package is not installed, this is a finding.'
 
 $ sudo dnf install firewalld'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257935'
@@ -37,12 +36,12 @@ $ sudo dnf install firewalld'
 
   alternate_firewall_tool = input('alternate_firewall_tool')
 
-  if alternate_firewall_tool != ''
-    describe package(alternate_firewall_tool) do
+  if alternate_firewall_tool == ''
+    describe package('firewalld') do
       it { should be_installed }
     end
   else
-    describe package('firewalld') do
+    describe package(alternate_firewall_tool) do
       it { should be_installed }
     end
   end

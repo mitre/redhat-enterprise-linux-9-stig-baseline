@@ -14,7 +14,6 @@ Add or update the following line in the "/etc/security/pwquality.conf" file or a
 
 ocredit = -1'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000266-GPOS-00101'
   tag gid: 'V-258109'

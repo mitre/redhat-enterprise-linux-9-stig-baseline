@@ -32,7 +32,6 @@ Remove any configurations that conflict with the above from the following locati
 /etc/sudoers
 /etc/sudoers.d/'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-76549r1069439_chk'
   tag severity: 'medium'
   tag gid: 'V-272496'

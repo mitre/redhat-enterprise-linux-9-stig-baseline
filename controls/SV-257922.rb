@@ -14,7 +14,6 @@ Run the following command, replacing "[DIRECTORY]" with any library directory no
 
 $ sudo chown root [DIRECTORY]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61663r1044986_chk'
   tag severity: 'medium'
   tag gid: 'V-257922'

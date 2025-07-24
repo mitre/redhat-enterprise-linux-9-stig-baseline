@@ -16,7 +16,6 @@ Add or modify the following line in the "/etc/login.defs" file:
 
 PASS_MAX_DAYS 60'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000076-GPOS-00044'
   tag gid: 'V-258041'

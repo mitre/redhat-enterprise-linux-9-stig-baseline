@@ -20,7 +20,6 @@ If a wireless interface is configured and has not been documented and approved b
 
 $ nmcli radio all off'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000299-GPOS-00117'
   tag satisfies: ['SRG-OS-000299-GPOS-00117', 'SRG-OS-000300-GPOS-00118', 'SRG-OS-000481-GPOS-000481', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000481-GPOS-00481']

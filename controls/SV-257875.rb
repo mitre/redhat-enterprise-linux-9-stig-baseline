@@ -10,7 +10,6 @@ $ mount | grep /var/log/audit
 If the "/var/log/audit" file system is mounted without the "nosuid" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/var/log/audit" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257875'

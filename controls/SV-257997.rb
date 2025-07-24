@@ -15,7 +15,6 @@ If the "/etc/ssh/sshd_config" file or "/etc/ssh/sshd_config.d" or any files in t
 
 $ sudo chgrp root /etc/ssh/sshd_config /etc/ssh/sshd_config.d'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61738r1045056_chk'
   tag severity: 'medium'
   tag gid: 'V-257997'

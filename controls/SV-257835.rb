@@ -14,7 +14,6 @@ If the "tftp-server" package is installed, this is a finding.'
 
 $ sudo dnf remove tftp-server'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61576r1069367_chk'
   tag severity: 'high'
   tag gid: 'V-257835'

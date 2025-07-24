@@ -47,7 +47,6 @@ Run the following command to update the database:
 
 $ sudo dconf update)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-74207r1044829_chk'
   tag severity: 'medium'
   tag gid: 'V-270174'
@@ -60,7 +59,7 @@ $ sudo dconf update)
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
 
-  only_if('Control not applicable: running in a container or GDM not installed', impact: 0.0) do
+  only_if('Control not applicable within a container or when GDM is not installed', impact: 0.0) do
     !virtualization.system.eql?('docker') && command('rpm -q gdm').exit_status.zero?
   end
 

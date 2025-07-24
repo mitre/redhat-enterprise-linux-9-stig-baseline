@@ -1,8 +1,6 @@
 control 'SV-258015' do
   title 'RHEL 9 must prevent a user from overriding the disabling of the graphical user interface automount function.'
-  desc 'A nonprivileged account is any operating system account with authorizations of a nonprivileged user.
-
-'
+  desc 'A nonprivileged account is any operating system account with authorizations of a nonprivileged user.'
   desc 'check', %q(Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
 Verify RHEL 9 disables the ability of the user to override the graphical user interface automount setting.
@@ -32,7 +30,6 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61756r1045085_chk'
   tag severity: 'medium'
   tag gid: 'V-258015'
@@ -61,7 +58,7 @@ $ sudo dconf update'
 
     profile = command('grep system-db /etc/dconf/profile/user').stdout.strip.match(/:(\S+)$/)[1]
 
-    describe command("grep ^automount-open /etc/dconf/db/#{profile}.d/locks/*") do
+    describe command("grep automount-open /etc/dconf/db/#{profile}.d/locks/*") do
       its('stdout.strip') { should match(%r{^/org/gnome/desktop/media-handling/automount-open}) }
     end
   end

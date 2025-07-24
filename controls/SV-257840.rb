@@ -14,7 +14,6 @@ If the "nss-tools" package is not installed, this is a finding.'
 
 $ sudo dnf install nss-tools'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61581r925505_chk'
   tag severity: 'medium'
   tag gid: 'V-257840'

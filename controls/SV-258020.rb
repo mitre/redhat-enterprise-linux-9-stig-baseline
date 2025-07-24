@@ -2,9 +2,7 @@ control 'SV-258020' do
   title 'RHEL 9 must prevent a user from overriding the disabling of the graphical user smart card removal action.'
   desc 'A session lock is a temporary action taken when a user stops work and moves away from the immediate physical vicinity of the information system but does not want to log out because of the temporary nature of the absence.
 
-The session lock is implemented at the point where session activity can be determined. Rather than be forced to wait for a period of time to expire before the user session can be locked, RHEL 9 needs to provide users with the ability to manually invoke a session lock so users can secure their session if it is necessary to temporarily vacate the immediate physical vicinity.
-
-'
+The session lock is implemented at the point where session activity can be determined. Rather than be forced to wait for a period of time to expire before the user session can be locked, RHEL 9 needs to provide users with the ability to manually invoke a session lock so users can secure their session if it is necessary to temporarily vacate the immediate physical vicinity.'
   desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
 Verify RHEL 9 disables ability of the user to override the smart card removal action setting.
@@ -22,7 +20,6 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61761r1045093_chk'
   tag severity: 'medium'
   tag gid: 'V-258020'

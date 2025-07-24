@@ -12,7 +12,6 @@ If the value of the "admin_space_left" keyword is not set to 5 percent of the st
 
 admin_space_left  = 5%'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61899r926459_chk'
   tag severity: 'medium'
   tag gid: 'V-258158'

@@ -19,7 +19,6 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
 
     The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
@@ -35,13 +34,13 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe parse_config_file('/etc/audit/auditd.conf') do
       its('overflow_action') { should match(/syslog$|single$|halt$/i) }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

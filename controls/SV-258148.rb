@@ -4,9 +4,7 @@ control 'SV-258148' do
 
 Offloading is a common process in information systems with limited audit storage capacity.
 
-RHEL 9 installation media provides "rsyslogd", a system utility providing support for message logging. Support for both internet and Unix domain sockets enables this utility to support both local and remote logging. Coupling this utility with "gnutls" (a secure communications library implementing the SSL, TLS and DTLS protocols) creates a method to securely encrypt and offload auditing.
-
-'
+RHEL 9 installation media provides "rsyslogd", a system utility providing support for message logging. Support for both internet and Unix domain sockets enables this utility to support both local and remote logging. Coupling this utility with "gnutls" (a secure communications library implementing the SSL, TLS and DTLS protocols) creates a method to securely encrypt and offload auditing.'
   desc 'check', %q(Verify RHEL 9 uses the gtls driver to encrypt audit records offloaded onto a different system or media from the system being audited with the following command:
 
 $ grep -Ei 'DefaultNetStreamDriver\b|StreamDriver.Name' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
@@ -20,7 +18,6 @@ If the variable name "StreamDriver" is present in an omfwd statement block, this
 
 $DefaultNetstreamDriver gtls'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61889r1045291_chk'
   tag severity: 'medium'
   tag gid: 'V-258148'

@@ -16,7 +16,6 @@ Add the following line to the top of the /etc/security/limits.conf or in a singl
 
 * hard core 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257814'
@@ -32,27 +31,35 @@ Add the following line to the top of the /etc/security/limits.conf or in a singl
     !virtualization.system.eql?('docker')
   }
 
-  setting = 'core'
-  expected_value = input('core_dump_expected_value')
-
-  limits_files = command('ls /etc/security/limits.d/*.conf').stdout.strip.split
-  limits_files.append('/etc/security/limits.conf')
-
-  # make sure that at least one limits.conf file has the correct setting
-  globally_set = limits_files.any? { |lf| !limits_conf(lf).read_params['*'].nil? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
-
-  # make sure that no limits.conf file has a value that contradicts the global set
-  failing_files = limits_files.select { |lf|
-    limits_conf(lf).read_params.values.flatten(1).any? { |l|
-      l[1].eql?(setting) && !l[2].to_i.eql?(expected_value)
-    }
-  }
-  describe 'Limits files' do
-    it 'should disallow core dumps by default' do
-      expect(globally_set).to eq(true), "No correct global ('*') setting found"
+  if input('core_dumps_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
-    it 'should not have any conflicting settings' do
-      expect(failing_files).to be_empty, "Files with incorrect '#{setting}' settings:\n\t- #{failing_files.join("\n\t- ")}"
+  else
+
+    setting = 'core'
+    expected_value = input('core_dump_expected_value')
+
+    limits_files = command('ls /etc/security/limits.d/*.conf').stdout.strip.split
+    limits_files.append('/etc/security/limits.conf')
+
+    # make sure that at least one limits.conf file has the correct setting
+    globally_set = limits_files.any? { |lf| !limits_conf(lf).read_params['*'].nil? && limits_conf(lf).read_params['*'].include?(['hard', setting.to_s, expected_value.to_s]) }
+
+    # make sure that no limits.conf file has a value that contradicts the global set
+    failing_files = limits_files.select { |lf|
+      limits_conf(lf).read_params.values.flatten(1).any? { |l|
+        l[1].eql?(setting) && !l[2].to_i.eql?(expected_value)
+      }
+    }
+    describe 'Limits files' do
+      it 'should disallow core dumps by default' do
+        expect(globally_set).to eq(true), "No correct global ('*') setting found"
+      end
+      it 'should not have any conflicting settings' do
+        expect(failing_files).to be_empty, "Files with incorrect '#{setting}' settings:\n\t- #{failing_files.join("\n\t- ")}"
+      end
     end
   end
 end

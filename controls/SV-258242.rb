@@ -4,9 +4,7 @@ control 'SV-258242' do
 
 Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash.
 
-RHEL 9 incorporates system-wide crypto policies by default. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/ directory.
-
-'
+RHEL 9 incorporates system-wide crypto policies by default. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/ directory.'
   desc 'check', %q(Verify that BIND uses the system crypto policy with the following command:
 
 Note: If the "bind" package is not installed, this requirement is Not Applicable.
@@ -22,7 +20,6 @@ Add the following line to the "options" section in "/etc/named.conf":
 
 include "/etc/crypto-policies/back-ends/bind.config";'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61983r926711_chk'
   tag severity: 'medium'
   tag gid: 'V-258242'
@@ -39,14 +36,16 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
+  only_if('This control is Not Applicable since bind is not installed', impact: 0.0) {
+    package('bind').installed?
+  }
 
   describe file('/etc/named.conf') do
     it { should exist }
   end
 
   bind_grep = command('grep include /etc/named.conf').stdout.lines.map(&:strip)
-
-  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config$}i) }
+  bind_conf = bind_grep.any? { |line| line.match?(%r{/etc/crypto-policies/back-ends/bind.config}i) }
 
   describe 'Bind config file' do
     it 'should include system-wide crypto policies' do

@@ -12,7 +12,6 @@ If the "nfs-utils" package is installed, this is a finding.'
 
 $ sudo dnf remove nfs-utils'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61569r1044893_chk'
   tag severity: 'medium'
   tag gid: 'V-257828'

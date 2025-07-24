@@ -24,9 +24,8 @@ If a remote server is not configured, or the line is commented out, ask the syst
 If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to offload audit records onto a different system or media from the system being audited via TCP using rsyslog by specifying the remote logging server in "/etc/rsyslog.conf"" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
 
-*.* @@[remoteloggingserver]:[port]"'}
+*.* @@[remoteloggingserver]:[port]'}
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227']
@@ -42,13 +41,13 @@ If there is no evidence that the audit logs are being offloaded to another syste
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe command("grep @@ #{input('logging_conf_files').join(' ')}") do
       its('stdout') { should match(/^[^#]*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/) }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

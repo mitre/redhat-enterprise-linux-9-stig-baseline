@@ -20,7 +20,6 @@ Reload the daemon for this change to take effect.
 
 $ sudo systemctl daemon-reload'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257815'
@@ -36,14 +35,22 @@ $ sudo systemctl daemon-reload'
     !virtualization.system.eql?('docker')
   }
 
-  s = systemd_service('systemd-coredump.socket')
-
-  describe.one do
-    describe s do
-      its('params.LoadState') { should eq 'masked' }
+  if input('core_dumps_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
-    describe s do
-      its('params.LoadState') { should eq 'not-found' }
+  else
+
+    s = systemd_service('systemd-coredump.socket')
+
+    describe.one do
+      describe s do
+        its('params.LoadState') { should eq 'masked' }
+      end
+      describe s do
+        its('params.LoadState') { should eq 'not-found' }
+      end
     end
   end
 end

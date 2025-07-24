@@ -14,7 +14,6 @@ Run the following command, replacing "[FILE]" with any system command with a mod
 
 $ sudo chmod 755 [FILE]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257882'

@@ -12,7 +12,6 @@ $ sudo dnf reinstall -y openssh-server
 $ rpm --setugids openssh-server
 $ rpm --setperms openssh-server'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61740r1069357_chk'
   tag severity: 'medium'
   tag gid: 'V-257999'

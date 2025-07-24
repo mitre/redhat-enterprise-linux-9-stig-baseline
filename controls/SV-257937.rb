@@ -40,7 +40,6 @@ $ sudo firewall-cmd --permanent --zone=drop --change-interface=ens33
 Reload the firewall rules for changes to take effect:
 $ sudo firewall-cmd --reload'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
@@ -64,7 +63,7 @@ $ sudo firewall-cmd --reload'
     its('zone') { should_not be_empty }
   end
 
-  failing_zones = firewalld.zone.reject { |fz| firewalld.zone(fz).target == 'DROP' }
+  failing_zones = firewalld.zone.select { |fz| firewalld.zone(fz).target == 'DROP' }
 
   describe 'All firewall zones' do
     it 'should be configured to drop all incoming network packets unless explicitly accepted' do

@@ -27,7 +27,6 @@ $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 Reboot the system:
 $ sudo reboot'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61530r1044839_chk'
   tag severity: 'high'
   tag gid: 'V-257789'

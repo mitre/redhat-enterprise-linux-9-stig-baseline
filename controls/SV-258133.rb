@@ -26,7 +26,6 @@ Edit the file "/etc/sssd/sssd.conf" or a configuration file in "/etc/sssd/conf.d
 
 offline_credentials_expiration = 1'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000383-GPOS-00166'
   tag gid: 'V-258133'

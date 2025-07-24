@@ -14,7 +14,6 @@ tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
 If the "/home" file system is mounted without the "nodev" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/home" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61591r1044929_chk'
   tag severity: 'medium'
   tag gid: 'V-257850'

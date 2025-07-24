@@ -38,7 +38,6 @@ Next, update the context type of the nondefault faillock directory/subdirectorie
 
 $ sudo restorecon -R -v /var/log/faillock'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61821r1045160_chk'
   tag severity: 'medium'
   tag gid: 'V-258080'

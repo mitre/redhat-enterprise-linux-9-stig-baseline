@@ -1,8 +1,6 @@
 control 'SV-257984' do
   title 'RHEL 9 SSHD must not allow blank passwords.'
-  desc 'If an account has an empty password, anyone could log on and run commands with the privileges of that account. Accounts with empty passwords should never be used in operational environments.
-
-'
+  desc 'If an account has an empty password, anyone could log on and run commands with the privileges of that account. Accounts with empty passwords should never be used in operational environments.'
   desc 'check', %q(Verify that RHEL 9 remote access using SSH prevents logging on with a blank password with the following command:
 
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*permitemptypasswords'
@@ -18,7 +16,6 @@ Restart the SSH daemon for the settings to take effect:
 
 $ sudo systemctl restart sshd.service'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61725r1014847_chk'
   tag severity: 'high'
   tag gid: 'V-257984'

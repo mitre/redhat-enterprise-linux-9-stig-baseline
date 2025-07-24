@@ -18,7 +18,6 @@ Update the dconf system databases:
 
 $ sudo dconf update"
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61770r1045107_chk'
   tag severity: 'medium'
   tag gid: 'V-258029'

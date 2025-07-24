@@ -12,7 +12,6 @@ If "/etc/shadow" file does not have an owner of "root", this is a finding.'
 
 $ sudo chown root /etc/shadow'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61651r925715_chk'
   tag severity: 'medium'
   tag gid: 'V-257910'

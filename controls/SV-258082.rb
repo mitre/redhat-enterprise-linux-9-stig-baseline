@@ -14,7 +14,6 @@ If the "policycoreutils-python-utils" package is not installed, this is a findin
 
 $ sudo dnf install policycoreutils-python-utils'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61823r1045165_chk'
   tag severity: 'medium'
   tag gid: 'V-258082'

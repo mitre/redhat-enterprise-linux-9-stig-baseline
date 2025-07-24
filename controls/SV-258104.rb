@@ -18,7 +18,6 @@ Add the following line in "/etc/login.defs" (or modify the line to have the requ
 
 PASS_MIN_DAYS 1'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000075-GPOS-00043'
   tag gid: 'V-258104'

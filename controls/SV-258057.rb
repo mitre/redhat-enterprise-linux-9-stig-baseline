@@ -1,8 +1,6 @@
 control 'SV-258057' do
   title 'RHEL 9 must maintain an account lock until the locked account is released by an administrator.'
-  desc 'By limiting the number of failed logon attempts the risk of unauthorized system access via user password guessing, otherwise known as brute-forcing, is reduced. Limits are imposed by locking the account.
-
-'
+  desc 'By limiting the number of failed logon attempts the risk of unauthorized system access via user password guessing, otherwise known as brute-forcing, is reduced. Limits are imposed by locking the account.'
   desc 'check', 'Verify RHEL 9 is configured to lock an account until released by an administrator after three unsuccessful logon attempts with the command:
 
 $ sudo grep -w unlock_time /etc/security/faillock.conf
@@ -18,7 +16,6 @@ Edit the "/etc/security/faillock.conf" file as follows:
 
 unlock_time = 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61798r1045144_chk'
   tag severity: 'medium'
   tag gid: 'V-258057'

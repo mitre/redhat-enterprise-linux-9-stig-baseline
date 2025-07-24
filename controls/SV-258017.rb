@@ -1,8 +1,6 @@
 control 'SV-258017' do
   title 'RHEL 9 must prevent a user from overriding the disabling of the graphical user interface autorun function.'
-  desc 'Techniques used to address this include protocols using nonces (e.g., numbers generated for a specific one-time use) or challenges (e.g., TLS, WS_Security). Additional techniques include time-synchronous or challenge-response one-time authenticators.
-
-'
+  desc 'Techniques used to address this include protocols using nonces (e.g., numbers generated for a specific one-time use) or challenges (e.g., TLS, WS_Security). Additional techniques include time-synchronous or challenge-response one-time authenticators.'
   desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
 Verify RHEL 9 disables ability of the user to override the graphical user interface autorun setting.
@@ -24,7 +22,6 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61758r1045087_chk'
   tag severity: 'medium'
   tag gid: 'V-258017'

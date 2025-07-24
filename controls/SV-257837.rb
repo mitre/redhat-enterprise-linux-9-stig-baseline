@@ -18,7 +18,6 @@ Warning: Removal of the graphical user interface will immediately render it usel
 $ sudo dnf remove "xorg*"
 $ sudo systemctl set-default multi-user.target'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257837'

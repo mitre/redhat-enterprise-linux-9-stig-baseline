@@ -17,7 +17,6 @@ If any interactive user password hash does not begin with "$6$", this is a findi
   desc 'fix', 'Lock all interactive user accounts not using SHA-512 hashing
 until the passwords can be regenerated with SHA-512.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag gid: 'V-258231'

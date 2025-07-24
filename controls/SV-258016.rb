@@ -23,7 +23,6 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61757r926033_chk'
   tag severity: 'medium'
   tag gid: 'V-258016'
@@ -40,16 +39,24 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
-
-  if no_gui
+  if input('gui_autorun_required')
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
   else
-    describe command('gsettings get org.gnome.desktop.media-handling autorun-never') do
-      its('stdout.strip') { should cmp 'true' }
+
+    no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+
+    if no_gui
+      impact 0.0
+      describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
+        skip 'A GUI desktop is not installed, this control is Not Applicable.'
+      end
+    else
+      describe command('gsettings get org.gnome.desktop.media-handling autorun-never') do
+        its('stdout.strip') { should cmp 'true' }
+      end
     end
   end
 end

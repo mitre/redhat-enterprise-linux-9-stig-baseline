@@ -22,7 +22,6 @@ Add or update the following line in the "/etc/security/pwquality.conf" file or a
 
 minlen = 15'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-258107'

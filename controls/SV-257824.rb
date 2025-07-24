@@ -14,7 +14,6 @@ Edit the file /etc/dnf/dnf.conf by adding or editing the following line:
 
  clean_requirements_on_remove=True'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000437-GPOS-00194'
   tag gid: 'V-257824'

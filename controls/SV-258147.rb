@@ -24,7 +24,6 @@ If the variable name "StreamDriverAuthMode" is present in an omfwd statement blo
 
 $ActionSendStreamDriverMode 1'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
@@ -40,11 +39,7 @@ $ActionSendStreamDriverMode 1'
     !virtualization.system.eql?('docker')
   }
 
-  if input('alternative_logging_method') != ''
-    describe 'manual check' do
-      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
-    end
-  else
+  if input('alternative_logging_method') == ''
     describe 'rsyslog configuration' do
       subject {
         command("grep -i '^\$DefaultNetstreamDriver' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
@@ -57,6 +52,10 @@ $ActionSendStreamDriverMode 1'
         command("grep -i '^\$ActionSendStreamDriverMode' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match(/\$ActionSendStreamDriverMode\s+1/) }
+    end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end

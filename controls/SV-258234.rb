@@ -14,7 +14,6 @@ If the crypto-policies package is not installed, this is a finding.'
 
 $ sudo dnf -y install crypto-policies'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61975r1051248_chk'
   tag severity: 'medium'
   tag gid: 'V-258234'
@@ -25,7 +24,7 @@ $ sudo dnf -y install crypto-policies'
   tag satisfies: ['SRG-OS-000396-GPOS-00176', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174']
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
-  tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag nist: ['SC-13 b', 'MA-4 (6)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

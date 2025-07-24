@@ -50,7 +50,6 @@ Encrypting a partition in an already installed system is more difficult, because
 
 To encrypt an entire partition, dedicate a partition for encryption in the partition layout.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000405-GPOS-00184'
   tag satisfies: ['SRG-OS-000185-GPOS-00079', 'SRG-OS-000404-GPOS-00183', 'SRG-OS-000405-GPOS-00184']
@@ -77,7 +76,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   # TODO: This should really have a resource
   if input('data_at_rest_exempt') == true
     impact 0.0
-    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.')
+    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `exempt_data_at_rest` input.')
   elsif all_args.empty?
     # TODO: Determine if this is an NA vs and NR or even a pass
     describe_and_skip('Command blkid did not return and non-psuedo block devices.')

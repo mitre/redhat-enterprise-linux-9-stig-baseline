@@ -30,7 +30,6 @@ Setting system policy to FIPS
 
 Note: Systemwide crypto policies are applied on application startup. It is recommended to restart the system for the change of policies to fully take place.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-74211r1051241_chk'
   tag severity: 'medium'
   tag gid: 'V-270178'

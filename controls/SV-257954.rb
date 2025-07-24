@@ -1,8 +1,6 @@
 control 'SV-257954' do
   title 'RHEL 9 libreswan package must be installed.'
-  desc 'Providing the ability for remote users or systems to initiate a secure VPN connection protects information when it is transmitted over a wide area network.
-
-'
+  desc 'Providing the ability for remote users or systems to initiate a secure VPN connection protects information when it is transmitted over a wide area network.'
   desc 'check', 'Verify that RHEL 9 libreswan service package is installed.
 
 Check that the libreswan service package is installed with the following command:
@@ -18,7 +16,6 @@ If the "libreswan" package is not installed, this is a finding.'
 
 $ sudo dnf install libreswan'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61695r1045007_chk'
   tag severity: 'medium'
   tag gid: 'V-257954'

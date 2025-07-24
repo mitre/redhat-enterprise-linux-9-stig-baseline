@@ -16,7 +16,6 @@ If the "smtpd_client_restrictions" parameter contains any entries other than "pe
 
 $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'"
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257951'

@@ -16,7 +16,6 @@ Add the following line to the top of "/etc/pam.d/postlogin":
 
 session required pam_lastlog.so showfailed'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258076'

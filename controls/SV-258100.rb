@@ -2,9 +2,7 @@ control 'SV-258100' do
   title 'RHEL 9 system-auth must be configured to use a sufficient number of hashing rounds.'
   desc 'Passwords need to be protected at all times, and encryption is the standard method for protecting passwords. If passwords are not encrypted, they can be plainly read (i.e., clear text) and easily compromised. Passwords that are encrypted with a weak algorithm are no more protected than if they are kept in plain text.
 
-Using more hashing rounds makes password cracking attacks more difficult.
-
-'
+Using more hashing rounds makes password cracking attacks more difficult.'
   desc 'check', 'Verify the number of rounds for the password hashing algorithm is configured with the following command:
 
 $ sudo grep rounds /etc/pam.d/system-auth
@@ -20,7 +18,6 @@ password sufficient pam_unix.so sha512 rounds=100000
 
 Note: Running authselect will overwrite this value unless a custom authselect policy is created.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61841r1045199_chk'
   tag severity: 'medium'
   tag gid: 'V-258100'
@@ -38,7 +35,7 @@ Note: Running authselect will overwrite this value unless a custom authselect po
   expected_line = 'password sufficient pam_unix.so sha512'
   pam_auth_files = input('pam_auth_files')
 
-  describe pam(pam_auth_files['password-auth']) do
+  describe pam(pam_auth_files['system-auth']) do
     its('lines') { should match_pam_rule(expected_line).any_with_integer_arg('rounds', '>=', input('password_hash_rounds')) }
   end
 end

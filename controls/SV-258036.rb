@@ -18,7 +18,6 @@ If the system is virtual machine with no virtual or physical USB peripherals att
 
 $ sudo systemctl enable --now usbguard'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258036'

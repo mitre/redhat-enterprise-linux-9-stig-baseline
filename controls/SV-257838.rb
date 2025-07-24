@@ -17,7 +17,6 @@ If the "openssl-pkcs11" package is not installed, this is a finding.'
 
 $ sudo dnf install openssl-pkcs11'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000105-GPOS-00052'
   tag gid: 'V-257838'

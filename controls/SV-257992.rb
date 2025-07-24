@@ -18,7 +18,6 @@ Restart the SSH daemon for the settings to take effect:
 
 $ sudo systemctl restart sshd.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61733r952189_chk'
   tag severity: 'medium'
   tag gid: 'V-257992'

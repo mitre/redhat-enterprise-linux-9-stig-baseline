@@ -13,7 +13,6 @@ If the value for "CREATE_HOME" parameter is not set to "yes", the line is missin
 
 CREATE_HOME yes'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258043'

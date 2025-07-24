@@ -31,7 +31,6 @@ To mask the kdump service run the following command:
 
 $ sudo systemctl mask --now kdump'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61559r1044875_chk'
   tag severity: 'medium'
   tag gid: 'V-257818'

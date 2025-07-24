@@ -24,7 +24,6 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 
 GRUB_CMDLINE_LINUX="page_poison=1"'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag satisfies: ['SRG-OS-000134-GPOS-00068', 'SRG-OS-000433-GPOS-00192', 'SRG-OS-000480-GPOS-00227']

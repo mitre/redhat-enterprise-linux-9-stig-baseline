@@ -16,7 +16,6 @@ Add the following line to the "/etc/pam.d/password-auth" file (or modify the lin
 
 password required pam_pwquality.so'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000069-GPOS-00037'
   tag gid: 'V-258097'

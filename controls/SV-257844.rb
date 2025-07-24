@@ -10,7 +10,6 @@ $ mount | grep /tmp
 If a separate entry for "/tmp" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/tmp" path onto a separate file system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257844'

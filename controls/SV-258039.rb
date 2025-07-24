@@ -18,7 +18,6 @@ blacklist bluetooth
 
 Reboot the system for the settings to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-258039'
@@ -34,9 +33,17 @@ Reboot the system for the settings to take effect.'
   }
 
   if input('bluetooth_installed')
-    describe kernel_module('bluetooth') do
-      it { should be_disabled }
-      it { should be_blacklisted }
+    if input('bluetooth_required')
+      impact 0.0
+      describe 'N/A' do
+        skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+      end
+    else
+
+      describe kernel_module('bluetooth') do
+        it { should be_disabled }
+        it { should be_blacklisted }
+      end
     end
   else
     impact 0.0

@@ -16,7 +16,6 @@ If the "pcsc-lite" package is not installed, this is a finding.'
 
 $ sudo dnf install pcsc-lite'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61865r1045249_chk'
   tag severity: 'medium'
   tag gid: 'V-258124'

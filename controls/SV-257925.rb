@@ -24,7 +24,6 @@ $ sudo chgrp root [audit_tool]
 
 Replace "[audit_tool]" with each audit tool not group-owned by "root".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag satisfies: ['SRG-OS-000256-GPOS-00097', 'SRG-OS-000257-GPOS-00098', 'SRG-OS-000258-GPOS-00099']

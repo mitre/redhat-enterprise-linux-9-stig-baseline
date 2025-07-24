@@ -16,7 +16,6 @@ Add or change the following line in the "[defaults]" section of "/etc/libuser.co
 
 crypt_style = sha512'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61857r1045239_chk'
   tag severity: 'medium'
   tag gid: 'V-258116'
@@ -31,6 +30,6 @@ crypt_style = sha512'
   tag 'container'
 
   describe parse_config_file('/etc/libuser.conf') do
-    its('crypt_style') { should cmp 'sha512' }
+    its('defaults.crypt_style') { should cmp 'sha512' }
   end
 end

@@ -20,7 +20,6 @@ If the audit log directory is not owned by "root", this is a finding.)
 
 $ sudo chown root /var/log/audit'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']

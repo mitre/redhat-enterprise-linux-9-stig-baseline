@@ -1,8 +1,6 @@
 control 'SV-258075' do
   title 'RHEL 9 must define default permissions for the system default profile.'
-  desc 'The umask controls the default access mode assigned to newly created files. A umask of 077 limits new files to mode 600 or less permissive. Although umask can be represented as a four-digit number, the first digit representing special access modes is typically ignored or required to be "0". This requirement applies to the globally configured system defaults and the local interactive user defaults for each account on the system.
-
-'
+  desc 'The umask controls the default access mode assigned to newly created files. A umask of 077 limits new files to mode 600 or less permissive. Although umask can be represented as a four-digit number, the first digit representing special access modes is typically ignored or required to be "0". This requirement applies to the globally configured system defaults and the local interactive user defaults for each account on the system.'
   desc 'check', 'Verify the "umask" setting is configured correctly in the "/etc/profile" file with the following command:
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/profile" file, the Severity is raised to a CAT I.
@@ -18,7 +16,6 @@ Add or edit the lines for the "umask" parameter in the "/etc/profile" file to "0
 
 umask 077'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61816r926210_chk'
   tag severity: 'medium'
   tag gid: 'V-258075'
@@ -35,7 +32,7 @@ umask 077'
 
   file = '/etc/profile'
 
-  expected_umask = input('permissions_for_shells')[:profile_umask]
+  expected_umask = input('modes_for_shells')[:profile_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 

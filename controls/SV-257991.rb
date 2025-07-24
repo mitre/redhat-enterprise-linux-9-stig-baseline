@@ -30,7 +30,6 @@ Setting system policy to FIPS
 
 Note: Systemwide crypto policies are applied on application startup. It is recommended to restart the system for the change of policies to fully take place.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000250-GPOS-00093'
   tag satisfies: ['SRG-OS-000250-GPOS-00093', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174', 'SRG-OS-000125-GPOS-00065']
@@ -43,8 +42,15 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag 'host'
   tag 'container-conditional'
 
-  # NOTE: At time of writing, the STIG baseline calls for two different values for the MACs option in the openssh.config file.
-  # SV-257990 calls for one set of MACs and SV-257991 calls for a mutually exclusive set.
+  # NOTE: This requirement as written is mutually exclusive with SV-257990.
+  #
+  # The STIG baseline calls for two different values for the MACs option in the openssh.config file.
+  #
+  # We assume that the requirements for OpenSSH *server* should be checking the
+  # values in the opensshserver.conf file (as opposed to openssh.conf for client),
+  # and these tests has been written accordingly.
+  #
+  # This means that test logic may not match the STIG check text at this time.
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
     !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
@@ -52,7 +58,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
 
   approved_macs = input('approved_openssh_server_conf')['macs']
 
-  options = { 'assignment_regex': /^(\S+)\s+(\S+)$/ }
+  options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
   opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
 
   actual_macs = opensshserver_conf['macs'].join(',')

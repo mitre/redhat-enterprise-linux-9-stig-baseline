@@ -16,7 +16,6 @@ If "gpgcheck" is not set to "1" for all returned lines, this is a finding.'
 
 $ sudo sed -i 's/gpgcheck\s*=.*/gpgcheck=1/g' /etc/yum.repos.d/*)
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61563r1044879_chk'
   tag severity: 'high'
   tag gid: 'V-257822'

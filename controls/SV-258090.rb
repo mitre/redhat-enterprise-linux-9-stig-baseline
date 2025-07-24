@@ -20,7 +20,6 @@ If fapolicyd module is not active, this is a finding.'
 
 $ systemctl enable --now fapolicyd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000370-GPOS-00155'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']

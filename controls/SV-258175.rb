@@ -14,7 +14,6 @@ If the "audispd-plugins" package is not installed, this is a finding.'
 
 $ sudo dnf install audispd-plugins'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61916r1045309_chk'
   tag severity: 'medium'
   tag gid: 'V-258175'

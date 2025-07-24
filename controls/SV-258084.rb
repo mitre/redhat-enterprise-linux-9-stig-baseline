@@ -20,7 +20,6 @@ Add the following line to "/etc/sudoers" or a file in "/etc/sudoers.d":
 
 Defaults timestamp_timeout=0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag gid: 'V-258084'

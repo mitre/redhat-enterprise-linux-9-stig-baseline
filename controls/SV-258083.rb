@@ -14,7 +14,6 @@ If the "sudo" package is not installed, this is a finding.'
 
 $ sudo dnf install sudo'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61824r1045167_chk'
   tag severity: 'medium'
   tag gid: 'V-258083'

@@ -18,7 +18,6 @@ If the firewalld service is not active, this is a finding.'
 
 $ sudo systemctl enable --now firewalld'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257936'

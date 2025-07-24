@@ -12,7 +12,6 @@ If any output is returned, this is a finding."
 
 $ sudo grubby --update-kernel=ALL --remove-args="systemd.confirm_spawn"'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61529r925349_chk'
   tag severity: 'medium'
   tag gid: 'V-257788'

@@ -14,7 +14,6 @@ If the "subscription-manager" package is not installed, this is a finding.'
 
 $ sudo dnf install subscription-manager'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61566r1044887_chk'
   tag severity: 'medium'
   tag gid: 'V-257825'

@@ -26,7 +26,6 @@ $ sudo dnf -y reinstall gzip
 $ sudo rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
 [no output])
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61564r1051229_chk'
   tag severity: 'medium'
   tag gid: 'V-257823'

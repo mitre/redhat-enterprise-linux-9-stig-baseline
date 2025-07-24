@@ -12,7 +12,6 @@ If "/boot/grub2/grub.cfg" file does not have a group owner of "root", this is a 
 
 $ sudo chgrp root /boot/grub2/grub.cfg'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61531r925355_chk'
   tag severity: 'medium'
   tag gid: 'V-257790'
@@ -29,7 +28,7 @@ $ sudo chgrp root /boot/grub2/grub.cfg'
     !virtualization.system.eql?('docker')
   }
 
-  grubfile = file(input('grub_conf_path'))
+  grubfile = input('grub_conf_path')
 
   describe file(grubfile) do
     it { should exist }

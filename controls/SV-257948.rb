@@ -29,7 +29,6 @@ $ nmcli connection modify [connection name] ipv4.dns [name server 1],[name serve
 	
 Replace [name server 1] and [name server 2] with the IPs of two different DNS resolvers. Replace [connection name] with a valid NetworkManager connection name on the system. Replace ipv4 with ipv6 if IPv6 DNS servers are used.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257948'
@@ -59,8 +58,7 @@ Replace [name server 1] and [name server 2] with the IPs of two different DNS re
     end
   end
 
-  nameservers = parse_config_file('/etc/resolv.conf',
-                                  comment_char: '#').params.keys.grep(/nameserver/)
+  nameservers = parse_config_file('/etc/resolv.conf', comment_char: '#').params.keys.grep(/nameserver/)
 
   if dns_in_host_line
     describe "The system's nameservers: #{nameservers}" do

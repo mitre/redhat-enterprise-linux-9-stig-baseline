@@ -12,7 +12,6 @@ If the rsyslog service is not active, this is a finding.'
 
 $ sudo systemctl enable --now rsyslog'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258142'

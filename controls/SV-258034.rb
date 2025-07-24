@@ -15,7 +15,6 @@ If the command does not return any output, or either line is commented out, and 
 install usb-storage /bin/false
 blacklist usb-storage'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag satisfies: ['SRG-OS-000114-GPOS-00059', 'SRG-OS-000378-GPOS-00163', 'SRG-OS-000480-GPOS-00227']

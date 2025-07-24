@@ -1,8 +1,6 @@
 control 'SV-258216' do
   title 'Successful/unsuccessful uses of the umount2 system call in RHEL 9 must generate an audit record.'
-  desc 'The changing of file permissions could indicate that a user is attempting to gain access to information that would otherwise be disallowed. Auditing DAC modifications can facilitate the identification of patterns of abuse among both authorized and unauthorized users.
-
-'
+  desc 'The changing of file permissions could indicate that a user is attempting to gain access to information that would otherwise be disallowed. Auditing DAC modifications can facilitate the identification of patterns of abuse among both authorized and unauthorized users.'
   desc 'check', 'To determine if the system is configured to audit calls to the umount2 system call, run the following command:
 
 $ sudo auditctl -l | grep umount2
@@ -20,7 +18,6 @@ To load the rules to the kernel immediately, use the following command:
 
 $ sudo augenrules --load'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61957r1045431_chk'
   tag severity: 'medium'
   tag gid: 'V-258216'
@@ -52,7 +49,7 @@ $ sudo augenrules --load'
         else
           expect(audit_rule.arch.uniq).to cmp 'b32'
         end
-        expect(audit_rule.fields.flatten).to include('uid!=euid', 'gid!=egid', 'euid=0', 'egid=0')
+        expect(audit_rule.fields.flatten).to include('auid>=1000', 'auid!=-1')
         expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_syscall])
       end
     end

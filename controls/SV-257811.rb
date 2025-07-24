@@ -1,8 +1,6 @@
 control 'SV-257811' do
   title 'RHEL 9 must restrict usage of ptrace to descendant processes.'
-  desc 'Unrestricted usage of ptrace allows compromised binaries to run ptrace on other processes of the user. Like this, the attacker can steal sensitive information from the target processes (e.g., SSH sessions, web browser, etc.) without any additional assistance from the user (i.e., without resorting to phishing).
-
-'
+  desc 'Unrestricted usage of ptrace allows compromised binaries to run ptrace on other processes of the user. Like this, the attacker can steal sensitive information from the target processes (e.g., SSH sessions, web browser, etc.) without any additional assistance from the user (i.e., without resorting to phishing).'
   desc 'check', %q(Verify RHEL 9 restricts the usage of ptrace to descendant processes with the following commands:
 
 $ sysctl kernel.yama.ptrace_scope
@@ -30,7 +28,6 @@ The system configuration files must be reloaded for the changes to take effect. 
 
 $ sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61552r1044870_chk'
   tag severity: 'medium'
   tag gid: 'V-257811'

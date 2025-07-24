@@ -20,7 +20,6 @@ Then enable the rngd service run the following command:
 
 $ sudo systemctl enable --now rngd'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257782'

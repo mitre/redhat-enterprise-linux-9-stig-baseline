@@ -30,7 +30,6 @@ Run the following command to update the database:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000028-GPOS-00009'
   tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227', 'SRG-OS-000028-GPOS-00009', 'SRG-OS-000030-GPOS-00011']
@@ -48,7 +47,7 @@ $ sudo dconf update'
 
   if package('gnome-desktop3').installed?
     describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
-      its('stdout.strip') { should match %r(/org/gnome/desktop/screensaver/lock-enabled) }
+      its('stdout.strip') { should match %r{/org/gnome/desktop/screensaver/lock-enabled} }
     end
   else
     impact 0.0

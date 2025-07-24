@@ -23,7 +23,6 @@ If the system is in noncompliance with the organizational patching policy, this 
 
 $ sudo dnf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257778'

@@ -16,7 +16,6 @@ Add the following line to "/etc/ipsec.conf":
 
 include /etc/crypto-policies/back-ends/libreswan.config'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61973r926681_chk'
   tag severity: 'medium'
   tag gid: 'V-258232'

@@ -14,7 +14,6 @@ If the "sha512" rule is not being used on all uncommented selection lines in the
 
 If AIDE is installed, ensure the "sha512" rule is present on all uncommented file and directory selection lists. Exclude any log files, or files expected to change frequently, to reduce unnecessary notifications.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61877r1045268_chk'
   tag severity: 'medium'
   tag gid: 'V-258136'
@@ -35,7 +34,7 @@ If AIDE is installed, ensure the "sha512" rule is present on all uncommented fil
 
   if file_integrity_tool == 'aide'
     describe parse_config_file('/etc/aide.conf') do
-      its('ALL') { should match(/sha512/) }
+      its('All') { should match(/sha512/) }
     end
   else
     describe 'Manual Review' do

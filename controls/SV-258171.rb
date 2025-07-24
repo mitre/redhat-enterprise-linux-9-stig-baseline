@@ -21,7 +21,6 @@ commands:
     $ sudo chmod 0640 /etc/audit/rules.d/[customrulesfile].rules
     $ sudo chmod 0640 /etc/audit/auditd.conf'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000063-GPOS-00032'
   tag gid: 'V-258171'

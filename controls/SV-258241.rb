@@ -73,7 +73,6 @@ Note: If additional subpolicies are being employed, they should be added to the 
 To make the cryptographic settings effective for already running services and applications, restart the system:
 $ sudo reboot'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61982r1051257_chk'
   tag severity: 'medium'
   tag gid: 'V-258241'
@@ -84,7 +83,7 @@ $ sudo reboot'
   tag satisfies: ['SRG-OS-000396-GPOS-00176', 'SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174']
   tag 'documentable'
   tag cci: ['CCI-002450', 'CCI-002890', 'CCI-003123']
-  tag nist: ['SC-13 b', 'MA-4 (6)', 'MA-4 (6)']
+  tag nist: ['SC-13 b', 'MA-4 (6)']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {

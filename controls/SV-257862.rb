@@ -12,7 +12,6 @@ $ mount | grep '\s/boot/efi\s'
 If the /boot/efi file system does not have the "nosuid" option set, this is a finding.)
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/boot/efi" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257862'

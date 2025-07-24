@@ -12,7 +12,6 @@ tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
 If the "/home" file system is mounted without the "noexec" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/home" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257852'

@@ -26,7 +26,6 @@ Run the following command to update the database:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012', 'SRG-OS-000480-GPOS-00227']
@@ -52,7 +51,7 @@ $ sudo dconf update'
   else
     describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
       it 'checks if idle delay is set' do
-        expect(subject.stdout.strip).to match(%r(/org/gnome/desktop/session/idle-delay)), 'The idle delay is not set. Please ensure it is set.'
+        expect(subject.stdout.strip).to match(%r{/org/gnome/desktop/session/idle-delay}), 'The idle delay is not set. Please ensure it is set.'
       end
     end
   end

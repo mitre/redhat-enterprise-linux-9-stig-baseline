@@ -12,7 +12,6 @@ If the command has any output, then a dconf database needs to be updated, and th
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61769r926069_chk'
   tag severity: 'medium'
   tag gid: 'V-258028'

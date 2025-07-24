@@ -16,7 +16,6 @@ Create a symlink pointing to system crypto policy in the Kerberos configuration 
 
 $ sudo ln -s /etc/crypto-policies/back-ends/krb5.config /usr/share/crypto-policies/FIPS/krb5.txt'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61978r1051254_chk'
   tag severity: 'medium'
   tag gid: 'V-258237'

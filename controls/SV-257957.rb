@@ -2,9 +2,7 @@ control 'SV-257957' do
   title 'RHEL 9 must be configured to use TCP syncookies.'
   desc 'Denial of service (DoS) is a condition when a resource is not available for legitimate users. When this occurs, the organization either cannot accomplish its mission or must operate at degraded capacity.
 
-Managing excess capacity ensures that sufficient capacity is available to counter flooding attacks. Employing increased capacity and service redundancy may reduce the susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning.
-
-'
+Managing excess capacity ensures that sufficient capacity is available to counter flooding attacks. Employing increased capacity and service redundancy may reduce the susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning.'
   desc 'check', %q(Verify RHEL 9 is configured to use IPv4 TCP syncookies.
 
 Determine if syncookies are used with the following command:
@@ -31,7 +29,6 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61698r942982_chk'
   tag severity: 'medium'
   tag gid: 'V-257957'
@@ -53,22 +50,29 @@ $ sudo sysctl --system'
   value = 1
   regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
-  describe kernel_parameter(parameter) do
-    its('value') { should eq value }
-  end
-
-  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
-
-  correct_result = search_results.any? { |line| line.match(regexp) }
-  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
-
-  describe 'Kernel config files' do
-    it "should configure '#{parameter}'" do
-      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+  if input('ipv4_enabled') == false
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
     end
-    unless incorrect_results.nil?
-      it 'should not have incorrect or conflicting setting(s) in the config files' do
-        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+  else
+    describe kernel_parameter(parameter) do
+      its('value') { should eq value }
+    end
+
+    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+    correct_result = search_results.any? { |line| line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+    describe 'Kernel config files' do
+      it "should configure '#{parameter}'" do
+        expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+      end
+      unless incorrect_results.nil?
+        it 'should not have incorrect or conflicting setting(s) in the config files' do
+          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+        end
       end
     end
   end

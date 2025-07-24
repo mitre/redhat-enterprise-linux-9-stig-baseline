@@ -23,7 +23,6 @@ file:
 
     $ sudo systemctl daemon-reload'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag gid: 'V-257784'

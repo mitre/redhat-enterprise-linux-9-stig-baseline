@@ -12,7 +12,6 @@ If any files on the system do not have an assigned group, this is a finding."
 
 $ sudo chgrp <group> <file>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257930'

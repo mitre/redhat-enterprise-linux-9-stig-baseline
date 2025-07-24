@@ -28,7 +28,6 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61711r1045010_chk'
   tag severity: 'medium'
   tag gid: 'V-257970'
@@ -49,6 +48,11 @@ $ sudo sysctl --system'
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  elsif input('ipv4_enabled') == false
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
     end
   else
 

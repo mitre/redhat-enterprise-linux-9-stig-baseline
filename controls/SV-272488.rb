@@ -16,7 +16,6 @@ If the "postfix" package is not installed, this is a finding.'
  
 $ sudo dnf install postfix'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-76542r1082176_chk'
   tag severity: 'medium'
   tag gid: 'V-272488'

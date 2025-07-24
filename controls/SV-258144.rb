@@ -18,7 +18,6 @@ The "rsyslog" service must be restarted for the changes to take effect with the 
 
 $ sudo systemctl restart rsyslog.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag gid: 'V-258144'

@@ -18,7 +18,6 @@ If any crontab is not group owned by root, this is a finding.'
 
 $ sudo chgrp root [cron config file]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61668r925766_chk'
   tag severity: 'medium'
   tag gid: 'V-257927'

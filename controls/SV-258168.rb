@@ -14,7 +14,6 @@ freq = 100
 
 The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61909r943022_chk'
   tag severity: 'medium'
   tag gid: 'V-258168'

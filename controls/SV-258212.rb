@@ -16,7 +16,6 @@ To load the rules to the kernel immediately, use the following command:
 
 $ sudo augenrules --load'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61953r1045419_chk'
   tag severity: 'medium'
   tag gid: 'V-258212'

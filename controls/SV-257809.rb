@@ -23,7 +23,6 @@ Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-257809'

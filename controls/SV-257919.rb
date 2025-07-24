@@ -15,7 +15,6 @@ file not group-owned by "root" or a required system account.
 
     $ sudo chgrp root [FILE]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257919'

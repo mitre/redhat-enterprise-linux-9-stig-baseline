@@ -14,7 +14,6 @@ If the pcscd socket is not active, this is a finding.'
 
 $ sudo systemctl enable --now pcscd.socket'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61866r1045251_chk'
   tag severity: 'medium'
   tag gid: 'V-258125'

@@ -12,7 +12,6 @@ If the "/etc/audit/" directory does not have an owner of "root", this is a findi
 
 $ sudo chown root /etc/audit/'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-74208r1044962_chk'
   tag severity: 'medium'
   tag gid: 'V-270175'

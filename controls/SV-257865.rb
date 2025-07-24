@@ -10,7 +10,6 @@ tmpfs on /dev/shm type tmpfs (rw,nodev,nosuid,noexec,seclabel)
 If the /dev/shm file system is mounted without the "nosuid" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/dev/shm" file system.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257865'

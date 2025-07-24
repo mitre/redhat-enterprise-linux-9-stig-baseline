@@ -12,7 +12,6 @@ If "/etc/audit/auditd.conf" does not have a mode of "0640", this is a finding.'
 
 $ sudo chmod 0640 /etc/audit/auditd.conf'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61913r926501_chk'
   tag severity: 'medium'
   tag gid: 'V-258172'

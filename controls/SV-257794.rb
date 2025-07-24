@@ -25,7 +25,6 @@ $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 Reboot the system:
 $ sudo reboot'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'
   tag satisfies: ['SRG-OS-000134-GPOS-00068', 'SRG-OS-000433-GPOS-00192']

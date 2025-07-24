@@ -17,7 +17,6 @@ Note: The example will be for the user "wadea".
 
 $ sudo chmod 0750 /home/wadea)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257890'

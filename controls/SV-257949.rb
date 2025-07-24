@@ -20,7 +20,6 @@ NetworkManager must be reloaded for the change to take effect.
 
 $ sudo systemctl reload NetworkManager'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61690r1014840_chk'
   tag severity: 'medium'
   tag gid: 'V-257949'
@@ -43,8 +42,7 @@ $ sudo systemctl reload NetworkManager'
       end
     end
   else
-    describe ini(network_manager) do
-      its('main.dns') { should exist }
+    describe ini({ content: network_manager.stdout.strip }) do
       its('main.dns') { should be_in ['none', 'default'] }
     end
   end

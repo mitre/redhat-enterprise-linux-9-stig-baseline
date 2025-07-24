@@ -10,7 +10,6 @@ UUID=fba5000f-2ffa-4417-90eb-8c54ae74a32f on /home type ext4 (rw,nodev,nosuid,no
 If a separate entry for "/home" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/home" directory onto a separate file system/partition.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257843'
@@ -29,7 +28,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
   root_device = etc_fstab.where { mount_point == '/' }.device_name
 
-  if input('separate_filesystem_exempt')
+  if input('exempt_separate_filesystem')
     impact 0.0
     describe 'This system is not required to have separate filesystems for each mount point' do
       skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'

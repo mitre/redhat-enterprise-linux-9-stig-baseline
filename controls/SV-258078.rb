@@ -36,7 +36,6 @@ Edit the file "/etc/selinux/config" and add or modify the following line:
 
 A reboot is required for the changes to take effect.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag gid: 'V-258078'

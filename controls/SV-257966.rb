@@ -30,7 +30,6 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257966'
@@ -49,22 +48,29 @@ $ sudo sysctl --system'
   value = 1
   regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
 
-  describe kernel_parameter(parameter) do
-    its('value') { should eq value }
-  end
-
-  search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
-
-  correct_result = search_results.any? { |line| line.match(regexp) }
-  incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
-
-  describe 'Kernel config files' do
-    it "should configure '#{parameter}'" do
-      expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+  if input('ipv4_enabled') == false
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
     end
-    unless incorrect_results.nil?
-      it 'should not have incorrect or conflicting setting(s) in the config files' do
-        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+  else
+    describe kernel_parameter(parameter) do
+      its('value') { should eq value }
+    end
+
+    search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
+
+    correct_result = search_results.any? { |line| line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+
+    describe 'Kernel config files' do
+      it "should configure '#{parameter}'" do
+        expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
+      end
+      unless incorrect_results.nil?
+        it 'should not have incorrect or conflicting setting(s) in the config files' do
+          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
+        end
       end
     end
   end

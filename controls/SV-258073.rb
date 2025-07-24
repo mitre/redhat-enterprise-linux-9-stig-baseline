@@ -1,8 +1,6 @@
 control 'SV-258073' do
   title 'RHEL 9 must define default permissions for the c shell.'
-  desc 'The umask controls the default access mode assigned to newly created files. A umask of 077 limits new files to mode 600 or less permissive. Although umask can be represented as a four-digit number, the first digit representing special access modes is typically ignored or required to be "0". This requirement applies to the globally configured system defaults and the local interactive user defaults for each account on the system.
-
-'
+  desc 'The umask controls the default access mode assigned to newly created files. A umask of 077 limits new files to mode 600 or less permissive. Although umask can be represented as a four-digit number, the first digit representing special access modes is typically ignored or required to be "0". This requirement applies to the globally configured system defaults and the local interactive user defaults for each account on the system.'
   desc 'check', 'Verify the "umask" setting is configured correctly in the "/etc/csh.cshrc" file with the following command:
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/csh.cshrc" file, the Severity is raised to a CAT I.
@@ -18,7 +16,6 @@ Add or edit the lines for the "umask" parameter in the "/etc/csh.cshrc" file to 
 
 umask 077'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61814r1045156_chk'
   tag severity: 'medium'
   tag gid: 'V-258073'
@@ -35,7 +32,7 @@ umask 077'
 
   file = '/etc/csh.cshrc'
 
-  expected_umask = input('permissions_for_shells')[:cshrc_umask]
+  expected_umask = input('modes_for_shells')[:cshrc_umask]
 
   umask_check = command("grep umask #{file}").stdout.strip.match(/^umask\s+(?<umask>\d+)$/)
 

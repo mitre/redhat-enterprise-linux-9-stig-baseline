@@ -19,7 +19,6 @@ $ sudo chown wadea /home/wadea
 $ sudo chgrp users /home/wadea
 $ sudo chmod 0750 /home/wadea'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258052'

@@ -17,7 +17,6 @@ Add or edit the lines for the "UMASK" parameter in the "/etc/login.defs" file to
 
 UMASK 077'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag gid: 'V-258074'
@@ -29,9 +28,9 @@ UMASK 077'
   tag 'host'
   tag 'container'
 
-  permissions_for_shells = input('permissions_for_shells')
+  modes_for_shells = input('modes_for_shells')
 
   describe login_defs do
-    its('UMASK') { should cmp permissions_for_shells['default_umask'] }
+    its('UMASK') { should cmp modes_for_shells['default_umask'] }
   end
 end

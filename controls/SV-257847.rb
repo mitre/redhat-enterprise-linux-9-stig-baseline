@@ -13,7 +13,6 @@ Note: Options displayed for mount may differ.
 If no line is returned, this is a finding.'
   desc 'fix', 'Migrate the system audit data path onto a separate file system.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag gid: 'V-257847'

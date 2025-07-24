@@ -12,7 +12,6 @@ If "/etc/passwd-" file does not have a group owner of "root", this is a finding.
 
 $ sudo chgrp root /etc/passwd-'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61650r925712_chk'
   tag severity: 'medium'
   tag gid: 'V-257909'

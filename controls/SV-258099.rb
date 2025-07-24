@@ -2,9 +2,7 @@ control 'SV-258099' do
   title 'RHEL 9 password-auth must be configured to use a sufficient number of hashing rounds.'
   desc 'Passwords need to be protected at all times, and encryption is the standard method for protecting passwords. If passwords are not encrypted, they can be plainly read (i.e., clear text) and easily compromised. Passwords that are encrypted with a weak algorithm are no more protected than if they are kept in plain text.
 
-Using more hashing rounds makes password cracking attacks more difficult.
-
-'
+Using more hashing rounds makes password cracking attacks more difficult.'
   desc 'check', 'Verify the number of rounds for the password hashing algorithm is configured with the following command:
 
 $ grep rounds /etc/pam.d/password-auth
@@ -20,7 +18,6 @@ password sufficient pam_unix.so sha512 rounds=100000
 
 Note: Running authselect will overwrite this value unless a custom authselect policy is created.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61840r1045196_chk'
   tag severity: 'medium'
   tag gid: 'V-258099'

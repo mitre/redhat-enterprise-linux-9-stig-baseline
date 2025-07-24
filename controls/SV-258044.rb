@@ -24,7 +24,6 @@ If any local interactive user initialization files are found to have a umask sta
 
 If the account is for an application, the requirement for a umask less restrictive than "077" can be documented with the information system security officer, but the user agreement for access to the account must specify that the local interactive user must log on to their account first and then switch the user to the application account with the correct option to gain the account's environment variables.)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258044'
@@ -40,7 +39,7 @@ If the account is for an application, the requirement for a umask less restricti
   }
 
   exempt_home_users = input('exempt_home_users')
-  expected_mode = input('permissions_for_shells')['default_umask']
+  expected_mode = input('modes_for_shells')['default_umask']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 

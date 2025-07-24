@@ -14,7 +14,6 @@ Add or modify the following line in /etc/systemd/coredump.conf:
 
 Storage=none'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257813'
@@ -30,7 +29,15 @@ Storage=none'
     !virtualization.system.eql?('docker')
   }
 
-  describe parse_config_file('/etc/systemd/coredump.conf') do
-    its('Coredump.Storage') { should cmp 'none' }
+  if input('storing_core_dumps_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  else
+
+    describe parse_config_file('/etc/systemd/coredump.conf') do
+      its('Coredump.Storage') { should cmp 'none' }
+    end
   end
 end

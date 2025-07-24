@@ -16,7 +16,6 @@ If the "opensc" package is not installed, this is a finding.'
 
 $ sudo dnf install opensc'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61867r1045254_chk'
   tag severity: 'medium'
   tag gid: 'V-258126'

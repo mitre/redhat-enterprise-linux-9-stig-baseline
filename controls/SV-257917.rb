@@ -14,7 +14,6 @@ If "/var/log/messages" does not have a group owner of "root", this is a finding.
 
 $ sudo chgrp root /var/log/messages'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257917'

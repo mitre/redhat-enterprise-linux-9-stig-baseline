@@ -12,7 +12,6 @@ If the "rsh-server" package is installed, this is a finding.'
 
 $ sudo dnf remove rsh-server'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag satisfies: ['SRG-OS-000095-GPOS-00049', 'SRG-OS-000074-GPOS-00042']

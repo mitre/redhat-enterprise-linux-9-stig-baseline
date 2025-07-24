@@ -12,7 +12,6 @@ $ mount | grep /var
 If the "/var" file system is mounted without the "nodev" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/var" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61610r925592_chk'
   tag severity: 'medium'
   tag gid: 'V-257869'

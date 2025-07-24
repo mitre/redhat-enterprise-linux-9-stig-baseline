@@ -16,7 +16,6 @@ The autofs service can be disabled with the following command:
 
 $ sudo systemctl mask --now autofs.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag gid: 'V-257849'

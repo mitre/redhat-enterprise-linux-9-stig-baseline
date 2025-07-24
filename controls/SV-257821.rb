@@ -20,7 +20,6 @@ Add or update the following line in the [main] section of the /etc/dnf/dnf.conf 
 
 localpkg_gpgcheck=1'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag gid: 'V-257821'

@@ -14,7 +14,6 @@ If the "ftp" package is installed, this is a finding.'
 
 $ sudo dnf remove vsftpd'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000074-GPOS-00042'
   tag gid: 'V-257826'

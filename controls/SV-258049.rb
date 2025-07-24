@@ -22,7 +22,6 @@ $ sudo useradd -D -f 35
 
 The recommendation is 35 days, but a lower value is acceptable.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000118-GPOS-00060'
   tag gid: 'V-258049'
