@@ -33,7 +33,15 @@ $ sudo systemctl restart sshd.service'
     !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
   }
 
-  describe sshd_config do
-    its('X11Forwarding') { should cmp 'no' }
+  if input('x11_forwarding_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  else
+
+    describe sshd_config do
+      its('X11Forwarding') { should cmp 'no' }
+    end
   end
 end

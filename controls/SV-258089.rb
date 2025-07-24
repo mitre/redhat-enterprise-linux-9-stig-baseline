@@ -37,14 +37,14 @@ $ sudo dnf install fapolicyd'
     !virtualization.system.eql?('docker')
   }
 
-  if !input('use_fapolicyd')
+  if input('use_fapolicyd')
+    describe package('fapolicyd') do
+      it { should be_installed }
+    end
+  else
     impact 0.0
     describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
       skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
-    end
-  else
-    describe package('fapolicyd') do
-      it { should be_installed }
     end
   end
 end

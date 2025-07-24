@@ -47,6 +47,11 @@ $ sudo dconf update'
     describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
+  elsif input('gui_automount_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
   else
     describe command('gsettings get org.gnome.desktop.media-handling automount-open') do
       its('stdout.strip') { should cmp 'false' }

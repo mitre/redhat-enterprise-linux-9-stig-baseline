@@ -48,6 +48,11 @@ $ sudo sysctl --system'
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
+  elsif input('ipv4_enabled') == false
+    impact 0.0
+    describe 'IPv4 is disabled on the system, this requirement is Not Applicable.' do
+      skip 'IPv4 is disabled on the system, this requirement is Not Applicable.'
+    end
   else
 
     parameter = 'net.ipv4.conf.default.send_redirects'

@@ -34,7 +34,7 @@ If AIDE is installed, ensure the "sha512" rule is present on all uncommented fil
 
   if file_integrity_tool == 'aide'
     describe parse_config_file('/etc/aide.conf') do
-      its('ALL') { should match(/sha512/) }
+      its('All') { should match(/sha512/) }
     end
   else
     describe 'Manual Review' do

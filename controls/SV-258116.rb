@@ -30,6 +30,6 @@ crypt_style = sha512'
   tag 'container'
 
   describe parse_config_file('/etc/libuser.conf') do
-    its('crypt_style') { should cmp 'sha512' }
+    its('defaults.crypt_style') { should cmp 'sha512' }
   end
 end

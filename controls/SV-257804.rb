@@ -28,8 +28,16 @@ blacklist atm'
     !virtualization.system.eql?('docker')
   }
 
-  describe kernel_module('atm') do
-    it { should be_disabled }
-    it { should be_blacklisted }
+  if input('atm_required')
+    impact 0.0
+    describe 'N/A' do
+      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
+    end
+  else
+
+    describe kernel_module('atm') do
+      it { should be_disabled }
+      it { should be_blacklisted }
+    end
   end
 end

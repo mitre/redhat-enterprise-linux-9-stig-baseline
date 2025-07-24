@@ -39,7 +39,7 @@ If the account is for an application, the requirement for a umask less restricti
   }
 
   exempt_home_users = input('exempt_home_users')
-  expected_mode = input('permissions_for_shells')['default_umask']
+  expected_mode = input('modes_for_shells')['default_umask']
   uid_min = login_defs.read_params['UID_MIN'].to_i
   uid_min = 1000 if uid_min.nil?
 

@@ -46,10 +46,11 @@ $ sudo dnf -y reinstall openssh'
     it { should exist }
   end
 
-  sshd_grep = command('grep Include /etc/ssh/sshd_config  /etc/ssh/sshd_config.d/*').stdout.lines.map(&:strip)
+  # NOTE: -s to supress if no files
+  sshd_grep = command('grep -s Include /etc/ssh/sshd_config  /etc/ssh/sshd_config.d/*').stdout.lines.map(&:strip)
 
-  star_dot_conf = sshd_grep.any? { |line| line.match?(%r{Include /etc/ssh/sshd_config.d/\*\.conf$}i) }
-  opensshserver_config = sshd_grep.any? { |line| line.match?(%r{Include /etc/crypto-policies/back-ends/opensshserver\.config$}i) }
+  star_dot_conf = sshd_grep.any? { |line| line.match?(%r{Include /etc/ssh/sshd_config.d/\*\.conf}i) }
+  opensshserver_config = sshd_grep.any? { |line| line.match?(%r{Include /etc/crypto-policies/back-ends/opensshserver\.config}i) }
 
   describe 'SSHD config files' do
     it 'should include system-wide crypto policies' do

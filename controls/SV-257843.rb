@@ -28,7 +28,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   homes = users.where { uid >= 1000 && !shell.match(ignore_shells) }.homes
   root_device = etc_fstab.where { mount_point == '/' }.device_name
 
-  if input('separate_filesystem_exempt')
+  if input('exempt_separate_filesystem')
     impact 0.0
     describe 'This system is not required to have separate filesystems for each mount point' do
       skip 'The system is managing filesystems and space via other mechanisms; this requirement is Not Applicable'

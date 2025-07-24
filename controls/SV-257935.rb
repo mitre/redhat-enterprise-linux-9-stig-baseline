@@ -36,12 +36,12 @@ $ sudo dnf install firewalld'
 
   alternate_firewall_tool = input('alternate_firewall_tool')
 
-  if alternate_firewall_tool != ''
-    describe package(alternate_firewall_tool) do
+  if alternate_firewall_tool == ''
+    describe package('firewalld') do
       it { should be_installed }
     end
   else
-    describe package('firewalld') do
+    describe package(alternate_firewall_tool) do
       it { should be_installed }
     end
   end
