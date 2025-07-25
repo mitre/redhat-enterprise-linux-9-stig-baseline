@@ -16,11 +16,10 @@ Add the following line to the top of the /etc/security/limits.conf or in a singl
 
 * hard core 0'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257814'
-  tag rid: 'SV-257814r925429_rule'
+  tag rid: 'SV-257814r991589_rule'
   tag stig_id: 'RHEL-09-213095'
   tag fix_id: 'F-61479r925428_fix'
   tag cci: ['CCI-000366']

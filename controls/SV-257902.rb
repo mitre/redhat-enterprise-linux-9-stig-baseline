@@ -12,18 +12,18 @@ If "/etc/gshadow" file does not have an owner of "root", this is a finding.'
 
 $ sudo chown root /etc/gshadow'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61643r925691_chk'
   tag severity: 'medium'
   tag gid: 'V-257902'
-  tag rid: 'SV-257902r925693_rule'
+  tag rid: 'SV-257902r991589_rule'
   tag stig_id: 'RHEL-09-232110'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61567r925692_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/gshadow') do
     it { should exist }

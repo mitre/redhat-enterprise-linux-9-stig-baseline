@@ -39,11 +39,10 @@ control 'SV-258047' do
 
     $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000123-GPOS-00064'
   tag gid: 'V-258047'
-  tag rid: 'SV-258047r926128_rule'
+  tag rid: 'SV-258047r958508_rule'
   tag stig_id: 'RHEL-09-411040'
   tag fix_id: 'F-61712r926127_fix'
   tag cci: ['CCI-001682', 'CCI-000016']

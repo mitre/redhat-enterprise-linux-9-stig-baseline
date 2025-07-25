@@ -10,11 +10,10 @@ UUID=fba5000f-2ffa-4417-90eb-8c54ae74a32f on /home type ext4 (rw,nodev,nosuid,no
 If a separate entry for "/home" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/home" directory onto a separate file system/partition.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257843'
-  tag rid: 'SV-257843r925516_rule'
+  tag rid: 'SV-257843r991589_rule'
   tag stig_id: 'RHEL-09-231010'
   tag fix_id: 'F-61508r925515_fix'
   tag cci: ['CCI-000366']

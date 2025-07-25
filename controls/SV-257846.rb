@@ -5,16 +5,16 @@ control 'SV-257846' do
 
 $ mount | grep /var/log
 
-UUID=c274f65f-c5b5-4486-b021-bee96feb8b21 /var/log xfs noatime 1 2
+/dev/mapper/rhel-var_log on /var/log type xfs (rw,nosuid,nodev,noexec,relatime,seclabel,attr2,inode64,logbufs=8,logbsize=32k)
+Note: Options displayed for mount may differ.
 
 If a separate entry for "/var/log" is not in use, this is a finding.'
   desc 'fix', 'Migrate the "/var/log" path onto a separate file system.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257846'
-  tag rid: 'SV-257846r925525_rule'
+  tag rid: 'SV-257846r1044922_rule'
   tag stig_id: 'RHEL-09-231025'
   tag fix_id: 'F-61511r925524_fix'
   tag cci: ['CCI-000366']

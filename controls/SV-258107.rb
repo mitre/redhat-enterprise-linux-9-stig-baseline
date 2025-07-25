@@ -11,26 +11,25 @@ The "minlen", sometimes noted as minimum length, acts as a "score" of complexity
 The DOD minimum password requirement is 15 characters.'
   desc 'check', 'Verify that RHEL 9 enforces a minimum 15-character password length with the following command:
 
-$ grep minlen /etc/security/pwquality.conf
+$ grep minlen /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
 
 minlen = 15
 
 If the command does not return a "minlen" value of "15" or greater, does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce a minimum 15-character password length.
 
-Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
+Add or update the following line in the "/etc/security/pwquality.conf" file or a configuration file in the "/etc/security/pwquality.conf.d/" directory to contain the "minlen" parameter:
 
 minlen = 15'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000078-GPOS-00046'
   tag gid: 'V-258107'
-  tag rid: 'SV-258107r926308_rule'
+  tag rid: 'SV-258107r1045218_rule'
   tag stig_id: 'RHEL-09-611090'
-  tag fix_id: 'F-61772r926307_fix'
-  tag cci: ['CCI-000205']
-  tag nist: ['IA-5 (1) (a)']
+  tag fix_id: 'F-61772r1045217_fix'
+  tag cci: ['CCI-000205', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 

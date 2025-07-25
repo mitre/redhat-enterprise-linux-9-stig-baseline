@@ -11,11 +11,10 @@ If a file system found in "/etc/fstab" refers to removable media and it does not
   desc 'fix', 'Configure the "/etc/fstab" to use the "nodev" option on
 file systems that are associated with removable media.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257858'
-  tag rid: 'SV-257858r925561_rule'
+  tag rid: 'SV-257858r991589_rule'
   tag stig_id: 'RHEL-09-231085'
   tag fix_id: 'F-61523r925560_fix'
   tag cci: ['CCI-000366']

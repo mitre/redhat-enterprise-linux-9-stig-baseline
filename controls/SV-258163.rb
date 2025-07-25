@@ -28,11 +28,10 @@ action_mail_acct = root
 
 The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'
   tag gid: 'V-258163'
-  tag rid: 'SV-258163r926476_rule'
+  tag rid: 'SV-258163r958424_rule'
   tag stig_id: 'RHEL-09-653070'
   tag fix_id: 'F-61828r926475_fix'
   tag cci: ['CCI-000139', 'CCI-001855']

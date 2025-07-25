@@ -7,7 +7,7 @@ Operating systems are capable of providing a wide variety of functions and servi
 The gssproxy package is a proxy for GSS API credential handling and could expose secrets on some networks. It is not needed for normal function of the OS.'
   desc 'check', 'Verify that the gssproxy package is not installed with the following command:
 
-$ sudo dnf list --installed gssproxy
+$ dnf list --installed gssproxy
 
 Error: No matching Packages to list
 
@@ -16,11 +16,10 @@ If the "gssproxy" package is installed and is not documented with the informatio
 
 $ sudo dnf remove gssproxy'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257832'
-  tag rid: 'SV-257832r925483_rule'
+  tag rid: 'SV-257832r1044900_rule'
   tag stig_id: 'RHEL-09-215045'
   tag fix_id: 'F-61497r925482_fix'
   tag cci: ['CCI-000381', 'CCI-000366']

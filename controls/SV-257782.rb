@@ -20,11 +20,10 @@ Then enable the rngd service run the following command:
 
 $ sudo systemctl enable --now rngd'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257782'
-  tag rid: 'SV-257782r942961_rule'
+  tag rid: 'SV-257782r991589_rule'
   tag stig_id: 'RHEL-09-211035'
   tag fix_id: 'F-61447r925332_fix'
   tag cci: ['CCI-000366']
@@ -38,7 +37,7 @@ $ sudo systemctl enable --now rngd'
   if input('use_fips') == true
     impact 0.0
     describe 'N/A' do
-      skip 'For RHEL 9 running with kernel FIPS mode enabled, this requirement is Not Applicable.'
+      skip 'For systems running with kernel FIPS mode enabled, this requirement is Not Applicable.'
     end
   else
     describe service('rngd') do

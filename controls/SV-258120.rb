@@ -16,11 +16,10 @@ To lock an account:
 
 $ sudo passwd -l [username]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61861r926345_chk'
   tag severity: 'medium'
   tag gid: 'V-258120'
-  tag rid: 'SV-258120r926347_rule'
+  tag rid: 'SV-258120r991589_rule'
   tag stig_id: 'RHEL-09-611155'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61785r926346_fix'

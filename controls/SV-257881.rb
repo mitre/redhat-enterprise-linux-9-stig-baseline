@@ -12,11 +12,10 @@ with the following command:
   desc 'fix', 'Configure the "/etc/fstab" to use the "nodev" option on all
 non-root local partitions.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257881'
-  tag rid: 'SV-257881r925630_rule'
+  tag rid: 'SV-257881r991589_rule'
   tag stig_id: 'RHEL-09-231200'
   tag fix_id: 'F-61546r925629_fix'
   tag cci: ['CCI-000366']

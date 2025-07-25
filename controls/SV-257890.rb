@@ -6,9 +6,9 @@ allow unauthorized access to user files by other users.'
 
 Note: This may miss interactive users that have been assigned a privileged user identifier (UID). Evidence of interactive use may be obtained from a number of log files containing system logon information.
 
-$ sudo ls -ld $(awk -F: '($3>=1000)&&($7 !~ /nologin/){print $6}' /etc/passwd)
+$ stat -L -c '%a %n' $(awk -F: '($3>=1000)&&($7 !~ /nologin/){print $6}' /etc/passwd) 2>/dev/null
 
-drwxr-x--- 2 wadea admin 4096 Jun 5 12:41 wadea
+700 /home/bingwa
 
 If home directories referenced in "/etc/passwd" do not have a mode of "0750" or less permissive, this is a finding.)
   desc 'fix', %q(Change the mode of interactive user's home directories to "0750". To change the mode of a local interactive user's home directory, use the following command:
@@ -17,11 +17,10 @@ Note: The example will be for the user "wadea".
 
 $ sudo chmod 0750 /home/wadea)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257890'
-  tag rid: 'SV-257890r925657_rule'
+  tag rid: 'SV-257890r1044961_rule'
   tag stig_id: 'RHEL-09-232050'
   tag fix_id: 'F-61555r925656_fix'
   tag cci: ['CCI-000366']

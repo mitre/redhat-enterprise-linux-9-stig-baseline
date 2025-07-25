@@ -16,18 +16,18 @@ Add or update the following line in the "/etc/login.defs" file:
 
 ENCRYPT_METHOD SHA512'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61858r926336_chk'
   tag severity: 'medium'
   tag gid: 'V-258117'
-  tag rid: 'SV-258117r926338_rule'
+  tag rid: 'SV-258117r1015116_rule'
   tag stig_id: 'RHEL-09-611140'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
   tag fix_id: 'F-61782r926337_fix'
   tag 'documentable'
-  tag cci: ['CCI-000196']
-  tag nist: ['IA-5 (1) (c)']
-  tag 'host', 'container'
+  tag cci: ['CCI-000196', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
 
   describe login_defs do
     its('ENCRYPT_METHOD') { should cmp 'SHA512' }

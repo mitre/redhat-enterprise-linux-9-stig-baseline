@@ -10,19 +10,18 @@ ocredit = -1
 If the value of "ocredit" is a positive number or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity by requiring at least one special character be used by setting the "ocredit" option.
 
-Add the following line to "/etc/security/pwquality.conf" (or modify the line to have the required value):
+Add or update the following line in the "/etc/security/pwquality.conf" file or a configuration file in the "/etc/security/pwquality.conf.d/" directory to contain the "ocredit" parameter:
 
 ocredit = -1'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000266-GPOS-00101'
   tag gid: 'V-258109'
-  tag rid: 'SV-258109r926314_rule'
+  tag rid: 'SV-258109r1045220_rule'
   tag stig_id: 'RHEL-09-611100'
-  tag fix_id: 'F-61774r926313_fix'
-  tag cci: ['CCI-001619']
-  tag nist: ['IA-5 (1) (a)']
+  tag fix_id: 'F-61774r1045219_fix'
+  tag cci: ['CCI-001619', 'CCI-004066']
+  tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
   tag 'host'
   tag 'container'
 
