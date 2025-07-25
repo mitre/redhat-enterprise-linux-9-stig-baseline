@@ -816,6 +816,12 @@ inputs:
     type: Numeric
     value: 4
 
+  # SV-258143
+  - name: is_log_aggregation_server
+    description: Set to true if the target system is intended to be a log aggregation server
+    type: Boolean
+    value: false
+
   #  SV-258146, SV-258147, SV-258149, SV-258150
   - name: logging_conf_files
     description: Configuration files for the logging service
@@ -1073,7 +1079,7 @@ inputs:
     value: false
 
   # SV-257970, SV-257974
-  - name: packet_forwarding
+  - name: packet_forwarding_enabled
     description: Set to true if there is a requirement for this system to be able forward packets that is documented with the ISSO
     type: Boolean
     value: false

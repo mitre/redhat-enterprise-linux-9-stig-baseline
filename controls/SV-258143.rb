@@ -61,7 +61,7 @@ $ sudo systemctl restart rsyslog.service'
   tag 'host'
   tag 'container'
 
-  if input('log_aggregator')
+  if input('is_log_aggregation_server')
     impact 0.0
     describe 'N/A' do
       skip 'This control is NA because the system is a log aggregation server.'
