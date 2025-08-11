@@ -11,8 +11,8 @@ jobs:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.ec2.disa.yml
-      SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
-      SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
+      #SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
+      #SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       DEPLOYMENT: "ec2"
       HARDENING_SOURCE: "disa"
       PLATFORM: "rhel-9"
@@ -30,8 +30,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.SAF_AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.SAF_AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - name: Check out repository
