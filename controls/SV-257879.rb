@@ -61,10 +61,6 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   tag nist: ['SC-28', 'SC-28 (1)']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers (disk encryption and data-at-rest implementation is handled on the host)', impact: 0.0) {
-    !virtualization.system.eql?('docker')
-  }
-
   all_args = command('blkid').stdout.strip.split("\n").map { |s| s.sub(/^"(.*)"$/, '\1') }
 
   def describe_and_skip(message)
@@ -74,16 +70,24 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
   end
 
   # TODO: This should really have a resource
-  if input('data_at_rest_exempt') == true
+
+  if virtualization.system.eql?('docker')
     impact 0.0
-    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `exempt_data_at_rest` input.')
+    describe_and_skip('Disk Encryption and Data At Rest Implementation is handled on the Container Host')
+  elsif input('data_at_rest_exempt')
+    impact 0.0
+    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.')
   elsif all_args.empty?
     # TODO: Determine if this is an NA vs and NR or even a pass
     describe_and_skip('Command blkid did not return and non-psuedo block devices.')
   else
-    all_args.each do |args|
-      describe args do
-        it { should match(/\bcrypto_LUKS\b/) }
+    unencrypted_drives = all_args.reject { |a| a.match(/\bcrypto_LUKS\b/) || 
+      input('luks_exceptions').include?(a.split(':').first) ||
+      a.split(':').first.match(%r{^/dev/mapper/})
+    }
+    describe 'All local disk partitions' do
+      it 'should be encrypted with crypto_LUKS' do
+        expect(unencrypted_drives).to be_empty, "The following partitions are not encrypted with crypto_LUKS:\t\n- #{unencrypted_drives.join("\t\n- ")}"
       end
     end
   end

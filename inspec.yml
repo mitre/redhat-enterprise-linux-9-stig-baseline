@@ -1173,3 +1173,9 @@ inputs:
     description: Set to true if Promiscuous Mode is Permitted.
     type: Boolean
     value: false
+
+  # SV-257879
+  - name: luks_exceptions
+    description: List of exceptions to the LUKS requirement for drives on this system (e.g. boot partitions)
+    type: Array
+    value: []
