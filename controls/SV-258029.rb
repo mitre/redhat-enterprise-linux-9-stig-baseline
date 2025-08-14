@@ -42,9 +42,7 @@ $ sudo dconf update"
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-
-    restart_button_setting = command('grep ^disable-restart-buttons /etc/dconf/db/*').stdout.strip.match(/:disable-restart-buttons=(\S+)/)[1]
-
+    restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip
     describe 'GUI settings should disable the restart button' do
       subject { restart_button_setting }
       it { should cmp 'true' }

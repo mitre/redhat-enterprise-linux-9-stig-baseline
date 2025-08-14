@@ -23,16 +23,9 @@ If the /boot file system does not have the "nosuid" option set, this is a findin
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-
-  if file('/sys/firmware/efi').exist?
-    impact 0.0
-    describe 'System running UEFI' do
-      skip 'The System is running UEFI, this control is Not Applicable.'
-    end
-  else
-    describe mount('/boot') do
-      it { should be_mounted }
-      its('options') { should include 'nosuid' }
-    end
+  
+  describe mount('/boot') do
+    it { should be_mounted }
+    its('options') { should include 'nosuid' }
   end
 end

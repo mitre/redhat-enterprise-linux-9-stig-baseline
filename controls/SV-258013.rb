@@ -53,11 +53,10 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-
-    profile = command('grep system-db /etc/dconf/profile/user').stdout.strip.match(/:(\S+)$/)[1]
-
-    describe command("grep -r ^banner-message-enable /etc/dconf/db/#{profile}.d/*") do
-      its('stdout.strip') { should match(%r{^/org/gnome/login-screen/banner-message-enable}) }
+    output = command('gsettings writable org.gnome.login-screen banner-message-enable').stdout.strip
+    describe 'Users should not be able to modify the login screen banner message setting' do
+      subject { output }
+      it { should cmp 'false' }
     end
   end
 end

@@ -86,4 +86,9 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
       expect(failing_crypto_policies).to be_empty, "Failing crypto policies:\n\t- #{failing_crypto_policies}"
     end
   end
+  output = command('sudo update-crypto-policies --check && echo PASS').stdout
+  describe 'System cryptographic policy must match the generated policy' do
+    subject { output }
+    it { should cmp 'The configured policy matches the generated policy' }
+  end
 end

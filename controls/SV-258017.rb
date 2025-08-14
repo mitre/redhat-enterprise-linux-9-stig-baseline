@@ -47,11 +47,10 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-
-    profile = command('grep system-db /etc/dconf/profile/user').stdout.strip.match(/:(\S+)$/)[1]
-
-    describe command("grep ^autorun-never /etc/dconf/db/#{profile}.d/locks/*") do
-      its('stdout.strip') { should match(%r{^/org/gnome/desktop/media-handling/autorun-never}) }
+    output = command('gsettings writable org.gnome.desktop.media-handling autorun-never').stdout.strip
+    describe 'Users should not be able to override the graphical user interface autorun setting' do
+      subject { output }
+      it { should cmp 'false' }
     end
   end
 end

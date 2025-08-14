@@ -42,22 +42,14 @@ offline_credentials_expiration = 1'
     !virtualization.system.eql?('docker')
   }
 
-  if input('smart_card_enabled')
-    impact 0.0
-    describe 'The system is not utilizing smart card authentication' do
-      skip 'The system is not utilizing smart card authentication, this control
-      is Not Applicable.'
+  describe.one do
+    describe 'Cache credentials enabled' do
+      subject { sssd_config.content }
+      it { should_not match(/cache_credentials\s*=\s*true/) }
     end
-  else
-    describe.one do
-      describe 'Cache credentials enabled' do
-        subject { sssd_config.content }
-        it { should_not match(/cache_credentials\s*=\s*true/) }
-      end
-      describe 'Offline credentials expiration' do
-        subject { sssd_config }
-        its('pam.offline_credentials_expiration') { should cmp '1' }
-      end
+    describe 'Offline credentials expiration' do
+      subject { sssd_config }
+      its('pam.offline_credentials_expiration') { should cmp '1' }
     end
   end
 end

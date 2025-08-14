@@ -42,8 +42,8 @@ If there is no evidence that the audit logs are being offloaded to another syste
   }
 
   if input('alternative_logging_method') == ''
-    describe command("grep @@ #{input('logging_conf_files').join(' ')}") do
-      its('stdout') { should match(/^[^#]*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/) }
+    describe command("grep -i 'type=\"omfwd\"' #{input('logging_conf_files').join(' ')}") do
+      its('stdout') { should match(%r{^.*:\s*#\s*action\(\s*type\s*=\s*"omfwd"}i) }
     end
   else
     describe 'manual check' do

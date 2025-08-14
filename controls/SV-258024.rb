@@ -49,10 +49,10 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    describe command('grep -i idle /etc/dconf/db/local.d/locks/*') do
-      it 'checks if idle delay is set' do
-        expect(subject.stdout.strip).to match(%r{/org/gnome/desktop/session/idle-delay}), 'The idle delay is not set. Please ensure it is set.'
-      end
+    output = command('gsettings writable org.gnome.desktop.session idle-delay').stdout.strip
+    describe 'Users should not be able to override GUI settings' do
+      subject { output }
+      it { should cmp 'false'}
     end
   end
 end

@@ -48,8 +48,9 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    describe command('grep logout /etc/dconf/db/local.d/locks/*') do
-      its('stdout.strip') { should match %r{/org/gnome/settings-daemon/plugins/media-keys/logout} }
+    output = command('gsettings writable org.gnome.settings-daemon.plugins.media-keys logout').stdout.strip
+    describe 'Users should not be able to enable the Ctrl-Alt-Del sequence in the GNOME desktop' do      subject { output }
+      it { should cmp 'false' }
     end
   end
 end

@@ -46,8 +46,10 @@ $ sudo dconf update'
   }
 
   if package('gnome-desktop3').installed?
-    describe command('grep -i lock-enabled /etc/dconf/db/local.d/locks/*') do
-      its('stdout.strip') { should match %r{/org/gnome/desktop/screensaver/lock-enabled} }
+    output = command('gsettings writable org.gnome.desktop.screensaver lock-enabled').stdout.strip
+    describe 'Users should not be able to override GUI settings' do
+      subject { output }
+      it { should cmp 'false' }
     end
   else
     impact 0.0

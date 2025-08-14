@@ -53,8 +53,10 @@ $ sudo dconf update'
       skip 'A GUI desktop is not installed, this control is Not Applicable.'
     end
   else
-    describe command('grep banner-message-enable /etc/dconf/db/local.d/*') do
-      its('stdout.strip') { should match(/banner-message-enable=true/) }
+    output = command('gsettings get org.gnome.login-screen banner-message-enable').stdout.strip
+    describe 'A banner message should be displayed on the login screen' do
+      subject { output }
+      it { should cmp 'true' }
     end
   end
 end

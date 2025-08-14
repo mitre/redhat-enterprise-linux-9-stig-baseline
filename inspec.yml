@@ -1031,7 +1031,7 @@ inputs:
     description: Config values expected for openssh server (order matters, so these values are comma-delimited strings and not arrays)
     type: Hash
     value:
-      ciphers: aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
+      ciphers: aes256-gcm@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
       macs: hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,umac-128@openssh.com,hmac-sha2-512
 
   # SV-257989
@@ -1046,7 +1046,7 @@ inputs:
   - name: password_hash_rounds
     description: Number of rounds for hashing passwords
     type: Numeric
-    value: 5000
+    value: 10000
 
   # SV-258227
   - name: expected_panic_value
@@ -1173,9 +1173,3 @@ inputs:
     description: Set to true if Promiscuous Mode is Permitted.
     type: Boolean
     value: false
-
-  # SV-257879
-  - name: luks_exceptions
-    description: List of exceptions to the LUKS requirement for drives on this system (e.g. boot partitions)
-    type: Array
-    value: []

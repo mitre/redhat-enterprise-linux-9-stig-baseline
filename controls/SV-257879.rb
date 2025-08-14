@@ -76,7 +76,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
     describe_and_skip('Disk Encryption and Data At Rest Implementation is handled on the Container Host')
   elsif input('data_at_rest_exempt')
     impact 0.0
-    describe_and_skip('Data At Rest Requirements have been set to Not Applicabe by the `data_at_rest_exempt` input.')
+    describe_and_skip('Data At Rest Requirements have been set to Not Applicable by the `data_at_rest_exempt` input.')
   elsif all_args.empty?
     # TODO: Determine if this is an NA vs and NR or even a pass
     describe_and_skip('Command blkid did not return and non-psuedo block devices.')

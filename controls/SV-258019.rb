@@ -58,14 +58,10 @@ $ sudo dconf update)
       Applicable."
     end
   else
-
-    # we're going to do this with grep to avoid doing really complicated tree parsing logic
-    dconf = command('grep -R removal-action /etc/dconf/db/*').stdout.strip
-
-    describe 'The dconf database' do
-      it 'should be set to initate a session lock when a smartcard is removed' do
-        expect(dconf).to match(/removal-action\s*=\s*['"]lock-screen['"]/), 'lock-screen setting not found'
-      end
+    output = command('gsettings get org.gnome.settings-daemon.peripherals.smartcard removal-action').stdout.strip
+    describe 'Smart card removal should trigger a session lock until reauthentication' do
+      subject { output }
+      it { should cmp "'lock-screen'" }
     end
   end
 end
