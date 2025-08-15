@@ -3,22 +3,22 @@ control 'SV-257818' do
   desc 'Kernel core dumps may contain the full contents of system memory at the time of the crash. Kernel core dumps consume a considerable amount of disk space and may result in denial of service by exhausting the available space on the target file system partition. Unless the system is used for kernel development or testing, there is little need to run the kdump service.'
   desc 'check', 'Verify that the kdump service is disabled in system boot configuration with the following command:
 
-$ sudo systemctl is-enabled  kdump  
+$ sudo systemctl is-enabled  kdump
 
-disabled 
+disabled
 
 Verify that the kdump service is not active (i.e., not running) through current runtime configuration with the following command:
 
-$ sudo systemctl is-active kdump 
+$ sudo systemctl is-active kdump
 
-masked 
+masked
 
 Verify that the kdump service is masked with the following command:
 
-$ sudo systemctl show  kdump  | grep "LoadState\\|UnitFileState" 
+$ sudo systemctl show  kdump  | grep "LoadState\\|UnitFileState"
 
-LoadState=masked 
-UnitFileState=masked 
+LoadState=masked
+UnitFileState=masked
 
 If the "kdump" service is loaded or active, and is not masked, this is a finding.'
   desc 'fix', 'Disable and mask the kdump service on RHEL 9.
@@ -48,6 +48,7 @@ $ sudo systemctl mask --now kdump'
   }
 
   describe service('kdump') do
+    it { should_not be_enabled }
     it { should_not be_running }
     its('params.LoadState') { should cmp 'masked' }
     its('params.UnitFileState') { should cmp 'masked' }

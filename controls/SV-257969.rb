@@ -40,9 +40,10 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+  only_if('This system is acting as a router on the network; this control is Not Applicable', impact: 0.0) {
     !input('network_router')
   }
+
   if input('send_redirects')
     impact 0.0
     describe 'N/A' do

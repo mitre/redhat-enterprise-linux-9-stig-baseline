@@ -11,7 +11,7 @@ Inactive
 
 If the "IPsec" service is active, check for configured IPsec connections ("conn"), with the following command:
 
-$ sudo grep -rni conn /etc/ipsec.conf /etc/ipsec.d/ 
+$ sudo grep -rni conn /etc/ipsec.conf /etc/ipsec.d/
 
 Verify any returned results are documented with the ISSO.
 

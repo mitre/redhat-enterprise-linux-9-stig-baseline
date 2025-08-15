@@ -7,7 +7,7 @@ To verify that RHEL 9 has smart cards  enabled in System Security Services Daemo
 
 $ sudo grep -ir pam_cert_auth /etc/sssd/sssd.conf /etc/sssd/conf.d/
 
-pam_cert_auth = True 
+pam_cert_auth = True
 
 If "pam_cert_auth" is not set to "True", the line is commented out, or the line is missing, this is a finding.'
   desc 'fix', 'Edit the file "/etc/sssd/sssd.conf" or a configuration file in "/etc/sssd/conf.d" and add or edit the following line:

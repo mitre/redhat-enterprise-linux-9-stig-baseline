@@ -34,7 +34,7 @@ If the /boot/efi file system does not have the "nosuid" option set, this is a fi
   else
     impact 0.0
     describe 'System running BIOS' do
-      skip 'The System is running a BIOS, this control is Not Applicable.'
+      skip 'The System is running a BIOS; this control is Not Applicable.'
     end
   end
 end

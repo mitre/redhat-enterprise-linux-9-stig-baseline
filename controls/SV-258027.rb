@@ -6,9 +6,9 @@ control 'SV-258027' do
 To ensure the screensaver is configured to be blank, run the following command:
 
 $ gsettings writable org.gnome.desktop.screensaver picture-uri
- 
+
 false
- 
+
 If "picture-uri" is writable and the result is "true", this is a finding.'
   desc 'fix', %q(Configure RHEL 9 to prevent a user from overriding the picture-uri setting for graphical user interfaces.
 
@@ -45,8 +45,8 @@ $ sudo dconf update)
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
 

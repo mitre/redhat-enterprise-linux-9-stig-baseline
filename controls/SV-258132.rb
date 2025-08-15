@@ -4,13 +4,13 @@ control 'SV-258132' do
   desc 'check', 'Verify the certificate of the user or group is mapped to the corresponding user or group in the "sssd.conf" file with the following command:
 
 $ sudo find /etc/sssd/sssd.conf /etc/sssd/conf.d/ -type f -exec cat {} \\;
- 
+
 [certmap/testing.test/rule_name]
 matchrule =<SAN>.*EDIPI@mil
 maprule = (userCertificate;binary={cert!bin})
 domains = testing.test
 
-If the certmap section does not exist, ask the system administrator (SA) to indicate how certificates are mapped to accounts. 
+If the certmap section does not exist, ask the system administrator (SA) to indicate how certificates are mapped to accounts.
 
 If there is no evidence of certificate mapping, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to map the authenticated identity to the user or group account by adding or modifying the certmap section of the "/etc/sssd/sssd.conf" file based on the following example:

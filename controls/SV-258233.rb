@@ -33,7 +33,14 @@ password sufficient pam_unix.so sha512'
 
   pam_auth_files = input('pam_auth_files')
 
-  describe pam(pam_auth_files['system-auth']) do
-    its('lines') { should match_pam_rule('password sufficient pam_unix.so sha512') }
+  if input('pam_config_included')
+    impact 0.0
+    describe 'N/A' do
+      skip 'The required PAM configuration is included or substacked from system-auth; this control is Not Applicable'
+    end
+  else
+    describe pam(pam_auth_files['system-auth']) do
+      its('lines') { should match_pam_rule('password sufficient pam_unix.so sha512') }
+    end
   end
 end

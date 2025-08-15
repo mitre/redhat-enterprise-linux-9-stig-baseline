@@ -38,7 +38,7 @@ $ sudo systemctl enable --now pcscd.socket'
   else
     impact 0.0
     describe 'The system is not smartcard enabled thus this control is Not Applicable' do
-      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
+      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement; this control is Not Applicable.'
     end
   end
 end

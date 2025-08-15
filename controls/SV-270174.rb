@@ -63,7 +63,7 @@ $ sudo dconf update)
     !virtualization.system.eql?('docker') && command('rpm -q gdm').exit_status.zero?
   end
 
-  banner = command("gsettings get org.gnome.login-screen banner-message-text").stdout.strip.gsub(/\\n|'|"|\s+/, '')
+  banner = command('gsettings get org.gnome.login-screen banner-message-text').stdout.strip.gsub(/\\n|'|"|\s+/, '')
   expected_banner = input('banner_message_text_gui').gsub(/\s+/, '')
 
   describe 'The GUI Login Banner' do

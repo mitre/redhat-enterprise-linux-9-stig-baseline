@@ -6,7 +6,7 @@ Password complexity is one factor of several that determines how long it takes t
   desc 'check', 'Verify that RHEL 9 requires passwords to contain at least four character classes.
 
 $ grep minclass /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
- 
+
 minclass = 4
 
 If the value of "minclass" is set to less than "4", or is commented out, this is a finding.'

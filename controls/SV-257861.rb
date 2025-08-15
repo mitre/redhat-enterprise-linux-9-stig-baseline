@@ -23,7 +23,7 @@ If the /boot file system does not have the "nosuid" option set, this is a findin
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
-  
+
   describe mount('/boot') do
     it { should be_mounted }
     its('options') { should include 'nosuid' }

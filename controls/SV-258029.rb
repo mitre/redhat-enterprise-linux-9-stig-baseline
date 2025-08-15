@@ -6,9 +6,9 @@ control 'SV-258029' do
 Verify RHEL 9 disables a user's ability to restart the system with the following command:
 
 $ gsettings get org.gnome.login-screen disable-restart-buttons
- 
+
 true
- 
+
 If "disable-restart-buttons" is "false", this is a finding.)
   desc 'fix', "Configure RHEL 9 to disable a user's ability to restart the system.
 
@@ -38,8 +38,8 @@ $ sudo dconf update"
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip

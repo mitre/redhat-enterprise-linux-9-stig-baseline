@@ -4,7 +4,7 @@ control 'SV-258034' do
 facilitating malicious activity.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the USB Storage kernel module with the following command:
 
-$ grep -r usb-storage /etc/modprobe.conf /etc/modprobe.d/* 
+$ grep -r usb-storage /etc/modprobe.conf /etc/modprobe.d/*
 
 install usb-storage /bin/false
 blacklist usb-storage

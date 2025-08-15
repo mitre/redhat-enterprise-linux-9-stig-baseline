@@ -59,7 +59,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   approved_macs = input('approved_openssh_server_conf')['macs']
 
   options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
-  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/opensshserver.config', options).params.to_h { |k, v| [k.downcase, v.split(',')] }
 
   actual_macs = opensshserver_conf['macs'].join(',')
 

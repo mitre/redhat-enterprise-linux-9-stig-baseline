@@ -45,7 +45,7 @@ $ sudo systemctl mask --now autofs.service'
   else
     impact 0.0
     describe 'The autofs service is not installed' do
-      skip 'The autofs service is not installed, this control is Not Applicable.'
+      skip 'The autofs service is not installed; this control is Not Applicable.'
     end
   end
 end

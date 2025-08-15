@@ -5,7 +5,7 @@ control 'SV-258073' do
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/csh.cshrc" file, the Severity is raised to a CAT I.
 
-$ grep umask /etc/csh.cshrc 
+$ grep umask /etc/csh.cshrc
 
 umask 077
 
@@ -42,7 +42,7 @@ umask 077'
       it { should_not be_nil }
     end
   else
-    impact 0.7 if umask_check[:umask] == '0000' || umask_check[:umask] == '000'
+    impact 0.7 if ['0000', '000'].include?(umask_check[:umask])
     describe 'UMASK' do
       subject { umask_check[:umask] }
       it { should cmp expected_umask }

@@ -45,7 +45,7 @@ $ sudo dconf update'
   if no_gui
     impact 0.0
     describe 'The system does not have a GUI installed, this requirement is Not Applicable.' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     describe command('gsettings get org.gnome.login-screen disable-user-list') do

@@ -9,8 +9,8 @@ unlock_time = 0
 
 If the "unlock_time" option is not set to "0" or the line is missing or commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to lock an account until released by an administrator after three unsuccessful logon attempts with the command:
- 
-$ sudo authselect enable-feature with-faillock  
+
+$ sudo authselect enable-feature with-faillock
 
 Edit the "/etc/security/faillock.conf" file as follows:
 

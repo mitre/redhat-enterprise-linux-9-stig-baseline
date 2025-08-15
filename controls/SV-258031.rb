@@ -40,8 +40,8 @@ $ sudo dconf update)
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     output = command('gsettings get org.gnome.settings-daemon.plugins.media-keys logout').stdout.strip

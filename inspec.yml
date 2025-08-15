@@ -382,9 +382,9 @@ inputs:
       - systemd-bus-proxy
       - systemd-network
 
-  # SV-257838, SV-258019, SV-258121, SV-258122, SV-258124, SV-258125, SV-258126, SV-258131, SV-258133
+  # SV-258019, SV-258121, SV-258122, SV-258124, SV-258125, SV-258126, SV-258131, SV-258133
   - name: smart_card_enabled
-    description: Smart card status of the system
+    description: Set to true if smart cards are enabled for the system
     type: Boolean
     value: false
 
@@ -723,7 +723,7 @@ inputs:
 
   # SV-258092, SV-258093, SV-258094, SV-258095, SV-258097, SV-258098, SV-258099, SV-258100, SV-258122, SV-258233
   - name: pam_auth_files
-    description: THe pam.d auth paths
+    description: The pam.d auth paths
     type: Hash
     value:
       system-auth: /etc/pam.d/system-auth
@@ -836,7 +836,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162
+  # SV-257838, SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162
   - name: alternative_logging_method
     description: Alternative tool for logging (instead of auditd and other built-in OS logging features) - leave blank if using default OS tools
     type: String
@@ -946,7 +946,7 @@ inputs:
       '/usr/bin/mount'                : 'privileged-mount',
       '/usr/bin/umount'               : 'privileged-mount',
       'mount'                         : 'privileged-mount',
-      'umount'                         : 'privileged-umount',
+      'umount'                        : 'privileged-umount',
       '/usr/sbin/unix_update'         : 'privileged-unix-update',
       '/usr/sbin/postdrop'            : 'privileged-unix-update',
       '/usr/sbin/postqueue'           : 'privileged-unix-update',
@@ -1173,3 +1173,39 @@ inputs:
     description: Set to true if Promiscuous Mode is Permitted.
     type: Boolean
     value: false
+
+  # SV-258038
+  - name: is_virtual_machine
+    description: Set to true if the target host is a virtual machine.
+    type: Boolean
+    value: false
+
+  # SV-258056
+  - name: centralized_account_mgmt
+    description: Set to true if using a centralized account management method
+    type: Boolean
+    value: false
+
+  # SV-258233
+  - name: pam_config_included
+    description: Set to true if the required PAM configuration is present in a file included or substacked from the system-auth file
+    type: Boolean
+    value: false
+    
+  # SV-257948
+  - name: ha_cloud_dns
+    description: Set to true if the system runs in a cloud platform that provides a single, highly available IP address for DNS configuration
+    type: Boolean
+    value: false
+
+  # SV-257949
+  - name: alt_dns_resolver
+    description: Set to true if the system uses a DNS resolver other than NetworkManager and the configuration is documented and approved by the ISSO
+    type: Boolean
+    value: false
+
+  # SV-257816
+  - name: user_namespaces_required
+    description: Set to true if the use of user namespaces is operationally required and documented/approved by the ISSM
+    type: Boolean
+    value: true

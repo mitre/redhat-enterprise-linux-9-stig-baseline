@@ -4,13 +4,13 @@ control 'SV-257889' do
 environment upon logon. Malicious modification of these files could compromise
 accounts upon logon."
   desc 'check', 'Verify that all local initialization files have a mode of "0740" or less permissive with the following command:
-	
+
 Note: The example will be for the "bingwa" user, who has a home directory of "/home/bingwa".
-	
+
 $ find /home/bingwa/.[^.]* -maxdepth 0 -perm -740 -exec stat -c "%a %n" {} \\; | more
 
 755 /home/bingwa/.somepermissivefile
-	
+
 If any local initialization files are returned, this indicates a mode more permissive than "0740", and this is a finding.'
   desc 'fix', 'Set the mode of the local initialization files to "0740" with the following command:
 

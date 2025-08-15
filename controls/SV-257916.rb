@@ -4,11 +4,11 @@ control 'SV-257916' do
 
 The structure and content of error messages must be carefully considered by the organization and development team. The extent to which the information system is able to identify and handle error conditions is guided by organizational policy and operational requirements."
   desc 'check', 'Verify the "/var/log/messages" file is owned by root with the following command:
-	
+
 $ stat -c "%U %n" /var/log/messages
-	
+
 root /var/log
-	
+
 If "/var/log/messages" does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the "/var/log/messages" file to "root" by running the following command:
 

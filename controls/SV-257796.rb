@@ -11,7 +11,7 @@ $ sudo grubby --info=ALL | grep args | grep -v 'audit=1'
 
 If any output is returned, this is a finding.
 
-Check that auditing is enabled by default to persist in kernel updates: 
+Check that auditing is enabled by default to persist in kernel updates:
 
 $ grep audit /etc/default/grub
 

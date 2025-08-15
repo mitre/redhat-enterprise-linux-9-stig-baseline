@@ -6,9 +6,9 @@ control 'SV-258032' do
 Verify that users cannot enable the Ctrl-Alt-Del sequence in the GNOME desktop with the following command:
 
 $ gsettings writable org.gnome.settings-daemon.plugins.media-keys logout
- 
+
 false
- 
+
 If "logout" is writable and the result is "true", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to disallow the user changing the Ctrl-Alt-Del sequence in the GNOME desktop.
 
@@ -44,12 +44,13 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     output = command('gsettings writable org.gnome.settings-daemon.plugins.media-keys logout').stdout.strip
-    describe 'Users should not be able to enable the Ctrl-Alt-Del sequence in the GNOME desktop' do      subject { output }
+    describe 'Users should not be able to enable the Ctrl-Alt-Del sequence in the GNOME desktop' do
+      subject { output }
       it { should cmp 'false' }
     end
   end

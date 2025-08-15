@@ -37,7 +37,7 @@ following command:
   elsif input('private_key_files').empty?
     impact 0.0
     describe 'N/A' do
-      skip 'No private key files were given in the input, this control is Not Applicable'
+      skip 'No private key files were given in the input; this control is Not Applicable'
     end
   elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
     describe 'no files found' do

@@ -5,9 +5,9 @@ control 'SV-258111' do
 
 Check the value for "ucredit" with the following command:
 
-$ grep ucredit /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf  
+$ grep ucredit /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
 
-ucredit = -1 
+ucredit = -1
 
 If the value of "ucredit" is a positive number or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to enforce password complexity by requiring that at least one uppercase character be used by setting the "ucredit" option.

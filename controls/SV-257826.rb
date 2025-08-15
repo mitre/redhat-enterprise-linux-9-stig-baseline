@@ -7,7 +7,7 @@ Removing the "vsftpd" package decreases the risk of accidental activation.'
 
 $ rpm -q vsftpd
 
-package vsftpd is not installed 
+package vsftpd is not installed
 
 If the "ftp" package is installed, this is a finding.'
   desc 'fix', 'The ftp package can be removed with the following command (using vsftpd as an example):

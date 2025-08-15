@@ -11,7 +11,7 @@ If the returned line does not have a value of "1", or a line is not returned, th
 
 Check that the configuration files are present to enable this kernel parameter.
 
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F kernel.yama.ptrace_scope| tail -1 
+$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F kernel.yama.ptrace_scope| tail -1
 
 kernel.yama.ptrace_scope = 1
 

@@ -19,9 +19,9 @@ DOD has defined the list of events for which RHEL 9 will provide an audit record
 4) All kernel module load, unload, and restart actions.'
   desc 'check', 'To verify that Linux Audit logging is enabled for the USBGuard daemon with the following command:
 
-$ sudo grep AuditBackend /etc/usbguard/usbguard-daemon.conf 
+$ sudo grep AuditBackend /etc/usbguard/usbguard-daemon.conf
 
-AuditBackend=LinuxAudit 
+AuditBackend=LinuxAudit
 
 If "AuditBackend" is not set to "LinuxAudit", this is a finding.
 

@@ -43,8 +43,8 @@ $ sudo dnf install fapolicyd'
     end
   else
     impact 0.0
-    describe 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable' do
-      skip 'The organization is not using the Fapolicyd service to manage firewall servies, this control is Not Applicable'
+    describe 'The organization is not using the Fapolicyd service to manage firewall servies; this control is Not Applicable' do
+      skip 'The organization is not using the Fapolicyd service to manage firewall servies; this control is Not Applicable'
     end
   end
 end

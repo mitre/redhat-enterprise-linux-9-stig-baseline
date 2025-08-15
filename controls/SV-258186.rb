@@ -16,7 +16,7 @@ $ sudo auditctl -l | grep setsebool
 If the command does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to generate an audit event for any successful/unsuccessful use of the "setsebool " command by adding or updating the following rules in the "/etc/audit/rules.d/audit.rules" file:
 
--a always,exit -F path=/usr/sbin/setsebool -F perm=x -F auid>=1000 -F auid!=unset -F key=privileged 
+-a always,exit -F path=/usr/sbin/setsebool -F perm=x -F auid>=1000 -F auid!=unset -F key=privileged
 
 To load the rules to the kernel immediately, use the following command:
 

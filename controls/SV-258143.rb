@@ -26,14 +26,6 @@ $ grep -i 'port="\S*"' /etc/rsyslog.conf /etc/rsyslog.d/*
 /etc/rsyslog.conf:#input(type="imudp" port="514")
 /etc/rsyslog.conf:#input(type="imtcp" port="514")
 /etc/rsyslog.conf:#Target="remote_host" Port="XXX" Protocol="tcp")
-
-'If any uncommented lines are returned by the commands, rsyslog is configured to receive remote messages, and this is a finding.
-
-Note: An error about no files or directories from the above commands may be returned. This is not a finding.
-
-If any modules are being loaded in the "/etc/rsyslog.conf" file or in the "/etc/rsyslog.d" subdirectories, ask to see the documentation for the system being used for log aggregation. 
-
-If the documentation does not exist or does not specify the server as a log aggregation system, this is a finding.)'
   desc 'fix', 'Configure RHEL 9 to not receive remote logs using rsyslog.
 
 Remove the lines in /etc/rsyslog.conf and any files in the /etc/rsyslog.d directory that match any of the following:

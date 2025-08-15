@@ -6,7 +6,7 @@ control 'SV-257804' do
 $ grep -r atm /etc/modprobe.conf /etc/modprobe.d/*
 
 install atm /bin/false
-blacklist atm 
+blacklist atm
 
 If the command does not return any output, or the line is commented out, and use of ATM is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'To configure the system to prevent the atm kernel module from being loaded, add the following line to the file  /etc/modprobe.d/atm.conf (or create atm.conf if it does not exist):

@@ -53,7 +53,7 @@ permissive = 0'
   tag nist: ['CM-7 (2)']
 
   describe file('/etc/fapolicyd/fapolicyd.conf') do
-    its('content') {should include 'permissive = 0'}
+    its('content') { should include 'permissive = 0' }
   end
 
   describe file('/etc/fapolicyd/compiled.rules') do

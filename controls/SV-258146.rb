@@ -15,11 +15,11 @@ x509/name - certificate validation and subject name authentication'
 
 $ grep -i 'StreamDriver[\.]*AuthMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-/etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name 
+/etc/rsyslog.conf:$ActionSendStreamDriverAuthMode x509/name
 
 If the variable name "StreamDriverAuthMode" is present in an omfwd statement block, this is not a finding. However, if the "StreamDriverAuthMode" variable is in a module block, this is a finding.
 
-If the value of the "$ActionSendStreamDriverAuthMode or StreamDriver.AuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media. 
+If the value of the "$ActionSendStreamDriverAuthMode or StreamDriver.AuthMode" option is not set to "x509/name" or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media.
 
 If there is no evidence that the transfer of the audit logs being offloaded to another system or media is encrypted, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to authenticate the remote logging server for offloading audit logs by setting the following option in "/etc/rsyslog.conf" or "/etc/rsyslog.d/[customfile].conf":
@@ -44,7 +44,7 @@ $ActionSendStreamDriverAuthMode x509/name'
   if input('alternative_logging_method') == ''
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^$ActionSendStreamDriverAuthMode' #{input('logging_conf_files').join(' ')}  | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match %r{\$ActionSendStreamDriverAuthMode\s+x509/name} }
     end

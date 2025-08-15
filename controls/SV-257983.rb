@@ -4,11 +4,11 @@ control 'SV-257983' do
   desc 'check', %q(Note: If the system administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is Not Applicable.
 
 Verify that RHEL 9 SSH daemon accepts public key encryption with the following command:
- 
+
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*pubkeyauthentication'
 
 PubkeyAuthentication yes
- 
+
 If "PubkeyAuthentication" is set to no, the line is commented out, or the line is missing, this is a finding.)
   desc 'fix', 'To configure the system, add or modify the following line in "/etc/ssh/sshd_config" or in a file in "/etc/ssh/sshd_config.d".
 

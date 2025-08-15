@@ -31,14 +31,14 @@ $ sudo dnf install openssl-pkcs11'
     !virtualization.system.eql?('docker')
   }
 
-  if input('smart_card_enabled')
+  if input('alternate_mfa_method') == ''
     describe package('openssl-pkcs11') do
       it { should be_installed }
     end
   else
     impact 0.0
-    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
-      skip 'The system is not using Smartcards / PIVs to fulfil the MFA requirement, this control is Not Applicable.'
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
     end
   end
 end

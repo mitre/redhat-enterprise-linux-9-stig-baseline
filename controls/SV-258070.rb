@@ -11,9 +11,9 @@ If the "audit" option is not set, is missing, or is commented out, this is a fin
   desc 'fix', 'Configure RHEL 9 to log username information when unsuccessful logon attempts occur.
 
 Enable the feature using the following command:
- 
-$ sudo authselect enable-feature with-faillock 
- 
+
+$ sudo authselect enable-feature with-faillock
+
 Add/modify the "/etc/security/faillock.conf" file to match the following line:
 
 audit'

@@ -19,7 +19,7 @@ $ dnf list --installed policycoreutils
 
 Example output:
 
-policycoreutils.x86_64          3.3-6.el9_0                                                 
+policycoreutils.x86_64          3.3-6.el9_0
 
 If the "policycoreutils" package is not installed, this is a finding.'
   desc 'fix', 'The policycoreutils package can be installed with the following command:

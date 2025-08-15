@@ -8,9 +8,9 @@ The session lock is implemented at the point where session activity can be deter
 Verify RHEL 9 disables ability of the user to override the smart card removal action setting.
 
 $ gsettings writable org.gnome.settings-daemon.peripherals.smartcard removal-action
- 
+
 false
- 
+
 If "removal-action" is writable and the result is "true", this is a finding.'
   desc 'fix', 'Add the following line to "/etc/dconf/db/local.d/locks/00-security-settings-lock" to prevent user override of the smart card removal action:
 
@@ -41,8 +41,8 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     output = command('gsettings writable org.gnome.settings-daemon.peripherals.smartcard removal-action').stdout.strip

@@ -31,10 +31,9 @@ If the system is mounting file systems via NFS and the "noexec" option is missin
   failing_mounts = nfs_file_systems.reject { |mnt| mnt['mount_options'].include?(option) }
 
   if nfs_file_systems.empty?
-    describe 'No NFS' do
-      it 'is mounted' do
-        expect(nfs_file_systems).to be_empty
-      end
+    impact 0.0
+    describe 'N/A' do
+      skip 'No NFS mounts are configured'
     end
   else
     describe 'Any mounted Network File System (NFS)' do

@@ -20,10 +20,10 @@ If the command does not return all lines, or the lines are commented out, this i
 
 Add or update the following file system rules to "/etc/audit/rules.d/audit.rules":
 
--a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k execpriv
 -a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k execpriv
--a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv 
--a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv 
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k execpriv
+-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k execpriv
 
 To load the rules to the kernel immediately, use the following command:
 

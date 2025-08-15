@@ -5,7 +5,7 @@ control 'SV-257847' do
 
 Note: /var/log/audit is used as the example as it is a common location.
 
-$ mount | grep /var/log/audit 
+$ mount | grep /var/log/audit
 
 /dev/mapper/rootvg-varlogaudit on /var/log/audit type xfs (rw,relatime,seclabel,attr2,inode64,logbufs=8,logbsize=32k,noquota)
 Note: Options displayed for mount may differ.

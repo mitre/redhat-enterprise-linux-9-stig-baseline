@@ -11,13 +11,13 @@ Determine which partition the audit records are being written to with the follow
 
 $ sudo grep -w log_file /etc/audit/auditd.conf
 
-log_file = /var/log/audit/audit.log 
+log_file = /var/log/audit/audit.log
 
 Check the size of the partition that audit records are written to with the following command and verify whether it is sufficiently large:
 
  # df -h /var/log/audit/
 
-/dev/sda2 24G 10.4G 13.6G 43% /var/log/audit 
+/dev/sda2 24G 10.4G 13.6G 43% /var/log/audit
 
 If the audit record partition is not allocated for sufficient storage capacity, this is a finding.'
   desc 'fix', 'Allocate enough storage capacity for at least one week of audit records

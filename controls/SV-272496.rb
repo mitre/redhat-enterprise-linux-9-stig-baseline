@@ -28,7 +28,7 @@ Use the following example to build the <customfile> in the /etc/sudoers.d direct
 %{designated_group_or_user_name} ALL=(ALL) TYPE=sysadm_t ROLE=sysadm_r ALL
 
 Remove any configurations that conflict with the above from the following locations:
- 
+
 /etc/sudoers
 /etc/sudoers.d/'
   impact 0.5

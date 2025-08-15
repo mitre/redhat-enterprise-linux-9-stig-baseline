@@ -8,9 +8,9 @@ The session lock is implemented at the point where session activity can be deter
 Verify RHEL 9 enables a user's session lock until that user reestablishes access using established identification and authentication procedures with the following command:
 
 $ gsettings get org.gnome.settings-daemon.peripherals.smartcard removal-action
- 
+
 'lock-screen'
- 
+
 If the result is not 'lock-screen', this is a finding."
   desc 'fix', %q(Configure RHEL 9 to enable a user's session lock until that user re-establishes access using established identification and authentication procedures.
 
@@ -49,7 +49,7 @@ $ sudo dconf update)
     describe "The system is not smartcard enabled thus this control is Not
     Applicable" do
       skip "The system is not using Smartcards / PIVs to fulfil the MFA
-      requirement, this control is Not Applicable."
+      requirement; this control is Not Applicable."
     end
   elsif !package('gnome-desktop3').installed?
     impact 0.0

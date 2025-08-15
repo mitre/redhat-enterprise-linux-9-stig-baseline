@@ -3,7 +3,7 @@ control 'SV-257805' do
   desc 'Disabling Controller Area Network (CAN) protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the CAN kernel module with the following command:
 
-$ grep -r can /etc/modprobe.conf /etc/modprobe.d/* 
+$ grep -r can /etc/modprobe.conf /etc/modprobe.d/*
 
 install can /bin/false
 blacklist can

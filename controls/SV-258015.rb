@@ -15,7 +15,7 @@ Check that the automount setting is locked from nonprivileged user modification 
 
 Note: The example below is using the database "local" for the system, so the path is "/etc/dconf/db/local.d". This path must be modified if a database other than "local" is being used.
 
-$ grep 'automount-open' /etc/dconf/db/local.d/locks/* 
+$ grep 'automount-open' /etc/dconf/db/local.d/locks/*
 
 /org/gnome/desktop/media-handling/automount-open
 
@@ -51,8 +51,8 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
 

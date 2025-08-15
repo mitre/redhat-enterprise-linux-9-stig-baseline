@@ -12,14 +12,14 @@ By limiting the number of attempts to meet the pwquality module complexity requi
 Check for the use of the retry option in the security directory with the following command:
 
 $ grep -w retry /etc/security/pwquality.conf /etc/security/pwquality.conf.d/*.conf
- 
+
 retry = 3
- 
+
 If the value of "retry" is set to "0" or greater than "3", or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to limit the "pwquality" retry option to "3".
 
 Add or update the following line in the "/etc/security/pwquality.conf" file or a file in the "/etc/security/pwquality.conf.d/" directory to contain the "retry" parameter:
- 
+
 retry = 3'
   impact 0.5
   tag check_id: 'C-61832r1045183_chk'

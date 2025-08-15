@@ -16,18 +16,18 @@ $ ls -Zd /var/log/faillock
 unconfined_u:object_r:faillog_t:s0 /var/log/faillock
 
 If the security context type of the nondefault tally directory is not "faillog_t", this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to allow the use of a nondefault faillock tally directory while SELinux enforces a targeted policy. 
+  desc 'fix', 'Configure RHEL 9 to allow the use of a nondefault faillock tally directory while SELinux enforces a targeted policy.
 
 First enable the feature using the following command:
- 
-$ sudo authselect enable-feature with-faillock 
- 
+
+$ sudo authselect enable-feature with-faillock
+
 Create a nondefault faillock tally directory (if it does not already exist) with the following example:
 
 $ sudo mkdir /var/log/faillock
 
 Then add/modify the "/etc/security/faillock.conf" file to match the following line:
- 
+
 dir = /var/log/faillock
 
 Update the /etc/selinux/targeted/contexts/files/file_contexts.local with "faillog_t" context type for the nondefault faillock tally directory with the following command:

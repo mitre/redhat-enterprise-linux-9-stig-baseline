@@ -20,7 +20,7 @@ $ sudo grep /usr/bin/au /etc/aide.conf
 
 If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system.
 
-If any of the audit tools listed above do not have a corresponding line, ask the SA to indicate what cryptographic mechanisms are being used to protect the integrity of the audit tools.  
+If any of the audit tools listed above do not have a corresponding line, ask the SA to indicate what cryptographic mechanisms are being used to protect the integrity of the audit tools.
 
 If there is no evidence of integrity protection, this is a finding.'
   desc 'fix', 'Add or update the following lines to "/etc/aide.conf", to protect the integrity of the audit tools.

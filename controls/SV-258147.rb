@@ -15,7 +15,7 @@ x509/name - certificate validation and subject name authentication'
 
 $ grep -i 'StreamDriver[\.]*Mode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-/etc/rsyslog.conf:$ActionSendStreamDriverMode 1 
+/etc/rsyslog.conf:$ActionSendStreamDriverMode 1
 
 If the value of the "$ActionSendStreamDriverMode or StreamDriver.Mode" option is not set to "1" or the line is commented out, this is a finding.
 
@@ -42,14 +42,14 @@ $ActionSendStreamDriverMode 1'
   if input('alternative_logging_method') == ''
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$DefaultNetstreamDriver' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^$DefaultNetstreamDriver' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match(/\$DefaultNetstreamDriver\s+gtls/) }
     end
 
     describe 'rsyslog configuration' do
       subject {
-        command("grep -i '^\$ActionSendStreamDriverMode' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
+        command("grep -i '^$ActionSendStreamDriverMode' #{input('logging_conf_files').join(' ')} | awk -F ':' '{ print $2 }'").stdout
       }
       it { should match(/\$ActionSendStreamDriverMode\s+1/) }
     end

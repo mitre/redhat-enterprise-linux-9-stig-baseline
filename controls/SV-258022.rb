@@ -7,16 +7,16 @@ The session lock is implemented at the point where session activity can be deter
 Implementing session settings will have little value if a user is able to manipulate these settings from the defaults prescribed in the other requirements of this implementation guide."
   desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, Gnome Shell. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces. 
+Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 $ gsettings writable org.gnome.desktop.screensaver lock-enabled
- 
+
 false
- 
+
 If "lock-enabled" is writable and the result is "true", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent a user from overriding settings for graphical user interfaces.
 
-Create a database to contain the systemwide screensaver settings (if it does not already exist) with the following command: 
+Create a database to contain the systemwide screensaver settings (if it does not already exist) with the following command:
 
 Note: The example below is using the database "local" for the system. If the system is using another database in "/etc/dconf/profile/user", the file should be created under the appropriate subdirectory.
 
@@ -53,8 +53,8 @@ $ sudo dconf update'
     end
   else
     impact 0.0
-    describe 'The GNOME desktop is not installed, this control is Not Applicable.' do
-      skip 'The GNOME desktop is not installed, this control is Not Applicable.'
+    describe 'The GNOME desktop is not installed; this control is Not Applicable.' do
+      skip 'The GNOME desktop is not installed; this control is Not Applicable.'
     end
   end
 end

@@ -39,7 +39,7 @@ $ nmcli radio all off'
   else
     impact 0.0
     describe 'Skip' do
-      skip 'The system does not have a wireless network adapter, this control is Not Applicable.'
+      skip 'The system does not have a wireless network adapter; this control is Not Applicable.'
     end
   end
 end

@@ -1,17 +1,17 @@
 control 'SV-270177' do
   title 'The RHEL 9 SSH client must be configured to use only DOD-approved encryption ciphers employing FIPS 140-3 validated cryptographic hash algorithms to protect the confidentiality of SSH client connections.'
-  desc 'Without cryptographic integrity protections, information can be altered by unauthorized users without detection. 
+  desc 'Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
 
-Remote access (e.g., RDP) is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless. 
+Remote access (e.g., RDP) is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless.
 
-Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography, enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash. 
+Cryptographic mechanisms used for protecting the integrity of information include, for example, signed hash functions using asymmetric cryptography, enabling distribution of the public key to verify the hash information while maintaining the confidentiality of the secret key used to generate the hash.
 
 RHEL 9 incorporates systemwide crypto policies by default. The SSH configuration file has no effect on the ciphers, MACs, or algorithms unless specifically defined in the /etc/sysconfig/sshd file. The employed algorithms can be viewed in the /etc/crypto-policies/back-ends/openssh.config file.'
   desc 'check', 'Verify the SSH client is configured to use only ciphers employing FIPS 140-3 approved algorithms.
 
 To verify the ciphers in the systemwide SSH configuration file, use the following command:
 
-$ grep -i Ciphers /etc/crypto-policies/back-ends/openssh.config 
+$ grep -i Ciphers /etc/crypto-policies/back-ends/openssh.config
 
 Ciphers aes256-gcm@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
 
@@ -47,6 +47,6 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
 
   describe file('/etc/crypto-policies/back-ends/openssh.config') do
     it { should exist }
-    its('content') {should match /^\s*Ciphers\s+aes256-gcm@openssh\.com,aes256-ctr,aes128-gcm@openssh\.com,aes128-ctr\s*$/ }
+    its('content') { should match(/^\s*Ciphers\s+aes256-gcm@openssh\.com,aes256-ctr,aes128-gcm@openssh\.com,aes128-ctr\s*$/) }
   end
 end

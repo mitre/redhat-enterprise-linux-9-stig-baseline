@@ -5,7 +5,7 @@ control 'SV-258079' do
 Note: During the development or debugging of SELinux modules, it is common to temporarily place nonproduction systems in "permissive" mode. In such temporary cases, SELinux policies should be developed, and once work is completed, the system should be reconfigured to "targeted".'
   desc 'check', 'Verify the SELINUX on RHEL 9 is using the targeted policy with the following command:
 
-$ sestatus | grep "policy name" 
+$ sestatus | grep "policy name"
 
 Loaded policy name:             targeted
 

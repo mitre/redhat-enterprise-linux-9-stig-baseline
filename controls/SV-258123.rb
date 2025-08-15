@@ -13,7 +13,7 @@ $ sudo grep -ir certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/ |
 
 certificate_verification = ocsp_dgst=sha512
 
-If the certificate_verification line is missing from the [sssd] section, or is missing "ocsp_dgst=sha512", ask the administrator to indicate what type of multifactor authentication is being used and how the system implements certificate status checking. 
+If the certificate_verification line is missing from the [sssd] section, or is missing "ocsp_dgst=sha512", ask the administrator to indicate what type of multifactor authentication is being used and how the system implements certificate status checking.
 
 If there is no evidence of certificate status checking being used, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to implement certificate status checking for multifactor authentication.

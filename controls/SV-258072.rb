@@ -5,9 +5,9 @@ control 'SV-258072' do
 
 Note: If the value of the "umask" parameter is set to "000" "/etc/bashrc" file, the Severity is raised to a CAT I.
 
-$ grep umask /etc/bashrc 
+$ grep umask /etc/bashrc
 
-[ `umask` -eq 0 ] && umask 077  
+[ `umask` -eq 0 ] && umask 077
 
 If the value for the "umask" parameter is not "077", or the "umask" parameter is missing or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to define default permissions for all authenticated users using the bash shell.
@@ -42,7 +42,7 @@ umask 077'
       it { should_not be_nil }
     end
   else
-    impact 0.7 if umask_check[:umask] == '0000' || umask_check[:umask] == '000'
+    impact 0.7 if ['0000', '000'].include?(umask_check[:umask])
     describe 'UMASK' do
       subject { umask_check[:umask] }
       it { should cmp expected_umask }

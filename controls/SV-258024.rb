@@ -3,16 +3,16 @@ control 'SV-258024' do
   desc "A session time-out lock is a temporary action taken when a user stops work and moves away from the immediate physical vicinity of the information system but does not logout because of the temporary nature of the absence. Rather than relying on the user to manually lock their operating system session prior to vacating the vicinity, the GNOME desktop can be configured to identify when a user's session has idled and take action to initiate the session lock. As such, users should not be allowed to change session settings."
   desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces. 
+Verify RHEL 9 prevents a user from overriding settings for graphical user interfaces.
 
 $ gsettings writable org.gnome.desktop.session idle-delay
- 
+
 false
- 
+
 If "idle-delay" is writable and the result is "true", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent a user from overriding settings for graphical user interfaces.
 
-Create a database to contain the systemwide screensaver settings (if it does not already exist) with the following command: 
+Create a database to contain the systemwide screensaver settings (if it does not already exist) with the following command:
 
 Note: The example below is using the database "local" for the system. If the system is using another database in "/etc/dconf/profile/user", the file should be created under the appropriate subdirectory.
 
@@ -45,14 +45,14 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     output = command('gsettings writable org.gnome.desktop.session idle-delay').stdout.strip
     describe 'Users should not be able to override GUI settings' do
       subject { output }
-      it { should cmp 'false'}
+      it { should cmp 'false' }
     end
   end
 end

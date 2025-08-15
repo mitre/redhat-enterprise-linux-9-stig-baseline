@@ -38,7 +38,12 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
 
   peripherals_package = input('peripherals_package')
 
-  if peripherals_package == 'usbguard'
+  if input('is_virtual_machine')
+    impact 0.0
+    describe 'N/A' do
+      skip 'This control is Not Applicable to virtual machines'
+    end
+  elsif peripherals_package == 'usbguard'
     describe command('usbguard list-rules') do
       its('stdout') { should_not be_empty }
       its('exit_status') { should eq 0 }

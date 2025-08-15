@@ -11,7 +11,7 @@ RHEL 9 incorporates systemwide crypto policies by default. The SSH configuration
 
 To verify the ciphers in the systemwide SSH configuration file, use the following command:
 
-$ sudo grep -i Ciphers /etc/crypto-policies/back-ends/opensshserver.config 
+$ sudo grep -i Ciphers /etc/crypto-policies/back-ends/opensshserver.config
 Ciphers aes256-gcm@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr
 
 If the cipher entries in the "opensshserver.config" file have any ciphers other than "aes256-gcm@openssh.com,aes256-ctr,aes128-gcm@openssh.com,aes128-ctr", or they are missing or commented out, this is a finding.'
@@ -48,7 +48,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   approved_ciphers = input('approved_openssh_server_conf')['ciphers']
 
   options = { assignment_regex: /^(\S+)\s+(\S+)$/ }
-  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.map { |k, v| [k.downcase, v.split(',')] }.to_h
+  opensshserver_conf = parse_config_file('/etc/crypto-policies/back-ends/openssh.config', options).params.to_h { |k, v| [k.downcase, v.split(',')] }
 
   actual_ciphers = opensshserver_conf['ciphers'].join(',')
 

@@ -33,6 +33,10 @@ $ sudo systemctl reload NetworkManager'
   tag 'host'
   tag 'container'
 
+  only_if('Alternate DNS resolver is documented and ISSO-approved; this control is Not Applicable', impact: 0.0) {
+    !input('alt_dns_resolver')
+  }
+
   network_manager = command('NetworkManager --print-config')
 
   if network_manager.stdout == '' && !network_manager.stderr.empty?

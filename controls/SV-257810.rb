@@ -3,13 +3,13 @@ control 'SV-257810' do
   desc 'Loading and accessing the packet filters programs and maps using the bpf() system call has the potential of revealing sensitive information about the kernel state.'
   desc 'check', %q(Verify that RHEL 9 prevents privilege escalation through the kernel by disabling access to the bpf system call with the following commands:
 
-$ sysctl kernel.unprivileged_bpf_disabled  
+$ sysctl kernel.unprivileged_bpf_disabled
 
 kernel.unprivileged_bpf_disabled = 1
 
 If the returned line does not have a value of "1", or a line is not returned, this is a finding.
 
-Check that the configuration files are present to enable this kernel parameter.  
+Check that the configuration files are present to enable this kernel parameter.
 
 $ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F kernel.unprivileged_bpf_disabled | tail -1
 

@@ -5,7 +5,7 @@ control 'SV-257879' do
 Selection of a cryptographic mechanism is based on the need to protect the integrity of organizational information. The strength of the mechanism is commensurate with the security category and/or classification of the information. Organizations have the flexibility to either encrypt all information on storage devices (i.e., full disk encryption) or encrypt specific data structures (e.g., files, records, or fields).'
   desc 'check', 'Note: If there is a documented and approved reason for not having data-at-rest encryption at the operating system level, such as encryption provided by a hypervisor or a disk storage array in a virtualized environment, this requirement is Not Applicable.
 
-Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption. 
+Verify RHEL 9 prevents unauthorized disclosure or modification of all information requiring at-rest protection by using disk encryption.
 
 Note: If there is a documented and approved reason for not having data-at-rest encryption, this requirement is Not Applicable.
 
@@ -41,7 +41,7 @@ $ sudo cryptsetup status luks-b74f6910-2547-4399-86b2-8b0252d926d7
   size:    995986063 sectors
   mode:    read/write
 
-If there are persistent filesystems (other than /boot or /boot/efi) whose block device trees do not have a crypt block device of type LUKS, ask the administrator to indicate how persistent filesystems are encrypted. 
+If there are persistent filesystems (other than /boot or /boot/efi) whose block device trees do not have a crypt block device of type LUKS, ask the administrator to indicate how persistent filesystems are encrypted.
 
 If there is no evidence that persistent filesystems are encrypted, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent unauthorized modification of all information at rest by using disk encryption.
@@ -81,9 +81,10 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
     # TODO: Determine if this is an NA vs and NR or even a pass
     describe_and_skip('Command blkid did not return and non-psuedo block devices.')
   else
-    unencrypted_drives = all_args.reject { |a| a.match(/\bcrypto_LUKS\b/) || 
-      input('luks_exceptions').include?(a.split(':').first) ||
-      a.split(':').first.match(%r{^/dev/mapper/})
+    unencrypted_drives = all_args.reject { |a|
+      a.match(/\bcrypto_LUKS\b/) ||
+        input('luks_exceptions').include?(a.split(':').first) ||
+        a.split(':').first.match(%r{^/dev/mapper/})
     }
     describe 'All local disk partitions' do
       it 'should be encrypted with crypto_LUKS' do

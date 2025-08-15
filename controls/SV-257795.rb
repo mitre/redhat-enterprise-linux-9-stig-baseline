@@ -7,7 +7,7 @@ $ sudo grubby --info=ALL | grep args | grep -v 'pti=on'
 
 If any output is returned, this is a finding.
 
-Check that kernel page-table isolation is enabled by default to persist in kernel updates: 
+Check that kernel page-table isolation is enabled by default to persist in kernel updates:
 
 $ grep pti /etc/default/grub
 

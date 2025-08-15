@@ -19,7 +19,7 @@ $ grep -i 'type="omfwd"' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
 *.* action(type="omfwd" target="[remoteloggingserver]" protocol="tcp" port="[port]"
 
-If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media. 
+If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media.
 
 If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to offload audit records onto a different system or media from the system being audited via TCP using rsyslog by specifying the remote logging server in "/etc/rsyslog.conf"" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
@@ -43,7 +43,7 @@ If there is no evidence that the audit logs are being offloaded to another syste
 
   if input('alternative_logging_method') == ''
     describe command("grep -i 'type=\"omfwd\"' #{input('logging_conf_files').join(' ')}") do
-      its('stdout') { should match(%r{^.*:\s*#\s*action\(\s*type\s*=\s*"omfwd"}i) }
+      its('stdout') { should match(/^.*:\s*#\s*action\(\s*type\s*=\s*"omfwd"/i) }
     end
   else
     describe 'manual check' do

@@ -6,7 +6,7 @@ for individuals not requiring access to the system and application accounts for
 applications not installed on the system.'
   desc 'check', 'Verify that there are no unauthorized interactive user accounts with the following command:
 
-$ less /etc/passwd  
+$ less /etc/passwd
 
 root:x:0:0:root:/root:/bin/bash
 ...

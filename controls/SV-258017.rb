@@ -8,9 +8,9 @@ Verify RHEL 9 disables ability of the user to override the graphical user interf
 Determine which profile the system database is using with the following command:
 
 $ gsettings writable org.gnome.desktop.media-handling autorun-never
- 
+
 false
- 
+
 If "autorun-never" is writable, the result is "true". If this is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
   desc 'fix', 'Configure the GNOME desktop to not allow a user to change the setting that disables autorun on removable media.
 
@@ -43,8 +43,8 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
     output = command('gsettings writable org.gnome.desktop.media-handling autorun-never').stdout.strip

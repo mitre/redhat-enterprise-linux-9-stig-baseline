@@ -5,7 +5,7 @@ control 'SV-258014' do
 
 Verify RHEL 9 disables the graphical user interface automount function with the following command:
 
-$ gsettings get org.gnome.desktop.media-handling automount-open 
+$ gsettings get org.gnome.desktop.media-handling automount-open
 
 false
 
@@ -44,8 +44,8 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   elsif input('gui_automount_required')
     impact 0.0
