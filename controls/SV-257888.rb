@@ -35,4 +35,12 @@ $ rpm --setperms cronie crontabs'
       expect(non_compliant_cron_dirs).to be_empty, "Failing directories:\n\t- #{non_compliant_cron_dirs.join("\n\t- ")}"
     end
   end
+
+  output = command(%q(rpm --verify cronie crontabs | awk '! ($2 == "c" && $1 ~ /^.\..\.\.\.\..\./) {print $0}')).stdout.strip
+
+  describe 'Cron configuration files and directories' do
+    it 'match the OS default owner, group, and mode' do
+      expect(output).to be_empty, "Failing configuration files and directories:\n#{output}"
+    end
+  end
 end

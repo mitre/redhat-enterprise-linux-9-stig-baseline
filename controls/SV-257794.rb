@@ -40,13 +40,10 @@ $ sudo reboot'
     !virtualization.system.eql?('docker')
   }
 
-  grub_stdout = command('grubby --info=ALL').stdout
-  setting = /slub_debug\s*=\s*P/
+  grub_stdout = command('grep -i grub_cmdline_linux /etc/default/grub').stdout.strip
 
-  describe 'GRUB config' do
-    it 'should enable page poisoning' do
-      expect(parse_config(grub_stdout)['args']).to match(setting), 'Current GRUB configuration does not disable this setting'
-      expect(parse_config_file('/etc/default/grub')['GRUB_CMDLINE_LINUX']).to match(setting), 'Setting not configured to persist between kernel updates'
-    end
+  describe 'GRUB2 is configured to mitigate use-after-free vulnerabilities by employing memory poisoning' do
+    subject { grub_stdout }
+    it { should match(/\binit_on_free=1\b/i) }
   end
 end

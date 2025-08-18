@@ -93,4 +93,19 @@ $ sudo reboot'
   describe command('update-crypto-policies --show') do
     its('stdout') { should match(/FIPS/) }
   end
+
+  describe parse_config_file('/etc/crypto-policies/state/CURRENT.pol') do
+    its(['min_rsa_size']) { should cmp >= 2048 }
+    its(['hash']) {
+      should include 'SHA2-256', 'SHA2-384', 'SHA2-512', 'SHA2-224',
+                     'SHA3-256', 'SHA3-384', 'SHA3-512', 'SHAKE-256'
+    }
+    its(['hash']) { should_not match(/SHA-?1\b/i) }
+    its(['hash']) {
+      is_expected.to satisfy('no hash size < 256 (except 224)') { |s|
+                       sizes = s.scan(/-(\d+)/).flatten.map(&:to_i)
+                       (sizes - [224]).all? { |n| n >= 256 }
+                     }
+    }
+  end
 end

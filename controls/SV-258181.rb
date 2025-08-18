@@ -36,7 +36,7 @@ $ sudo augenrules --load'
   audit_command = '/usr/bin/chacl'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    virtualization.system.eql?('docker')
+    !virtualization.system.eql?('docker')
   }
 
   describe 'Command' do
