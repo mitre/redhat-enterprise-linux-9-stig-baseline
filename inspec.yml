@@ -1205,7 +1205,7 @@ inputs:
     value: false
 
   # SV-257816
-  - name: user_namespaces_required
+  - name: user_namespaces_documented
     description: Set to true if the use of user namespaces is operationally required and documented/approved by the ISSM
     type: Boolean
-    value: true
+    value: false

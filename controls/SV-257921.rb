@@ -25,7 +25,9 @@ $ sudo chgrp root [FILE]'
   tag 'host'
   tag 'container'
 
-  failing_files = command("find -L #{input('system_libraries').join(' ')} ! -group root -exec ls -d {} \\;").stdout.split("\n")
+  required_system_account_caveats = input('required_system_accounts').map{ |acct| "-group #{acct}" }.join(' ')
+
+  failing_files = command("find -L #{input('system_libraries').join(' ')} ! #{required_system_account_caveats} -exec ls -d {} \\;").stdout.split("\n")
 
   describe 'System libraries' do
     it 'should be group-owned by root' do

@@ -47,6 +47,8 @@ $ sudo augenrules --load'
       expect(audit_rule.list.uniq).to cmp 'exit'
       expect(audit_rule.fields.flatten).to include('perm=x', 'auid>=1000', 'auid!=-1')
       expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
+      auditctl_output = command("sudo auditctl -l | grep #{audit_command}").stdout.strip
+      expect(auditctl_output).to match(/-S\s+all\b/)
     end
   end
 end

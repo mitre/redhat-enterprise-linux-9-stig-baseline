@@ -26,6 +26,14 @@ $ grep -i 'port="\S*"' /etc/rsyslog.conf /etc/rsyslog.d/*
 /etc/rsyslog.conf:#input(type="imudp" port="514")
 /etc/rsyslog.conf:#input(type="imtcp" port="514")
 /etc/rsyslog.conf:#Target="remote_host" Port="XXX" Protocol="tcp")
+
+  'If any uncommented lines are returned by the commands, rsyslog is configured to receive remote messages, and this is a finding.
+
+Note: An error about no files or directories from the above commands may be returned. This is not a finding.
+
+If any modules are being loaded in the "/etc/rsyslog.conf" file or in the "/etc/rsyslog.d" subdirectories, ask to see the documentation for the system being used for log aggregation.
+
+If the documentation does not exist or does not specify the server as a log aggregation system, this is a finding.)'
   desc 'fix', 'Configure RHEL 9 to not receive remote logs using rsyslog.
 
 Remove the lines in /etc/rsyslog.conf and any files in the /etc/rsyslog.d directory that match any of the following:
@@ -59,13 +67,35 @@ $ sudo systemctl restart rsyslog.service'
       skip 'This control is NA because the system is a log aggregation server.'
     end
   else
-    modload = command('grep -i modload /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip.split
-    serverrun = command('grep -i serverrun /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip.split
+    modload = command('grep -i modload /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip
+    imtcp = command(%q(grep -i 'load="imtcp"' /etc/rsyslog.conf /etc/rsyslog.d/*)).stdout.strip
+    imrelp = command(%q(grep -i 'load="imrelp"' /etc/rsyslog.conf /etc/rsyslog.d/*)).stdout.strip
+    serverrun = command('grep -i serverrun /etc/rsyslog.conf /etc/rsyslog.d/*').stdout.strip
+    ports = command(%q(grep -i 'port="\S*"' /etc/rsyslog.conf /etc/rsyslog.d/*)).stdout.strip
 
-    describe 'Rsyslog config' do
-      it 'should not accept remote logs' do
-        expect(modload).to be_empty, "ModLoad settings found:\n\t- #{modload.join("\n\t- ")}"
-        expect(serverrun).to be_empty, "ServerRun settings found:\n\t- #{serverrun.join("\n\t- ")}"
+    describe 'modload' do
+      it 'is not configured to receive remote logs' do
+        expect(modload).to be_empty, "modload settings found:\n#{modload}"
+      end
+    end
+    describe 'imtcp' do
+      it 'is not configured to receive remote logs' do
+        expect(imtcp).to be_empty, "imtcp settings found:\n#{imtcp}"
+      end
+    end
+    describe 'imrelp' do
+      it 'is not configured to receive remote logs' do
+        expect(imrelp).to be_empty, "imrelp settings found:\n#{imrelp}"
+      end
+    end
+    describe 'serverrun config' do
+      it 'is not configured to receive remote logs' do
+        expect(serverrun).to be_empty, "serverrun settings found:\n#{serverrun}"
+      end
+    end
+    describe 'ports' do
+      it 'are not configured to receive remote logs' do
+        expect(ports).to be_empty, "port settings found:\n#{ports}"
       end
     end
   end
