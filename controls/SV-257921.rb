@@ -25,7 +25,7 @@ $ sudo chgrp root [FILE]'
   tag 'host'
   tag 'container'
 
-  required_system_account_caveats = input('required_system_accounts').map{ |acct| "-group #{acct}" }.join(' ')
+  required_system_account_caveats = input('required_system_accounts').map { |acct| "-group #{acct}" }.join(' ')
 
   failing_files = command("find -L #{input('system_libraries').join(' ')} ! #{required_system_account_caveats} -exec ls -d {} \\;").stdout.split("\n")
 
