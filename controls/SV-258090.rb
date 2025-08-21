@@ -20,12 +20,11 @@ If fapolicyd module is not active, this is a finding.'
 
 $ systemctl enable --now fapolicyd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000370-GPOS-00155'
   tag satisfies: ['SRG-OS-000368-GPOS-00154', 'SRG-OS-000370-GPOS-00155', 'SRG-OS-000480-GPOS-00232']
   tag gid: 'V-258090'
-  tag rid: 'SV-258090r926257_rule'
+  tag rid: 'SV-258090r958808_rule'
   tag stig_id: 'RHEL-09-433015'
   tag fix_id: 'F-61755r926256_fix'
   tag cci: ['CCI-001764', 'CCI-001774']
@@ -40,7 +39,7 @@ $ systemctl enable --now fapolicyd'
   elsif !input('use_fapolicyd')
     impact 0.0
     describe 'The organization does not use the Fapolicyd service to manage firewall services' do
-      skip 'The organization is not using the Fapolicyd service to manage firewall services, this control is Not Applicable'
+      skip 'The organization is not using the Fapolicyd service to manage firewall services; this control is Not Applicable'
     end
   else
     describe service('fapolicyd') do

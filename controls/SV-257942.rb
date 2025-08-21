@@ -23,11 +23,10 @@ The system configuration files need to be reloaded for the changes to take effec
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257942'
-  tag rid: 'SV-257942r925813_rule'
+  tag rid: 'SV-257942r1044999_rule'
   tag stig_id: 'RHEL-09-251045'
   tag fix_id: 'F-61607r925812_fix'
   tag cci: ['CCI-000366']

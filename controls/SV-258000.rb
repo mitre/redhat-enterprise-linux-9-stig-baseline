@@ -4,7 +4,7 @@ control 'SV-258000' do
 host could be impersonated.'
   desc 'check', 'Verify the SSH private host key files have a mode of "0640" or less permissive with the following command:
 
-$ ls -l /etc/ssh/*_key
+$ stat -c "%a %n" /etc/ssh/*_key
 
 640 /etc/ssh/ssh_host_dsa_key
 640 /etc/ssh/ssh_host_ecdsa_key
@@ -20,11 +20,10 @@ Restart the SSH daemon for the changes to take effect:
 
 $ sudo systemctl restart sshd.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258000'
-  tag rid: 'SV-258000r925987_rule'
+  tag rid: 'SV-258000r1045063_rule'
   tag stig_id: 'RHEL-09-255120'
   tag fix_id: 'F-61665r925986_fix'
   tag cci: ['CCI-000366']

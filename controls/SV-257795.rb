@@ -1,21 +1,19 @@
 control 'SV-257795' do
   title 'RHEL 9 must enable mitigations against processor-based vulnerabilities.'
   desc 'Kernel page-table isolation is a kernel feature that mitigates the Meltdown security vulnerability and hardens the kernel against attempts to bypass kernel address space layout randomization (KASLR).'
-  desc 'check', 'Verify RHEL 9 enables kernel page-table isolation with the following command:
+  desc 'check', %q(Verify RHEL 9 enables kernel page-table isolation with the following command:
 
-$ sudo grubby --info=ALL | grep pti
+$ sudo grubby --info=ALL | grep args | grep -v 'pti=on'
 
-args="ro crashkernel=auto resume=/dev/mapper/rhel-swap rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet fips=1 audit=1 audit_backlog_limit=8192 pti=on
-
-If the "pti" entry does not equal "on", or is missing, this is a finding.
+If any output is returned, this is a finding.
 
 Check that kernel page-table isolation is enabled by default to persist in kernel updates:
 
-$ sudo grep pti /etc/default/grub
+$ grep pti /etc/default/grub
 
 GRUB_CMDLINE_LINUX="pti=on"
 
-If "pti" is not set to "on", is missing or commented out, this is a finding.'
+If "pti" is not set to "on", is missing or commented out, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to enable kernel page-table isolation with the following command:
 
 $ sudo grubby --update-kernel=ALL --args="pti=on"
@@ -24,11 +22,10 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 
 GRUB_CMDLINE_LINUX="pti=on"'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000433-GPOS-00193'
   tag gid: 'V-257795'
-  tag rid: 'SV-257795r925372_rule'
+  tag rid: 'SV-257795r1044845_rule'
   tag stig_id: 'RHEL-09-212050'
   tag fix_id: 'F-61460r925371_fix'
   tag cci: ['CCI-000381', 'CCI-002824']

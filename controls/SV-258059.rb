@@ -15,11 +15,10 @@ UID of "0".
 should be changed to one greater than "0" but less than "1000". Otherwise,
 assign a UID of greater than "1000" that has not already been assigned.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258059'
-  tag rid: 'SV-258059r926164_rule'
+  tag rid: 'SV-258059r991589_rule'
   tag stig_id: 'RHEL-09-411100'
   tag fix_id: 'F-61724r926163_fix'
   tag cci: ['CCI-000366']

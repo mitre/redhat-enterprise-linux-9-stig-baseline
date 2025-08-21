@@ -5,29 +5,29 @@ control 'SV-258116' do
 This setting ensures user and group account administration utilities are configured to store only encrypted representations of passwords. Additionally, the "crypt_style" configuration option ensures the use of a strong hashing algorithm that makes password cracking attacks more difficult.'
   desc 'check', 'Verify the user and group account administration utilities are configured to store only encrypted representations of passwords with the following command:
 
-# grep crypt /etc/libuser.conf
+$ grep crypt_style /etc/libuser.conf
 
 crypt_style = sha512
 
 If the "crypt_style" variable is not set to "sha512", is not in the defaults section, is commented out, or does not exist, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to use the SHA-512 algorithm for password hashing.
 
-Add or change the following line in the "[default]" section of "/etc/libuser.conf" file:
+Add or change the following line in the "[defaults]" section of "/etc/libuser.conf" file:
 
 crypt_style = sha512'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61857r926333_chk'
+  tag check_id: 'C-61857r1045239_chk'
   tag severity: 'medium'
   tag gid: 'V-258116'
-  tag rid: 'SV-258116r926335_rule'
+  tag rid: 'SV-258116r1045240_rule'
   tag stig_id: 'RHEL-09-611135'
   tag gtitle: 'SRG-OS-000073-GPOS-00041'
-  tag fix_id: 'F-61781r926334_fix'
+  tag fix_id: 'F-61781r1014895_fix'
   tag 'documentable'
-  tag cci: ['CCI-000196']
-  tag nist: ['IA-5 (1) (c)']
-  tag 'host', 'container'
+  tag cci: ['CCI-000196', 'CCI-004062']
+  tag nist: ['IA-5 (1) (c)', 'IA-5 (1) (d)']
+  tag 'host'
+  tag 'container'
 
   describe parse_config_file('/etc/libuser.conf') do
     its('defaults.crypt_style') { should cmp 'sha512' }

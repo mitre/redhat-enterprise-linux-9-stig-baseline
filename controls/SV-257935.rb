@@ -9,7 +9,7 @@ Remote access is access to DOD nonpublic information systems by an authorized us
 RHEL 9 functionality (e.g., SSH) must be capable of taking enforcement action if the audit reveals unauthorized activity. Automated control of remote access sessions allows organizations to ensure ongoing compliance with remote access policies by enforcing connection rules of remote access applications on a variety of information system components (e.g., servers, workstations, notebook computers, smartphones, and tablets).'
   desc 'check', 'Run the following command to determine if the firewalld package is installed with the following command:
 
-$ sudo dnf list --installed firewalld
+$ dnf list --installed firewalld
 
 Example output:
 
@@ -20,11 +20,10 @@ If the "firewall" package is not installed, this is a finding.'
 
 $ sudo dnf install firewalld'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257935'
-  tag rid: 'SV-257935r928954_rule'
+  tag rid: 'SV-257935r1044994_rule'
   tag stig_id: 'RHEL-09-251010'
   tag fix_id: 'F-61600r925791_fix'
   tag cci: ['CCI-002314', 'CCI-000366', 'CCI-000382', 'CCI-002322']

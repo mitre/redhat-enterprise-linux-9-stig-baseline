@@ -12,11 +12,10 @@ If "/boot/grub2/grub.cfg" file does not have a group owner of "root", this is a 
 
 $ sudo chgrp root /boot/grub2/grub.cfg'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61531r925355_chk'
   tag severity: 'medium'
   tag gid: 'V-257790'
-  tag rid: 'SV-257790r925357_rule'
+  tag rid: 'SV-257790r991589_rule'
   tag stig_id: 'RHEL-09-212025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61455r925356_fix'

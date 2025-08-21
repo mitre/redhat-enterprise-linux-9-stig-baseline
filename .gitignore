@@ -1,3 +1,5 @@
+aws
+awscliv2.zip
 .DS_Store
 *.gem
 *.rbc
@@ -68,8 +70,8 @@ build-iPhoneSimulator/
 .vscode
 
 # delta files
-delta.json
-report.md
-*xccdf.xml
+# delta.json
+# report.md
+# *xccdf.xml
 check-results.txt
 kitchen.local.ec2.yml

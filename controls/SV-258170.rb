@@ -16,11 +16,10 @@ write_logs = yes
 
 The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61911r926495_chk'
   tag severity: 'medium'
   tag gid: 'V-258170'
-  tag rid: 'SV-258170r926497_rule'
+  tag rid: 'SV-258170r991589_rule'
   tag stig_id: 'RHEL-09-653105'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61835r926496_fix'

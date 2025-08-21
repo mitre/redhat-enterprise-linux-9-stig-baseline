@@ -5,23 +5,29 @@ control 'SV-258094' do
 
 $ sudo grep -i nullok /etc/pam.d/system-auth /etc/pam.d/password-auth
 
-If output is produced, this is a finding.'
-  desc 'fix', 'Remove any instances of the "nullok" option in the "/etc/pam.d/password-auth" and "/etc/pam.d/system-auth" files to prevent logons with empty passwords.
+If output is produced, this is a finding.
+
+If the system administrator (SA) can demonstrate that the required configuration is contained in a PAM configuration file included or substacked from the system-auth file, this is not a finding.'
+  desc 'fix', 'If PAM is managed with authselect, use the following command to remove instances of "nullok":
+
+$ sudo authselect enable-feature without-nullok
+
+Otherwise, remove any instances of the "nullok" option in the "/etc/pam.d/password-auth" and "/etc/pam.d/system-auth" files to prevent logons with empty passwords.
 
 Note: Manual changes to the listed file may be overwritten by the "authselect" program.'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61835r926267_chk'
+  tag check_id: 'C-61835r1014877_chk'
   tag severity: 'high'
   tag gid: 'V-258094'
-  tag rid: 'SV-258094r926269_rule'
+  tag rid: 'SV-258094r1045187_rule'
   tag stig_id: 'RHEL-09-611025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61759r926268_fix'
+  tag fix_id: 'F-61759r1045186_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   pam_auth_files = input('pam_auth_files')
   file_list = pam_auth_files.values.join(' ')

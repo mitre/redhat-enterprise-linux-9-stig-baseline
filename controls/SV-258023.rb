@@ -26,12 +26,11 @@ Update the system databases:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000029-GPOS-00010'
   tag satisfies: ['SRG-OS-000029-GPOS-00010', 'SRG-OS-000031-GPOS-00012']
   tag gid: 'V-258023'
-  tag rid: 'SV-258023r926056_rule'
+  tag rid: 'SV-258023r958402_rule'
   tag stig_id: 'RHEL-09-271065'
   tag fix_id: 'F-61688r926055_fix'
   tag cci: ['CCI-000057', 'CCI-000060']

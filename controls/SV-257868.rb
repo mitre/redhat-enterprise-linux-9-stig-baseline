@@ -10,11 +10,10 @@ $ mount | grep /tmp
 If the "/tmp" file system is mounted without the "nosuid" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nosuid" option on the "/tmp" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257868'
-  tag rid: 'SV-257868r925591_rule'
+  tag rid: 'SV-257868r958804_rule'
   tag stig_id: 'RHEL-09-231135'
   tag fix_id: 'F-61533r925590_fix'
   tag cci: ['CCI-001764']

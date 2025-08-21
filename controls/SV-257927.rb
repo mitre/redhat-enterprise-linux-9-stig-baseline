@@ -18,18 +18,18 @@ If any crontab is not group owned by root, this is a finding.'
 
 $ sudo chgrp root [cron config file]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61668r925766_chk'
   tag severity: 'medium'
   tag gid: 'V-257927'
-  tag rid: 'SV-257927r925768_rule'
+  tag rid: 'SV-257927r991589_rule'
   tag stig_id: 'RHEL-09-232235'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61592r925767_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   crontabs = command('stat -c "%U %n" /etc/cron*').stdout.split("\n")
 

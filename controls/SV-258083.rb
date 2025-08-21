@@ -3,7 +3,7 @@ control 'SV-258083' do
   desc '"sudo" is a program designed to allow a system administrator to give limited root privileges to users and log root activity. The basic philosophy is to give as few privileges as possible but still allow system users to get their work done.'
   desc 'check', 'Verify that RHEL 9 sudo package is installed with the following command:
 
-$ sudo dnf list --installed sudo
+$ dnf list --installed sudo
 
 Example output:
 
@@ -14,11 +14,10 @@ If the "sudo" package is not installed, this is a finding.'
 
 $ sudo dnf install sudo'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61824r926234_chk'
+  tag check_id: 'C-61824r1045167_chk'
   tag severity: 'medium'
   tag gid: 'V-258083'
-  tag rid: 'SV-258083r926236_rule'
+  tag rid: 'SV-258083r1045168_rule'
   tag stig_id: 'RHEL-09-432010'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag fix_id: 'F-61748r926235_fix'

@@ -14,11 +14,10 @@ Modify the "/etc/login.defs" file to set the "FAIL_DELAY" parameter to 4 or grea
 
 FAIL_DELAY 4'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00226'
   tag gid: 'V-258071'
-  tag rid: 'SV-258071r926200_rule'
+  tag rid: 'SV-258071r991588_rule'
   tag stig_id: 'RHEL-09-412050'
   tag fix_id: 'F-61736r926199_fix'
   tag cci: ['CCI-000366']

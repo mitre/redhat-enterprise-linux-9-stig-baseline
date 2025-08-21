@@ -7,16 +7,18 @@ the cron facility by unauthorized and malicious users.'
 
 Note: If another logging package is used, substitute the utility configuration file for "/etc/rsyslog.conf" or "/etc/rsyslog.d/*.conf" files.
 
-$ sudo grep -s cron /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+$ grep -s cron /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-/etc/rsyslog.conf:*.info;mail.none;authpriv.none;cron.none                          /var/log/messages
-/etc/rsyslog.conf:cron.*                                                           /var/log/cron
+/etc/rsyslog.conf:*.info;mail.none;authpriv.none;cron.none /var/log/messages
+/etc/rsyslog.conf:cron.* /var/log/cron
 
 If the command does not return a response, check for cron logging all facilities with the following command:
 
-$ sudo grep -s /var/log/messages /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+$ logger -p local0.info "Test message for all facilities."
 
-/etc/rsyslog.conf:*.info;mail.none;authpriv.none;cron.none                          /var/log/messages
+Check the logs for the test message with:
+
+$ sudo tail /var/log/messages
 
 If "rsyslog" is not logging messages for the cron facility or all facilities, this is a finding.'
   desc 'fix', 'Configure "rsyslog" to log all cron messages by adding or updating the
@@ -28,11 +30,10 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
     The rsyslog daemon must be restarted for the changes to take effect:
     $ sudo systemctl restart rsyslog.service'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258150'
-  tag rid: 'SV-258150r926437_rule'
+  tag rid: 'SV-258150r1045296_rule'
   tag stig_id: 'RHEL-09-652060'
   tag fix_id: 'F-61815r926436_fix'
   tag cci: ['CCI-000366']

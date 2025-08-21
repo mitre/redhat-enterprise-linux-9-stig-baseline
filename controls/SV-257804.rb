@@ -3,8 +3,9 @@ control 'SV-257804' do
   desc 'Disabling Asynchronous Transfer Mode (ATM) protects the system against exploitation of any flaws in its implementation.'
   desc 'check', 'Verify that RHEL 9 disables the ability to load the ATM kernel module with the following command:
 
-$ sudo grep -r atm /etc/modprobe.conf /etc/modprobe.d/*
+$ grep -r atm /etc/modprobe.conf /etc/modprobe.d/*
 
+install atm /bin/false
 blacklist atm
 
 If the command does not return any output, or the line is commented out, and use of ATM is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
@@ -13,11 +14,10 @@ If the command does not return any output, or the line is commented out, and use
 install atm /bin/false
 blacklist atm'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257804'
-  tag rid: 'SV-257804r925399_rule'
+  tag rid: 'SV-257804r1044853_rule'
   tag stig_id: 'RHEL-09-213045'
   tag fix_id: 'F-61469r925398_fix'
   tag cci: ['CCI-000381']

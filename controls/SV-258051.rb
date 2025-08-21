@@ -15,11 +15,10 @@ Inspect the output and verify that all interactive users (normally users with a 
 If users home directory is not defined, this is a finding."
   desc 'fix', 'Create and assign home directories to all local interactive users on RHEL 9 that currently do not have a home directory assigned.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258051'
-  tag rid: 'SV-258051r926140_rule'
+  tag rid: 'SV-258051r991589_rule'
   tag stig_id: 'RHEL-09-411060'
   tag fix_id: 'F-61716r926139_fix'
   tag cci: ['CCI-000366']

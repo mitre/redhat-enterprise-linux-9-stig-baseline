@@ -17,11 +17,10 @@ Add or edit the lines for the "UMASK" parameter in the "/etc/login.defs" file to
 
 UMASK 077'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00228'
   tag gid: 'V-258074'
-  tag rid: 'SV-258074r926209_rule'
+  tag rid: 'SV-258074r991590_rule'
   tag stig_id: 'RHEL-09-412065'
   tag fix_id: 'F-61739r926208_fix'
   tag cci: ['CCI-000366']

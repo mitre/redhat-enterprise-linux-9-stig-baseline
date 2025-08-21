@@ -14,11 +14,10 @@ Add or update the following line in "/etc/audit/auditd.conf" file:
 
 max_log_file_action = ROTATE'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61901r926465_chk'
   tag severity: 'medium'
   tag gid: 'V-258160'
-  tag rid: 'SV-258160r926467_rule'
+  tag rid: 'SV-258160r1038966_rule'
   tag stig_id: 'RHEL-09-653055'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag fix_id: 'F-61825r926466_fix'

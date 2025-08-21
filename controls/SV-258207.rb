@@ -11,23 +11,24 @@ The system call rules are loaded into a matching engine that intercepts each sys
 
 $ sudo auditctl -l | grep unix_update
 
--a always,exit -F path=/usr/sbin/unix_update -F perm=x -F auid>=1000 -F auid!=unset -k privileged-unix-update
+-a always,exit -S all -F path=/usr/sbin/unix_update -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-unix-update
 
 If the command does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to generate audit records upon successful/unsuccessful attempts to use the "unix_update" command by adding or updating the following rule in "/etc/audit/rules.d/audit.rules":
 
 -a always,exit -F path=/usr/sbin/unix_update -F perm=x -F auid>=1000 -F auid!=unset -k privileged-unix-update
 
-The audit daemon must be restarted for the changes to take effect.'
+To load the rules to the kernel immediately, use the following command:
+
+$ sudo augenrules --load'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000064-GPOS-00033']
   tag gid: 'V-258207'
-  tag rid: 'SV-258207r926608_rule'
+  tag rid: 'SV-258207r1045406_rule'
   tag stig_id: 'RHEL-09-654165'
-  tag fix_id: 'F-61872r926607_fix'
+  tag fix_id: 'F-61872r1045405_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
   tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'
@@ -46,6 +47,8 @@ The audit daemon must be restarted for the changes to take effect.'
       expect(audit_rule.list.uniq).to cmp 'exit'
       expect(audit_rule.fields.flatten).to include('perm=x', 'auid>=1000', 'auid!=-1')
       expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
+      auditctl_output = command("sudo auditctl -l | grep #{audit_command}").stdout.strip
+      expect(auditctl_output).to match(/-S\s+all\b/)
     end
   end
 end

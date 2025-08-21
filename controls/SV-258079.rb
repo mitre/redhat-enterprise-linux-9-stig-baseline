@@ -5,7 +5,7 @@ control 'SV-258079' do
 Note: During the development or debugging of SELinux modules, it is common to temporarily place nonproduction systems in "permissive" mode. In such temporary cases, SELinux policies should be developed, and once work is completed, the system should be reconfigured to "targeted".'
   desc 'check', 'Verify the SELINUX on RHEL 9 is using the targeted policy with the following command:
 
-$ sestatus | grep policy
+$ sestatus | grep "policy name"
 
 Loaded policy name:             targeted
 
@@ -18,11 +18,10 @@ Edit the file "/etc/selinux/config" and add or modify the following line:
 
 A reboot is required for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag gid: 'V-258079'
-  tag rid: 'SV-258079r926224_rule'
+  tag rid: 'SV-258079r1045159_rule'
   tag stig_id: 'RHEL-09-431015'
   tag fix_id: 'F-61744r926223_fix'
   tag cci: ['CCI-002696']

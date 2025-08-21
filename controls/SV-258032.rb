@@ -1,18 +1,18 @@
 control 'SV-258032' do
   title 'RHEL 9 must prevent a user from overriding the Ctrl-Alt-Del sequence settings for the graphical user interface.'
   desc 'A locally logged-in user who presses Ctrl-Alt-Del, when at the console, can reboot the system. If accidentally pressed, as could happen in the case of mixed OS environment, this can create the risk of short-term loss of availability of systems due to unintentional reboot.'
-  desc 'check', 'Verify that users cannot enable the Ctrl-Alt-Del sequence in the GNOME desktop with the following command:
+  desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
-Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
+Verify that users cannot enable the Ctrl-Alt-Del sequence in the GNOME desktop with the following command:
 
-$ grep logout /etc/dconf/db/local.d/locks/*
+$ gsettings writable org.gnome.settings-daemon.plugins.media-keys logout
 
-/org/gnome/settings-daemon/plugins/media-keys/logout
+false
 
-If the output is not "/org/gnome/settings-daemon/plugins/media-keys/logout", the line is commented out, or the line is missing, this is a finding.'
+If "logout" is writable and the result is "true", this is a finding.'
   desc 'fix', 'Configure RHEL 9 to disallow the user changing the Ctrl-Alt-Del sequence in the GNOME desktop.
 
-Create a database to container system-wide graphical user logon settings (if it does not already exist) with the following command:
+Create a database to contain the systemwide graphical user logon settings (if it does not already exist) with the following command:
 
 $ sudo touch /etc/dconf/db/local.d/locks/session
 
@@ -24,14 +24,13 @@ Run the following command to update the database:
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61773r926081_chk'
+  tag check_id: 'C-61773r1045115_chk'
   tag severity: 'medium'
   tag gid: 'V-258032'
-  tag rid: 'SV-258032r926083_rule'
+  tag rid: 'SV-258032r1045117_rule'
   tag stig_id: 'RHEL-09-271110'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61697r926082_fix'
+  tag fix_id: 'F-61697r1045116_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
@@ -45,12 +44,14 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
-    describe command('grep logout /etc/dconf/db/local.d/locks/*') do
-      its('stdout.strip') { should match %r{/org/gnome/settings-daemon/plugins/media-keys/logout} }
+    output = command('gsettings writable org.gnome.settings-daemon.plugins.media-keys logout').stdout.strip
+    describe 'Users should not be able to enable the Ctrl-Alt-Del sequence in the GNOME desktop' do
+      subject { output }
+      it { should cmp 'false' }
     end
   end
 end

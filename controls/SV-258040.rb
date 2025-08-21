@@ -20,12 +20,11 @@ If a wireless interface is configured and has not been documented and approved b
 
 $ nmcli radio all off'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000299-GPOS-00117'
   tag satisfies: ['SRG-OS-000299-GPOS-00117', 'SRG-OS-000300-GPOS-00118', 'SRG-OS-000481-GPOS-000481', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000481-GPOS-00481']
   tag gid: 'V-258040'
-  tag rid: 'SV-258040r926107_rule'
+  tag rid: 'SV-258040r991568_rule'
   tag stig_id: 'RHEL-09-291040'
   tag fix_id: 'F-61705r926106_fix'
   tag cci: ['CCI-001444', 'CCI-001443', 'CCI-002418', 'CCI-002421']
@@ -40,7 +39,7 @@ $ nmcli radio all off'
   else
     impact 0.0
     describe 'Skip' do
-      skip 'The system does not have a wireless network adapter, this control is Not Applicable.'
+      skip 'The system does not have a wireless network adapter; this control is Not Applicable.'
     end
   end
 end

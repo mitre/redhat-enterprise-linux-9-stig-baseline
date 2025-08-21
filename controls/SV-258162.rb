@@ -19,12 +19,11 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
 
     The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224']
   tag gid: 'V-258162'
-  tag rid: 'SV-258162r926473_rule'
+  tag rid: 'SV-258162r958754_rule'
   tag stig_id: 'RHEL-09-653065'
   tag fix_id: 'F-61827r926472_fix'
   tag cci: ['CCI-001851']
