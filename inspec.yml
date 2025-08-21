@@ -1174,12 +1174,6 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-258038
-  - name: is_virtual_machine
-    description: Set to true if the target host is a virtual machine.
-    type: Boolean
-    value: false
-
   # SV-258056
   - name: centralized_account_mgmt
     description: Set to true if using a centralized account management method

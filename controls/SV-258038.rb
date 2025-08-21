@@ -32,18 +32,13 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
   tag nist: ['IA-3']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+  only_if('This control is Not Applicable to containers or virtualized environments', impact: 0.0) {
+    !virtualization.system.eql?('docker') || !virtualization.role.eql?('guest')
   }
 
   peripherals_package = input('peripherals_package')
 
-  if input('is_virtual_machine')
-    impact 0.0
-    describe 'N/A' do
-      skip 'This control is Not Applicable to virtual machines'
-    end
-  elsif peripherals_package == 'usbguard'
+  if peripherals_package == 'usbguard'
     describe command('usbguard list-rules') do
       its('stdout') { should_not be_empty }
       its('exit_status') { should eq 0 }
