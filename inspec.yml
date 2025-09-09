@@ -1203,3 +1203,9 @@ inputs:
     description: Set to true if the use of user namespaces is operationally required and documented/approved by the ISSM
     type: Boolean
     value: false
+
+  # SV-257879
+  - name: luks_exceptions
+    description: List of block devices/partitions that are permitted to be unencrypted
+    type: Array
+    value: []

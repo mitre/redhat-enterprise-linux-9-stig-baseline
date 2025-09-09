@@ -25,17 +25,6 @@ $ rpm --setperms cronie crontabs'
   tag 'host'
   tag 'container'
 
-  cron_dirs = command('find /etc/cron* -type d').stdout.split("\n")
-  mode = input('expected_modes')['cron_dirs']
-
-  non_compliant_cron_dirs = cron_dirs.select { |dir| file(dir).more_permissive_than?(mode) }
-
-  describe 'All cron directories' do
-    it "have a mode of '#{mode}' or less permissive" do
-      expect(non_compliant_cron_dirs).to be_empty, "Failing directories:\n\t- #{non_compliant_cron_dirs.join("\n\t- ")}"
-    end
-  end
-
   output = command(%q(rpm --verify cronie crontabs | awk '! ($2 == "c" && $1 ~ /^.\..\.\.\.\..\./) {print $0}')).stdout.strip
 
   describe 'Cron configuration files and directories' do
