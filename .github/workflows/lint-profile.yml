@@ -24,18 +24,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Clone full repository so we can push
-        run: git fetch --prune --unshallow
-
-      - name: Set short git commit SHA
-        id: vars
-        run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-
-      - name: Confirm git commit SHA output
-        run: echo ${{ env.COMMIT_SHORT_SHA }}
-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
