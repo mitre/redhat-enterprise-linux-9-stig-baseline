@@ -76,7 +76,7 @@ jobs:
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         uses: mitre/saf_action@v1.5.2
         with:
-          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
+          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
       - name: Save Test Result JSON
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
