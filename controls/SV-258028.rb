@@ -28,6 +28,7 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
+  # TODO: q1: the /usr/share/xsessions directory seems to include .desktop files that display managers use to start a GUI session; however, there is no hardlink between this .desktop file existing and a GUI being installed.  it is possible to start a GUI without having a .desktop file in that location in which case this control would have to apply but we would have marked it as skipped.  what would be the process for actually identifying that no gui was installed?  do we just check for gnome packages in particular being installed since that's what the checktext describes?  and if a non-gnome package is installed then we have to fall back to manual review as the requirement is still applicable?  maybe we have to use an input where we force the user to tell us what desktop environment/gui that they're using?  what if they have multiple DE's installed and these rules are in place for gnome but not for the other DE's so someone could still violate the requirements specified in other controls?
   no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
 
   if no_gui
@@ -37,8 +38,12 @@ $ sudo dconf update'
     end
   else
 
+    # TODO: q2: should we make a dconf resource?
     db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
 
+    # TODO: q3: is there always a db.d for every db?  I feel like the answer might be no which is what is leading to a `comparison of Integer with nil failed` error
+    # TODO: q4: the checktext compares the contents of each of those dbs not to the db.d directory itself but to the oldest mtime of those directory contents.  the contents themselves include user defined rules in file(s) named in a ##-name format and then a 'locks' directory that could contain file(s) that seem to share the same naming scheme.  there definitely are not always user defined rules files.  is there always going to be a locks directory in there or is it possible that db.d could be empty entirely?
+    # TODO: q5: why does the checktext check if the values are numbers before doing the comparison?  is it just defensive programming or is there actually a chance that those stats will not succeed for some reason?
     failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
 
     describe 'dconf databases' do
