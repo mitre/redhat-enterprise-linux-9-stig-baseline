@@ -42,6 +42,10 @@ $ sudo dconf update"
       skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
+    # TODO: q1: should we have a gsettings resource?  or would it fit under the dconf resource that we might create?
+    # TODO: q2: do we need to add a check to see if gsettings is installed?  my brief skim did not have a requirement that says that it must be installed.  is it possible that we would have to fallback to the checking /etc/dconf/db/* approach or manual review?
+    # TODO: q3: the requirement says that the ability for a user to do this thing must be disabled entirely but we are only checking the runtime status of this setting.  is it necessary to ensure that the lockfile also contains this requirement so that a user could not modify the settings between scans?  it seems like there is a 'gsettings writable' subcommand that might check this status
+    # TODO: q4: it is possible for schemas like 'org.gnome.login-screen' to not be there (in my case on a GUI less system so it'll probably be there on one with a GUI).  should we add an additional check to ensure that the schema exists before looking for a particular item within it?
     restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip
     describe 'GUI settings should disable the restart button' do
       subject { restart_button_setting }
