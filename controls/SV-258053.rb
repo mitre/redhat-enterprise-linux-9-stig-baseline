@@ -22,11 +22,10 @@ Note: The example will be for the user "wadea", who has a home directory of "/ho
 
 $ sudo chgrp users /home/wadea)
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258053'
-  tag rid: 'SV-258053r926146_rule'
+  tag rid: 'SV-258053r991589_rule'
   tag stig_id: 'RHEL-09-411070'
   tag fix_id: 'F-61718r926145_fix'
   tag cci: ['CCI-000366']

@@ -10,11 +10,10 @@ If any files on the system do not have an assigned owner, this is a finding."
 
 $ sudo chown <user> <file>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257931'
-  tag rid: 'SV-257931r925780_rule'
+  tag rid: 'SV-257931r991589_rule'
   tag stig_id: 'RHEL-09-232255'
   tag fix_id: 'F-61596r925779_fix'
   tag cci: ['CCI-000366']
@@ -35,7 +34,7 @@ $ sudo chown <user> <file>'
       failing_files += command("find / -xdev -xautofs -fstype #{fs} -nouser").stdout.strip.split("\n")
     end
 
-    describe 'All files on RHEL 9' do
+    describe 'All local files and directories' do
       it 'should have an owner' do
         expect(failing_files).to be_empty, "Files with no owner:\n\t- #{failing_files.join("\n\t- ")}"
       end

@@ -3,7 +3,7 @@ control 'SV-258085' do
   desc 'If the rootpw, targetpw, or runaspw flags are defined and not disabled, by default the operating system will prompt the invoking user for the "root" user password.'
   desc 'check', %q(Verify that the sudoers security policy is configured to use the invoking user's password for privilege escalation with the following command:
 
-$ sudo egrep -ir '(!rootpw|!targetpw|!runaspw)' /etc/sudoers /etc/sudoers.d/* | grep -v '#'
+$ sudo egrep -ir '(!rootpw|!targetpw|!runaspw)' /etc/sudoers /etc/sudoers.d/ | grep -v '#'
 
 /etc/sudoers:Defaults !targetpw
 /etc/sudoers:Defaults !rootpw
@@ -24,11 +24,10 @@ Defaults !targetpw
 Defaults !rootpw
 Defaults !runaspw'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258085'
-  tag rid: 'SV-258085r943063_rule'
+  tag rid: 'SV-258085r1045173_rule'
   tag stig_id: 'RHEL-09-432020'
   tag fix_id: 'F-61750r926241_fix'
   tag cci: ['CCI-002227', 'CCI-000366']

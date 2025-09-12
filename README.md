@@ -2,8 +2,8 @@
 
 The Redhat Enterprise Linux 9.X Security Technical Implementation Guide (RHEL9.x STIG) InSpec Profile can help programs automate their compliance checks of RedHat Enterprise Linux 9.x System to Department of Defense (DoD) requirements.
 
-- Profile Version: `1.2.2`
-- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r2
+- Profile Version: `2.4.0`
+- RedHat Enterprise Linux 9 Security Technical Implementation Guide v2r4
 
 This profile was developed to reduce the time it takes to perform a security checks based upon the STIG Guidance from the Defense Information Systems Agency (DISA) in partnership between the DISA Services Directorate (SD) and the DISA Risk Management Executive (RME) office.
 
@@ -14,17 +14,17 @@ The RHEL8 STIG Profile uses the [InSpec](https://github.com/inspec/inspec) open-
 Table of Contents
 =================
 
-* [RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-9x-security-technical-implementation-guide-inspec-profile)
-   * [RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)](#redhat-9x-enterprise-linux-security-technical-implementation-guide-rhel9-stig)
-* [Getting Started and Intended Usage](#getting-started-and-intended-usage)
-   * [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
-   * [Environment Aware Testing](#environment-aware-testing)
-   * [Tailoring to Your Environment](#tailoring-to-your-environment)
-* [Running the Profile](#running-the-profile)
-   * [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
-   * [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
-   * [Different Run Options](#different-run-options)
-* [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
+- [RedHat Enterprise Linux 9.x Security Technical Implementation Guide InSpec Profile](#redhat-enterprise-linux-9x-security-technical-implementation-guide-inspec-profile)
+  - [RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)](#redhat-9x-enterprise-linux-security-technical-implementation-guide-rhel9-stig)
+- [Getting Started and Intended Usage](#getting-started-and-intended-usage)
+  - [Intended Usage - main vs releases](#intended-usage---main-vs-releases)
+  - [Environment Aware Testing](#environment-aware-testing)
+  - [Tailoring to Your Environment](#tailoring-to-your-environment)
+- [Running the Profile](#running-the-profile)
+  - [(connected) Running the Profile Directly](#connected-running-the-profile-directly)
+  - [(disconnected) Running the profile from a local archive copy](#disconnected-running-the-profile-from-a-local-archive-copy)
+  - [Different Run Options](#different-run-options)
+- [Using Heimdall for Viewing Test Results and Exporting for Checklist and eMASS](#using-heimdall-for-viewing-test-results-and-exporting-for-checklist-and-emass)
 
 ## RedHat 9.x Enterprise Linux Security Technical Implementation Guide (RHEL9 STIG)
 
@@ -38,7 +38,7 @@ The RHEL9.x STIG profile checks were developed to provide technical implementati
 
 ### Source Guidance
 
-- RedHat Enterprise Linux 9 Security Technical Implementation Guide v1r2
+- RedHat Enterprise Linux 9 Security Technical Implementation Guide v2r4
 
 ### Current Profile Statistics
 
@@ -150,11 +150,12 @@ You can deploy your own instances of Heimdall-Lite or Heimdall Server easily via
 
 # Authors
 
-Defense Information Systems Agency (DISA) https://www.disa.mil/
+Defense Information Systems Agency (DISA) <https://www.disa.mil/>
 
-STIG support by DISA Risk Management Team and Cyber Exchange https://public.cyber.mil/
+STIG support by DISA Risk Management Team and Cyber Exchange <https://public.cyber.mil/>
 
-MITRE Security Automation Framework Team https://saf.mitre.org
+MITRE Security Automation Framework Team <https://saf.mitre.org>
 
 ### NOTICE
-DISA STIGs are published by DISA IASE, see: https://iase.disa.mil/Pages/privacy_policy.aspx
+
+DISA STIGs are published by DISA IASE, see: <https://iase.disa.mil/Pages/privacy_policy.aspx>

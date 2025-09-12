@@ -19,11 +19,10 @@ following command:
 
     $ sudo ssh-keygen -n [passphrase]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'
   tag gid: 'V-258127'
-  tag rid: 'SV-258127r926368_rule'
+  tag rid: 'SV-258127r958450_rule'
   tag stig_id: 'RHEL-09-611190'
   tag fix_id: 'F-61792r926367_fix'
   tag cci: ['CCI-000186']
@@ -38,7 +37,7 @@ following command:
   elsif input('private_key_files').empty?
     impact 0.0
     describe 'N/A' do
-      skip 'No private key files were given in the input, this control is Not Applicable'
+      skip 'No private key files were given in the input; this control is Not Applicable'
     end
   elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
     describe 'no files found' do

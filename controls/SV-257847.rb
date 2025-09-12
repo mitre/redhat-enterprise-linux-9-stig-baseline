@@ -7,16 +7,16 @@ Note: /var/log/audit is used as the example as it is a common location.
 
 $ mount | grep /var/log/audit
 
-UUID=2efb2979-45ac-82d7-0ae632d11f51 on /var/log/home type xfs  (rw,realtime,seclabel,attr2,inode64)
+/dev/mapper/rootvg-varlogaudit on /var/log/audit type xfs (rw,relatime,seclabel,attr2,inode64,logbufs=8,logbsize=32k,noquota)
+Note: Options displayed for mount may differ.
 
 If no line is returned, this is a finding.'
   desc 'fix', 'Migrate the system audit data path onto a separate file system.'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag gid: 'V-257847'
-  tag rid: 'SV-257847r925528_rule'
+  tag rid: 'SV-257847r1044924_rule'
   tag stig_id: 'RHEL-09-231030'
   tag fix_id: 'F-61512r925527_fix'
   tag cci: ['CCI-000366', 'CCI-001849']

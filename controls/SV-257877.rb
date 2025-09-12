@@ -10,11 +10,10 @@ $ mount | grep /var/tmp
 If the "/var/tmp" file system is mounted without the "noexec" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/var/tmp" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257877'
-  tag rid: 'SV-257877r925618_rule'
+  tag rid: 'SV-257877r958804_rule'
   tag stig_id: 'RHEL-09-231180'
   tag fix_id: 'F-61542r925617_fix'
   tag cci: ['CCI-001764']

@@ -12,11 +12,10 @@ $ mount | grep /var/tmp
 If the "/var/tmp" file system is mounted without the "nodev" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/var/tmp" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257876'
-  tag rid: 'SV-257876r925615_rule'
+  tag rid: 'SV-257876r958804_rule'
   tag stig_id: 'RHEL-09-231175'
   tag fix_id: 'F-61541r925614_fix'
   tag cci: ['CCI-001764']

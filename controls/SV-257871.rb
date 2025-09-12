@@ -10,11 +10,10 @@ $ mount | grep /var/log
 If the "/var/log" file system is mounted without the "noexec" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "noexec" option on the "/var/log" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257871'
-  tag rid: 'SV-257871r925600_rule'
+  tag rid: 'SV-257871r958804_rule'
   tag stig_id: 'RHEL-09-231150'
   tag fix_id: 'F-61536r925599_fix'
   tag cci: ['CCI-001764']

@@ -14,11 +14,10 @@ Set the owner of all public directories as root or a system account using the co
 
 $ sudo chown root [Public Directory]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257928'
-  tag rid: 'SV-257928r925771_rule'
+  tag rid: 'SV-257928r1044992_rule'
   tag stig_id: 'RHEL-09-232240'
   tag fix_id: 'F-61593r925770_fix'
   tag cci: ['CCI-000366', 'CCI-001090']

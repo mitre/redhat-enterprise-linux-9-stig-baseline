@@ -15,7 +15,7 @@ functions).
 SCSI devices supported by the ipr SCSI storage device driver.'
   desc 'check', 'Verify that the iprutils package is not installed with the following command:
 
-$ sudo dnf list --installed iprutils
+$ dnf list --installed iprutils
 
 Error: No matching Packages to list
 
@@ -24,11 +24,10 @@ If the "iprutils" package is installed and is not documented with the informatio
 
 $ sudo dnf remove iprutils'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257833'
-  tag rid: 'SV-257833r925486_rule'
+  tag rid: 'SV-257833r1044902_rule'
   tag stig_id: 'RHEL-09-215050'
   tag fix_id: 'F-61498r925485_fix'
   tag cci: ['CCI-000366', 'CCI-000381']

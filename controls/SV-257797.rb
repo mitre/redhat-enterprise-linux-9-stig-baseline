@@ -34,11 +34,10 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag gid: 'V-257797'
-  tag rid: 'SV-257797r942965_rule'
+  tag rid: 'SV-257797r958514_rule'
   tag stig_id: 'RHEL-09-213010'
   tag fix_id: 'F-61462r925377_fix'
   tag cci: ['CCI-001090', 'CCI-001082']

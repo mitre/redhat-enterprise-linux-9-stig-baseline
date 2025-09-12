@@ -20,18 +20,18 @@ Then, run the following command:
 
 $ sudo newaliases'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61694r925844_chk'
   tag severity: 'medium'
   tag gid: 'V-257953'
-  tag rid: 'SV-257953r925846_rule'
+  tag rid: 'SV-257953r958424_rule'
   tag stig_id: 'RHEL-09-252060'
   tag gtitle: 'SRG-OS-000046-GPOS-00022'
   tag fix_id: 'F-61618r925845_fix'
   tag 'documentable'
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   options = { assignment_regex: /^(\S+):\s*(\S+)/ }
 

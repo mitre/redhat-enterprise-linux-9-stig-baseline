@@ -1,7 +1,7 @@
 control 'SV-257970' do
   title 'RHEL 9 must not enable IPv4 packet forwarding unless the system is a router.'
   desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this capability is used when not required, system network information may be unnecessarily transmitted across the network.'
-  desc 'check', %q(Verify RHEL 9 is not performing IPv4 packet forwarding, unless the system is a router.
+  desc 'check', %q(Verify RHEL 9 is not performing IPv4 packet forwarding unless the system is a router.
 
 Check that IPv4 forwarding is disabled using the following command:
 
@@ -13,7 +13,7 @@ If the IPv4 forwarding value is not "0" and is not documented with the informati
 
 Check that the configuration files are present to enable this network parameter.
 
-$ sudo (/usr/lib/systemd/systemd-sysctl --cat-config; cat /etc/sysctl.conf) | egrep -v '^(#|$)' | grep net.ipv4.conf.all.forwarding | tail -1
+$ /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|$)' | grep -F net.ipv4.conf.all.forwarding | tail -1
 
 net.ipv4.conf.all.forwarding = 0
 
@@ -28,11 +28,10 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61711r943000_chk'
+  tag check_id: 'C-61711r1045010_chk'
   tag severity: 'medium'
   tag gid: 'V-257970'
-  tag rid: 'SV-257970r943001_rule'
+  tag rid: 'SV-257970r1045011_rule'
   tag stig_id: 'RHEL-09-253075'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61635r925896_fix'
@@ -41,11 +40,11 @@ $ sudo sysctl --system'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+  only_if('This system is acting as a router on the network; this control is Not Applicable', impact: 0.0) {
     !input('network_router')
   }
 
-  if input('forwarding')
+  if input('packet_forwarding_enabled')
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"

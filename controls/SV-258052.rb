@@ -19,11 +19,10 @@ $ sudo chown wadea /home/wadea
 $ sudo chgrp users /home/wadea
 $ sudo chmod 0750 /home/wadea'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258052'
-  tag rid: 'SV-258052r926143_rule'
+  tag rid: 'SV-258052r991589_rule'
   tag stig_id: 'RHEL-09-411065'
   tag fix_id: 'F-61717r926142_fix'
   tag cci: ['CCI-000366']

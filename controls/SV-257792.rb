@@ -2,9 +2,7 @@ control 'SV-257792' do
   title 'RHEL 9 must disable virtual system calls.'
   desc 'System calls are special routines in the Linux kernel, which userspace applications ask to do privileged tasks. Invoking a system call is an expensive operation because the processor must interrupt the currently executing task and switch context to kernel mode and then back to userspace after the system call completes. Virtual system calls map into user space a page that contains some variables and the implementation of some system calls. This allows the system calls to be executed in userspace to alleviate the context switching expense.
 
-Virtual system calls provide an opportunity of attack for a user who has control of the return instruction pointer. Disabling virtual system calls help to prevent return oriented programming (ROP) attacks via buffer overflows and overruns. If the system intends to run containers based on RHEL 6 components, then virtual system calls will need enabled so the components function properly.
-
-'
+Virtual system calls provide an opportunity of attack for a user who has control of the return instruction pointer. Disabling virtual system calls help to prevent return oriented programming (ROP) attacks via buffer overflows and overruns. If the system intends to run containers based on RHEL 6 components, then virtual system calls will need enabled so the components function properly.'
   desc 'check', %q(Verify the current GRUB 2 configuration disables virtual system calls with the following command:
 
 $ sudo grubby --info=ALL | grep args | grep -v 'vsyscall=none'
@@ -26,11 +24,10 @@ Add or modify the following line in "/etc/default/grub" to ensure the configurat
 
 GRUB_CMDLINE_LINUX="vsyscall=none"'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61533r925361_chk'
   tag severity: 'medium'
   tag gid: 'V-257792'
-  tag rid: 'SV-257792r925363_rule'
+  tag rid: 'SV-257792r1044842_rule'
   tag stig_id: 'RHEL-09-212035'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61457r925362_fix'

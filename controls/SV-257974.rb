@@ -45,7 +45,7 @@ $ sudo sysctl --system'
     !virtualization.system.eql?('docker')
   }
 
-  if input('forwarding')
+  if input('packet_forwarding_enabled')
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"

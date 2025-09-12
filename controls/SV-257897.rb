@@ -12,18 +12,18 @@ If a value of "0" is not returned, this is a finding.'
 
 $ sudo chmod 0000 /etc/shadow-'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61638r925676_chk'
   tag severity: 'medium'
   tag gid: 'V-257897'
-  tag rid: 'SV-257897r925678_rule'
+  tag rid: 'SV-257897r991589_rule'
   tag stig_id: 'RHEL-09-232085'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61562r925677_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   system_file = '/etc/shadow-'
 

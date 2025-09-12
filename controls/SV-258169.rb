@@ -27,11 +27,10 @@ option:
 
     The audit daemon must be restarted for changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000255-GPOS-00096'
   tag gid: 'V-258169'
-  tag rid: 'SV-258169r926494_rule'
+  tag rid: 'SV-258169r991556_rule'
   tag stig_id: 'RHEL-09-653100'
   tag fix_id: 'F-61834r926493_fix'
   tag cci: ['CCI-000366', 'CCI-001487']

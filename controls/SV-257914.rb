@@ -5,20 +5,19 @@ control 'SV-257914' do
 The structure and content of error messages must be carefully considered by the organization and development team. The extent to which the information system is able to identify and handle error conditions is guided by organizational policy and operational requirements."
   desc 'check', 'Verify the "/var/log" directory is owned by root with the following command:
 
-$ ls -ld /var/log
+$ stat -c "%U %n" /var/log
 
-drwxr-xr-x. 16 root root 4096 July 11 11:34 /var/log
+root /var/log
 
 If "/var/log" does not have an owner of "root", this is a finding.'
   desc 'fix', 'Configure the owner of the directory "/var/log" to "root" by running the following command:
 
 $ sudo chown root /var/log'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257914'
-  tag rid: 'SV-257914r925729_rule'
+  tag rid: 'SV-257914r1044969_rule'
   tag stig_id: 'RHEL-09-232170'
   tag fix_id: 'F-61579r925728_fix'
   tag cci: ['CCI-001314']

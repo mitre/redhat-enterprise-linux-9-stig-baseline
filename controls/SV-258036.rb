@@ -11,20 +11,21 @@ active
 
 If usbguard is not active, ask the SA to indicate how unauthorized peripherals are being blocked.
 
-If there is no evidence that unauthorized peripherals are being blocked before establishing a connection, this is a finding.'
+If there is no evidence that unauthorized peripherals are being blocked before establishing a connection, this is a finding.
+
+If the system is virtual machine with no virtual or physical USB peripherals attached, this is not a finding.'
   desc 'fix', 'To enable the USBGuard service run the following command:
 
 $ sudo systemctl enable --now usbguard'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000378-GPOS-00163'
   tag gid: 'V-258036'
-  tag rid: 'SV-258036r926095_rule'
+  tag rid: 'SV-258036r1014861_rule'
   tag stig_id: 'RHEL-09-291020'
   tag fix_id: 'F-61701r926094_fix'
-  tag cci: ['CCI-001958']
-  tag nist: ['IA-3']
+  tag cci: ['CCI-001958', 'CCI-003959']
+  tag nist: ['IA-3', 'CM-7 (9) (b)']
   tag 'host'
 
   only_if('This requirement does not apply to containers', impact: 0.0) {

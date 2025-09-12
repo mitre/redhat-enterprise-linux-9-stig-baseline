@@ -7,7 +7,7 @@ The telnet service provides an unencrypted remote access service, which does not
 Removing the "telnet-server" package decreases the risk of accidental (or intentional) activation of the telnet service.'
   desc 'check', 'Verify that the telnet-server package is not installed with the following command:
 
-$ sudo dnf list --installed telnet-server
+$ dnf list --installed telnet-server
 
 Error: No matching Packages to list
 
@@ -16,11 +16,10 @@ If the "telnet-server" package is installed, this is a finding.'
 
 $ sudo dnf remove telnet-server'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000095-GPOS-00049'
   tag gid: 'V-257831'
-  tag rid: 'SV-257831r925480_rule'
+  tag rid: 'SV-257831r1044898_rule'
   tag stig_id: 'RHEL-09-215040'
   tag fix_id: 'F-61496r925479_fix'
   tag cci: ['CCI-000381']

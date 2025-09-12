@@ -1,9 +1,9 @@
 control 'SV-258175' do
   title 'RHEL 9 audispd-plugins package must be installed.'
   desc '"audispd-plugins" provides plugins for the real-time interface to the audit subsystem, "audispd". These plugins can do things like relay events to remote machines or analyze events for suspicious behavior.'
-  desc 'check', 'Verify that RHEL 9 has the audispd-plugins package for installed with the following command:
+  desc 'check', 'Verify that RHEL 9 has the audispd-plugins package installed with the following command:
 
-$ sudo dnf list --installed audispd-plugins
+$ dnf list --installed audispd-plugins
 
 Example output:
 
@@ -14,11 +14,10 @@ If the "audispd-plugins" package is not installed, this is a finding.'
 
 $ sudo dnf install audispd-plugins'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61916r926510_chk'
+  tag check_id: 'C-61916r1045309_chk'
   tag severity: 'medium'
   tag gid: 'V-258175'
-  tag rid: 'SV-258175r926512_rule'
+  tag rid: 'SV-258175r1045310_rule'
   tag stig_id: 'RHEL-09-653130'
   tag gtitle: 'SRG-OS-000342-GPOS-00133'
   tag fix_id: 'F-61840r926511_fix'

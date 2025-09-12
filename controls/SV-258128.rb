@@ -16,11 +16,10 @@ Add or modify the following line in the "/usr/lib/systemd/system/emergency.servi
 
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag gid: 'V-258128'
-  tag rid: 'SV-258128r926371_rule'
+  tag rid: 'SV-258128r958472_rule'
   tag stig_id: 'RHEL-09-611195'
   tag fix_id: 'F-61793r926370_fix'
   tag cci: ['CCI-000213']

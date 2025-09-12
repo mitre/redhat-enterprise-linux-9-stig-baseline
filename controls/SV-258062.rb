@@ -17,11 +17,10 @@ the following command:
 
     $ sudo chmod 0755 <file>'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258062'
-  tag rid: 'SV-258062r926173_rule'
+  tag rid: 'SV-258062r991589_rule'
   tag stig_id: 'RHEL-09-411115'
   tag fix_id: 'F-61727r926172_fix'
   tag cci: ['CCI-000366']

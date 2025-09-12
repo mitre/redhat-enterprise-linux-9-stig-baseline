@@ -18,7 +18,7 @@ physical means of protection are employed, then logical means (cryptography) do
 not have to be employed, and vice versa.'
   desc 'check', 'Verify that RHEL 9 has the openssh-server package installed with the following command:
 
-$ sudo dnf list --installed openssh-server
+$ dnf list --installed openssh-server
 
 Example output:
 
@@ -29,12 +29,11 @@ If the "openssh-server" package is not installed, this is a finding.'
 
 $ sudo dnf install openssh-server'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000423-GPOS-00187'
   tag satisfies: ['SRG-OS-000423-GPOS-00187', 'SRG-OS-000424-GPOS-00188', 'SRG-OS-000425-GPOS-00189', 'SRG-OS-000426-GPOS-00190']
   tag gid: 'V-257978'
-  tag rid: 'SV-257978r925921_rule'
+  tag rid: 'SV-257978r1045013_rule'
   tag stig_id: 'RHEL-09-255010'
   tag fix_id: 'F-61643r925920_fix'
   tag cci: ['CCI-002418', 'CCI-002420', 'CCI-002421', 'CCI-002422']
@@ -44,9 +43,9 @@ $ sudo dnf install openssh-server'
 
   openssh_present = package('openssh-server').installed?
 
-  only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !openssh_present)
-  }
+  only_if('This requirement is Not Applicable in a container without OpenSSH installed or when physical protections are employed', impact: 0.0) do
+    !((virtualization.system.eql?('docker') && !openssh_present) || input('physical_protections_employed'))
+  end
 
   if input('allow_container_openssh_server') == false
     describe 'In a container Environment' do
@@ -55,9 +54,9 @@ $ sudo dnf install openssh-server'
       end
     end
   else
-    describe 'In a machine environment' do
-      it 'the OpenSSH Server should be installed' do
-        expect(package('openssh-server').installed?).to eq(true), 'the OpenSSH Server is not installed'
+    describe 'OpenSSH Server package' do
+      it 'should be installed' do
+        expect(package('openssh-server').installed?).to eq(true), 'OpenSSH Server is not installed'
       end
     end
   end

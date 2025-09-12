@@ -18,11 +18,10 @@ Add the following line to the top of the /etc/security/limits.conf or in a ".con
 
 * hard maxlogins 10'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000027-GPOS-00008'
   tag gid: 'V-258069'
-  tag rid: 'SV-258069r926194_rule'
+  tag rid: 'SV-258069r958398_rule'
   tag stig_id: 'RHEL-09-412040'
   tag fix_id: 'F-61734r926193_fix'
   tag cci: ['CCI-000054']

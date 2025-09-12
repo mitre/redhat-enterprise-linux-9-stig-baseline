@@ -30,20 +30,20 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257969'
-  tag rid: 'SV-257969r942999_rule'
+  tag rid: 'SV-257969r991589_rule'
   tag stig_id: 'RHEL-09-253070'
   tag fix_id: 'F-61634r925893_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This system is acting as a router on the network, this control is Not Applicable', impact: 0.0) {
+  only_if('This system is acting as a router on the network; this control is Not Applicable', impact: 0.0) {
     !input('network_router')
   }
+
   if input('send_redirects')
     impact 0.0
     describe 'N/A' do

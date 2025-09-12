@@ -9,16 +9,15 @@ Note: If a separate file system has not been created for the user home directori
 
 $ mount | grep /home
 
-tmpfs on /home type tmpfs (rw,nodev,nosuid,noexec,seclabel)
+tmpfs on /home type xfs (rw,nodev,nosuid,noexec,seclabel)
 
 If the "/home" file system is mounted without the "nodev" option, this is a finding.'
   desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/home" directory.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61591r925535_chk'
+  tag check_id: 'C-61591r1044929_chk'
   tag severity: 'medium'
   tag gid: 'V-257850'
-  tag rid: 'SV-257850r925537_rule'
+  tag rid: 'SV-257850r1044930_rule'
   tag stig_id: 'RHEL-09-231045'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag fix_id: 'F-61515r925536_fix'

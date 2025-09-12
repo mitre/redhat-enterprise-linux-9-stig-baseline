@@ -12,11 +12,10 @@ If the "cmdport" option is not set to "0", is commented out, or is missing, this
 
 cmdport 0'
   impact 0.3
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'low'
   tag gtitle: 'SRG-OS-000096-GPOS-00050'
   tag gid: 'V-257947'
-  tag rid: 'SV-257947r925828_rule'
+  tag rid: 'SV-257947r958480_rule'
   tag stig_id: 'RHEL-09-252030'
   tag fix_id: 'F-61612r925827_fix'
   tag cci: ['CCI-000381', 'CCI-000382']

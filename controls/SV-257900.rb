@@ -12,18 +12,18 @@ If "/etc/group-" file does not have an owner of "root", this is a finding.'
 
 $ sudo chown root /etc/group-'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61641r925685_chk'
   tag severity: 'medium'
   tag gid: 'V-257900'
-  tag rid: 'SV-257900r925687_rule'
+  tag rid: 'SV-257900r991589_rule'
   tag stig_id: 'RHEL-09-232100'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61565r925686_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/group-') do
     it { should exist }

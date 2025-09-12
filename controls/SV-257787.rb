@@ -3,13 +3,13 @@ control 'SV-257787' do
   desc 'To mitigate the risk of unauthorized access to sensitive information by entities that have been issued certificates by DOD-approved PKIs, all DOD systems (e.g., web servers and web portals) must be properly configured to incorporate access control methods that do not rely solely on the possession of a certificate for access. Successful authentication must not automatically give an entity access to an asset or security boundary. Authorization procedures and controls must be implemented to ensure each authenticated entity also has a validated and current authorization. Authorization is the process of determining whether an entity, once authenticated, is permitted to access a specific asset. Information systems use access control policies and enforcement mechanisms to implement this requirement.
 
 Password protection on the boot loader configuration ensures users with physical access cannot trivially alter important bootloader settings. These include which kernel to use, and whether to enter single-user mode.'
-  desc 'check', 'Verify the boot loader superuser password has been set and run the following command:
+  desc 'check', 'Verify the boot loader superuser password has been set with the following command:
 
-$ sudo grep "superusers" /etc/grub2.cfg
+$ sudo grep password_pbkdf2 /etc/grub2.cfg
 
-password_pbkdf2  superusers-account   ${GRUB2_PASSWORD}
+password_pbkdf2  <superusers-accountname>   ${GRUB2_PASSWORD}
 
-To verify the boot loader superuser account password has been set, and the password encrypted, run the following command:
+To verify the boot loader superuser account password has been set and the password encrypted, run the following command:
 
 $ sudo cat /boot/grub2/user.cfg
 
@@ -27,11 +27,10 @@ $ sudo grub2-setpassword
 Enter password:
 Confirm password:'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61528r925346_chk'
+  tag check_id: 'C-61528r1044835_chk'
   tag severity: 'medium'
   tag gid: 'V-257787'
-  tag rid: 'SV-257787r925348_rule'
+  tag rid: 'SV-257787r1044836_rule'
   tag stig_id: 'RHEL-09-212010'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-61452r925347_fix'
@@ -59,14 +58,14 @@ Confirm password:'
     password_set = file(grubfile).content.lines.select { |line| line.match(/password_pbkdf2\s+\w+\s+\$\{\w+\}/) }
 
     describe 'The GRUB bootloader superuser password' do
-      it "should be set in the GRUB config file (\'#{grubfile}\')" do
-        expect(password_set).to_not be_empty, "No bootloader superuser password set in \'#{grubfile}\'"
+      it "should be set in the GRUB config file ('#{grubfile}')" do
+        expect(password_set).to_not be_empty, "No bootloader superuser password set in '#{grubfile}'"
       end
 
       grub_envar = password_set.first.match(/\$\{(?<grub_pw_envar>\w+)\}/).captures.first
       password_encrypted = file(grub_userfile).content.match?(/#{grub_envar}=grub.pbkdf2/)
-      it "should be encrypted in the user config file (\'#{grub_userfile}\')" do
-        expect(password_encrypted).to eq(true), "GRUB password environment variable not set to an encrypted value in \'#{grub_userfile}\'"
+      it "should be encrypted in the user config file ('#{grub_userfile}')" do
+        expect(password_encrypted).to eq(true), "GRUB password environment variable not set to an encrypted value in '#{grub_userfile}'"
       end
     end
   end

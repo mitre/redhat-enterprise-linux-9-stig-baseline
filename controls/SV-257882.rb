@@ -14,11 +14,10 @@ Run the following command, replacing "[FILE]" with any system command with a mod
 
 $ sudo chmod 755 [FILE]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257882'
-  tag rid: 'SV-257882r925633_rule'
+  tag rid: 'SV-257882r991560_rule'
   tag stig_id: 'RHEL-09-232010'
   tag fix_id: 'F-61547r925632_fix'
   tag cci: ['CCI-001499']

@@ -2,9 +2,7 @@ control 'SV-257957' do
   title 'RHEL 9 must be configured to use TCP syncookies.'
   desc 'Denial of service (DoS) is a condition when a resource is not available for legitimate users. When this occurs, the organization either cannot accomplish its mission or must operate at degraded capacity.
 
-Managing excess capacity ensures that sufficient capacity is available to counter flooding attacks. Employing increased capacity and service redundancy may reduce the susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning.
-
-'
+Managing excess capacity ensures that sufficient capacity is available to counter flooding attacks. Employing increased capacity and service redundancy may reduce the susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning.'
   desc 'check', %q(Verify RHEL 9 is configured to use IPv4 TCP syncookies.
 
 Determine if syncookies are used with the following command:
@@ -31,11 +29,10 @@ Load settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61698r942982_chk'
   tag severity: 'medium'
   tag gid: 'V-257957'
-  tag rid: 'SV-257957r942983_rule'
+  tag rid: 'SV-257957r1045009_rule'
   tag stig_id: 'RHEL-09-253010'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61622r925857_fix'

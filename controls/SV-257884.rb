@@ -12,11 +12,10 @@ If any system-wide shared library file is found to be group-writable or world-wr
 
 $ sudo chmod 755 [FILE]'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257884'
-  tag rid: 'SV-257884r925639_rule'
+  tag rid: 'SV-257884r991560_rule'
   tag stig_id: 'RHEL-09-232020'
   tag fix_id: 'F-61549r925638_fix'
   tag cci: ['CCI-001499']

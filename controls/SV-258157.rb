@@ -16,11 +16,10 @@ If there is no evidence that real-time alerts are configured on the system, this
 
 space_left_action = email'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000343-GPOS-00134'
   tag gid: 'V-258157'
-  tag rid: 'SV-258157r926458_rule'
+  tag rid: 'SV-258157r971542_rule'
   tag stig_id: 'RHEL-09-653040'
   tag fix_id: 'F-61822r926457_fix'
   tag cci: ['CCI-001855']

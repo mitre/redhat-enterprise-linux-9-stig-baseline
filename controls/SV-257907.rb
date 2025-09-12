@@ -12,18 +12,18 @@ If "/etc/passwd" file does not have a group owner of "root", this is a finding.'
 
 $ sudo chgrp root /etc/passwd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61648r925706_chk'
   tag severity: 'medium'
   tag gid: 'V-257907'
-  tag rid: 'SV-257907r925708_rule'
+  tag rid: 'SV-257907r991589_rule'
   tag stig_id: 'RHEL-09-232135'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61572r925707_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/passwd') do
     it { should exist }

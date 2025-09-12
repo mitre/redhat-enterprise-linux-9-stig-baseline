@@ -12,11 +12,10 @@ If the command has any output, then a dconf database needs to be updated, and th
 
 $ sudo dconf update'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61769r926069_chk'
   tag severity: 'medium'
   tag gid: 'V-258028'
-  tag rid: 'SV-258028r926071_rule'
+  tag rid: 'SV-258028r991589_rule'
   tag stig_id: 'RHEL-09-271090'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61693r926070_fix'
@@ -33,8 +32,8 @@ $ sudo dconf update'
 
   if no_gui
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed, this control is Not Applicable' do
-      skip 'A GUI desktop is not installed, this control is Not Applicable.'
+    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+      skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
 

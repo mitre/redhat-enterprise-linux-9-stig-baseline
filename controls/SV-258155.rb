@@ -5,16 +5,18 @@ control 'SV-258155' do
 The task of allocating audit record storage capacity is usually performed during initial installation of RHEL 9.'
   desc 'check', 'Verify RHEL 9 allocates audit record storage capacity to store at least one week of audit records when audit records are not immediately sent to a central audit record storage facility.
 
-Note: The partition size needed to capture a week of audit records is based on the activity level of the system and the total storage capacity available. Typically 10.0 GB of storage space for audit records should be sufficient.
+Note: The partition size needed to capture a week of audit records is based on the activity level of the system and the total storage capacity available. Typically 10.0GB of storage space for audit records should be sufficient.
 
 Determine which partition the audit records are being written to with the following command:
 
-$ sudo grep log_file /etc/audit/auditd.conf
+$ sudo grep -w log_file /etc/audit/auditd.conf
+
 log_file = /var/log/audit/audit.log
 
 Check the size of the partition that audit records are written to with the following command and verify whether it is sufficiently large:
 
  # df -h /var/log/audit/
+
 /dev/sda2 24G 10.4G 13.6G 43% /var/log/audit
 
 If the audit record partition is not allocated for sufficient storage capacity, this is a finding.'
@@ -29,11 +31,10 @@ audit records.
     If audit records are not stored on a partition made specifically for audit
 records, a new partition with sufficient space will need be to be created.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000341-GPOS-00132'
   tag gid: 'V-258155'
-  tag rid: 'SV-258155r926452_rule'
+  tag rid: 'SV-258155r1045300_rule'
   tag stig_id: 'RHEL-09-653030'
   tag fix_id: 'F-61820r926451_fix'
   tag cci: ['CCI-001849', 'CCI-001851']

@@ -14,18 +14,15 @@ StopIdleSessionSec=900
 
 The "logind" service must be restarted for the changes to take effect. To restart the "logind" service, run the following command:
 
-$ sudo systemctl restart systemd-logind
-
-Note: To preserve running user programs such as tmux, uncomment and/or edit "KillUserProccesses=no" in "/etc/systemd/logind.conf".'
+$ sudo systemctl restart systemd-logind'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61818r926216_chk'
   tag severity: 'medium'
   tag gid: 'V-258077'
-  tag rid: 'SV-258077r926218_rule'
+  tag rid: 'SV-258077r1014874_rule'
   tag stig_id: 'RHEL-09-412080'
   tag gtitle: 'SRG-OS-000163-GPOS-00072'
-  tag fix_id: 'F-61742r926217_fix'
+  tag fix_id: 'F-61742r1014873_fix'
   tag 'documentable'
   tag cci: ['CCI-001133']
   tag nist: ['SC-10']

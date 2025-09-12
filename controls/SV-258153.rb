@@ -18,11 +18,10 @@ disk_error_action = HALT
 
 If availability has been determined to be more important, and this decision is documented with the information system security officer (ISSO), configure the operating system to notify SA staff and ISSO staff in the event of an audit processing failure by setting the "disk_error_action" to "SYSLOG".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000047-GPOS-00023'
   tag gid: 'V-258153'
-  tag rid: 'SV-258153r926446_rule'
+  tag rid: 'SV-258153r1038966_rule'
   tag stig_id: 'RHEL-09-653020'
   tag fix_id: 'F-61818r926445_fix'
   tag cci: ['CCI-000140']

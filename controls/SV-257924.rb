@@ -24,12 +24,11 @@ $ sudo chown root [audit_tool]
 
 Replace "[audit_tool]" with each audit tool not owned by "root".'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag satisfies: ['SRG-OS-000256-GPOS-00097', 'SRG-OS-000257-GPOS-00098', 'SRG-OS-000258-GPOS-00099']
   tag gid: 'V-257924'
-  tag rid: 'SV-257924r925759_rule'
+  tag rid: 'SV-257924r991557_rule'
   tag stig_id: 'RHEL-09-232220'
   tag fix_id: 'F-61589r925758_fix'
   tag cci: ['CCI-001493']

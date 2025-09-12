@@ -3,25 +3,28 @@ control 'SV-258070' do
   desc 'Without auditing of these events, it may be harder or impossible to identify what an attacker did after an attack.'
   desc 'check', 'Verify the "/etc/security/faillock.conf" file is configured to log username information when unsuccessful logon attempts occur with the following command:
 
-$ grep audit /etc/security/faillock.conf
+$ sudo grep audit /etc/security/faillock.conf
 
 audit
 
 If the "audit" option is not set, is missing, or is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to log username information when unsuccessful logon attempts occur.
 
+Enable the feature using the following command:
+
+$ sudo authselect enable-feature with-faillock
+
 Add/modify the "/etc/security/faillock.conf" file to match the following line:
 
 audit'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000021-GPOS-00005'
   tag satisfies: ['SRG-OS-000021-GPOS-00005', 'SRG-OS-000329-GPOS-00128']
   tag gid: 'V-258070'
-  tag rid: 'SV-258070r926197_rule'
+  tag rid: 'SV-258070r1045153_rule'
   tag stig_id: 'RHEL-09-412045'
-  tag fix_id: 'F-61735r926196_fix'
+  tag fix_id: 'F-61735r1045152_fix'
   tag cci: ['CCI-000044']
   tag nist: ['AC-7 a']
   tag 'host'

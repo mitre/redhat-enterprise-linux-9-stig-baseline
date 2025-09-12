@@ -14,11 +14,10 @@ freq = 100
 
 The audit daemon must be restarted for the changes to take effect.'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61909r943022_chk'
   tag severity: 'medium'
   tag gid: 'V-258168'
-  tag rid: 'SV-258168r943024_rule'
+  tag rid: 'SV-258168r958428_rule'
   tag stig_id: 'RHEL-09-653095'
   tag gtitle: 'SRG-OS-000051-GPOS-00024'
   tag fix_id: 'F-61833r943023_fix'

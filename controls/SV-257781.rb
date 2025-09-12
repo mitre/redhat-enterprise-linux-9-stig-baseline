@@ -12,11 +12,10 @@ If the system default target is not set to "multi-user.target" and the informati
 
 $ sudo systemctl set-default multi-user.target'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61522r925328_chk'
   tag severity: 'medium'
   tag gid: 'V-257781'
-  tag rid: 'SV-257781r925330_rule'
+  tag rid: 'SV-257781r991589_rule'
   tag stig_id: 'RHEL-09-211030'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61446r925329_fix'

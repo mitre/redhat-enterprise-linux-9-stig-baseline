@@ -12,18 +12,18 @@ If "/etc/passwd-" file does not have an owner of "root", this is a finding.'
 
 $ sudo chown root /etc/passwd-'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61649r925709_chk'
   tag severity: 'medium'
   tag gid: 'V-257908'
-  tag rid: 'SV-257908r925711_rule'
+  tag rid: 'SV-257908r991589_rule'
   tag stig_id: 'RHEL-09-232140'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61573r925710_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   describe file('/etc/passwd-') do
     it { should exist }

@@ -3,7 +3,7 @@ control 'SV-258140' do
   desc 'rsyslogd is a system utility providing support for message logging. Support for both internet and Unix domain sockets enables this utility to support both local and remote logging. Couple this utility with "gnutls" (which is a secure communications library implementing the SSL, TLS, and DTLS protocols), to create a method to securely encrypt and offload auditing.'
   desc 'check', 'Verify that RHEL 9 has the rsyslogd package installed with the following command:
 
-$ sudo dnf list --installed rsyslog
+$ dnf list --installed rsyslog
 
 Example output:
 
@@ -14,11 +14,10 @@ If the "rsyslogd" package is not installed, this is a finding.'
 
 $ sudo dnf install rsyslogd'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag gid: 'V-258140'
-  tag rid: 'SV-258140r926407_rule'
+  tag rid: 'SV-258140r1045278_rule'
   tag stig_id: 'RHEL-09-652010'
   tag fix_id: 'F-61805r926406_fix'
   tag cci: ['CCI-000366', 'CCI-000154', 'CCI-001851']

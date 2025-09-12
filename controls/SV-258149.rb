@@ -13,25 +13,24 @@ UDP *.* @remotesystemname
 TCP *.* @@remotesystemname
 RELP *.* :omrelp:remotesystemname:2514
 Note that a port number was given as there is no standard port for RELP.'
-  desc 'check', 'Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
+  desc 'check', %q{Verify that RHEL 9 audit system offloads audit records onto a different system or media from the system being audited via rsyslog using TCP with the following command:
 
-$ sudo grep @@ /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+$ grep -i 'type="omfwd"' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
-/etc/rsyslog.conf:*.* @@[remoteloggingserver]:[port]
+*.* action(type="omfwd" target="[remoteloggingserver]" protocol="tcp" port="[port]"
 
 If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are offloaded to a different system or media.
 
-If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.'
+If there is no evidence that the audit logs are being offloaded to another system or media, this is a finding.)
   desc 'fix', 'Configure RHEL 9 to offload audit records onto a different system or media from the system being audited via TCP using rsyslog by specifying the remote logging server in "/etc/rsyslog.conf"" or "/etc/rsyslog.d/[customfile].conf" with the name or IP address of the log aggregation server.
 
-*.* @@[remoteloggingserver]:[port]"'
+*.* @@[remoteloggingserver]:[port]'}
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000479-GPOS-00224'
   tag satisfies: ['SRG-OS-000342-GPOS-00133', 'SRG-OS-000479-GPOS-00224', 'SRG-OS-000480-GPOS-00227']
   tag gid: 'V-258149'
-  tag rid: 'SV-258149r926434_rule'
+  tag rid: 'SV-258149r1045294_rule'
   tag stig_id: 'RHEL-09-652055'
   tag fix_id: 'F-61814r926433_fix'
   tag cci: ['CCI-001851', 'CCI-000366']
@@ -43,8 +42,8 @@ If there is no evidence that the audit logs are being offloaded to another syste
   }
 
   if input('alternative_logging_method') == ''
-    describe command("grep @@ #{input('logging_conf_files').join(' ')}") do
-      its('stdout') { should match(/^[^#]*:\*\.\*\s*@@[a-z.0-9]*:?[0-9]*?/) }
+    describe command("grep -i 'type=\"omfwd\"' #{input('logging_conf_files').join(' ')}") do
+      its('stdout') { should match(/^.*:\s*#\s*action\(\s*type\s*=\s*"omfwd"/i) }
     end
   else
     describe 'manual check' do

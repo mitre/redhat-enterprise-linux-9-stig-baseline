@@ -10,11 +10,10 @@ If a "shosts.equiv" file is found, this is a finding.'
 
 $ sudo rm /[path]/[to]/[file]/shosts.equiv'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257955'
-  tag rid: 'SV-257955r925852_rule'
+  tag rid: 'SV-257955r991589_rule'
   tag stig_id: 'RHEL-09-252070'
   tag fix_id: 'F-61620r925851_fix'
   tag cci: ['CCI-000366']
@@ -24,7 +23,7 @@ $ sudo rm /[path]/[to]/[file]/shosts.equiv'
 
   shosts_files = command('find / -xdev -xautofs -name shosts.equiv').stdout.strip.split("\n")
 
-  describe 'The RHEL8 filesystem' do
+  describe 'The filesystem' do
     it 'should not have any shosts.equiv files present' do
       expect(shosts_files).to be_empty, "Discovered shosts files:\n\t- #{shosts_files.join("\n\t- ")}"
     end

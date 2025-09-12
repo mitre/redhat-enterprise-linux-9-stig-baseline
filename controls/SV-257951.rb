@@ -3,7 +3,9 @@ control 'SV-257951' do
   desc 'If unrestricted mail relaying is permitted, unauthorized senders could
 use this host as a mail relay for the purpose of sending spam or other
 unauthorized activity.'
-  desc 'check', 'Verify RHEL 9 is configured to prevent unrestricted mail relaying with the following command:
+  desc 'check', 'If postfix is not installed, this is Not Applicable.
+
+Verify RHEL 9 is configured to prevent unrestricted mail relaying with the following command:
 
 $ postconf -n smtpd_client_restrictions
 
@@ -14,11 +16,10 @@ If the "smtpd_client_restrictions" parameter contains any entries other than "pe
 
 $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'"
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257951'
-  tag rid: 'SV-257951r925840_rule'
+  tag rid: 'SV-257951r1014843_rule'
   tag stig_id: 'RHEL-09-252050'
   tag fix_id: 'F-61616r925839_fix'
   tag cci: ['CCI-000366']
@@ -35,7 +36,7 @@ $ sudo postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'"
   else
     impact 0.0
     describe 'The `postfix` package is not installed' do
-      skip 'The `postfix` package is not installed, this control is Not Applicable'
+      skip 'The `postfix` package is not installed; this control is Not Applicable'
     end
   end
 end

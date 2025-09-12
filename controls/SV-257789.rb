@@ -5,31 +5,35 @@ control 'SV-257789' do
 
 $ sudo grep -A1 "superusers" /etc/grub2.cfg
 
- set superusers="<superusers-account>"
+set superusers="<accountname>"
 export superusers
+password_pbkdf2 <accountname> ${GRUB2_PASSWORD}
 
-The <superusers-account> is the actual account name different from common names like root, admin, or administrator.
+Verify <accountname> is not a common name such as root, admin, or administrator.
 
 If superusers contains easily guessable usernames, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to have a unique username for the grub superuser account.
 
-Edit the "/etc/grub.d/01_users" file and add or modify the following lines in the "### BEGIN /etc/grub.d/01_users ###" section:
+Edit the "/etc/grub.d/01_users" file and add or modify the following lines with a nondefault username for the superuser account:
 
-set superusers="superusers-account"
+set superusers="<accountname>"
 export superusers
 
 Once the superuser account has been added, update the grub.cfg file by running:
 
-$ sudo grubby --update-kernel=ALL'
+Regenerate the GRUB configuration:
+$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+Reboot the system:
+$ sudo reboot'
   impact 0.7
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
-  tag check_id: 'C-61530r943053_chk'
+  tag check_id: 'C-61530r1044839_chk'
   tag severity: 'high'
   tag gid: 'V-257789'
-  tag rid: 'SV-257789r943055_rule'
+  tag rid: 'SV-257789r1069356_rule'
   tag stig_id: 'RHEL-09-212020'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
-  tag fix_id: 'F-61454r943054_fix'
+  tag fix_id: 'F-61454r1069355_fix'
   tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
@@ -48,12 +52,12 @@ $ sudo grubby --update-kernel=ALL'
   superusers_account = grubfile.content.match(/set superusers="(?<superusers_account>\w+)"/)
 
   describe 'The GRUB superuser' do
-    it "should be set in the GRUB config file (\'#{grubfile}\')" do
-      expect(superusers_account).to_not be_nil, "No superuser account set in \'#{grubfile}\'"
+    it "should be set in the GRUB config file ('#{grubfile}')" do
+      expect(superusers_account).to_not be_nil, "No superuser account set in '#{grubfile}'"
     end
     unless superusers_account.nil?
       it 'should not contain easily guessable usernames' do
-        expect(input('disallowed_grub_superusers')).to_not include(superusers_account[:superusers_account]), "Superuser account is set to easily guessable username \'#{superusers_account[:superusers_account]}\'"
+        expect(input('disallowed_grub_superusers')).to_not include(superusers_account[:superusers_account]), "Superuser account is set to easily guessable username '#{superusers_account[:superusers_account]}'"
       end
     end
   end
