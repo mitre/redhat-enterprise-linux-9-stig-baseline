@@ -47,10 +47,9 @@ $ sudo dconf update'
               expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
             end
           end
-        else
-          describe 'Non-GNOME desktop environments detected' do
-            skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_non_gnome_guis.map { |gui| "  - #{gui}" }.join('\n')}"
-          end
+        end
+        describe 'Non-GNOME desktop environments detected' do
+          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_non_gnome_guis.map { |gui| "  - #{gui}" }.join('\n')}"
         end
       else
         describe 'dconf databases' do
