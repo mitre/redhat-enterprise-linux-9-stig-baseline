@@ -41,18 +41,15 @@ $ sudo dconf update'
       failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
 
       if gui.has_non_gnome_gui?
-        if failing_dbs.empty?
-          describe 'Non-GNOME desktop environments detected' do
-            skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_non_gnome_guis.map { |gui| '  - ' + gui }.join('\n')}"
-          end
-        else
-          describe 'Non-GNOME desktop environments detected' do
-            skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_non_gnome_guis.map { |gui| '  - ' + gui }.join('\n')}"
-          end
+        unless failing_dbs.empty?
           describe 'dconf databases' do
             it 'should have been updated after the last corresponding keyfile edit' do
               expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
             end
+          end
+        else
+          describe 'Non-GNOME desktop environments detected' do
+            skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_non_gnome_guis.map { |gui| "  - #{gui}" }.join('\n')}"
           end
         end
       else
@@ -64,7 +61,7 @@ $ sudo dconf update'
       end
     else
       describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_guis.map { |gui| '  - ' + gui }.join('\n')}"
+        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{gui.installed_guis.map { |gui| "  - #{gui}" }.join('\n')}"
       end
     end
   else
