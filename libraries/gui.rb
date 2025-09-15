@@ -1,11 +1,14 @@
-class Gui < Inspec.resource(1)
-  name 'gui'
+class GUIs < Inspec.resource(1)
+  name 'guis'
 
   supports platform: 'redhat', release: '9.*'
 
+  def initialize(possibly_installed_guis)
+    @user_specified_packages = possibly_installed_guis
+  end
+
   def installed_guis()
-    user_specified_packages = input('possibly_installed_guis')
-    user_specified_installed_packages = user_specified_packages.select do |package|
+    user_specified_installed_packages = @user_specified_packages.select do |package|
       inspec.package(package).installed?
     end
 
