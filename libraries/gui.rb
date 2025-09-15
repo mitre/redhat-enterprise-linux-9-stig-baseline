@@ -33,4 +33,5 @@ class Gui < Inspec.resource(1)
 
   def has_non_gnome_gui?()
     installed_non_gnome_guis.empty?
+  end
 end
