@@ -4,7 +4,7 @@ class Gui < Inspec.resource(1)
   supports platform: 'redhat', release: '9.*'
 
   def installed_guis()
-    user_specified_packages = inspec.input('possibly_installed_guis')
+    user_specified_packages = input('possibly_installed_guis')
     user_specified_installed_packages = user_specified_packages.select do |package|
       inspec.package(package).installed?
     end
