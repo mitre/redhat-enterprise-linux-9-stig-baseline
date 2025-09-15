@@ -36,6 +36,16 @@ supports:
 ###
 
 inputs:
+  # SV-258028, any other dconf ones that require seeing if a GUI exists - probably do a grep for /usr/share/xsessions
+  - name: possibly_installed_guis
+    description: 'GUI packages that might be installed - must be an actual package name'
+    type: Array
+    value:
+      - 'gnome-shell' # Gnome
+      - 'plasma-desktop' # KDE
+      - 'xfce4-session' # XFCE
+      # LXQt, MATE, Cinnamon, LXDE, Deepin, Pantheon, Budgie, i3, Sway
+
   # SV-258084, SV-258085, SV-258086, SV-258087, SV-258106
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
