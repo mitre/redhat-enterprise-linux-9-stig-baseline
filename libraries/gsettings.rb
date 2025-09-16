@@ -11,23 +11,23 @@ class Gsettings < Inspec.resource(1)
   end
 
   def get()
-    @get ||= inspec.command("gsettings#{@schemadir_snippet} get #{schema} #{key}")
+    @get ||= inspec.command("gsettings#{@schemadir_snippet} get #{@schema} #{@key}")
   end
 
   def writable()
-    @writable ||= inspec.command("gsettings#{@schemadir_snippet} writable #{schema} #{key}")
+    @writable ||= inspec.command("gsettings#{@schemadir_snippet} writable #{@schema} #{@key}")
   end
 
   def exist?()
-    @get.stderr.strip.empty?
+    get.stderr.strip.empty?
   end
 
-  def true?()
-    @get.stdout.strip == "true"
+  def set?(value)
+    get.stdout.strip == "#{value}"
   end
 
   def locked?()
-    @writable.stdout.strip == "false"
+    writable.stdout.strip == 'false'
   end
 
   def to_s

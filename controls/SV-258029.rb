@@ -44,12 +44,16 @@ $ sudo dconf update"
   else
     # TODO: q2: do we need to add a check to see if gsettings is installed?  my brief skim did not have a requirement that says that it must be installed.  is it possible that we would have to fallback to the checking /etc/dconf/db/* approach or manual review?
     # if a gnome gui is installed, gsettings is installed.  we will need to do checks for non-gnome guis
-    # TODO: q4: it is possible for schemas like 'org.gnome.login-screen' to not be there (in my case on a GUI less system so it'll probably be there on one with a GUI).  should we add an additional check to ensure that the schema exists before looking for a particular item within it?
-    # i think we just need to surface the error text that we receive since that clearly designates when/what schema is missing and then when/what key is missing
     describe gsettings('disable-restart-buttons', 'org.gnome.login-screen') do
-      it { should exist }
-      it { should be_true }
-      it { should be_locked }
+      it 'should exist.' do
+        expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
+      end
+      it 'should be true.' do
+        expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
+      end
+      it 'should be locked.' do
+        expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases."
+      end
     end
 
     restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip
