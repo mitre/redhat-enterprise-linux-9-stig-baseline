@@ -43,9 +43,13 @@ $ sudo dconf update"
     end
   else
     # TODO: q1: should we have a gsettings resource?  or would it fit under the dconf resource that we might create?
+    # it should be its own thing
     # TODO: q2: do we need to add a check to see if gsettings is installed?  my brief skim did not have a requirement that says that it must be installed.  is it possible that we would have to fallback to the checking /etc/dconf/db/* approach or manual review?
+    # if a gnome gui is installed, gsettings is installed.  we will need to do checks for non-gnome guis
     # TODO: q3: the requirement says that the ability for a user to do this thing must be disabled entirely but we are only checking the runtime status of this setting.  is it necessary to ensure that the lockfile also contains this requirement so that a user could not modify the settings between scans?  it seems like there is a 'gsettings writable' subcommand that might check this status
+    # the writable subcommand does check if the setting is locked or not.  the way i am reading the guidance makes me think that we need to lock these settings, but it should be straightforward to move that test if we decide we don't want it.
     # TODO: q4: it is possible for schemas like 'org.gnome.login-screen' to not be there (in my case on a GUI less system so it'll probably be there on one with a GUI).  should we add an additional check to ensure that the schema exists before looking for a particular item within it?
+    # i think we just need to surface the error text that we receive since that clearly designates when/what schema is missing and then when/what key is missing
     restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip
     describe 'GUI settings should disable the restart button' do
       subject { restart_button_setting }
