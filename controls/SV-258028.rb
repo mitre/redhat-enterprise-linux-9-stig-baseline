@@ -32,6 +32,10 @@ $ sudo dconf update'
 
   if g.has_gui?
     if g.has_gnome_gui?
+      describe dconf_dbs do
+        it { should have_keyfiles_dir }
+      end
+
       # TODO: q2: should we make a dconf resource?
       db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
 
