@@ -36,8 +36,13 @@ $ sudo dconf update'
       db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
 
       # TODO: q3: is there always a db.d for every db?  I feel like the answer might be no which is what is leading to a `comparison of Integer with nil failed` error
+      # local testing by deleting one of the .d dirs is the only way I've been able to replicate that error, but still need to validate by looking at the original system that caused this error
       # TODO: q4: the checktext compares the contents of each of those dbs not to the db.d directory itself but to the oldest mtime of those directory contents.  the contents themselves include user defined rules in file(s) named in a ##-name format and then a 'locks' directory that could contain file(s) that seem to share the same naming scheme.  there definitely are not always user defined rules files.  is there always going to be a locks directory in there or is it possible that db.d could be empty entirely?
+      # there doesn't seem to be a guarantee that a locks dir is always there
+      # was able to confirm that our logic marks a fail with the .d dir is touched but the checktext script passes it whereas the script causes a fail when the rules inside are touched but our code passes it which confirms my thoughts that our implementation is bugged due to mistakenly thinking that the mtime of a dir is influenced by mtime updates to items inside the dir
+      # i think that the provided script is also wrong though cause it falls into that same fallacy of mtime of a dir actually means anything cause we should actually be checking the mtimes of the "FILE"s inside of the .d and .d/locks dirs not the mtimes of all files (and dirs) inside of the .d
       # TODO: q5: why does the checktext check if the values are numbers before doing the comparison?  is it just defensive programming or is there actually a chance that those stats will not succeed for some reason?
+      # presumably there is a chance that those commands will not succeed considering the above research showing that the .d directory might not exist, but then again that command failed when that .d dir was not there so still not sure if the author was expecting that case to exist
       failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
 
       if g.has_non_gnome_gui?
