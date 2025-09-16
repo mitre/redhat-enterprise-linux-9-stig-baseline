@@ -32,29 +32,8 @@ $ sudo dconf update'
 
   if g.has_gui?
     if g.has_gnome_gui?
-      describe 'Each dconf database' do
-        subject { dconf_dbs }
-        it 'is expected to have a keyfiles directory.' do
-          failure_message = "These databases are missing keyfiles directories:\n\t- #{dconf_dbs.where(keyfile_dir_exists: false).name.join("\n\t- ")}"
-          expect(subject).to have_keyfiles_dir, failure_message
-        end
-        it 'is expected to have been updated after the last corresponding keyfile edit.' do
-          failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
-          failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
-          expect(subject).to have_latest_keyfiles_dir_updates, failure_message
-        end
-        it 'is expected to have been updated after the last corresponding lockfile edit.' do
-          failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
-          failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
-          expect(subject).to have_latest_lockfiles_dir_updates, failure_message
-        end
-      end
-
-      db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
-      failing_dbs = db_list.select { |db| !file("#{db}.d").exist? || file(db).mtime < file("#{db}.d").mtime }
-
       if g.has_non_gnome_gui?
-        unless failing_dbs.empty?
+        if dconf_dbs.where(keyfile_dir_exists: false).count != 0 || dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }.count != 0 || dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }.count != 0
           describe 'dconf databases' do
             it 'should have been updated after the last corresponding keyfile edit' do
               expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
@@ -65,9 +44,21 @@ $ sudo dconf update'
           skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
         end
       else
-        describe 'dconf databases' do
-          it 'should have been updated after the last corresponding keyfile edit' do
-            expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
+        describe 'Each dconf database' do
+          subject { dconf_dbs }
+          it 'is expected to have a keyfiles directory.' do
+            failure_message = "These databases are missing keyfiles directories:\n\t- #{dconf_dbs.where(keyfile_dir_exists: false).name.join("\n\t- ")}"
+            expect(subject).to have_keyfiles_dir, failure_message
+          end
+          it 'is expected to have been updated after the last corresponding keyfile edit.' do
+            failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
+            failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+            expect(subject).to have_latest_keyfiles_dir_updates, failure_message
+          end
+          it 'is expected to have been updated after the last corresponding lockfile edit.' do
+            failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
+            failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+            expect(subject).to have_latest_lockfiles_dir_updates, failure_message
           end
         end
       end
