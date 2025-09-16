@@ -43,6 +43,11 @@ $ sudo dconf update'
           failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
           expect(subject).to have_latest_keyfiles_dir_updates, failure_message
         end
+        it 'is expected to have been updated after the last corresponding lockfile edit.' do
+          failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
+          failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+          expect(subject).to have_latest_lockfiles_dir_updates, failure_message
+        end
       end
 
       db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
