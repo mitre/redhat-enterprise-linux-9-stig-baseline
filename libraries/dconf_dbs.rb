@@ -12,7 +12,7 @@ class DConfDBs < Inspec.resource(1)
   ft.register_column(:keyfile_dir, field: :keyfile_dir)
   ft.register_column(:keyfile_dir_exists, field: :keyfile_dir_exists)
 
-  ft.register_custom_matcher(:has_keyfiles_dir?) { |table| table.name.all? { |db| db.keyfile_dir_exists } }
+  ft.register_custom_matcher(:has_keyfiles_dir?) { |table| table.keyfile_dir_exists.all? }
   # matcher for the mtime comparison
 
   ft.install_filter_methods_on_resource(self, :collect_dconf_dbs_details)
