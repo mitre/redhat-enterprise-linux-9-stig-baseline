@@ -9,8 +9,10 @@ class DConfDBs < Inspec.resource(1)
 
   ft.register_column(:name, field: :name)
   ft.register_column(:mtime, field: :mtime)
+  ft.register_column(:keyfile_dir, field: :keyfile_dir)
+  ft.register_column(:keyfile_dir_exists, field: :keyfile_dir_exists)
 
-  ft.register_custom_matcher(:has_keyfiles_dir?) { |table| table.name.all? { |db| inspec.file("#{db}.d/").exist? } }
+  ft.register_custom_matcher(:has_keyfiles_dir?) { |table| table.name.all? { |db| db.keyfile_dir_exists } }
   # matcher for the mtime comparison
 
   ft.install_filter_methods_on_resource(self, :collect_dconf_dbs_details)
@@ -23,6 +25,6 @@ class DConfDBs < Inspec.resource(1)
 
   def collect_dconf_dbs_details
     dbs = inspec.command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
-    dbs.map { |db| { name: db, mtime: inspec.file(db).mtime } } # add in keyfiles + lock files
+    dbs.map { |db| { name: db, mtime: inspec.file(db).mtime, keyfile_dir: "#{db}.d/", keyfile_dir_exists:  inspec.file("#{db}.d/").exist? } } # add in keyfiles + lock files
   end
 end
