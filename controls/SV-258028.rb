@@ -49,7 +49,7 @@ $ sudo dconf update'
           end
         end
         describe 'Non-GNOME desktop environments detected' do
-          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
         end
       else
         describe 'dconf databases' do
@@ -60,7 +60,7 @@ $ sudo dconf update'
       end
     else
       describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages:\n\t- #{g.installed_guis.join("\n\t- ")}"
+        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_guis.join("\n\t- ")}"
       end
     end
   else
