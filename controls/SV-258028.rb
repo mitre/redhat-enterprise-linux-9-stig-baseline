@@ -28,9 +28,6 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  # TODO: q1: the /usr/share/xsessions directory seems to include .desktop files that display managers use to start a GUI session; however, there is no hardlink between this .desktop file existing and a GUI being installed.  it is possible to start a GUI without having a .desktop file in that location in which case this control would have to apply but we would have marked it as skipped.  what would be the process for actually identifying that no gui was installed?  do we just check for gnome packages in particular being installed since that's what the checktext describes?  and if a non-gnome package is installed then we have to fall back to manual review as the requirement is still applicable?  maybe we have to use an input where we force the user to tell us what desktop environment/gui that they're using?  what if they have multiple DE's installed and these rules are in place for gnome but not for the other DE's so someone could still violate the requirements specified in other controls?
-  # TODO: after further research and discussion, it's this and/or look at the list of all packages installed and see if any of them match desktop environments but that's gonna be having problems cause you can install whatever DE you want beyond just the standards, and even then there's no comprehensive list of standards beyond like gnome, kde, cinnamon, xfce, and for kde especially you will get false positives.  one possible approach that we could do is make the user supply an input of stuff that's installed with a default of whatever DEs we can think of and identify if any of those packages are installed.  alongside that, we look in this directory for anything.  if we get no results whatsoever, we get to do the NA out cause no GUIs were installed.  if we get any that are non-gnome, then we have to do the manual review.  if we get gnome, then we actually are able to do the below test as per the checktext.
-
   g = guis(input('possibly_installed_guis'))
 
   if g.has_gui?
@@ -52,7 +49,7 @@ $ sudo dconf update'
           end
         end
         describe 'Non-GNOME desktop environments detected' do
-          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{g.installed_non_gnome_guis.map { |gui| "  - #{gui}" }.join('\n')}"
+          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
         end
       else
         describe 'dconf databases' do
@@ -63,7 +60,7 @@ $ sudo dconf update'
       end
     else
       describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following packages:\n#{g.installed_guis.map { |gui| "  - #{gui}" }.join('\n')}"
+        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages:\n\t- #{g.installed_guis.join("\n\t- ")}"
       end
     end
   else

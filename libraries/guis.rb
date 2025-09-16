@@ -13,7 +13,7 @@ class GUIs < Inspec.resource(1)
     end
 
     desktop_files_to_packages_command = inspec.command('ls -w 1 /usr/share/xsessions/ | xargs -I{} rpm -qf /usr/share/xsessions/{} --qf "%{NAME}\n" | uniq')
-    if desktop_files_to_packages_command.exit_status != 0
+    if desktop_files_to_packages_command.exit_status == 0
       desktop_packages = desktop_files_to_packages_command.stdout.split("\n")
     else
       desktop_packages = []
@@ -23,7 +23,7 @@ class GUIs < Inspec.resource(1)
   end
 
   def installed_non_gnome_guis()
-    @installed_non_gnome_guis ||= installed_guis - installed_guis.all?(/gnome/)
+    @installed_non_gnome_guis ||= installed_guis - installed_guis.select { |gui| gui.match?(/gnome/) }
   end
 
   def has_gui?()
@@ -35,6 +35,6 @@ class GUIs < Inspec.resource(1)
   end
 
   def has_non_gnome_gui?()
-    installed_non_gnome_guis.empty?
+    !installed_non_gnome_guis.empty?
   end
 end
