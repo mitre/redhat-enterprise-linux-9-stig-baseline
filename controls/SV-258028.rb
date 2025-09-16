@@ -35,8 +35,8 @@ $ sudo dconf update'
       describe "Each dconf database" do
         subject { dconf_dbs }
         it "is expected to have a keyfiles directory." do
-          failure_message = "These dconf databases do not have keyfiles directories: #{dconf_dbs.where(keyfile_dir_exists: false).name.join(', ')}"
-          expect(subject).to(have_keyfiles_dir)
+          failure_message = "These dconf databases do not have keyfiles directories:\n\t- #{dconf_dbs.where(keyfile_dir_exists: false).name.join("\n\t- ")}"
+          expect(subject).to have_keyfiles_dir, failure_message
         end
       end
 
@@ -51,7 +51,7 @@ $ sudo dconf update'
       # i think that the provided script is also wrong though cause it falls into that same fallacy of mtime of a dir actually means anything cause we should actually be checking the mtimes of the "FILE"s inside of the .d and .d/locks dirs not the mtimes of all files (and dirs) inside of the .d
       # TODO: q5: why does the checktext check if the values are numbers before doing the comparison?  is it just defensive programming or is there actually a chance that those stats will not succeed for some reason?
       # presumably there is a chance that those commands will not succeed considering the above research showing that the .d directory might not exist, but then again that command failed when that .d dir was not there so still not sure if the author was expecting that case to exist
-      failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
+      failing_dbs = db_list.select { |db| !file("#{db}.d").exist? || file(db).mtime < file("#{db}.d").mtime }
 
       if g.has_non_gnome_gui?
         unless failing_dbs.empty?
