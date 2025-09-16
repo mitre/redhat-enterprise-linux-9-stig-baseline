@@ -42,8 +42,6 @@ $ sudo dconf update"
       skip 'A GUI desktop is not installed; this control is Not Applicable.'
     end
   else
-    # TODO: q2: do we need to add a check to see if gsettings is installed?  my brief skim did not have a requirement that says that it must be installed.  is it possible that we would have to fallback to the checking /etc/dconf/db/* approach or manual review?
-    # if a gnome gui is installed, gsettings is installed.  we will need to do checks for non-gnome guis
     describe gsettings('disable-restart-buttons', 'org.gnome.login-screen') do
       it 'should exist.' do
         expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
@@ -54,12 +52,6 @@ $ sudo dconf update"
       it 'should be locked.' do
         expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases."
       end
-    end
-
-    restart_button_setting = command('gsettings get org.gnome.login-screen disable-restart-buttons').stdout.strip
-    describe 'GUI settings should disable the restart button' do
-      subject { restart_button_setting }
-      it { should cmp 'true' }
     end
   end
 end
