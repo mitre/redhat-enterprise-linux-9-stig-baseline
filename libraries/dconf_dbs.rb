@@ -36,8 +36,8 @@ class DConfDBs < Inspec.resource(1)
         name: db,
         mtime: inspec.file(db).mtime,
         keyfile_dir: "#{db}.d/",
-        keyfile_dir_exists: keyfile_dir_exists
-        keyfiles: keyfiles
+        keyfile_dir_exists: keyfile_dir_exists,
+        keyfiles: keyfiles,
         lockfiles: lockfiles
       }
     }
