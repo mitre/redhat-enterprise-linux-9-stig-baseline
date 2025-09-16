@@ -32,22 +32,24 @@ $ sudo dconf update'
 
   if g.has_gui?
     if g.has_gnome_gui?
+      missing_dir_failures = dconf_dbs.where(keyfile_dir_exists: false)
+      keyfile_failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
+      lockfile_failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
+
       if g.has_non_gnome_gui?
-        if dconf_dbs.where(keyfile_dir_exists: false).count != 0 || dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }.count != 0 || dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }.count != 0
+        if missing_dir_failures.count != 0 || keyfile_failures.count != 0 || lockfile_failures.count != 0
           describe 'Each dconf database' do
             subject { dconf_dbs }
             it 'is expected to have a keyfiles directory.' do
-              failure_message = "These databases are missing keyfiles directories:\n\t- #{dconf_dbs.where(keyfile_dir_exists: false).name.join("\n\t- ")}"
+              failure_message = "These databases are missing keyfiles directories:\n\t- #{missing_dir_failures.name.join("\n\t- ")}"
               expect(subject).to have_keyfiles_dir, failure_message
             end
             it 'is expected to have been updated after the last corresponding keyfile edit.' do
-              failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
-              failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+              failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{keyfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
               expect(subject).to have_latest_keyfiles_dir_updates, failure_message
             end
             it 'is expected to have been updated after the last corresponding lockfile edit.' do
-              failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
-              failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+              failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{lockfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
               expect(subject).to have_latest_lockfiles_dir_updates, failure_message
             end
           end
@@ -59,17 +61,15 @@ $ sudo dconf update'
         describe 'Each dconf database' do
           subject { dconf_dbs }
           it 'is expected to have a keyfiles directory.' do
-            failure_message = "These databases are missing keyfiles directories:\n\t- #{dconf_dbs.where(keyfile_dir_exists: false).name.join("\n\t- ")}"
+            failure_message = "These databases are missing keyfiles directories:\n\t- #{missing_dir_failures.name.join("\n\t- ")}"
             expect(subject).to have_keyfiles_dir, failure_message
           end
           it 'is expected to have been updated after the last corresponding keyfile edit.' do
-            failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
-            failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+            failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{keyfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
             expect(subject).to have_latest_keyfiles_dir_updates, failure_message
           end
           it 'is expected to have been updated after the last corresponding lockfile edit.' do
-            failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
-            failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+            failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{lockfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
             expect(subject).to have_latest_lockfiles_dir_updates, failure_message
           end
         end
