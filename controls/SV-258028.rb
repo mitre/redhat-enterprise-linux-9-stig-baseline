@@ -81,8 +81,8 @@ $ sudo dconf update'
     end
   else
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end
