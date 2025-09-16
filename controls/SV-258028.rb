@@ -39,8 +39,9 @@ $ sudo dconf update'
           expect(subject).to have_keyfiles_dir, failure_message
         end
         it 'is expected to have been updated after the last corresponding keyfile edit.' do
-          failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf.mtime } }
-          failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.map { |f| "#{f.name}\n\t\t- #{f.keyfiles.join("\n\t\t- ")}" }.join("\n\t- ")}"
+          failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
+          failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+          expect(subject).to have_latest_keyfiles_dir_updates, failure_message
         end
       end
 

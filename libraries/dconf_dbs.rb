@@ -15,8 +15,8 @@ class DConfDBs < Inspec.resource(1)
   ft.register_column(:lockfiles, field: :lockfiles)
 
   ft.register_custom_matcher(:has_keyfiles_dir?) { |table| table.keyfile_dir_exists.all? }
-  ft.register_custom_matcher(:has_latest_keyfiles_dir_updates?) { |table| table.where { keyfiles.any? { |kf| mtime < kf.mtime } }.empty? }
-  ft.register_custom_matcher(:has_latest_lockfiles_dir_updates?) { |table| table.where { lockfiles.any? { |lf| mtime < lf.mtime } }.empty? }
+  ft.register_custom_matcher(:has_latest_keyfiles_dir_updates?) { |table| table.where { !keyfiles.empty? && keyfiles.all? { |kf| mtime < kf[:mtime] } }.count == 0 }
+  ft.register_custom_matcher(:has_latest_lockfiles_dir_updates?) { |table| table.where { !lockfiles.empty? && lockfiles.all? { |lf| mtime < lf[:mtime] } }.count == 0 }
 
   ft.install_filter_methods_on_resource(self, :collect_dconf_dbs_details)
 
@@ -30,8 +30,8 @@ class DConfDBs < Inspec.resource(1)
     dbs = inspec.command('find /etc/dconf/db/ -maxdepth 1 -type f').stdout.strip.split("\n")
     dbs.map { |db|
       keyfile_dir_exists = inspec.file("#{db}.d/").exist?
-      keyfiles = keyfile_dir_exists ? inspec.command("find /etc/dconf/db/#{db}.d/ -maxdepth 1 -type f").stdout.strip.split("\n").map { |f| { name: f, mtime: inspec.file(f).mtime } } : []
-      lockfiles = keyfile_dir_exists && inspec.file("#{db}.d/locks").exist? ? inspec.command("find /etc/dconf/db/#{db}.d/locks -maxdepth 1 -type f").stdout.strip.split("\n").map { |f| { name: f, mtime: inspec.file(f).mtime } } : []
+      keyfiles = keyfile_dir_exists ? inspec.command("find -L #{db}.d/ -maxdepth 1 -type f").stdout.strip.split("\n").map { |f| { name: f, mtime: inspec.file(f).mtime } } : []
+      lockfiles = keyfile_dir_exists && inspec.file("#{db}.d/locks").exist? ? inspec.command("find -L #{db}.d/locks -maxdepth 1 -type f").stdout.strip.split("\n").map { |f| { name: f, mtime: inspec.file(f).mtime } } : []
       {
         name: db,
         mtime: inspec.file(db).mtime,
