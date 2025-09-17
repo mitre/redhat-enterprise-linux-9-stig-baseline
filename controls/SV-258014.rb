@@ -71,10 +71,14 @@ tag 'host'
     else
       if !gs.error? && !gs.set?('false') && gui_automount_required
         impact 0.0
-      end
-      describe gs do
-        it 'should be false.' do
-          expect(subject).to be_set('false'), !gs.error? && gui_automount_required ? "Profile inputs indicate that the value of #{gs} is a documented operational requirement." : "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+        describe gs do
+          skip "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
+        end
+      else
+        describe gs do
+          it 'should be false.' do
+            expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+          end
         end
       end
     end
