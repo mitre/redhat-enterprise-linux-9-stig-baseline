@@ -58,7 +58,7 @@ $ sudo dconf update'
       if g.has_gnome_gui? && !gs.set?('true')
         describe gs do
           it 'should be true.' do
-            expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+            expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
           end
         end
       end
@@ -69,7 +69,7 @@ $ sudo dconf update'
     else
       describe gs do
         it 'should be true.' do
-          expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+          expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
     end

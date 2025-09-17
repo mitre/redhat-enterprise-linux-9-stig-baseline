@@ -59,7 +59,7 @@ tag 'host'
         else
           describe gs do
             it 'should be false.' do
-              expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+              expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
             end
           end
         end
@@ -77,7 +77,7 @@ tag 'host'
       else
         describe gs do
           it 'should be false.' do
-            expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+            expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
           end
         end
       end
