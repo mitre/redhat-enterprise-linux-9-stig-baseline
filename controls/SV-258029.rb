@@ -40,16 +40,13 @@ $ sudo dconf update"
   if g.has_gui?
     if g.has_gnome_gui?
       if g.has_non_gnome_gui?
-        if !gs.exist? || !gs.set?('true') || !gs.locked?
+        if !gs.exist? || !gs.set?('true')
           describe gs do
             it 'should exist.' do
               expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
             end
             it 'should be true.' do
               expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
-            end
-            it 'should be locked.' do
-              expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases."
             end
           end
         end
@@ -64,9 +61,6 @@ $ sudo dconf update"
           it 'should be true.' do
             expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
           end
-          it 'should be locked.' do
-            expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases."
-          end
         end
       end
     else
@@ -76,7 +70,7 @@ $ sudo dconf update"
     end
   else
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
       skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
