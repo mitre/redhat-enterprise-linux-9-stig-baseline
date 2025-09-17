@@ -34,7 +34,7 @@ $ sudo dconf update'
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-000778', 'CCI-001958']
   tag nist: ['CM-6 b', 'IA-3']
-  tag 'host'
+tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
     !virtualization.system.eql?('docker')
@@ -42,48 +42,41 @@ $ sudo dconf update'
 
   g = guis(input('possibly_installed_guis'))
   gs = gsettings('automount-open', 'org.gnome.desktop.media-handling')
+  gui_automount_required = input('gui_automount_required')
 
-  if g.has_gui?
-    if g.has_gnome_gui?
-      if g.has_non_gnome_gui?
-        if !gs.exist? || !gs.set?('false')
-          if !gs.set?('false') && input('gui_automount_required')
-            impact 0.0
-          end
-          describe gs do
-            it 'should exist.' do
-              expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
-            end
-            it 'should be false.' do
-              expect(subject).to be_set('false'), input('gui_automount_required') ? 'Profile inputs indicate that this parameter\'s settings is a documented operational requirement.' : "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
-            end
-          end
-        end
-        describe 'Non-GNOME desktop environments detected' do
-          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
-        end
-      else
-        if !gs.set?('false') && input('gui_automount_required')
-          impact 0.0
-        end
-        describe gs do
-          it 'should exist.' do
-            expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
-          end
-          it 'should be false.' do
-            expect(subject).to be_set('false'), input('gui_automount_required') ? 'Profile inputs indicate that this parameter\'s settings is a documented operational requirement.' : "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
-          end
-        end
-      end
-    else
-      describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_guis.join("\n\t- ")}"
-      end
-    end
-  else
+  unless g.has_gui?
     impact 0.0
     describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
       skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
+    end
+  else
+    if g.has_non_gnome_gui?
+      skip_message_addition = ''
+
+      if g.has_gnome_gui? && !gs.set('false')
+        if !gs.error? && gui_automount_required
+          skip_message_addition = "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
+        else
+          describe gs do
+            it 'should be false.' do
+              expect(subject).to be_set('false'), "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+            end
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.length == 0 ? '' : "\n#{skip_message_addition}"}"
+      end
+    else
+      if !gs.error? && !gs.set('false') && gui_automount_required
+        impact 0.0
+      end
+      describe gs do
+        it 'should be false.' do
+          expect(subject).to be_set('false'), !gs.error? && gui_automount_required ? "Profile inputs indicate that the value of #{gs} is a documented operational requirement." : "#{subject} must be set to `false` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Receieved the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   end
 end

@@ -7,7 +7,6 @@ class Gsettings < Inspec.resource(1)
 
   example <<~EXAMPLE
     describe gsettings('disable-restart-buttons', 'org.gnome.login-screen')
-      it { should exist }
       it { should be_set('true') }
       it { should be_locked }
     end
@@ -28,8 +27,12 @@ class Gsettings < Inspec.resource(1)
     @writable ||= inspec.command("gsettings#{@schemadir_snippet} writable #{@schema} #{@key}")
   end
 
-  def exist?()
-    get.stderr.strip.empty?
+  def error()
+    @error ||= get.stderr.strip
+  end
+
+  def error?()
+    error.length > 0
   end
 
   def set?(value)
