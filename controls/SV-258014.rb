@@ -53,7 +53,7 @@ tag 'host'
     if g.has_non_gnome_gui?
       skip_message_addition = ''
 
-      if g.has_gnome_gui? && !gs.set('false')
+      if g.has_gnome_gui? && !gs.set?('false')
         if !gs.error? && gui_automount_required
           skip_message_addition = "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
         else
@@ -69,7 +69,7 @@ tag 'host'
         skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.length == 0 ? '' : "\n#{skip_message_addition}"}"
       end
     else
-      if !gs.error? && !gs.set('false') && gui_automount_required
+      if !gs.error? && !gs.set?('false') && gui_automount_required
         impact 0.0
       end
       describe gs do
