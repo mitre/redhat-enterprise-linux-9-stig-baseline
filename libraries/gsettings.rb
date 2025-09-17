@@ -3,6 +3,16 @@ class Gsettings < Inspec.resource(1)
 
   supports platform: 'redhat', release: '9.*'
 
+  desc 'Use the gsettings InSpec audit resource to test configuration data saved in GNOME\'s GSettings format.'
+
+  example <<~EXAMPLE
+    describe gsettings('disable-restart-buttons', 'org.gnome.login-screen')
+      it { should exist }
+      it { should be_set('true') }
+      it { should be_locked }
+    end
+  EXAMPLE
+
   def initialize(key, schema, schemadir = nil)
     @key = key
     @schema = schema

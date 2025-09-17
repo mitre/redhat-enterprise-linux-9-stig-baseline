@@ -3,6 +3,21 @@ class GUIs < Inspec.resource(1)
 
   supports platform: 'redhat', release: '9.*'
 
+  desc 'Use the guis InSpec audit resource to test for the existence of GUI desktop environments.  This is mostly a utility resource to handle requirements that differ when a GNOME desktop environment is available.'
+  example <<~EXAMPLE
+    g = guis(input('possibly_installed_guis'))
+    if g.has_gui?
+      describe command('ls -w 1 /usr/share/xsessions')
+        its('stdout.strip.lines.count') { should be > 0 }
+      end
+    else
+      describe 'No .desktop files detected.' do
+        skip 'Manual check required.'
+      end
+    end
+  EXAMPLE
+
+  # `possibly_installed_guis` must be an array of packages whose installation would count as proof that a GUI desktop environment was installed
   def initialize(possibly_installed_guis)
     @user_specified_packages = possibly_installed_guis
   end

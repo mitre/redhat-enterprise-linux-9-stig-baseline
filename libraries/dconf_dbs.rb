@@ -5,6 +5,16 @@ class DConfDBs < Inspec.resource(1)
 
   supports platform: 'redhat', release: '9.*'
 
+  desc 'Use the dconf_dbs InSpec audit resource to test the `dconf` binary databases, keyfiles, and lockfiles in `/etc/dconf/db/`.'
+
+  example <<~EXAMPLE
+    describe dconf_dbs do
+      it { should have_keyfiles_dir }
+      it { should have_latest_keyfiles_dir_updates }
+      it { should have_latest_lockfiles_dir_updates }
+    end
+  EXAMPLE
+
   ft = FilterTable.create
 
   ft.register_column(:name, field: :name)
