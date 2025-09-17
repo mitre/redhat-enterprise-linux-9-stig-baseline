@@ -45,18 +45,44 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('banner-message-enable', 'org.gnome.login-screen')
 
-  if no_gui
-    impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+  if g.has_gui?
+    if g.has_gnome_gui?
+      if g.has_non_gnome_gui?
+        if !gs.exist? || !gs.set?('true')
+          describe gs do
+            it 'should exist.' do
+              expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
+            end
+            it 'should be true.' do
+              expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
+            end
+          end
+        end
+        describe 'Non-GNOME desktop environments detected' do
+          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+        end
+      else
+        describe gs do
+          it 'should exist.' do
+            expect(subject).to exist, "#{subject} must be set using either `gsettings set` or modifying the `gconf` keyfiles and regenerating the `gconf` databases.  Received the following error on access: `#{subject.get.stderr.strip}`."
+          end
+          it 'should be true.' do
+            expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases."
+          end
+        end
+      end
+    else
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_guis.join("\n\t- ")}"
+      end
     end
   else
-    output = command('gsettings get org.gnome.login-screen banner-message-enable').stdout.strip
-    describe 'A banner message should be displayed on the login screen' do
-      subject { output }
-      it { should cmp 'true' }
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end
