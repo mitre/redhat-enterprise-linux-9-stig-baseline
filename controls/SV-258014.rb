@@ -41,7 +41,7 @@ $ sudo dconf update'
   }
 
   g = guis(input('possibly_installed_guis'))
-  gs = gsettings('disable-restart-buttons', 'org.gnome.login-screen')
+  gs = gsettings('automount-open', 'org.gnome.desktop.media-handling')
 
   if g.has_gui?
     if g.has_gnome_gui?
