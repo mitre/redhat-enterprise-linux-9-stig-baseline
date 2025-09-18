@@ -45,16 +45,35 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  if package('gnome-desktop3').installed?
-    output = command('gsettings writable org.gnome.desktop.screensaver lock-enabled').stdout.strip
-    describe 'Users should not be able to override GUI settings' do
-      subject { output }
-      it { should cmp 'false' }
+  # the lockfile should not need to be examined because the writable status for a given key is directly derived from its existence in a lockfile and consequently updated dconf database
+
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('lock-enabled', 'org.gnome.desktop.screensaver')
+
+  if g.has_gui?
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && !gs.locked?
+        describe gs do
+          it 'should be locked.' do
+            expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
+    else
+      describe gs do
+        it 'should be locked.' do
+          expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   else
     impact 0.0
-    describe 'The GNOME desktop is not installed; this control is Not Applicable.' do
-      skip 'The GNOME desktop is not installed; this control is Not Applicable.'
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

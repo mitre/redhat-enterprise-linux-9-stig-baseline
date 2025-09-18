@@ -36,18 +36,33 @@ $ sudo dconf update)
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('logout', 'org.gnome.settings-daemon.plugins.media-keys')
 
-  if no_gui
-    impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+  if g.has_gui?
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && !gs.set?("['']")
+        describe gs do
+          it "should be `['']`." do
+            expect(subject).to be_set("['']"), "#{subject} must be set to `['']` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
+    else
+      describe gs do
+        it "should be `['']`." do
+          expect(subject).to be_set("['']"), "#{subject} must be set to `['']` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   else
-    output = command('gsettings get org.gnome.settings-daemon.plugins.media-keys logout').stdout.strip
-    describe 'GNOME desktop should be configured to ignore the Ctrl-Alt-Del sequence' do
-      subject { output }
-      it { should cmp "['']" }
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

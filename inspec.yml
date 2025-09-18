@@ -36,6 +36,30 @@ supports:
 ###
 
 inputs:
+  # SV-258028, any other dconf ones that require seeing if a GUI exists - probably do a grep for /usr/share/xsessions
+  - name: possibly_installed_guis
+    description: 'GUI packages that might be installed - must be an actual package name'
+    type: Array
+    value:
+      - 'gnome-shell' # Gnome
+      - 'gnome-desktop3' # Gnome
+      - 'gdm' # Gnome
+      - 'plasma-desktop' # KDE
+      - 'xfce4-session' # XFCE
+      # LXQt, MATE, Cinnamon, LXDE, Deepin, Pantheon, Budgie, i3, Sway
+
+  # SV-258025
+  - name: screensaver_lock_delay
+    description: 'Seconds of delay between the screensaver activating and the user session being locked'
+    type: Numeric
+    value: 5
+
+  # SV-258028
+  - name: screensaver_picture_uri
+    description: 'Path to a PNG, JPG, JPEG, or TGA file that will be scaled as necessary and then used as the lock screen background'
+    type: String
+    value: ''
+
   # SV-258084, SV-258085, SV-258086, SV-258087, SV-258106
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
@@ -433,15 +457,21 @@ inputs:
     type: Numeric
     value: 3
 
-  # SV-258023, SV-258068
-  - name: system_inactivity_timeout
+  # SV-258023
+  - name: graphical_user_session_inactivity_timeout
+    description: Maximum system inactivity timeout (time in seconds).
+    type: Numeric
+    value: 900
+
+  # SV-258068
+  - name: interactive_command_shell_user_session_inactivity_timeout
     description: Maximum system inactivity timeout (time in seconds).
     type: Numeric
     value: 600
 
   # SV-258049
   - name: days_of_inactivity
-    description: Maximum number of days if account inactivity before account lockout
+    description: Maximum number of days of account inactivity before account lockout
     type: Numeric
     value: 35
 
@@ -541,12 +571,6 @@ inputs:
     description: Minimum amount of time account must be locked out after failed logins. '0' indicates an account should not unlock until reset by an admin.
     type: Numeric
     value: 0
-
-  # SV-258066
-  - name: system_activity_timeout
-    description: The expected maximum delay in seconds before the system will lock the session
-    type: Numeric
-    value: 600
 
   # SV-258060
   - name: log_directory
@@ -1162,9 +1186,15 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-258014
+  # SV-258016
   - name: gui_autorun_required
     description: Set to true if there is a requirement for this system to enable graphical user interface autorun function that is documented with the ISSO
+    type: Boolean
+    value: false
+ 
+  # SV-258017
+  - name: gui_autorun_writable_required
+    description: Set to true if there is a requirement for this system to enable user override of the disablement of the graphical user interface autorun function that is documented with the ISSO
     type: Boolean
     value: false
 

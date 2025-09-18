@@ -39,24 +39,45 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  if input('gui_autorun_required')
-    impact 0.0
-    describe 'N/A' do
-      skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
-    end
-  else
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('autorun-never', 'org.gnome.desktop.media-handling')
+  gui_autorun_required = input('gui_autorun_required')
 
-    no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+  if g.has_gui?
+    if g.has_non_gnome_gui?
+      skip_message_addition = ''
 
-    if no_gui
+      if g.has_gnome_gui? && !gs.set?('true')
+        if !gs.error? && gui_autorun_required
+          skip_message_addition = "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
+        else
+          describe gs do
+            it 'should be true.' do
+              expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+            end
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.empty? ? '' : "\n#{skip_message_addition}"}"
+      end
+    elsif !gs.error? && !gs.set?('true') && gui_autorun_required
       impact 0.0
-      describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-        skip 'A GUI desktop is not installed; this control is Not Applicable.'
+      describe gs do
+        skip "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
       end
     else
-      describe command('gsettings get org.gnome.desktop.media-handling autorun-never') do
-        its('stdout.strip') { should cmp 'true' }
+      describe gs do
+        it 'should be true.' do
+          expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

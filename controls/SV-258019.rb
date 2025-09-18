@@ -44,24 +44,40 @@ $ sudo dconf update)
     !virtualization.system.eql?('docker')
   }
 
-  if !input('smart_card_enabled')
-    impact 0.0
-    describe "The system is not smartcard enabled thus this control is Not
-    Applicable" do
-      skip "The system is not using Smartcards / PIVs to fulfil the MFA
-      requirement; this control is Not Applicable."
-    end
-  elsif !package('gnome-desktop3').installed?
-    impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-      Applicable."
+  if input('smart_card_enabled')
+    g = guis(input('possibly_installed_guis'))
+    gs = gsettings('removal-action', 'org.gnome.settings-daemon.peripherals.smartcard')
+
+    if g.has_gui?
+      if g.has_non_gnome_gui?
+        if g.has_gnome_gui? && !gs.set?('lock-screen')
+          describe gs do
+            it 'should be lock-screen.' do
+              expect(subject).to be_set('lock-screen'), "#{subject} must be set to `lock-screen` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+            end
+          end
+        end
+
+        describe 'Non-GNOME desktop environments detected' do
+          skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+        end
+      else
+        describe gs do
+          it 'should be lock-screen.' do
+            expect(subject).to be_set('lock-screen'), "#{subject} must be set to `lock-screen` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+    else
+      impact 0.0
+      describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+        skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
+      end
     end
   else
-    output = command('gsettings get org.gnome.settings-daemon.peripherals.smartcard removal-action').stdout.strip
-    describe 'Smart card removal should trigger a session lock until reauthentication' do
-      subject { output }
-      it { should cmp "'lock-screen'" }
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfill the MFA requirement; this control is Not Applicable.'
     end
   end
 end

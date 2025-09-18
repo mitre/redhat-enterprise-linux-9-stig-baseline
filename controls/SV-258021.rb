@@ -49,15 +49,33 @@ $ sudo dconf update)
     !virtualization.system.eql?('docker')
   }
 
-  if package('gnome-desktop3').installed?
-    describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
-      its('stdout.strip') { should cmp 'true' }
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('lock-enabled', 'org.gnome.desktop.screensaver')
+
+  if g.has_gui?
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && !gs.set?('true')
+        describe gs do
+          it 'should be true.' do
+            expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
+    else
+      describe gs do
+        it 'should be true.' do
+          expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   else
     impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-        Applicable."
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end
