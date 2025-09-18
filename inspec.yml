@@ -445,8 +445,14 @@ inputs:
     type: Numeric
     value: 3
 
-  # SV-258023, SV-258068
-  - name: system_inactivity_timeout
+  # SV-258023
+  - name: graphical_user_session_inactivity_timeout
+    description: Maximum system inactivity timeout (time in seconds).
+    type: Numeric
+    value: 900
+
+  # SV-258068
+  - name: interactive_command_shell_user_session_inactivity_timeout
     description: Maximum system inactivity timeout (time in seconds).
     type: Numeric
     value: 600
