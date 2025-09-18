@@ -46,7 +46,7 @@ $ sudo dconf update'
   gs = gsettings('lock-delay', 'org.gnome.desktop.screensaver')
   delay = input('screensaver_lock_delay')
   set_check = proc { |val|
-    numeric_type, value = val.split(' ')
+    numeric_type, value = val.split
     value = value.to_i
     numeric_type == 'uint32' && value >= 0 && value <= delay
   }

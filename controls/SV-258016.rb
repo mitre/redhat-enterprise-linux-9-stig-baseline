@@ -60,7 +60,7 @@ $ sudo dconf update'
       end
 
       describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.length == 0 ? '' : "\n#{skip_message_addition}"}"
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.empty? ? '' : "\n#{skip_message_addition}"}"
       end
     elsif !gs.error? && !gs.set?('true') && gui_autorun_required
       impact 0.0

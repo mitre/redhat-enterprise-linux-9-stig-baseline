@@ -45,7 +45,7 @@ $ sudo dconf update'
   gs = gsettings('idle-delay', 'org.gnome.desktop.session')
   timeout = input('graphical_user_session_inactivity_timeout')
   set_check = proc { |val|
-    numeric_type, value = val.split(' ')
+    numeric_type, value = val.split
     value = value.to_i
     numeric_type == 'uint32' && value > 0 && value <= timeout
   }
