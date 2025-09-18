@@ -54,6 +54,12 @@ inputs:
     type: Numeric
     value: 5
 
+  # SV-258028
+  - name: screensaver_picture_uri
+    description: 'Path to a PNG, JPG, JPEG, or TGA file that will be scaled as necessary and then used as the lock screen background'
+    type: String
+    value: ''
+
   # SV-258084, SV-258085, SV-258086, SV-258087, SV-258106
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
