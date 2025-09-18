@@ -36,7 +36,12 @@ class Gsettings < Inspec.resource(1)
   end
 
   def set?(value)
-    get.stdout.strip == "#{value}"
+    get_stdout = get.stdout.strip
+    if block_given?
+      yield(get_stdout)
+    else
+      get_stdout == value
+    end
   end
 
   def locked?()
