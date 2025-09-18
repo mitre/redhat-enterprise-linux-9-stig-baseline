@@ -1172,9 +1172,15 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-258014
+  # SV-258016
   - name: gui_autorun_required
     description: Set to true if there is a requirement for this system to enable graphical user interface autorun function that is documented with the ISSO
+    type: Boolean
+    value: false
+ 
+  # SV-258017
+  - name: gui_autorun_writable_required
+    description: Set to true if there is a requirement for this system to enable user override of the disablement of the graphical user interface autorun function that is documented with the ISSO
     type: Boolean
     value: false
 
