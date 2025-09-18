@@ -38,7 +38,7 @@ class GUIs < Inspec.resource(1)
   end
 
   def installed_non_gnome_guis()
-    @installed_non_gnome_guis ||= installed_guis - installed_guis.select { |gui| gui.match?(/gnome/) }
+    @installed_non_gnome_guis ||= installed_guis - installed_guis.select { |gui| gui.match?(/gnome/) || gui == 'gdm' }
   end
 
   def has_gui?()
@@ -46,7 +46,7 @@ class GUIs < Inspec.resource(1)
   end
 
   def has_gnome_gui?()
-    installed_guis.any?(/gnome/)
+    installed_guis.any?(/gnome/) || installed_guis.include?('gdm')
   end
 
   def has_non_gnome_gui?()

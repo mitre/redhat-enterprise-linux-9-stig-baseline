@@ -42,6 +42,8 @@ inputs:
     type: Array
     value:
       - 'gnome-shell' # Gnome
+      - 'gnome-desktop3' # Gnome
+      - 'gdm' # Gnome
       - 'plasma-desktop' # KDE
       - 'xfce4-session' # XFCE
       # LXQt, MATE, Cinnamon, LXDE, Deepin, Pantheon, Budgie, i3, Sway

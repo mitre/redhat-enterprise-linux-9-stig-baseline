@@ -30,26 +30,40 @@ AutomaticLoginEnable=false'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
+  only_if('This requirement is Not Applicable inside a container') {
     !virtualization.system.eql?('docker')
   }
 
-  custom_conf = '/etc/gdm/custom.conf'
+  g = guis(input('possibly_installed_guis'))
 
-  if package('gnome-desktop3').installed?
-    if (f = file(custom_conf)).exist?
-      describe parse_config_file(custom_conf) do
-        its('daemon.AutomaticLoginEnable') { cmp false }
-      end
-    else
-      describe f do
-        it { should exist }
-      end
+  unless g.has_gui?
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   else
-    impact 0.0
-    describe 'The system does not have GDM installed' do
-      skip 'The system does not have GDM installed, this requirement is Not Applicable.'
+    if g.has_gnome_gui?
+      conf_path = '/etc/gdm/custom.conf'
+      conf_file = file(conf_path)
+
+      if conf_file.exist?
+        describe "`gdm` config file at #{conf_path}" do
+          subject { parse_config_file(conf_path) }
+          it 'should have `AutomaticLoginEnable` set to `false` in the `[daemon]` section.' do
+            expect(subject.params['daemon']['AutomaticLoginEnable']).to eq ('false')
+          end
+        end
+      else
+        describe conf_file do
+          it { should exist }
+        end
+      end
+    end
+
+    if g.has_non_gnome_gui?
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
     end
   end
 end
