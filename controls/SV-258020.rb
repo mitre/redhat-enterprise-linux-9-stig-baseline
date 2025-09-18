@@ -37,18 +37,35 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+  # the lockfile should not need to be examined because the writable status for a given key is directly derived from its existence in a lockfile and consequently updated dconf database
 
-  if no_gui
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('removal-action', 'org.gnome.settings-daemon.peripherals.smartcard')
+
+  unless g.has_gui?
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   else
-    output = command('gsettings writable org.gnome.settings-daemon.peripherals.smartcard removal-action').stdout.strip
-    describe 'Users should not be able to override the smart card removal action setting' do
-      subject { output }
-      it { should cmp 'false' }
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && !gs.locked?()
+        describe gs do
+          it 'should be locked.' do
+            expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
+    else
+      describe gs do
+        it 'should be locked.' do
+          expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   end
 end
