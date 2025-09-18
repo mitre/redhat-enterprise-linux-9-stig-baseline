@@ -44,21 +44,11 @@ $ sudo dconf update)
     !virtualization.system.eql?('docker')
   }
 
-  if !input('smart_card_enabled')
-    impact 0.0
-    describe "The system is not smartcard enabled thus this control is Not Applicable" do
-      skip "The system is not using Smartcards / PIVs to fulfill the MFA requirement; this control is Not Applicable."
-    end
-  else
+  if input('smart_card_enabled')
     g = guis(input('possibly_installed_guis'))
     gs = gsettings('removal-action', 'org.gnome.settings-daemon.peripherals.smartcard')
 
-    unless g.has_gui?
-      impact 0.0
-      describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-        skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-      end
-    else
+    if g.has_gui?
       if g.has_non_gnome_gui?
         if g.has_gnome_gui? && !gs.set?('lock-screen')
           describe gs do
@@ -78,6 +68,16 @@ $ sudo dconf update)
           end
         end
       end
+    else
+      impact 0.0
+      describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+        skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
+      end
+    end
+  else
+    impact 0.0
+    describe 'The system is not smartcard enabled thus this control is Not Applicable' do
+      skip 'The system is not using Smartcards / PIVs to fulfill the MFA requirement; this control is Not Applicable.'
     end
   end
 end

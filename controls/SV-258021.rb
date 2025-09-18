@@ -52,12 +52,7 @@ $ sudo dconf update)
   g = guis(input('possibly_installed_guis'))
   gs = gsettings('lock-enabled', 'org.gnome.desktop.screensaver')
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     if g.has_non_gnome_gui?
       if g.has_gnome_gui? && !gs.set?('true')
         describe gs do
@@ -76,6 +71,11 @@ $ sudo dconf update)
           expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

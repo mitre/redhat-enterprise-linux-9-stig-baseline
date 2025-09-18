@@ -36,12 +36,7 @@ AutomaticLoginEnable=false'
 
   g = guis(input('possibly_installed_guis'))
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     conf_path = '/etc/gdm/custom.conf'
     conf_file = file(conf_path)
     conf = parse_config_file(conf_path)
@@ -56,7 +51,7 @@ AutomaticLoginEnable=false'
           describe "`gdm` config file at #{conf_path}" do
             subject { conf }
             it 'should have `AutomaticLoginEnable` set to `false` in the `[daemon]` section.' do
-              expect(subject.params['daemon']['AutomaticLoginEnable']).to eq ('false')
+              expect(subject.params['daemon']['AutomaticLoginEnable']).to eq('false')
             end
           end
         end
@@ -65,19 +60,22 @@ AutomaticLoginEnable=false'
       describe 'Non-GNOME desktop environments detected' do
         skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
       end
-    else
-      if conf_file.exist?
-        describe "`gdm` config file at #{conf_path}" do
-          subject { conf }
-          it 'should have `AutomaticLoginEnable` set to `false` in the `[daemon]` section.' do
-            expect(subject.params['daemon']['AutomaticLoginEnable']).to eq ('false')
-          end
-        end
-      else
-        describe conf_file do
-          it { should exist }
+    elsif conf_file.exist?
+      describe "`gdm` config file at #{conf_path}" do
+        subject { conf }
+        it 'should have `AutomaticLoginEnable` set to `false` in the `[daemon]` section.' do
+          expect(subject.params['daemon']['AutomaticLoginEnable']).to eq('false')
         end
       end
+    else
+      describe conf_file do
+        it { should exist }
+      end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

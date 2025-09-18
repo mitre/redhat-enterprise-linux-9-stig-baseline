@@ -30,12 +30,7 @@ $ sudo dconf update'
 
   g = guis(input('possibly_installed_guis'))
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     missing_dir_failures = dconf_dbs.where(keyfile_dir_exists: false)
     keyfile_failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
     lockfile_failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
@@ -78,6 +73,11 @@ $ sudo dconf update'
           expect(subject).to have_latest_lockfiles_dir_updates, failure_message
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

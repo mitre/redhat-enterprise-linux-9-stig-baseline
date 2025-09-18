@@ -47,22 +47,17 @@ $ sudo dconf update)
   gs = gsettings('picture-uri', 'org.gnome.desktop.screensaver')
   uri = input('screensaver_picture_uri')
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     if g.has_non_gnome_gui?
       if g.has_gnome_gui?
-        if !gs.set?(uri)
+        unless gs.set?(uri)
           describe gs do
             it "should be #{uri}." do
               expect(subject).to be_set(uri), "#{subject} must be set to `#{uri}` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
             end
           end
         end
-        if !gs.locked?()
+        unless gs.locked?
           describe gs do
             it 'should be locked.' do
               expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
@@ -85,6 +80,11 @@ $ sudo dconf update)
           expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

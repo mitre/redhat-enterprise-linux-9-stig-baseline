@@ -42,14 +42,9 @@ $ sudo dconf update'
   g = guis(input('possibly_installed_guis'))
   gs = gsettings('removal-action', 'org.gnome.settings-daemon.peripherals.smartcard')
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     if g.has_non_gnome_gui?
-      if g.has_gnome_gui? && !gs.locked?()
+      if g.has_gnome_gui? && !gs.locked?
         describe gs do
           it 'should be locked.' do
             expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
@@ -66,6 +61,11 @@ $ sudo dconf update'
           expect(subject).to be_locked, "#{subject} must be set as not writable by creating/modifying the appropriate `gconf` lockfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

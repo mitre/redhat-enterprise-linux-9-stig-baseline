@@ -43,12 +43,7 @@ $ sudo dconf update'
   gs = gsettings('autorun-never', 'org.gnome.desktop.media-handling')
   gui_autorun_required = input('gui_autorun_required')
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     if g.has_non_gnome_gui?
       skip_message_addition = ''
 
@@ -67,19 +62,22 @@ $ sudo dconf update'
       describe 'Non-GNOME desktop environments detected' do
         skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}#{skip_message_addition.length == 0 ? '' : "\n#{skip_message_addition}"}"
       end
+    elsif !gs.error? && !gs.set?('true') && gui_autorun_required
+      impact 0.0
+      describe gs do
+        skip "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
+      end
     else
-      if !gs.error? && !gs.set?('true') && gui_autorun_required
-        impact 0.0
-        describe gs do
-          skip "Profile inputs indicate that the value of #{gs} is a documented operational requirement."
-        end
-      else
-        describe gs do
-          it 'should be true.' do
-            expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
-          end
+      describe gs do
+        it 'should be true.' do
+          expect(subject).to be_set('true'), "#{subject} must be set to `true` using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end

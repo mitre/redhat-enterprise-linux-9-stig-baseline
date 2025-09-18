@@ -44,18 +44,13 @@ $ sudo dconf update'
   g = guis(input('possibly_installed_guis'))
   gs = gsettings('idle-delay', 'org.gnome.desktop.session')
   timeout = input('graphical_user_session_inactivity_timeout')
-  set_check = Proc.new { |val|
+  set_check = proc { |val|
     numeric_type, value = val.split(' ')
     value = value.to_i
     numeric_type == 'uint32' && value > 0 && value <= timeout
   }
 
-  unless g.has_gui?
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
-    end
-  else
+  if g.has_gui?
     if g.has_non_gnome_gui?
       if g.has_gnome_gui? && !gs.set?(&set_check)
         describe gs do
@@ -74,6 +69,11 @@ $ sudo dconf update'
           expect(subject).to be_set(&set_check), "#{subject} must be set to `uint32` and then an integer greater than 0 and less than or equal to #{timeout} using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   end
 end
