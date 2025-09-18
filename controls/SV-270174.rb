@@ -75,10 +75,10 @@ $ sudo dconf update)
     end
   else
     if g.has_non_gnome_gui?
-      if g.has_gnome_gui? && !gs.set?(set_check)
+      if g.has_gnome_gui? && !gs.set?(&set_check)
         describe gs do
           it 'should be set to the standard banner and have the correct text.' do
-            expect(subject).to be_set(set_check), "#{subject} must be set to the standard banner and have the correct text using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+            expect(subject).to be_set(&set_check), "#{subject} must be set to the standard banner and have the correct text using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
           end
         end
       end
@@ -89,7 +89,7 @@ $ sudo dconf update)
     else
       describe gs do
         it 'should be set to the standard banner and have the correct text.' do
-          expect(subject).to be_set(set_check), "#{subject} must be set to the standard banner and have the correct text using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          expect(subject).to be_set(&set_check), "#{subject} must be set to the standard banner and have the correct text using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
         end
       end
     end

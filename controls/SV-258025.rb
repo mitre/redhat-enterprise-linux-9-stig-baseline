@@ -61,7 +61,7 @@ $ sudo dconf update'
       if g.has_gnome_gui? && !gs.set?(&set_check)
         describe gs do
           it "should be greater than or equal to 0 and less than or equal to #{delay}." do
-            expect(subject).to be_set(set_check), "#{subject} must be set to `uint32` and then an integer greater than or equal to 0 and less than or equal to #{delay} using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+            expect(subject).to be_set(&set_check), "#{subject} must be set to `uint32` and then an integer greater than or equal to 0 and less than or equal to #{delay} using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
           end
         end
       end
