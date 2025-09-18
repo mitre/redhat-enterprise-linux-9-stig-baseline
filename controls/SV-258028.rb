@@ -30,34 +30,18 @@ $ sudo dconf update'
 
   g = guis(input('possibly_installed_guis'))
 
-  if g.has_gui?
-    if g.has_gnome_gui?
-      missing_dir_failures = dconf_dbs.where(keyfile_dir_exists: false)
-      keyfile_failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
-      lockfile_failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
+  unless g.has_gui?
+    impact 0.0
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
+    end
+  else
+    missing_dir_failures = dconf_dbs.where(keyfile_dir_exists: false)
+    keyfile_failures = dconf_dbs.where { keyfiles.any? { |kf| mtime < kf[:mtime] } }
+    lockfile_failures = dconf_dbs.where { lockfiles.any? { |lf| mtime < lf[:mtime] } }
 
-      if g.has_non_gnome_gui?
-        if missing_dir_failures.count != 0 || keyfile_failures.count != 0 || lockfile_failures.count != 0
-          describe 'Each dconf database' do
-            subject { dconf_dbs }
-            it 'is expected to have a keyfiles directory.' do
-              failure_message = "These databases are missing keyfiles directories:\n\t- #{missing_dir_failures.name.join("\n\t- ")}"
-              expect(subject).to have_keyfiles_dir, failure_message
-            end
-            it 'is expected to have been updated after the last corresponding keyfile edit.' do
-              failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{keyfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
-              expect(subject).to have_latest_keyfiles_dir_updates, failure_message
-            end
-            it 'is expected to have been updated after the last corresponding lockfile edit.' do
-              failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{lockfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
-              expect(subject).to have_latest_lockfiles_dir_updates, failure_message
-            end
-          end
-        end
-        describe 'Non-GNOME desktop environments detected' do
-          skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
-        end
-      else
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && (missing_dir_failures.count != 0 || keyfile_failures.count != 0 || lockfile_failures.count != 0)
         describe 'Each dconf database' do
           subject { dconf_dbs }
           it 'is expected to have a keyfiles directory.' do
@@ -74,15 +58,26 @@ $ sudo dconf update'
           end
         end
       end
-    else
+
       describe 'Non-GNOME desktop environments detected' do
-        skip "Manual check required.  There is no guidance for non-GNOME desktop environments.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_guis.join("\n\t- ")}"
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
       end
-    end
-  else
-    impact 0.0
-    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
-      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
+    else
+      describe 'Each dconf database' do
+        subject { dconf_dbs }
+        it 'is expected to have a keyfiles directory.' do
+          failure_message = "These databases are missing keyfiles directories:\n\t- #{missing_dir_failures.name.join("\n\t- ")}"
+          expect(subject).to have_keyfiles_dir, failure_message
+        end
+        it 'is expected to have been updated after the last corresponding keyfile edit.' do
+          failure_message = "These databases need to be updated to incorporate changes from the following keyfiles:\n\t- #{keyfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:keyfiles].map { |kf| kf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+          expect(subject).to have_latest_keyfiles_dir_updates, failure_message
+        end
+        it 'is expected to have been updated after the last corresponding lockfile edit.' do
+          failure_message = "These databases need to be updated to incorporate changes from the following lockfiles:\n\t- #{lockfile_failures.entries.map { |f| "#{f[:name]}\n\t\t- #{f[:lockfiles].map { |lf| lf[:name] }.join("\n\t\t- ")}" }.join("\n\t- ")}"
+          expect(subject).to have_latest_lockfiles_dir_updates, failure_message
+        end
+      end
     end
   end
 end
