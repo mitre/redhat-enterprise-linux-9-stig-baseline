@@ -47,7 +47,7 @@ $ sudo dconf update'
   set_check = Proc.new { |val|
     numeric_type, value = val.split(' ')
     value = value.to_i
-    components[0] == 'uint32' && value > 0 && value <= timeout
+    numeric_type == 'uint32' && value > 0 && value <= timeout
   }
 
   unless g.has_gui?

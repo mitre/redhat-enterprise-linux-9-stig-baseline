@@ -42,16 +42,39 @@ $ sudo dconf update'
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
+  g = guis(input('possibly_installed_guis'))
+  gs = gsettings('lock-delay', 'org.gnome.desktop.screensaver')
+  delay = input('screensaver_lock_delay')
+  set_check = Proc.new { |val|
+    numeric_type, value = val.split(' ')
+    value = value.to_i
+    numeric_type == 'uint32' && value >= 0 && value <= delay
+  }
 
-  if no_gui
+  unless g.has_gui?
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+    describe 'The system does not have a GUI/desktop environment installed; this control is Not Applicable' do
+      skip 'A GUI/desktop environment is not installed; this control is Not Applicable.'
     end
   else
-    describe command('gsettings get org.gnome.desktop.screensaver lock-delay') do
-      its('stdout.strip') { should match(/uint32\s[0-5]/) }
+    if g.has_non_gnome_gui?
+      if g.has_gnome_gui? && !gs.set?(set_check)
+        describe gs do
+          it "should be greater than or equal to 0 and less than or equal to #{delay}." do
+            expect(subject).to be_set(set_check), "#{subject} must be set to `uint32` and then an integer greater than or equal to 0 and less than or equal to #{delay} using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+          end
+        end
+      end
+
+      describe 'Non-GNOME desktop environments detected' do
+        skip "Manual check required as there is no guidance for non-GNOME desktop environments, which were identified as being installed on the system.  Investigate the following, possibly related packages to determine which desktop environments are installed and then determine a method to ensure that each of those desktop environments' configuration is up-to-date and matches policy:\n\t- #{g.installed_non_gnome_guis.join("\n\t- ")}"
+      end
+    else
+      describe gs do
+        it "should be greater than or equal to 0 and less than or equal to #{delay}." do
+          expect(subject).to be_set(set_check), "#{subject} must be set to `uint32` and then an integer greater than or equal to 0 and less than or equal to #{delay} using either `gsettings set` or by creating/modifying the appropriate `gconf` keyfile and regenerating the `gconf` databases.  #{subject.error? ? "Received the following error on access: `#{subject.error}`." : ''}"
+        end
+      end
     end
   end
 end

@@ -48,6 +48,12 @@ inputs:
       - 'xfce4-session' # XFCE
       # LXQt, MATE, Cinnamon, LXDE, Deepin, Pantheon, Budgie, i3, Sway
 
+  # SV-258025
+  - name: screensaver_lock_delay
+    description: 'Seconds of delay between the screensaver activating and the user session being locked'
+    type: Numeric
+    value: 5
+
   # SV-258084, SV-258085, SV-258086, SV-258087, SV-258106
   - name: sudoers_config_files
     description: 'The files and directories you keep your sudoers configs'
@@ -459,7 +465,7 @@ inputs:
 
   # SV-258049
   - name: days_of_inactivity
-    description: Maximum number of days if account inactivity before account lockout
+    description: Maximum number of days of account inactivity before account lockout
     type: Numeric
     value: 35
 
@@ -559,12 +565,6 @@ inputs:
     description: Minimum amount of time account must be locked out after failed logins. '0' indicates an account should not unlock until reset by an admin.
     type: Numeric
     value: 0
-
-  # SV-258066
-  - name: system_activity_timeout
-    description: The expected maximum delay in seconds before the system will lock the session
-    type: Numeric
-    value: 600
 
   # SV-258060
   - name: log_directory

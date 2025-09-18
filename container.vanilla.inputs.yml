@@ -177,10 +177,6 @@ file_integrity_tool: "aide"
 # (monthly, weekly, or daily)
 file_integrity_interval: "weekly"
 
-# V-72223
-# (time in seconds)
-system_activity_timeout: 600
-
 # V-72237
 # (time in seconds)
 client_alive_interval: 600
