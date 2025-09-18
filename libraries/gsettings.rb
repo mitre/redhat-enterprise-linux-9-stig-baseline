@@ -35,12 +35,14 @@ class Gsettings < Inspec.resource(1)
     error.length > 0
   end
 
-  def set?(value)
+  def set?(value = nil)
     get_stdout = get.stdout.strip
     if block_given?
       yield(get_stdout)
-    else
+    elsif value.is_a?(String)
       get_stdout == value
+    else
+      raise "Provided value #{value} is not a string"
     end
   end
 
