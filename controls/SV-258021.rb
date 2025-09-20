@@ -45,19 +45,11 @@ $ sudo dconf update)
   tag nist: ['AC-11 b', 'AC-11 a']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+  only_if('This control is Not Applicable to containers or without GUI', impact: 0.0) {
+    !virtualization.system.eql?('docker') && gui.present?
   }
 
-  if package('gnome-desktop3').installed?
-    describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
-      its('stdout.strip') { should cmp 'true' }
-    end
-  else
-    impact 0.0
-    describe 'The system does not have GNOME installed' do
-      skip "The system does not have GNOME installed, this requirement is Not
-        Applicable."
-    end
+  describe gnome_settings('desktop.screensaver') do
+    its('lock_enabled') { should cmp true }
   end
 end

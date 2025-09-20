@@ -12,10 +12,11 @@ If the command has any output, then a dconf database needs to be updated, and th
 
 $ sudo dconf update'
   impact 0.5
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag check_id: 'C-61769r926069_chk'
   tag severity: 'medium'
   tag gid: 'V-258028'
-  tag rid: 'SV-258028r991589_rule'
+  tag rid: 'SV-258028r926071_rule'
   tag stig_id: 'RHEL-09-271090'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61693r926070_fix'
@@ -24,27 +25,12 @@ $ sudo dconf update'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+  only_if('This requirement is Not Applicable in containers or without GUI', impact: 0.0) {
+    !virtualization.system.eql?('docker') && gui.present?
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
-
-  if no_gui
-    impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
-    end
-  else
-
-    db_list = command('find /etc/dconf/db -maxdepth 1 -type f').stdout.strip.split("\n")
-
-    failing_dbs = db_list.select { |db| file(db).mtime < file("#{db}.d").mtime }
-
-    describe 'dconf databases' do
-      it 'should have been updated after the last corresponding keyfile edit' do
-        expect(failing_dbs).to be_empty, "Failing databases:\n\t- #{failing_dbs.join("\n\t- ")}"
-      end
-    end
+  describe dconf do
+    it { should have_databases_compiled }
+    it { should_not have_stale_databases }
   end
 end
