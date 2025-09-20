@@ -1,5 +1,6 @@
 require "inspec/utils/filter"
 require "hashie/mash"
+require "json"
 
 # Create custom Mash subclass with warnings disabled for GNOME settings
 class GnomeSettingsMash < Hashie::Mash

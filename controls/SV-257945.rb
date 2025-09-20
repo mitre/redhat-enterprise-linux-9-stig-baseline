@@ -56,19 +56,19 @@ server [ntp.server.name] iburst maxpoll 16'
 
   # Verify the "chrony.conf" file is configured to an authoritative DoD time source by running the following command:
 
-  describe ntp_conf('/etc/chrony.conf') do
+  describe chrony_conf('/etc/chrony.conf') do
     its('server') { should_not be_nil }
   end
 
-  unless ntp_conf('/etc/chrony.conf').server.nil?
-    if ntp_conf('/etc/chrony.conf').server.is_a? String
-      describe ntp_conf('/etc/chrony.conf') do
+  unless chrony_conf('/etc/chrony.conf').server.nil?
+    if chrony_conf('/etc/chrony.conf').server.is_a? String
+      describe chrony_conf('/etc/chrony.conf') do
         its('server') { should match input('authoritative_timeserver') }
       end
     end
 
-    if ntp_conf('/etc/chrony.conf').server.is_a? Array
-      describe ntp_conf('/etc/chrony.conf') do
+    if chrony_conf('/etc/chrony.conf').server.is_a? Array
+      describe chrony_conf('/etc/chrony.conf') do
         its('server.join') { should match input('authoritative_timeserver') }
       end
     end

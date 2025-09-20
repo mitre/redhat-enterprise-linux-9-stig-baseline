@@ -425,4 +425,86 @@ end
 - [ ] Input parameterization for flexibility
 - [ ] Proper impact vs skip for different N/A types
 
+## Code Review and Quality Assurance
+
+### Common Issues from AI Review Tools
+
+When using automated code review tools (like GitHub Copilot), watch for these patterns:
+
+#### 1. Constructor Parameter Mismatches
+**Issue**: Subclass initializers not matching parent class calls
+```ruby
+# Problem: Parent calls `new(inspec)` but child defines `initialize()`
+class WindowsGui < Gui
+  def initialize  # Missing inspec_instance parameter
+  end
+end
+
+# Solution: Consistent parameter signatures
+class WindowsGui < Gui
+  def initialize(inspec_instance)
+    @inspec = inspec_instance
+  end
+end
+```
+
+#### 2. Missing Standard Library Requires
+**Issue**: Using Ruby/gem features without explicit requires
+```ruby
+# Problem: Using JSON.parse without require
+JSON.parse(array_string)
+
+# Solution: Explicit requires at file top
+require "json"
+```
+
+#### 3. GNOME Settings Value Assertions
+**Issue**: Incorrect assumptions about GNOME setting formats
+```ruby
+# Problem: Empty array assertion for disabled key binding
+its('logout') { should be_empty }
+
+# Solution: GNOME uses array with empty string for disabled
+its('logout') { should cmp [''] }
+```
+
+#### 4. Resource Type Consistency
+**Issue**: Mixing different resource types for same configuration
+```ruby
+# Problem: Mixing ntp_conf and chrony_conf
+describe ntp_conf('/etc/chrony.conf') do
+  # Should use chrony_conf for Chrony files
+end
+
+# Solution: Use appropriate resource type
+describe chrony_conf('/etc/chrony.conf') do
+  its('server') { should_not be_nil }
+end
+```
+
+#### 5. Platform Detection Completeness
+**Issue**: Missing modern desktop environments in detection
+```ruby
+# Limited: Only X11 session detection
+cmd = inspec.command('ls -1 /usr/share/xsessions/')
+
+# Better: Include Wayland for modern systems
+xsessions_cmd = inspec.command('ls -1 /usr/share/xsessions/ 2>/dev/null')
+wayland_cmd = inspec.command('ls -1 /usr/share/wayland-sessions/ 2>/dev/null')
+```
+
+#### 6. Official STIG Compliance
+**Critical**: Always verify timeout values against official STIG documents using cyber.trackr.live API
+- **Shell timeout**: 10 minutes (600 seconds) per SV-258068 (RHEL 9 STIG v2.4)
+- **GUI timeout**: 15 minutes (900 seconds) per SV-258023 (RHEL 9 STIG v2.4)
+- **Verification**: `curl -s "https://cyber.trackr.live/api/stig/Red_Hat_Enterprise_Linux_9/2/4/V-{control}"` for latest requirements
+
+### Quality Checklist Updates
+- [ ] All subclass constructors accept required parameters
+- [ ] Standard library usage has explicit requires
+- [ ] GNOME setting assertions match actual value formats
+- [ ] Resource types are used consistently throughout controls
+- [ ] Platform detection covers modern environments (X11 + Wayland)
+- [ ] Timeout values match official STIG requirements exactly
+
 This document ensures consistent, high-quality control development following established InSpec and RHEL profile patterns.

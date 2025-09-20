@@ -117,9 +117,11 @@ module Inspec::Resources
     end
 
     def has_sessions?
-      # Check for desktop session files (X11 on Linux)
-      cmd = @inspec.command('ls -1 /usr/share/xsessions/ 2>/dev/null')
-      cmd.exit_status == 0 && !cmd.stdout.strip.empty?
+      # Check for desktop session files (X11 and Wayland on Linux)
+      xsessions_cmd = @inspec.command('ls -1 /usr/share/xsessions/ 2>/dev/null')
+      wayland_cmd = @inspec.command('ls -1 /usr/share/wayland-sessions/ 2>/dev/null')
+      (xsessions_cmd.exit_status == 0 && !xsessions_cmd.stdout.strip.empty?) ||
+        (wayland_cmd.exit_status == 0 && !wayland_cmd.stdout.strip.empty?)
     end
 
     private
@@ -173,7 +175,8 @@ module Inspec::Resources
   # Windows GUI detection (placeholder for future)
   class WindowsGui < Gui
 
-    def initialize
+    def initialize(inspec_instance)
+      @inspec = inspec_instance
     end
 
     def present?
@@ -200,7 +203,8 @@ module Inspec::Resources
   # macOS GUI detection (placeholder for future)
   class DarwinGui < Gui
 
-    def initialize
+    def initialize(inspec_instance)
+      @inspec = inspec_instance
     end
 
     def present?

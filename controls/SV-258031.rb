@@ -39,6 +39,6 @@ $ sudo dconf update"
   }
 
   describe gnome_settings('settings-daemon.plugins.media-keys') do
-    its('logout') { should be_empty }
+    its('logout') { should cmp [''] }
   end
 end
