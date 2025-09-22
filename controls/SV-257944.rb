@@ -22,8 +22,8 @@ $ sudo systemctl enable --now chronyd'
   tag gtitle: 'SRG-OS-000355-GPOS-00143'
   tag fix_id: 'F-61609r925818_fix'
   tag 'documentable'
-  tag cci: ['CCI-001891', 'CCI-004923']
-  tag nist: ['AU-8 (1) (a)', 'SC-45 (1) (a)']
+  tag cci: ['CCI-001891']
+  tag nist: ['AU-8 (1) (a)']
   tag 'host'
   tag 'container'
 
