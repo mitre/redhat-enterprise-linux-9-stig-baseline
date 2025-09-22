@@ -1,9 +1,11 @@
 control 'SV-258014' do
   title 'RHEL 9 must disable the graphical user interface automount function unless required.'
-  desc 'Automatically mounting file systems permits easy introduction of unknown devices, thereby facilitating malicious activity.'
-  desc 'check', 'Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
+  desc 'Automatically mounting file systems permits easy introduction of unknown devices, thereby facilitating malicious activity.
 
-Verify RHEL 9 disables the graphical user interface automount function with the following command:
+'
+  desc 'check', 'Verify RHEL 9 disables the graphical user interface automount function with the following command:
+
+Note: This requirement assumes the use of the RHEL 9 default graphical user interface, the GNOME desktop environment. If the system does not have any graphical user interface installed, this requirement is Not Applicable.
 
 $ gsettings get org.gnome.desktop.media-handling automount-open
 
@@ -23,38 +25,39 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  tag check_id: 'C-61755r1045083_chk'
+  ref 'DPMS Target Red Hat Enterprise Linux 9'
+  tag check_id: 'C-61755r926027_chk'
   tag severity: 'medium'
   tag gid: 'V-258014'
-  tag rid: 'SV-258014r1045084_rule'
+  tag rid: 'SV-258014r926029_rule'
   tag stig_id: 'RHEL-09-271020'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61679r926028_fix'
   tag satisfies: ['SRG-OS-000114-GPOS-00059', 'SRG-OS-000378-GPOS-00163', 'SRG-OS-000480-GPOS-00227']
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-000778', 'CCI-001958']
-  tag nist: ['CM-6 b', 'IA-3']
+  tag nist: ['CM-6 b', 'IA-3', 'IA-3']
   tag 'host'
 
-  only_if('This requirement is Not Applicable in the container', impact: 0.0) {
+  only_if('This requirement is Not Applicable in containers', impact: 0.0) {
     !virtualization.system.eql?('docker')
   }
 
-  no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)
-
-  if no_gui
+  unless gui.present?
     impact 0.0
-    describe 'The system does not have a GUI Desktop is installed; this control is Not Applicable' do
-      skip 'A GUI desktop is not installed; this control is Not Applicable.'
+    describe 'The system does not have a GUI/desktop environment installed' do
+      skip 'A GUI/desktop environment is not installed, this control is Not Applicable.'
     end
-  elsif input('gui_automount_required')
+  end
+
+  if input('gui_automount_required')
     impact 0.0
     describe 'N/A' do
       skip "Profile inputs indicate that this parameter's setting is a documented operational requirement"
     end
-  else
-    describe command('gsettings get org.gnome.desktop.media-handling automount-open') do
-      its('stdout.strip') { should cmp 'false' }
-    end
+  end
+
+  describe gnome_settings('desktop.media-handling') do
+    its('automount_open') { should cmp false }
   end
 end

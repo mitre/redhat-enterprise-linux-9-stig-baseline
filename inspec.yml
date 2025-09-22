@@ -1209,3 +1209,15 @@ inputs:
     description: List of block devices/partitions that are permitted to be unencrypted
     type: Array
     value: []
+
+  # SV-258023 - GUI session timeout
+  - name: gui_session_timeout
+    description: Maximum graphical session inactivity timeout (time in seconds).
+    type: Numeric
+    value: 900
+
+  # SV-258068, SV-258077 - Shell session timeout
+  - name: shell_session_timeout
+    description: Maximum shell session inactivity timeout (time in seconds).
+    type: Numeric
+    value: 600
