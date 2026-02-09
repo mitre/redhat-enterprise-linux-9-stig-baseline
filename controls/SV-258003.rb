@@ -35,7 +35,7 @@ $ sudo systemctl restart sshd.service'
   gssapi_authentication = input('sshd_config_values')
   value = gssapi_authentication[setting]
 
-  if virtualization.system.eql?('docker')
+  if virtualization.send(:detect_container)
     describe 'In a container Environment' do
       if package('openssh-server').installed?
         it 'the OpenSSH Server should be installed only when allowed in a container environment' do

@@ -80,7 +80,7 @@ AIDE found NO differences between database and filesystem. Looks okay!!
   file_integrity_tool = input('file_integrity_tool')
 
   only_if('Control not applicable within a container', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   end
 
   if file_integrity_tool == 'aide'

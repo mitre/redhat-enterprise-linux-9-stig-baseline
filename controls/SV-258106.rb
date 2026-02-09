@@ -27,7 +27,7 @@ $ sudo find /etc/sudoers /etc/sudoers.d -type f -exec sed -i '/NOPASSWD/ s/^/# /
   tag 'container-conditional'
 
   only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !(virtualization.send(:detect_container) && !command('sudo').exist?)
   }
 
   # TODO: figure out why this .where throws an exception if we don't explicitly filter out nils via 'tags.nil?'

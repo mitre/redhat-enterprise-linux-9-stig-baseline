@@ -24,7 +24,7 @@ ALL     ALL=(ALL:ALL) ALL'
   tag 'host'
 
   only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !(virtualization.send(:detect_container) && !command('sudo').exist?)
   }
 
   bad_sudoers_rules = sudoers(input('sudoers_config_files').join(' ')).rules.where {

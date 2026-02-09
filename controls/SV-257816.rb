@@ -36,7 +36,7 @@ $ sudo sysctl --system'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   if input('user_namespaces_documented') == true

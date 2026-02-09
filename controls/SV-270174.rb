@@ -60,7 +60,7 @@ $ sudo dconf update)
   tag nist: ['AC-8 a']
 
   only_if('Control not applicable within a container or when GDM is not installed', impact: 0.0) do
-    !virtualization.system.eql?('docker') && command('rpm -q gdm').exit_status.zero?
+    !virtualization.send(:detect_container) && command('rpm -q gdm').exit_status.zero?
   end
 
   banner = command('gsettings get org.gnome.login-screen banner-message-text').stdout.strip.gsub(/\\n|'|"|\s+/, '')

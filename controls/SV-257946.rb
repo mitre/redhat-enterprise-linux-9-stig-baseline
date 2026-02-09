@@ -23,7 +23,7 @@ port 0'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?)
+    !(virtualization.send(:detect_container) && !file('/etc/chrony.conf').exist?)
   }
 
   chrony_conf = ntp_conf('/etc/chrony.conf')

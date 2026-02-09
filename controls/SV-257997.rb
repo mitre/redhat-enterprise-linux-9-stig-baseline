@@ -29,7 +29,7 @@ $ sudo chgrp root /etc/ssh/sshd_config /etc/ssh/sshd_config.d'
   tag 'container-conditional'
 
   only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+    !(virtualization.send(:detect_container) && !directory('/etc/ssh').exist?)
   }
 
   describe file('/etc/ssh/sshd_config') do

@@ -21,7 +21,7 @@ If a separate entry for "/home" is not in use, this is a finding.'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside a container; the host manages the container filesystem') {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   ignore_shells = input('non_interactive_shells').join('|')

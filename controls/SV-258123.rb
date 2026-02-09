@@ -45,7 +45,7 @@ $ sudo systemctl restart sssd.service'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   if input('alternate_mfa_method').nil?

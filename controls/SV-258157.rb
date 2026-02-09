@@ -29,7 +29,7 @@ space_left_action = email'
   alert_method = input('alert_method')
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   describe auditd_conf do

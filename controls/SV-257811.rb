@@ -42,7 +42,7 @@ $ sysctl --system'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   parameter = 'kernel.yama.ptrace_scope'

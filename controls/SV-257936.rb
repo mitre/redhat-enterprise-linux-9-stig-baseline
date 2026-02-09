@@ -28,7 +28,7 @@ $ sudo systemctl enable --now firewalld'
   tag nist: ['AC-17 (1)', 'CM-6 b', 'CM-7 b']
 
   only_if('This requirment is Not Applicable in the container, the container management platform manages the firewall service', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   if input('external_firewall')

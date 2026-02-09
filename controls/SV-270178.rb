@@ -42,7 +42,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag nist: ['AC-17 (2)']
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
-    !virtualization.system.eql?('docker') || file('/etc/ssh/sshd_config').exist?
+    !virtualization.send(:detect_container) || file('/etc/ssh/sshd_config').exist?
   }
 
   describe file('/etc/crypto-policies/back-ends/openssh.config') do

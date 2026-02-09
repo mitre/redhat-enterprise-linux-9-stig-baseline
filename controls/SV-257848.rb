@@ -22,7 +22,7 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   describe mount('/var/tmp') do

@@ -37,7 +37,7 @@ $ sudo dnf install policycoreutils'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   end
 
   describe package('policycoreutils') do

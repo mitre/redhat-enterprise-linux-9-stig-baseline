@@ -50,7 +50,7 @@ $ sudo restorecon -R -v /var/log/faillock'
   tag nist: ['AC-7 a', 'AC-7 b']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if virtualization.send(:detect_container)
     impact 0.0
     describe 'Control not applicable in a container' do
       skip 'SELinux controls Not Applicable in a container'

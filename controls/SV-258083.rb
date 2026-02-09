@@ -27,7 +27,7 @@ $ sudo dnf install sudo'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?)
+    !(virtualization.send(:detect_container) && !file('/etc/ssh/sshd_config').exist?)
   }
 
   describe package('sudo') do
