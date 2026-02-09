@@ -40,7 +40,7 @@ Confirm password:'
   tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   end
 
   grubfile = input('grub_conf_path')

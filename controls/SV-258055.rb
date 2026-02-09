@@ -30,7 +30,7 @@ even_deny_root'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   describe command('grep even_deny_root /etc/security/faillock.conf').stdout.strip do

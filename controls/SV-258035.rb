@@ -41,7 +41,7 @@ Note: usbguard will need to be configured to allow authorized devices once it is
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   peripherals_package = input('peripherals_package')

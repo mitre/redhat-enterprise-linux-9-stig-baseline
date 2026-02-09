@@ -35,7 +35,7 @@ retry = 3'
   tag 'host'
 
   only_if('This control is Not Applicable for containers', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   end
 
   describe 'System pwquality setting' do

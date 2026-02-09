@@ -25,7 +25,7 @@ If the "/var" file system is mounted without the "nodev" option, this is a findi
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   path = '/var'

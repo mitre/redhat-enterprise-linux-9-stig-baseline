@@ -42,7 +42,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag 'container-conditional'
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !file('/etc/sysconfig/sshd').exist?)
+    !(virtualization.send(:detect_container) && !file('/etc/sysconfig/sshd').exist?)
   }
 
   approved_ciphers = input('approved_openssh_server_conf')['ciphers']

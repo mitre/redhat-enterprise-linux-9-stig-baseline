@@ -32,7 +32,7 @@ Defaults timestamp_timeout=0'
   tag 'container-conditional'
 
   only_if('This requirement is Not Applicable in a container with no sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !(virtualization.send(:detect_container) && !command('sudo').exist?)
   }
 
   setting = 'timestamp_timeout'

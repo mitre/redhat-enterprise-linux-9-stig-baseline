@@ -42,7 +42,7 @@ $ sudo systemctl restart sshd.service'
   openssh_present = package('openssh-server').installed?
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !openssh_present)
+    !(virtualization.send(:detect_container) && !openssh_present)
   }
 
   if input('allow_container_openssh_server') == false

@@ -25,7 +25,7 @@ $ sudo chown root /boot/grub2/grub.cfg'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   grubfile = input('grub_conf_path')

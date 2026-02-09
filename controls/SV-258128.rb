@@ -27,7 +27,7 @@ ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency'
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   describe service('emergency') do

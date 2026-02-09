@@ -25,7 +25,7 @@ Reboot the system for the changes to take effect.'
   tag nist: ['AC-17 (2)', 'MA-4 c', 'SC-8', 'SC-13 b']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if virtualization.send(:detect_container)
     impact 0.0
     describe 'Control not applicable in a container' do
       skip 'The host OS controls the FIPS mode settings. The host OS should also be scanned with the applicable OS validation profile.'

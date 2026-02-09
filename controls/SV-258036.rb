@@ -29,7 +29,7 @@ $ sudo systemctl enable --now usbguard'
   tag 'host'
 
   only_if('This requirement does not apply to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !virtualization.send(:detect_container)
   }
 
   peripherals_service = input('peripherals_service')

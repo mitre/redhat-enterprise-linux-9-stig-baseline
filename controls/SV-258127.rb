@@ -29,7 +29,7 @@ following command:
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if virtualization.send(:detect_container)
     impact 0.0
     describe 'N/A' do
       skip 'Control not applicable within a container'

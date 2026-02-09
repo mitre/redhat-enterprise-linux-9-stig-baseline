@@ -33,7 +33,7 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
   tag 'host'
 
   only_if('This control is Not Applicable to containers or virtualized environments', impact: 0.0) {
-    !virtualization.system.eql?('docker') || !virtualization.role.eql?('guest')
+    !virtualization.send(:detect_container) || !virtualization.role.eql?('guest')
   }
 
   peripherals_package = input('peripherals_package')
