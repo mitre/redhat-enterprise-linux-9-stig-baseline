@@ -7,14 +7,14 @@ Obtain the list of available package security updates from Red Hat. The URL for 
 
 Check that the available package security updates have been installed on the system with the following command:
 
-$ dnf history list | more
+$ sudo dnf history list | more
 
-    ID | Command line | Date and time | Action(s) | Altered
--------------------------------------------------------------------------------
-   70 | install aide | 2023-03-05 10:58 | Install | 1
-   69 | update -y | 2023-03-04 14:34 | Update | 18 EE
-   68 | install vlc | 2023-02-21 17:12 | Install | 21
-   67 | update -y | 2023-02-21 17:04 | Update | 7 EE
+    ID | Command line | Date and time | Action(s) | Altered    
+-------------------------------------------------------------------------------    
+   70 | install aide | 2023-03-05 10:58 | Install | 1    
+   69 | update -y | 2023-03-04 14:34 | Update | 18 EE    
+   68 | install vlc | 2023-02-21 17:12 | Install | 21   
+   67 | update -y | 2023-02-21 17:04 | Update | 7 EE 
 
 Typical update frequency may be overridden by Information Assurance Vulnerability Alert (IAVA) notifications from CYBERCOM.
 
@@ -26,7 +26,7 @@ $ sudo dnf update'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257778'
-  tag rid: 'SV-257778r991589_rule'
+  tag rid: 'SV-257778r1134892_rule'
   tag stig_id: 'RHEL-09-211015'
   tag fix_id: 'F-61443r925320_fix'
   tag cci: ['CCI-000366']

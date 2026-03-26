@@ -1,7 +1,7 @@
 control 'SV-258215' do
   title 'Successful/unsuccessful uses of the umount system call in RHEL 9 must generate an audit record.'
   desc 'The changing of file permissions could indicate that a user is attempting to gain access to information that would otherwise be disallowed. Auditing DAC modifications can facilitate the identification of patterns of abuse among both authorized and unauthorized users.'
-  desc 'check', %q(Verify that RHEL 9 generates an audit record for all uses of the "umount" and system call with the following command:
+  desc 'check', %q(Verify RHEL 9 generates an audit record for all uses of the "umount" and system call with the following command:
 
 $ sudo auditctl -l | grep b32 | grep 'umount\b'
 
@@ -20,7 +20,7 @@ $ sudo augenrules --load'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215']
   tag gid: 'V-258215'
-  tag rid: 'SV-258215r1045430_rule'
+  tag rid: 'SV-258215r1155611_rule'
   tag stig_id: 'RHEL-09-654205'
   tag fix_id: 'F-61880r1045429_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000172', 'CCI-002884']

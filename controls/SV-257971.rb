@@ -1,41 +1,46 @@
 control 'SV-257971' do
   title 'RHEL 9 must not accept router advertisements on all IPv6 interfaces.'
-  desc 'An illicit router advertisement message could result in a man-in-the-middle attack.'
-  desc 'check', %q(Verify RHEL 9 does not accept router advertisements on all IPv6 interfaces, unless the system is a router.
+  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
+
+An illicit router advertisement message could result in a man-in-the-middle attack.
+
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 does not accept router advertisements on all IPv6 interfaces, unless the system is a router.
 
 Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
-Determine if router advertisements are not accepted by using the following command:
+Check that "net.ipv6.conf.all.accept_ra" is set to not accept router advertisements by using the following command:
 
 $ sudo sysctl net.ipv6.conf.all.accept_ra
-
 net.ipv6.conf.all.accept_ra = 0
 
-If the "accept_ra" value is not "0" and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.
-
-Check that the configuration files are present to enable this network parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F net.ipv6.conf.all.accept_ra | tail -1
-
-net.ipv6.conf.all.accept_ra = 0
-
-If "net.ipv6.conf.all.accept_ra" is not set to "0" or is missing, this is a finding.)
+If "net.ipv6.conf.all.accept_ra" is not set to "0" or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to not accept router advertisements on all IPv6 interfaces unless the system is a router.
 
-Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
+Create a configuration file if it does not already exist:
 
+$ sudo vi /etc/sysctl.d/ipv4_accept_ra.conf
+
+Add the following line to the file:
 net.ipv6.conf.all.accept_ra = 0
 
-Load settings from all system configuration files with the following command:
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257971'
-  tag rid: 'SV-257971r991589_rule'
+  tag rid: 'SV-257971r1155754_rule'
   tag stig_id: 'RHEL-09-254010'
-  tag fix_id: 'F-61636r925899_fix'
+  tag fix_id: 'F-61636r1155753_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

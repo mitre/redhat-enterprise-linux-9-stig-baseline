@@ -6,40 +6,43 @@ This requirement generally applies to the design of an information technology pr
 
 There may be shared resources with configurable protections (e.g., files in storage) that may be assessed on specific information system components.
 
-Setting the kernel.perf_event_paranoid kernel parameter to "2" prevents attackers from gaining additional system information as a nonprivileged user.'
-  desc 'check', %q(Verify RHEL 9 is configured to prevent kernel profiling by nonprivileged users with the following commands:
+Setting the kernel.perf_event_paranoid kernel parameter to "2" prevents attackers from gaining additional system information as a nonprivileged user.
 
-Check the status of the kernel.perf_event_paranoid kernel parameter.
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
 
-$ sysctl kernel.perf_event_paranoid
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 is configured to prevent kernel profiling by nonprivileged users.
 
+Check the status of the "kernel.perf_event_paranoid" kernel parameter.
+
+$ sudo sysctl kernel.perf_event_paranoid
 kernel.perf_event_paranoid = 2
 
-If "kernel.perf_event_paranoid" is not set to "2" or is missing, this is a finding.
-
-Check that the configuration files are present to enable this kernel parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config  | egrep -v '^(#|;)' | grep -F kernel.perf_event_paranoid | tail -1
-
-kernel.perf_event_paranoid = 2
-
-If "kernel.perf_event_paranoid" is not set to "2" or is missing, this is a finding.)
+If "kernel.perf_event_paranoid" is not set to "2" or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to prevent kernel profiling by nonprivileged users.
 
-Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
+Create a drop-in if it does not already exist:
 
+$ sudo vi /etc/sysctl.d/99-kernel_perf_event_paranoid.conf
+
+Add the following to the file:
 kernel.perf_event_paranoid = 2
 
-Load settings from all system configuration files with the following command:
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag gid: 'V-257798'
-  tag rid: 'SV-257798r1044849_rule'
+  tag rid: 'SV-257798r1155694_rule'
   tag stig_id: 'RHEL-09-213015'
-  tag fix_id: 'F-61463r925380_fix'
+  tag fix_id: 'F-61463r1155693_fix'
   tag cci: ['CCI-001090', 'CCI-001082']
   tag nist: ['SC-4', 'SC-2']
   tag 'host'

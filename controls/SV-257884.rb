@@ -3,21 +3,23 @@ control 'SV-257884' do
   desc 'If RHEL 9 allowed any user to make changes to software libraries, then those changes might be implemented without undergoing the appropriate testing and approvals that are part of a robust change management process.
 
 This requirement applies to RHEL 9 with software libraries that are accessible and configurable, as in the case of interpreted languages. Software libraries also include privileged programs that execute with escalated privileges.'
-  desc 'check', 'Verify the system-wide shared library files contained in the following directories have mode "755" or less permissive with the following command:
+  desc 'check', %q(Verify the systemwide shared library files contained in the directories "/lib", "/lib64", "/usr/lib", and "/usr/lib64" have mode 0755 or less permissive.
 
-$ sudo find -L /lib /lib64 /usr/lib /usr/lib64 -perm /022 -type f -exec ls -l {} \\;
+Check that the systemwide shared library files have mode 0755 or less permissive with the following command:
 
-If any system-wide shared library file is found to be group-writable or world-writable, this is a finding.'
-  desc 'fix', 'Configure the library files to be protected from unauthorized access. Run the following command, replacing "[FILE]" with any library file with a mode more permissive than 755.
+$ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' -perm /022 -exec stat -c "%n %a" {} +
 
-$ sudo chmod 755 [FILE]'
+If any output is returned, this is a finding.)
+  desc 'fix', %q(Configure the systemwide shared library files contained in the directories "/lib", "/lib64", "/usr/lib", and "/usr/lib64" to have mode 0755 or less permissive with the following command.
+
+$ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' -perm /022 -exec chmod go-w {} +)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257884'
-  tag rid: 'SV-257884r991560_rule'
+  tag rid: 'SV-257884r1106306_rule'
   tag stig_id: 'RHEL-09-232020'
-  tag fix_id: 'F-61549r925638_fix'
+  tag fix_id: 'F-61549r1106305_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
   tag 'host'

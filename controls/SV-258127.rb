@@ -7,24 +7,28 @@ The cornerstone of the PKI is the private key used to encrypt or digitally sign 
 If the private key is stolen, this will lead to the compromise of the authentication and nonrepudiation gained through PKI because the attacker can use the private key to digitally sign documents and pretend to be the authorized user.
 
 Both the holders of a digital certificate and the issuing authority must protect the computers, storage devices, or whatever they use to keep the private keys.'
-  desc 'check', 'Verify the SSH private key files have a passcode.
+  desc 'check', 'Note: If the system administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
+
+Verify the SSH private key files have a passcode.
 
 For each private key stored on the system, use the following command:
 
 $ sudo ssh-keygen -y -f /path/to/file
 
-If the contents of the key are displayed, this is a finding.'
-  desc 'fix', 'Create a new private and public key pair that utilizes a passcode with the
-following command:
+The expected output is a password prompt:
+ "Enter passphrase:"
 
-    $ sudo ssh-keygen -n [passphrase]'
+If the password prompt is not displayed, and the contents of the key are displayed, this is a finding.'
+  desc 'fix', 'Create a new private and public key pair that utilizes a passcode with the following command:
+
+$ sudo ssh-keygen -N [passphrase]'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'
   tag gid: 'V-258127'
-  tag rid: 'SV-258127r958450_rule'
+  tag rid: 'SV-258127r1155648_rule'
   tag stig_id: 'RHEL-09-611190'
-  tag fix_id: 'F-61792r926367_fix'
+  tag fix_id: 'F-61792r1155647_fix'
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'

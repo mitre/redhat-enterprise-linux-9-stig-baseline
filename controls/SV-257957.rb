@@ -1,41 +1,49 @@
 control 'SV-257957' do
   title 'RHEL 9 must be configured to use TCP syncookies.'
-  desc 'Denial of service (DoS) is a condition when a resource is not available for legitimate users. When this occurs, the organization either cannot accomplish its mission or must operate at degraded capacity.
+  desc 'Preventing unauthorized information transfers mitigates the risk of information, including encrypted representations of information, produced by the actions of prior users/roles (or the actions of processes acting on behalf of prior users/roles) from being available to any current users/roles (or current processes) that obtain access to shared system resources (e.g., registers, main memory, hard disks) after those resources have been released back to information systems. The control of information in shared resources is also commonly referred to as object reuse and residual information protection.
 
-Managing excess capacity ensures that sufficient capacity is available to counter flooding attacks. Employing increased capacity and service redundancy may reduce the susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning.'
-  desc 'check', %q(Verify RHEL 9 is configured to use IPv4 TCP syncookies.
+This requirement generally applies to the design of an information technology product, but it can also apply to the configuration of particular information system components that are, or use, such products. This can be verified by acceptance/validation processes in DOD or other government agencies.
 
-Determine if syncookies are used with the following command:
+There may be shared resources with configurable protections (e.g., files in storage) that may be assessed on specific information system components.
 
-Check the status of the kernel.perf_event_paranoid kernel parameter.
+Restricting access to the kernel message buffer limits access to only root. This prevents attackers from gaining additional system information as a nonprivileged user.
+
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 is configured to use IPv4 TCP syncookies.
+
+Check the value of all "tcp_syncookies" variables with the following command:
 
 $ sudo sysctl net.ipv4.tcp_syncookies
-
 net.ipv4.tcp_syncookies = 1
 
-Check that the configuration files are present to enable this kernel parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F net.ipv4.tcp_syncookies | tail -1
-
-net.ipv4.tcp_syncookies = 1
-
-If the network parameter "ipv4.tcp_syncookies" is not equal to "1" or nothing is returned, this is a finding.)
+If the network parameter "ipv4.tcp_syncookies" is not equal to "1" or nothing is returned, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to use TCP syncookies.
 
-Add or edit the following line in a system configuration file in the "/etc/sysctl.d/" directory:
- net.ipv4.tcp_syncookies = 1
+Create a configuration file if it does not already exist:
 
-Load settings from all system configuration files with the following command:
+$ sudo vi /etc/sysctl.d/99-ipv4_tcp_syncookies.conf
+
+Add the following line to the file:
+net.ipv4.tcp_syncookies = 1
+
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  tag check_id: 'C-61698r942982_chk'
+  tag check_id: 'C-61698r1155616_chk'
   tag severity: 'medium'
   tag gid: 'V-257957'
-  tag rid: 'SV-257957r1045009_rule'
+  tag rid: 'SV-257957r1155618_rule'
   tag stig_id: 'RHEL-09-253010'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61622r925857_fix'
+  tag fix_id: 'F-61622r1155617_fix'
   tag satisfies: ['SRG-OS-000480-GPOS-00227', 'SRG-OS-000420-GPOS-00186', 'SRG-OS-000142-GPOS-00071']
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001095', 'CCI-002385']

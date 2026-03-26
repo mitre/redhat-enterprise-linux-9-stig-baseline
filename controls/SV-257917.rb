@@ -7,7 +7,7 @@ The structure and content of error messages must be carefully considered by the 
 
 $ stat -c "%G %n" /var/log/messages
 
-root /var/log
+root /var/log/messages
 
 If "/var/log/messages" does not have a group owner of "root", this is a finding.'
   desc 'fix', 'Change the group owner of the "/var/log/messages" file to "root" by running the following command:
@@ -17,7 +17,7 @@ $ sudo chgrp root /var/log/messages'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257917'
-  tag rid: 'SV-257917r1044975_rule'
+  tag rid: 'SV-257917r1101914_rule'
   tag stig_id: 'RHEL-09-232185'
   tag fix_id: 'F-61582r925737_fix'
   tag cci: ['CCI-001314']

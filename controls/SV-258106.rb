@@ -3,11 +3,11 @@ control 'SV-258106' do
   desc 'Without reauthentication, users may access resources or perform tasks for which they do not have authorization.
 
 When operating systems provide the capability to escalate a functional capability, it is critical that the user reauthenticate.'
-  desc 'check', 'Verify that "/etc/sudoers" has no occurrences of "NOPASSWD" with the following command:
+  desc 'check', %q(Verify that "/etc/sudoers" has no occurrences of "NOPASSWD" with the following command:
 
-$ sudo grep -ri nopasswd /etc/sudoers /etc/sudoers.d/
+$ sudo grep -iR 'NOPASSWD' /etc/sudoers /etc/sudoers.d/
 
-If any occurrences of "NOPASSWD" are returned from the command and have not been documented with the information system security officer (ISSO) as an organizationally defined administrative group using MFA, this is a finding.'
+If any occurrences of "NOPASSWD" are returned from the command and have not been documented with the information system security officer (ISSO) as an organizationally defined administrative group using multifactor authentication (MFA), this is a finding.)
   desc 'fix', %q(Configure RHEL 9 to not allow users to execute privileged actions without authenticating with a password.
 
 Remove any occurrence of "NOPASSWD" found in "/etc/sudoers" file or files in the "/etc/sudoers.d" directory.
@@ -18,7 +18,7 @@ $ sudo find /etc/sudoers /etc/sudoers.d -type f -exec sed -i '/NOPASSWD/ s/^/# /
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-258106'
-  tag rid: 'SV-258106r1050789_rule'
+  tag rid: 'SV-258106r1102061_rule'
   tag stig_id: 'RHEL-09-611085'
   tag fix_id: 'F-61771r1045214_fix'
   tag cci: ['CCI-002038', 'CCI-004895']

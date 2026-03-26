@@ -3,23 +3,21 @@ control 'SV-257921' do
   desc 'If RHEL 9 allowed any user to make changes to software libraries, then those changes might be implemented without undergoing the appropriate testing and approvals that are part of a robust change management process.
 
 This requirement applies to RHEL 9 with software libraries that are accessible and configurable, as in the case of interpreted languages. Software libraries also include privileged programs that execute with escalated privileges.'
-  desc 'check', 'Verify the systemwide shared library files are group-owned by "root" with the following command:
+  desc 'check', %q(Verify the systemwide shared library files contained in the directories "/lib", "/lib64", "/usr/lib", and "/usr/lib64" are group owned by root with the following command:
 
-$ sudo find -L /lib /lib64 /usr/lib /usr/lib64 ! -group root ! -type d -exec stat -L -c "%G %n" {} \\;
+$ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' ! -group root -exec stat -c "%n %G" {} +
 
-If any systemwide shared library file is returned and is not group-owned by a required system account, this is a finding.'
-  desc 'fix', 'Configure the systemwide shared library files (/lib, /lib64, /usr/lib and /usr/lib64) to be protected from unauthorized access.
+If any output is returned, this is a finding.)
+  desc 'fix', %q(Configure the systemwide shared library files contained in the directories "/lib", "/lib64", "/usr/lib", and "/usr/lib64" to be group owned by root with the following command:
 
-Run the following command, replacing "[FILE]" with any library file not group-owned by "root".
-
-$ sudo chgrp root [FILE]'
+$ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' ! -group root -exec chown :root {} +)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000259-GPOS-00100'
   tag gid: 'V-257921'
-  tag rid: 'SV-257921r1069387_rule'
+  tag rid: 'SV-257921r1106308_rule'
   tag stig_id: 'RHEL-09-232205'
-  tag fix_id: 'F-61586r1044984_fix'
+  tag fix_id: 'F-61586r1106307_fix'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
   tag 'host'

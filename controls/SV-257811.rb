@@ -1,40 +1,43 @@
 control 'SV-257811' do
   title 'RHEL 9 must restrict usage of ptrace to descendant processes.'
-  desc 'Unrestricted usage of ptrace allows compromised binaries to run ptrace on other processes of the user. Like this, the attacker can steal sensitive information from the target processes (e.g., SSH sessions, web browser, etc.) without any additional assistance from the user (i.e., without resorting to phishing).'
-  desc 'check', %q(Verify RHEL 9 restricts the usage of ptrace to descendant processes with the following commands:
+  desc 'It is detrimental for operating systems to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore, may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
+
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographic order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 restricts the usage of ptrace to descendant processes.
+
+Check the status of the "kernel.yama.ptrace_scope" kernel parameter with the following command:
 
 $ sysctl kernel.yama.ptrace_scope
-
 kernel.yama.ptrace_scope = 1
 
-If the returned line does not have a value of "1", or a line is not returned, this is a finding.
+If the network parameter "kernel.yama.ptrace_scope" is not equal to "1", or nothing is returned, this is a finding.'
+  desc 'fix', "Configure RHEL 9 to restrict the usage of ptrace to descendant processes.
 
-Check that the configuration files are present to enable this kernel parameter.
+Create the drop-in if it doesn't already exist:
 
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F kernel.yama.ptrace_scope| tail -1
+$ sudo vi /etc/sysctl.d/99-kernel_yama.ptrace_scope.conf
 
+Add the following line to the file:
 kernel.yama.ptrace_scope = 1
 
-If the network parameter "kernel.yama.ptrace_scope" is not equal to "1", or nothing is returned, this is a finding.)
-  desc 'fix', 'Configure the currently loaded kernel parameter to the secure setting:
+Reload settings from all system configuration files with the following command:
 
-$ sudo sysctl -w kernel.yama.ptrace_scope=1
-
-Configure RHEL 9 to restrict usage of ptrace to descendant processes by adding the following line to a file in the "/etc/sysctl.d" directory:
-
-kernel.yama.ptrace_scope = 1
-
-The system configuration files must be reloaded for the changes to take effect. To reload the contents of the files, run the following command:
-
-$ sysctl --system'
+$ sudo sysctl --system"
   impact 0.5
-  tag check_id: 'C-61552r1044870_chk'
+  tag check_id: 'C-61552r1155672_chk'
   tag severity: 'medium'
   tag gid: 'V-257811'
-  tag rid: 'SV-257811r1044872_rule'
+  tag rid: 'SV-257811r1155674_rule'
   tag stig_id: 'RHEL-09-213080'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
-  tag fix_id: 'F-61476r1044871_fix'
+  tag fix_id: 'F-61476r1155673_fix'
   tag satisfies: ['SRG-OS-000132-GPOS-00067', 'SRG-OS-000480-GPOS-00227']
   tag 'documentable'
   tag cci: ['CCI-000366', 'CCI-001082']

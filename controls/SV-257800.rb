@@ -1,21 +1,30 @@
 control 'SV-257800' do
   title 'RHEL 9 must restrict exposed kernel pointer addresses access.'
-  desc 'Exposing kernel pointers (through procfs or "seq_printf()") exposes kernel writeable structures, which may contain functions pointers. If a write vulnerability occurs in the kernel, allowing write access to any of this structure, the kernel can be compromised. This option disallows any program without the CAP_SYSLOG capability to get the addresses of kernel pointers by replacing them with "0".'
-  desc 'check', %q(Verify the runtime status of the kernel.kptr_restrict kernel parameter with the following command:
+  desc 'It is detrimental for operating systems to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
 
-$ sudo sysctl kernel.kptr_restrict
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
 
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 is configured to restrict exposed kernel pointer address access.
+
+Verify the runtime status of the "kernel.kptr_restrict" kernel parameter with the following command:
+
+$ sudo sysctl kernel.kptr_restrict 
 kernel.kptr_restrict = 1
 
-Verify the configuration of the kernel.kptr_restrict kernel parameter with the following command:
+If "kernel.kptr_restrict" is not set to "1" or is missing, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to restrict exposed kernel pointer addresses access.
 
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' |  grep -F kernel.kptr_restrict | tail -1
+Create a drop-in if it does not already exist:
 
-kernel.kptr_restrict =1
+$ sudo vi /etc/sysctl.d/99-kernel_kptr_restrict.conf
 
-If "kernel.kptr_restrict" is not set to "1" or is missing, this is a finding.)
-  desc 'fix', 'Add or edit the following line in a system configuration file in the "/etc/sysctl.d/" directory:
-
+Add the following to the file:
 kernel.kptr_restrict = 1
 
 Reload settings from all system configuration files with the following command:
@@ -25,9 +34,9 @@ $ sudo sysctl --system'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag gid: 'V-257800'
-  tag rid: 'SV-257800r1044851_rule'
+  tag rid: 'SV-257800r1155700_rule'
   tag stig_id: 'RHEL-09-213025'
-  tag fix_id: 'F-61465r925386_fix'
+  tag fix_id: 'F-61465r1155699_fix'
   tag cci: ['CCI-000366', 'CCI-001082', 'CCI-002824']
   tag nist: ['CM-6 b', 'SC-2', 'SI-16']
   tag 'host'

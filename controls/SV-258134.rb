@@ -1,23 +1,25 @@
 control 'SV-258134' do
   title 'RHEL 9 must have the AIDE package installed.'
-  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.'
-  desc 'check', %q(Verify that RHEL 9 has the Advanced Intrusion Detection Environment (AIDE) package installed with the following command:
+  desc '<path> [object Object]<#text> Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
 
-$ dnf list --installed aide
+Selection lines in the aide.conf file determine which files and directories AIDE will monitor for changes. They follow this format:'
+  desc 'check', 'Verify the file integrity tool is configured to verify ACLs.
 
-Example output:
+Note: AIDE is highly configurable at install time. This requirement assumes the "aide.conf" file is under the "/etc" directory.
 
-aide.x86_64          0.16.100.el9
+Verify AIDE is installed with the following command:
 
-If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system.
+$ sudo dnf list installed aide
 
-If there is no application installed to perform integrity checks, this is a finding.
+Updating Subscription Management repositories.
+Installed Packages
+aide.x86_64                                0.16-103.el9                                @rhel-9-for-x86_64-appstream-rpms
 
-If AIDE is installed, check if it has been initialized with the following command:
+Use the following command to determine if the file is in a location other than "/etc/aide/aide.conf":
 
-$ sudo /usr/sbin/aide --check
+$ sudo find / -name aide.conf
 
-If the output is "Couldn't open file /var/lib/aide/aide.db.gz for reading", this is a finding.)
+If AIDE is not installed, ask the system administrator (SA) how file integrity checks are performed on the system.'
   desc 'fix', 'Install AIDE, initialize it, and perform a manual check.
 
 Install AIDE:
@@ -65,10 +67,10 @@ AIDE found NO differences between database and filesystem. Looks okay!!
 
 ...'
   impact 0.5
-  tag check_id: 'C-61875r1045264_chk'
+  tag check_id: 'C-61875r1155619_chk'
   tag severity: 'medium'
   tag gid: 'V-258134'
-  tag rid: 'SV-258134r1045265_rule'
+  tag rid: 'SV-258134r1155620_rule'
   tag stig_id: 'RHEL-09-651010'
   tag gtitle: 'SRG-OS-000363-GPOS-00150'
   tag fix_id: 'F-61799r926388_fix'

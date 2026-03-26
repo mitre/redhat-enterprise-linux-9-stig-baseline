@@ -5,19 +5,30 @@ control 'SV-257863' do
 The only legitimate location for device files is the "/dev" directory located on the root partition, with the exception of chroot jails if implemented.'
   desc 'check', 'Verify "/dev/shm" is mounted with the "nodev" option with the following command:
 
-$ mount | grep /dev/shm
+$ findmnt /dev/shm
 
-tmpfs on /dev/shm type tmpfs (rw,nodev,nosuid,noexec,seclabel)
+TARGET   SOURCE FSTYPE OPTIONS
+/dev/shm tmpfs  tmpfs  rw,nodev,nosuid,noexec,seclabel
 
-If the /dev/shm file system is mounted without the "nodev" option, this is a finding.'
-  desc 'fix', 'Modify "/etc/fstab" to use the "nodev" option on the "/dev/shm" file system.'
+If the mount options for /dev/shm does not include nodev, this is a finding.'
+  desc 'fix', 'Configure "/dev/shm" to mount with the "nodev" option.
+
+Modify "/etc/fstab" to use the "nodev" option on the "/dev/shm" file system.
+
+To reload all implicit mount units and update the dependency graph so that new options will apply correctly at next remount, run the following command:
+
+$ sudo systemctl daemon-reload
+
+Use the following command to apply the changes immediately without a reboot:
+
+$ sudo mount -o remount /dev/shm'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000368-GPOS-00154'
   tag gid: 'V-257863'
-  tag rid: 'SV-257863r958804_rule'
+  tag rid: 'SV-257863r1155633_rule'
   tag stig_id: 'RHEL-09-231110'
-  tag fix_id: 'F-61528r925575_fix'
+  tag fix_id: 'F-61528r1155632_fix'
   tag cci: ['CCI-001764']
   tag nist: ['CM-7 (2)']
   tag 'host'

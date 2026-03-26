@@ -5,7 +5,7 @@ control 'SV-258086' do
 When operating systems provide the capability to escalate a functional capability, it is critical that the user reauthenticate.'
   desc 'check', %q(Verify that "/etc/sudoers" has no occurrences of "!authenticate" with the following command:
 
-$ sudo grep -ir '!authenticate' /etc/sudoers /etc/sudoers.d/
+$ sudo egrep -iR '!authenticate' /etc/sudoers /etc/sudoers.d/
 
 If any occurrences of "!authenticate" are returned, this is a finding.)
   desc 'fix', %q(Configure RHEL 9 to not allow users to execute privileged actions without authenticating.
@@ -18,7 +18,7 @@ $ sudo sed -i '/\!authenticate/ s/^/# /g' /etc/sudoers /etc/sudoers.d/*)
   tag gtitle: 'SRG-OS-000373-GPOS-00156'
   tag satisfies: ['SRG-OS-000373-GPOS-00156', 'SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00158']
   tag gid: 'V-258086'
-  tag rid: 'SV-258086r1050789_rule'
+  tag rid: 'SV-258086r1102063_rule'
   tag stig_id: 'RHEL-09-432025'
   tag fix_id: 'F-61751r926244_fix'
   tag cci: ['CCI-002038', 'CCI-004895']

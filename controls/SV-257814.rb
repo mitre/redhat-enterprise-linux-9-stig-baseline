@@ -1,27 +1,33 @@
 control 'SV-257814' do
   title 'RHEL 9 must disable core dumps for all users.'
   desc 'A core dump includes a memory image taken at the time the operating system terminates an application. The memory image could contain sensitive data and is generally useful only for developers trying to debug problems.'
-  desc 'check', 'Verify RHEL 9 disables core dumps for all users by issuing the following command:
+  desc 'check', 'Note: If kernel dumps are disabled in accordance with RHEL-09-213040, this requirement is not applicable.
 
-$ grep -r -s core /etc/security/limits.conf /etc/security/limits.d/*.conf
+Verify RHEL 9 disables core dumps for all users by issuing the following command:
+
+$ grep -rs core /etc/security/limits.conf /etc/security/limits.d/*.conf
 
 /etc/security/limits.conf:* hard core 0
 
 This can be set as a global domain (with the * wildcard) but may be set differently for multiple domains.
 
-If the "core" item is missing, commented out, or the value is anything other than "0" and the need for core dumps is not documented with the information system security officer (ISSO) as an operational requirement for all domains that have the "core" item assigned, this is a finding.'
-  desc 'fix', 'Configure the operating system to disable core dumps for all users.
+If the "core" item is missing or commented out, or the value is anything other than "0", and the need for core dumps is not documented with the information system security officer (ISSO) as an operational requirement for all domains that have the "core" item assigned, this is a finding.
+
+If entries exist for users or groups with a value set to anything other than "0", this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to disable core dumps for all users.
 
 Add the following line to the top of the /etc/security/limits.conf or in a single ".conf" file defined in /etc/security/limits.d/:
 
-* hard core 0'
+* hard core 0
+
+Remove or comment out any entries for users or groups with a value set to anything other than "0".'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257814'
-  tag rid: 'SV-257814r991589_rule'
+  tag rid: 'SV-257814r1156057_rule'
   tag stig_id: 'RHEL-09-213095'
-  tag fix_id: 'F-61479r925428_fix'
+  tag fix_id: 'F-61479r1155592_fix'
   tag cci: ['CCI-000366']
   tag legacy: []
   tag nist: ['CM-6 b']

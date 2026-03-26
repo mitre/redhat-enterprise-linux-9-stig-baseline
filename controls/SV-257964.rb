@@ -1,41 +1,42 @@
 control 'SV-257964' do
   title 'RHEL 9 must not forward IPv4 source-routed packets by default.'
-  desc 'Source-routed packets allow the source of the packet to suggest routers forward the packet along a different path than configured on the router, which can be used to bypass network security measures.
+  desc 'Source-routed packets allow the source of the packet to suggest routers forward the packet along a different path than configured on the router, which can be used to bypass network security measures. This requirement applies only to the forwarding of source-routed traffic, such as when forwarding is enabled and the system is functioning as a router.
 
-Accepting source-routed packets in the IPv4 protocol has few legitimate uses. It must be disabled unless it is absolutely required, such as when IPv4 forwarding is enabled and the system is legitimately functioning as a router.'
-  desc 'check', %q(Verify RHEL 9 does not accept IPv4 source-routed packets by default.
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
 
-Check the value of the accept source route variable with the following command:
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 does not accept IPv4 source-routed packets by default.
+
+Check the value of the "accept source route" variable with the following command:
 
 $ sudo sysctl net.ipv4.conf.default.accept_source_route
-
 net.ipv4.conf.default.accept_source_route = 0
 
-If the returned line does not have a value of "0", a line is not returned, or the line is commented out, this is a finding.
-
-Check that the configuration files are present to enable this network parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F net.ipv4.conf.default.accept_source_route | tail -1
-
-net.ipv4.conf.default.accept_source_route = 0
-
-If "net.ipv4.conf.default.accept_source_route" is not set to "0" or is missing, this is a finding.)
+If "net.ipv4.conf.default.accept_source_route" is not set to "0" or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to not forward IPv4 source-routed packets by default.
 
-Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
+Create a configuration file if it does not already exist:
 
+$ sudo vi /etc/sysctl.d/99-ipv4_accept_source_route.conf
+
+Add the following line to the file:
 net.ipv4.conf.default.accept_source_route = 0
 
-Load settings from all system configuration files with the following command:
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257964'
-  tag rid: 'SV-257964r991589_rule'
+  tag rid: 'SV-257964r1155739_rule'
   tag stig_id: 'RHEL-09-253045'
-  tag fix_id: 'F-61629r925878_fix'
+  tag fix_id: 'F-61629r1155738_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'

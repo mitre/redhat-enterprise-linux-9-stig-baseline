@@ -1,7 +1,9 @@
 control 'SV-257954' do
   title 'RHEL 9 libreswan package must be installed.'
   desc 'Providing the ability for remote users or systems to initiate a secure VPN connection protects information when it is transmitted over a wide area network.'
-  desc 'check', 'Verify that RHEL 9 libreswan service package is installed.
+  desc 'check', 'Note: If there is no operational need for Libreswan to be installed, this rule is not applicable.
+
+Verify that RHEL 9 libreswan service package is installed.
 
 Check that the libreswan service package is installed with the following command:
 
@@ -16,10 +18,10 @@ If the "libreswan" package is not installed, this is a finding.'
 
 $ sudo dnf install libreswan'
   impact 0.5
-  tag check_id: 'C-61695r1045007_chk'
+  tag check_id: 'C-61695r1101930_chk'
   tag severity: 'medium'
   tag gid: 'V-257954'
-  tag rid: 'SV-257954r1045008_rule'
+  tag rid: 'SV-257954r1106315_rule'
   tag stig_id: 'RHEL-09-252065'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag fix_id: 'F-61619r925848_fix'

@@ -5,21 +5,23 @@ control 'SV-257822' do
 All software packages must be signed with a cryptographic key recognized and approved by the organization.
 
 Verifying the authenticity of software prior to installation validates the integrity of the software package received from a vendor. This verifies the software has not been tampered with and that it has been provided by a trusted vendor.'
-  desc 'check', 'Verify that all software repositories defined in "/etc/yum.repos.d/" have been configured with "gpgcheck" enabled:
+  desc 'check', 'Verify all software repositories defined in "/etc/yum.repos.d/" have been configured with "gpgcheck" enabled:
 
 $ grep -w gpgcheck /etc/yum.repos.d/*.repo | more
 
-gpgcheck = 1
+/etc/yum.repos.d/redhat.repo:gpgcheck = 1
 
-If "gpgcheck" is not set to "1" for all returned lines, this is a finding.'
+For all listed repos, if "gpgcheck" is not set to "1", or if the option is missing or commented out, ask the system administrator how the GPG signatures of local software packages are being verified.
+
+If there is no process to verify GPG signatures that is approved by the organization, this is a finding.'
   desc 'fix', %q(Configure all software repositories defined in "/etc/yum.repos.d/" to have "gpgcheck" enabled:
 
 $ sudo sed -i 's/gpgcheck\s*=.*/gpgcheck=1/g' /etc/yum.repos.d/*)
   impact 0.7
-  tag check_id: 'C-61563r1044879_chk'
+  tag check_id: 'C-61563r1155614_chk'
   tag severity: 'high'
   tag gid: 'V-257822'
-  tag rid: 'SV-257822r1044880_rule'
+  tag rid: 'SV-257822r1155615_rule'
   tag stig_id: 'RHEL-09-214025'
   tag gtitle: 'SRG-OS-000366-GPOS-00153'
   tag fix_id: 'F-61487r925452_fix'

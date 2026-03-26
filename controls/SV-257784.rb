@@ -8,27 +8,30 @@ environment, risk of unintentional reboot from the Ctrl-Alt-Delete sequence is
 reduced because the user will be prompted before any action is taken.'
   desc 'check', 'Verify RHEL 9 is configured to not reboot the system when Ctrl-Alt-Delete is pressed seven times within two seconds with the following command:
 
-$ grep -i ctrl /etc/systemd/system.conf
+$ sudo grep -iR CtrlAltDelBurstAction /etc/systemd/system*
+/etc/systemd/system.conf.d/55-CtrlAltDel-BurstAction:CtrlAltDelBurstAction=none
+
+If the "CtrlAltDelBurstAction" is not set to "none", commented out, or is missing, this is a finding.'
+  desc 'fix', 'Configure RHEL 9 to disable the CtrlAltDelBurstAction by adding it to a drop file in a "/etc/systemd/system.conf.d/" configuration file:
+
+If no drop file exists, create one with the following command:
+
+$ sudo mkdir -p /etc/systemd/system.conf.d && sudo vi /etc/systemd/system.conf.d/55-CtrlAltDel-BurstAction
+
+Edit the file to contain the setting by adding the following text:
 
 CtrlAltDelBurstAction=none
 
-If the "CtrlAltDelBurstAction" is not set to "none", commented out, or is missing, this is a finding.'
-  desc 'fix', 'Configure the system to disable the CtrlAltDelBurstAction by added or
-modifying the following line in the "/etc/systemd/system.conf" configuration
-file:
+Reload the daemon for this change to take effect.
 
-    CtrlAltDelBurstAction=none
-
-    Reload the daemon for this change to take effect.
-
-    $ sudo systemctl daemon-reload'
+$ sudo systemctl daemon-reload'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
   tag gid: 'V-257784'
-  tag rid: 'SV-257784r1044832_rule'
+  tag rid: 'SV-257784r1155651_rule'
   tag stig_id: 'RHEL-09-211045'
-  tag fix_id: 'F-61449r925338_fix'
+  tag fix_id: 'F-61449r1155650_fix'
   tag cci: ['CCI-000366', 'CCI-002235']
   tag nist: ['CM-6 b', 'AC-6 (10)']
   tag 'host'
