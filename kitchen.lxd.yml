@@ -1,0 +1,73 @@
+---
+platforms:
+  - name: rhel-9
+
+driver:
+  name: proxy
+  host: <%= ENV.fetch("KITCHEN_HOST") %>
+  username: rhel
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /usr/bin
+  # require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  requirements_collection_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-vanilla.yml
+    driver:
+      tags:
+        Name: Vanilla-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-rhel-hardened.yml
+    driver:
+      tags:
+        Name: Hardened-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        # echo "+++ Refreshing DNF package cache +++"
+        # sudo dnf -y clean all
+        echo ""
+        echo "+++ Updating DNF Packages +++"
+        sudo dnf -y update --nogpgcheck --nobest
+        echo ""
+        echo "+++ Installing needed packages for workflow and utility +++\n\n"
+        sudo dnf -y install --nogpgcheck bc bind-utils redhat-lsb-core vim git wget gcc openssl-devel libffi-devel bzip2-devel
+        echo ""
+        echo "+++ Installing Python 3.9 and Ansible +++\n\n"
+        export PATH=/usr/local/bin:$PATH
+        sudo dnf -y install python3-pip
+        sudo python3 -m pip install ansible jmespath
+        echo ""
+        echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
+        sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
+        echo ""
+        echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+        sudo dnf -y install git
+        echo "+++ add cinc-auditor for local shell +++\n\n"
+        curl -L https://omnitruck.cinc.sh/install.sh | sudo bash -s -- -P cinc-auditor
+
+transport:
+  name: ssh
+  username: rhel
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+  #https://github.com/neillturner/kitchen-ansible/issues/295
+  max_ssh_sessions: 2

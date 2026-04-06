@@ -1,7 +1,6 @@
 name: EC2 Ansible Lockdown Testing Matrix
 
-on:
-  pull_request:
+on: []
 
 jobs:
   validate:
