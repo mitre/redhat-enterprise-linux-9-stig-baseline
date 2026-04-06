@@ -27,7 +27,7 @@ jobs:
       - name: add needed packages
         run: |
           sudo apt-get update
-          sudo apt-get -y install jq
+          sudo apt-get -y install jq qemu-utils gdisk
 
       - name: Install LXD
         run: |
@@ -178,11 +178,22 @@ jobs:
           curl -L -o "$OUTPUT_FILE" "$QCOW2_URL"
           ls -lh "$OUTPUT_FILE"
 
+      - name: Convert QCOW2 to RAW and fix GPT backup header
+        run: |
+          set -euo pipefail
+          INPUT_FILE="rhel-image.qcow2"
+          RAW_FILE="disk.raw"
+          echo "Converting $INPUT_FILE to raw $RAW_FILE..."
+          qemu-img convert -O raw "$INPUT_FILE" "$RAW_FILE"
+          echo "Fixing GPT backup header on $RAW_FILE..."
+          sgdisk -e "$RAW_FILE"
+          ls -lh "$RAW_FILE"
+
       - name: Create LXD VM metadata and import image alias
         run: |
           set -euo pipefail
           ALIAS_NAME="rhel9-imagebuilder"
-          OUTPUT_FILE="rhel-image.qcow2"
+          OUTPUT_FILE="disk.raw"
 
           echo "Generating metadata.yaml for LXD VM image..."
           EPOCH="$(date +%s)"
