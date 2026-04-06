@@ -178,15 +178,19 @@ jobs:
           curl -L -o "$OUTPUT_FILE" "$QCOW2_URL"
           ls -lh "$OUTPUT_FILE"
 
-      - name: Convert QCOW2 to RAW and fix GPT backup header
+      - name: Convert QCOW2 to RAW, grow by +16MiB, and fix GPT backup header
         run: |
           set -euo pipefail
           INPUT_FILE="rhel-image.qcow2"
           RAW_FILE="disk.raw"
           echo "Converting $INPUT_FILE to raw $RAW_FILE..."
           qemu-img convert -O raw "$INPUT_FILE" "$RAW_FILE"
+          echo "Growing $RAW_FILE by +16MiB to make room for GPT backup header..."
+          qemu-img resize "$RAW_FILE" +16M
           echo "Fixing GPT backup header on $RAW_FILE..."
           sgdisk -e "$RAW_FILE"
+          echo "Verifying GPT... (non-fatal)"
+          sgdisk -v "$RAW_FILE" || true
           ls -lh "$RAW_FILE"
 
       - name: Create LXD VM metadata and import image alias
