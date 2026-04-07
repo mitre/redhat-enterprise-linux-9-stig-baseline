@@ -193,11 +193,22 @@ jobs:
           sgdisk -v "$RAW_FILE" || true
           ls -lh "$RAW_FILE"
 
+      - name: Convert RAW back to QCOW2 for LXD import
+        run: |
+          set -euo pipefail
+          RAW_FILE="disk.raw"
+          QCOW2_FILE="disk.qcow2"
+          echo "Converting $RAW_FILE back to QCOW2 $QCOW2_FILE..."
+          qemu-img convert -O qcow2 "$RAW_FILE" "$QCOW2_FILE"
+          echo "Verifying new QCOW2..."
+          qemu-img info "$QCOW2_FILE"
+          ls -lh "$QCOW2_FILE"
+
       - name: Create LXD VM metadata and import image alias
         run: |
           set -euo pipefail
           ALIAS_NAME="rhel9-imagebuilder"
-          OUTPUT_FILE="disk.raw"
+          OUTPUT_FILE="disk.qcow2"
 
           echo "Generating metadata.yaml for LXD VM image..."
           EPOCH="$(date +%s)"
