@@ -276,25 +276,6 @@ jobs:
             if sudo lxc list --format=csv | grep -q "$NAME.*RUNNING"; then
               echo "VM is in RUNNING state"
               
-              # Try to execute a simple command to verify VM is responsive
-              if sudo lxc exec $NAME -- echo "VM is responsive" 2>/dev/null; then
-                echo "VM is responsive to commands"
-                
-                # Check if basic system is ready (systemd, if available)
-                if sudo lxc exec $NAME -- systemctl is-system-running --wait 2>/dev/null || true; then
-                  echo "VM system is ready!"
-                  break
-                else
-                  echo "VM system not fully ready yet, but responsive"
-                  # For basic VMs, being responsive might be enough
-                  if [ $elapsed -ge 60 ]; then  # After 60 seconds, if responsive, consider ready
-                    echo "VM has been responsive for sufficient time, considering ready"
-                    break
-                  fi
-                fi
-              else
-                echo "VM not responsive to commands yet"
-              fi
             else
               echo "VM not in RUNNING state yet"
             fi
@@ -336,15 +317,6 @@ jobs:
             sleep $interval
             elapsed=$((elapsed + interval))
           done
-
-          # Fallback: query IPs from inside the VM if LXD hasn't reported them yet
-          if [ -z "$ipv4" ] && [ -z "$ipv6" ]; then
-            echo "Falling back to querying IPs from inside the VM..."
-            set +e
-            ipv4=$(sudo lxc exec "$NAME" -- bash -lc "ip -o -4 addr show scope global | awk '{print \\4}' | cut -d/ -f1 | head -n1" 2>/dev/null)
-            ipv6=$(sudo lxc exec "$NAME" -- bash -lc "ip -o -6 addr show scope global | awk '{print \\4}' | cut -d/ -f1 | head -n1" 2>/dev/null)
-            set -e
-          fi
 
           if [ -n "$ipv4" ]; then
             echo "Using IPv4 $ipv4 for KITCHEN_HOST"
