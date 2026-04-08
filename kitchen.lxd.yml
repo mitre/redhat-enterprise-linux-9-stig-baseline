@@ -45,6 +45,8 @@ lifecycle:
         echo "+++ Checking subscription manager +++"
         sudo subscription-manager status
         echo ""
+        echo "+++ Machine ID check+++"
+        sudo cat /etc/machine-id
         echo "+++ Updating DNF Packages +++"
         sudo dnf -y update --nogpgcheck --nobest
         echo ""
