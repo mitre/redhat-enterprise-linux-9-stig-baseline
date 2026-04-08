@@ -8,7 +8,7 @@ Current end of Maintenance Support for Red Hat Linux 9 is 31 May 3032.
 Current end of Extended Life Cycle Support (ELS) for Red Hat Linux 9 is 31 May 2035.'
   desc 'check', 'Verify the version or RHEL 9 is vendor supported with the following command:
 
-$ cat /etc/redhat-release 
+$ cat /etc/redhat-release
 
 Red Hat Enterprise Linux release 9.6 (Plow)
 

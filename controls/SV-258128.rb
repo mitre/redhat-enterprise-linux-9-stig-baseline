@@ -5,20 +5,20 @@ control 'SV-258128' do
 This requirement prevents attackers with physical access from trivially bypassing security on the machine and gaining root access. Such accesses are further prevented by configuring the bootloader password.'
   desc 'check', 'Verify RHEL 9 requires authentication for emergency mode with the following command:
 
-$ grep sulogin /usr/lib/systemd/system/emergency.service 
+$ grep sulogin /usr/lib/systemd/system/emergency.service
 
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency
 
 If the line is not returned from the default systemd file, use the following command to look for modifications to the emergency.service:
 
-$ grep sulogin /etc/systemd/system/emergency.service.d/*.conf 
+$ grep sulogin /etc/systemd/system/emergency.service.d/*.conf
 
 If the line is not returned from either location this is a finding.
 
 Note: The configuration setting can only be in either the default location, or in the drop in file, not both locations.'
   desc 'fix', 'Configure RHEL 9 to require authentication for emergency mode.
 
-Create a directory for supplementary configuration files: 
+Create a directory for supplementary configuration files:
 $ sudo mkdir /etc/systemd/system/emergency.service.d/
 
 Copy the original file emergency.service file to the new directory with:

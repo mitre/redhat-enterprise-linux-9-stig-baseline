@@ -9,7 +9,7 @@ $ sudo dnf list --installed postfix
 
 Example output:
 
-postfix.x86_64                             2:3.5.25-1.el9 
+postfix.x86_64                             2:3.5.25-1.el9
 
 If the "postfix" package is not installed, this is a finding.'
   desc 'fix', 'Install the Postfix package with the following command:

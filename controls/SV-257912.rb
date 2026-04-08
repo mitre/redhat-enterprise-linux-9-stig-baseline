@@ -3,9 +3,9 @@ control 'SV-257912' do
   desc 'The "/etc/shadow-" file is a backup file of "/etc/shadow", and as such, contains the list of local system accounts and password hashes. Protection of this file is critical for system security.'
   desc 'check', 'Verify the ownership of the "/etc/shadow-" file with the following command:
 
-$ sudo stat -c "%U %n" /etc/shadow- 
+$ sudo stat -c "%U %n" /etc/shadow-
 
-root /etc/shadow- 
+root /etc/shadow-
 
 If "/etc/shadow-" file does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the file /etc/shadow- to root by running the following command:

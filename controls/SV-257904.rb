@@ -3,9 +3,9 @@ control 'SV-257904' do
   desc 'The "/etc/gshadow-" file is a backup of "/etc/gshadow", and as such, contains group password hashes. Protection of this file is critical for system security.'
   desc 'check', 'Verify the ownership of the "/etc/gshadow-" file with the following command:
 
-$ sudo stat -c "%U %n" /etc/gshadow- 
+$ sudo stat -c "%U %n" /etc/gshadow-
 
-root /etc/gshadow- 
+root /etc/gshadow-
 
 If "/etc/gshadow-" file does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the file /etc/gshadow- to root by running the following command:

@@ -14,7 +14,7 @@ The sysctl --system command will load settings from all system configuration fil
 
 Verify the runtime status of the "kernel.kptr_restrict" kernel parameter with the following command:
 
-$ sudo sysctl kernel.kptr_restrict 
+$ sudo sysctl kernel.kptr_restrict
 kernel.kptr_restrict = 1
 
 If "kernel.kptr_restrict" is not set to "1" or is missing, this is a finding.'

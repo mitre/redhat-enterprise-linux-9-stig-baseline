@@ -21,7 +21,7 @@ $ sudo grep -ir '@@' /etc/rsyslog.conf /etc/rsyslog.d/
 To check for Rainer script syntax, perform the following:
 $ sudo grep -rq 'type="omfwd"' /etc/rsyslog.conf /etc/rsyslog.d/
 
-If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are off-loaded to a different system or media. 
+If a remote server is not configured, or the line is commented out, ask the system administrator (SA) to indicate how the audit logs are off-loaded to a different system or media.
 
 If there is no evidence that the audit logs are being off-loaded to another system or media, this is a finding.)
   impact 0.5

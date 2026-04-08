@@ -15,7 +15,7 @@ The configured policy does NOT match the generated policy
 
 List all of the crypto backends configured on the system with the following command:
 
-$ ls -l /etc/crypto-policies/back-ends/ 
+$ ls -l /etc/crypto-policies/back-ends/
 
 lrwxrwxrwx. 1 root root  40 Nov 13 16:29 bind.config -> /usr/share/crypto-policies/FIPS/bind.txt
 lrwxrwxrwx. 1 root root  42 Nov 13 16:29 gnutls.config -> /usr/share/crypto-policies/FIPS/gnutls.txt

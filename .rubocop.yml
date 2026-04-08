@@ -61,7 +61,7 @@ Style/FrozenStringLiteralComment:
 # The following cops were added to RuboCop, but are not configured. Please set Enabled to either `true` or `false` in your `.rubocop.yml` file.
 # Please also note that you can opt-in to new cops by default by adding this to your config:
 # For more information: https://docs.rubocop.org/rubocop/versioning.html
-Gemspec/DateAssignment: # new in 1.10
+Gemspec/DeprecatedAttributeAssignment: # replaces Gemspec/DateAssignment (removed)
   Enabled: true
 Gemspec/RequireMFA: # new in 1.23
   Enabled: true

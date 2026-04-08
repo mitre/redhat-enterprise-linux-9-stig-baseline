@@ -11,7 +11,7 @@ rsyslog.x86_64          8.2102.0-101.el9_0.1
 
 If the "rsyslog" package is not installed, this is a finding.'
   desc 'fix', 'Install the rsyslog package with the following command:
- 
+
 $ sudo dnf install rsyslog'
   impact 0.5
   tag severity: 'medium'

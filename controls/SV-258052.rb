@@ -3,11 +3,11 @@ control 'SV-258052' do
   desc 'If a local interactive user has a home directory defined that does not exist, the user may be given access to the / directory as the current working directory upon logon. This could create a denial of service because the user would not be able to access their logon configuration files, and it may give them visibility to system files they normally would not be able to access.'
   desc 'check', %q(Verify the assigned home directories of all interactive users on the system exist with the following command:
 
-$ sudo pwck -r 
+$ sudo pwck -r
 
 The output should not return any interactive (human) users.
 
-Ask the system administrator (SA) if any users found without home directories are local interactive users. 
+Ask the system administrator (SA) if any users found without home directories are local interactive users.
 If the SA is unable to provide a response, check for users with a user identifier (UID) of 1000 or greater with the following command:
 
 $ awk -F: '($3>=1000)&&($1!="nobody"){print $1 ":" $3}' /etc/passwd
@@ -17,7 +17,7 @@ If any interactive users do not have a home directory assigned, this is a findin
 
 Note: The example will be for the user wadea, who has a home directory of "/home/wadea", a user identifier (UID) of "wadea", and a group identifier (GID) of "users assigned" in "/etc/passwd".
 
-$ sudo mkdir /home/wadea 
+$ sudo mkdir /home/wadea
 $ sudo chown wadea /home/wadea
 $ sudo chgrp users /home/wadea
 $ sudo chmod 0750 /home/wadea'

@@ -3,10 +3,10 @@ control 'SV-257823' do
   desc 'The hashes of important files such as system executables should match the information given by the RPM database. Executables with erroneous hashes could be a sign of nefarious activity on the system.
 If the Check Text command returns results from third-party software vendors, it is an indication that the vendor is not implementing their rpm packages correctly and this must be corrected by the software vendor.'
   desc 'check', %q(Verify RHEL 9 is configured so that the cryptographic hashes of system files match vendor values.
- 
+
 List files on the system that have file hashes different from what is expected by the RPM database with the following command:
 
-$ sudo rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"' 
+$ sudo rpm -Va --noconfig | awk '$1 ~ /..5/ && $2 != "c"'
 
 If there is output, this is a finding.)
   desc 'fix', %q(Configure RHEL 9 so that the cryptographic hashes of system files match vendor values.

@@ -18,7 +18,7 @@ $ sudo sysctl kernel.core_pattern
 kernel.core_pattern = |/bin/false
 
 If "kernel.core_pattern" is not set to "|/bin/false", or a line is not returned and the need for core dumps is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.'
-  desc 'fix', 'Configure RHEL 9 to disable storing core dumps. 
+  desc 'fix', 'Configure RHEL 9 to disable storing core dumps.
 
 Create a drop-in if it does not already exist:
 

@@ -3,9 +3,9 @@ control 'SV-258088' do
   desc 'The "su" program allows to run commands with a substitute user and group ID. It is commonly used to run commands as the root user. Limiting access to such commands is considered a good security practice.'
   desc 'check', 'Verify RHEL 9 includes users who require privilege escalation to be members of the "wheel" group with the following command:
 
-$ sudo grep pam_wheel /etc/pam.d/su 
+$ sudo grep pam_wheel /etc/pam.d/su
 
-auth             required        pam_wheel.so use_uid 
+auth             required        pam_wheel.so use_uid
 
 If a line for "pam_wheel.so" does not exist, or the line is commented out, this is a finding.'
   desc 'fix', %q(Configure RHEL 9 to require users to be in the "wheel" group to run "su" command.

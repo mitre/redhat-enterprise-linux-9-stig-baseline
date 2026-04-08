@@ -9,20 +9,20 @@ To modify properties, such as dependencies or timeouts, of a service that is han
 For example, to extend the configuration of the network service, do not modify the /etc/rc.d/init.d/network initscript file. Instead, create new directory /etc/systemd/system/network.service.d/ and a systemd drop-in file /etc/systemd/system/network.service.d/my_config.conf. Then, put the modified values into the drop-in file. Note: systemd knows the network service as network.service, which is why the created directory must be called "network.service.d".'
   desc 'check', 'Verify RHEL 9 requires authentication for single-user mode with the following command:
 
-$ grep sulogin /usr/lib/systemd/system/rescue.service 
+$ grep sulogin /usr/lib/systemd/system/rescue.service
 
 ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue
 
 If the line is not returned from the default systemd file, use the following command to look for modifications to the rescue.service:
 
-$ grep sulogin /etc/systemd/system/rescue.service.d/*.conf 
+$ grep sulogin /etc/systemd/system/rescue.service.d/*.conf
 
 If the line is not returned from either location this is a finding.
 
 Note: The configuration setting can only be in either the default location, or in the drop in file, not both locations.'
   desc 'fix', 'Configure RHEL 9 to require authentication for single-user mode.
 
-Create a directory for supplementary configuration files: 
+Create a directory for supplementary configuration files:
 $ sudo mkdir /etc/systemd/system/rescue.service.d/
 
 Copy the original file rescue.service file to the new directory with:
