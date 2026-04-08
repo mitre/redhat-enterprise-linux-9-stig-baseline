@@ -44,9 +44,10 @@ lifecycle:
     - remote: |
         echo "+++ Checking subscription manager +++"
         sudo subscription-manager status
+        sudo subscription-manager identity
         echo ""
-        echo "+++ Machine ID check+++"
-        sudo cat /etc/machine-id
+        echo "+++ Manager logs+++"
+        sudo cat /var/log/rhsm/rhsm.log
         echo "+++ Updating DNF Packages +++"
         sudo dnf -y update --nogpgcheck --nobest
         echo ""
