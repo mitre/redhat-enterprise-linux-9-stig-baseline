@@ -57,7 +57,7 @@ lifecycle:
         sudo python3 -m pip install ansible jmespath
         echo ""
         echo "+++ Updating the ec2-user to keep sudo working after hardening phase +++\n\n"
-        sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
+        sudo chage -d $(( $( date +%s ) / 86400 )) rhel
         echo ""
         echo "+++ updating ec2-user sudo config for hardening phase +++\n\n"
         sudo chmod 600 /etc/sudoers && sudo sed -i'' "/rhel/d" /etc/sudoers && sudo chmod 400 /etc/sudoers

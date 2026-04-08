@@ -230,7 +230,7 @@ jobs:
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
 
-          sudo lxc launch "$ALIAS_NAME" "$NAME" --vm
+          sudo lxc launch rhel9-imagebuilder "$NAME" --vm
 
       - name: Wait for VM to be ready
         run: |
