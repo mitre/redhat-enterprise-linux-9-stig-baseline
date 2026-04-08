@@ -42,8 +42,8 @@ suites:
 lifecycle:
   pre_converge:
     - remote: |
-        # echo "+++ Refreshing DNF package cache +++"
-        # sudo dnf -y clean all
+        echo "+++ Checking subscription manager +++"
+        sudo subscription-manager status
         echo ""
         echo "+++ Updating DNF Packages +++"
         sudo dnf -y update --nogpgcheck --nobest

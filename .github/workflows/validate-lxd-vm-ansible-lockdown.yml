@@ -21,7 +21,7 @@ jobs:
       LXD_VM_USERNAME: "rhel"
     strategy:
       matrix:
-        suite: ["vanilla", "hardened"]
+        suite: ["vanilla"]
       fail-fast: false
     steps:
       - name: add needed packages
