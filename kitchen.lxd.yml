@@ -46,6 +46,7 @@ lifecycle:
         sudo subscription-manager status
         sudo subscription-manager identity
         echo ""
+        curl -v https://subscription.rhsm.redhat.com/subscription/status
         echo "+++ Manager logs+++"
         sudo cat /var/log/rhsm/rhsm.log
         echo "+++ Updating DNF Packages +++"
