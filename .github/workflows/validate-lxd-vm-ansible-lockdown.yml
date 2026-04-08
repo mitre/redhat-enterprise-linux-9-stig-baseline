@@ -112,25 +112,22 @@ jobs:
       - name: Vendor the Profile
         run: bundle exec cinc-auditor vendor . --overwrite
 
-      - name: Generate ephemeral SSH key for Kitchen
+      - name: Prepare SSH private key for Kitchen from secret
         run: |
           set -euo pipefail
-          KEY="$RUNNER_TEMP/kitchen_ed25519"
-          ssh-keygen -t ed25519 -a 64 -N "" -f "$KEY" -C "kitchen-ci-$(date -u +%Y%m%dT%H%M%SZ)" </dev/null
+          KEY="$RUNNER_TEMP/kitchen_key"
+          printf '%s\n' "${{ secrets.KITCHEN_SSH_PRIVATE_KEY }}" > "$KEY"
           chmod 600 "$KEY"
-          chmod 644 "$KEY.pub"
           {
             echo "KITCHEN_SSH_KEY=$KEY"
-            echo "KITCHEN_SSH_PUBKEY=$(cat "$KEY.pub")"
           } >> "$GITHUB_ENV"
-      
       - name: Download RHEL QCOW2 via Image Builder
         run: |
           set -euo pipefail
           TOKEN_URL="https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"
           CLIENT_ID="${{ secrets.RH_SSO_CLIENT_ID }}"
           CLIENT_SECRET="${{ secrets.RH_SSO_CLIENT_SECRET }}"
-          COMPOSE_ID="${{ vars.RH_COMPOSE_ID }}"
+          COMPOSE_ID="${{ secrets.RH_COMPOSE_ID }}"
           OUTPUT_FILE="rhel-image.qcow2"
           POLL_INTERVAL=15
           API_URL="https://console.redhat.com/api/image-builder/v1/composes/${COMPOSE_ID}"
@@ -228,32 +225,12 @@ jobs:
           echo "Available LXD images:"
           sudo lxc image list
 
-      - name: Launch LXD VM with cloud-init enabling SSH
+      - name: Launch LXD VM
         run: |
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
 
-          cat > user-data.yaml <<EOF
-          #cloud-config
-          write_files:
-            - path: /etc/apt/apt.conf.d/99force-ipv4
-              permissions: '0644'
-              content: |
-                Acquire::ForceIPv4 "true";
-          package_update: true
-          packages:
-            - openssh-server
-          users:
-            - name: ${LXD_VM_USERNAME}
-              groups: [sudo]
-              sudo: ALL=(ALL) NOPASSWD:ALL
-              shell: /bin/bash
-              ssh_authorized_keys:
-                - ${KITCHEN_SSH_PUBKEY}
-          ssh_pwauth: false
-          EOF
-
-          sudo lxc launch rhel9-imagebuilder "$NAME" --vm -c user.user-data="$(cat user-data.yaml)"
+          sudo lxc launch rhel9-imagebuilder "$NAME" --vm
 
       - name: Wait for VM to be ready
         run: |
@@ -375,7 +352,7 @@ jobs:
         with:
           command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
 
-      - name: Cleanup ephemeral SSH key
+      - name: Cleanup SSH private key
         if: always()
         run: |
-          rm -f "$RUNNER_TEMP/kitchen_ed25519" "$RUNNER_TEMP/kitchen_ed25519.pub"
+          rm -f "$RUNNER_TEMP/kitchen_key"
