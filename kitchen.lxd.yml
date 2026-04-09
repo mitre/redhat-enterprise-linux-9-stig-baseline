@@ -46,7 +46,9 @@ lifecycle:
         source /etc/osbuild-subscription-register.env
         sudo subscription-manager register --activationkey=$ACTIVATION_KEY --org=$ORG_ID
         sudo subscription-manager status
-        sudo /usr/bin/crb enable
+        # https://access.redhat.com/solutions/7127504
+        mkdir -p /tmp/backup-repos
+        find /etc/yum.repos.d/ -maxdepth 1 -type f -name "*.repo" ! -name "redhat.repo" -exec mv {} /tmp/backup-repos/ \;
         echo "+++ Updating DNF Packages +++"
         sudo dnf -y update --nogpgcheck --nobest
         echo ""
