@@ -46,6 +46,7 @@ lifecycle:
         source /etc/osbuild-subscription-register.env
         sudo subscription-manager register --activationkey=$ACTIVATION_KEY --org=$ORG_ID
         sudo subscription-manager status
+        sudo /usr/bin/crb enable
         echo "+++ Updating DNF Packages +++"
         sudo dnf -y update --nogpgcheck --nobest
         echo ""
