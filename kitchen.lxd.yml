@@ -13,7 +13,7 @@ provisioner:
   hosts: all
   require_chef_for_busser: false
   require_ruby_for_busser: false
-  ansible_binary_path: /usr/bin
+  ansible_binary_path: /usr/local/bin
   # require_pip3: true
   ansible_verbose: true
   roles_path: spec/ansible/roles
