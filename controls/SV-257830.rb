@@ -26,4 +26,10 @@ $ sudo dnf config-manager --set-disabled epel'
   tag 'documentable'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host'
+  tag 'container'
+
+  describe command('dnf -q repolist --enabled') do
+    its('stdout') { should_not match(/epel/i) }
+  end
 end
