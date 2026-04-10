@@ -1,6 +1,7 @@
 ---
 verifier:
   name: inspec
+  command: cinc-auditor
   sudo: true
   reporter:
     - cli
