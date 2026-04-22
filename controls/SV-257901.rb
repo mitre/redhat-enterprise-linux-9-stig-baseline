@@ -22,4 +22,11 @@ $ sudo chgrp root /etc/group-'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe file('/etc/group-') do
+    it { should exist }
+    its('group') { should cmp 'root' }
+  end
 end

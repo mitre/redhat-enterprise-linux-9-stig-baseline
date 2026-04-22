@@ -919,7 +919,7 @@ inputs:
   # If you need to override these values, do so via adding the desired key/value to
   # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
   # directly will lose the values for any key you do not explictly define.
-  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226
+  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226, SV-279936
   - name: audit_rule_keynames
     description: The audit rules to be applied to the system
     type: Hash
@@ -995,7 +995,9 @@ inputs:
       '/usr/sbin/reboot'              : 'privileged-reboot',
       '/usr/sbin/shutdown'            : 'privileged-shutdown',
       'umount2'                       : 'perm_mod',
-      '/var/log/tallylog'             : 'logins'
+      '/var/log/tallylog'             : 'logins',
+      '/etc/cron.d'                   : 'cronjobs',
+      '/var/spool/cron'               : 'cronjobs'
     }
 
   # Override values for expected keynames for all audit rules
@@ -1006,7 +1008,7 @@ inputs:
   # {
   #   'execve': 'my_org_specific_keyname_for_auditing_execve'
   # }
-  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226
+  # SV-258176, SV-258177, SV-258178, SV-258179, SV-258180, SV-258181, SV-258182, SV-258183, SV-258184, SV-258185, SV-258186, SV-258187, SV-258188, SV-258189, SV-258190, SV-258191, SV-258192, SV-258193, SV-258194, SV-258195, SV-258196, SV-258197, SV-258198, SV-258199, SV-258200, SV-258201, SV-258202, SV-258203, SV-258204, SV-258205, SV-258206, SV-258207, SV-258208, SV-258209, SV-258210, SV-258211, SV-258212, SV-258213, SV-258214, SV-258215, SV-258216, SV-258217, SV-258218, SV-258219, SV-258220, SV-258221, SV-258222, SV-258223, SV-258224, SV-258225, SV-258226, SV-279936
   - name: audit_rule_keynames_overrides
     description: The audit rules to be applied to the system
     type: Hash

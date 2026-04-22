@@ -52,4 +52,21 @@ If the "-s" option is not present in the "ExecStart" line or if the line is miss
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  if input('tftp_required')
+    describe package('tftp-server') do
+      it { should be_installed }
+    end
+
+    describe file('/usr/lib/systemd/system/tftp.service') do
+      it { should exist }
+      its('content') { should match(/ExecStart=.*\s-s(\s|$)/) }
+    end
+  else
+    describe package('tftp-server') do
+      it { should_not be_installed }
+    end
+  end
 end
