@@ -1211,3 +1211,9 @@ inputs:
     description: List of block devices/partitions that are permitted to be unencrypted
     type: Array
     value: []
+
+  # SV-257862
+  - name: boot_efi_mountpoint
+    description: Mount point for the EFI System Partition
+    type: String
+    value: '/boot/efi'

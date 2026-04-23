@@ -22,4 +22,11 @@ $ sudo chown root /etc/passwd-'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe file('/etc/passwd-') do
+    it { should exist }
+    it { should be_owned_by 'root' }
+  end
 end

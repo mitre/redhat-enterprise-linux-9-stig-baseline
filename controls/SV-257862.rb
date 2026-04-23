@@ -28,10 +28,20 @@ Note: This control is not applicable to vfat file systems.)
     !virtualization.system.eql?('docker')
   }
 
-  if file('/sys/firmware/efi').exist?
-    describe mount('/boot/efi') do
-      it { should be_mounted }
-      its('options') { should include 'nosuid' }
+  boot_efi_path = input('boot_efi_mountpoint')
+  boot_efi = mount(boot_efi_path)
+
+  if boot_efi.mounted?
+    if boot_efi.type == 'vfat'
+      impact 0.0
+      describe 'vfat filesystem detected on /boot/efi' do
+        skip 'This control is Not Applicable for vfat file systems.'
+      end
+    else
+      describe boot_efi do
+        it { should be_mounted }
+        its('options') { should include 'nosuid' }
+      end
     end
   else
     impact 0.0

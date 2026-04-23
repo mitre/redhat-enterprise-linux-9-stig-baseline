@@ -40,7 +40,8 @@ $ sudo systemctl daemon-reload'
     !virtualization.system.eql?('docker')
   }
 
-  describe parse_config_file('/etc/systemd/system.conf') do
-    its('Manager') { should include('CtrlAltDelBurstAction' => 'none') }
+  describe command('grep -iR CtrlAltDelBurstAction /etc/systemd/system*') do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should match(/^[[:space:]]*CtrlAltDelBurstAction[[:space:]]*=[[:space:]]*none/i) }
   end
 end
