@@ -54,7 +54,7 @@ $ sudo systemctl reload NetworkManager'
     end
   else
     describe ini({ content: network_manager.stdout.strip }) do
-      its('main.dns') { should be_in ['none', 'default'] }
+      its('main.dns') { should be_in ['none', 'default', 'systemd-resolved'] }
     end
   end
 end

@@ -45,7 +45,7 @@ $ sudo ssh-keygen -N [passphrase]'
     end
   elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
     describe 'no files found' do
-      skip 'No private key files given in the input were found on the system; please check the input accurately lists all private keys on this system'
+      skip 'No private key files given in the input were found on the system; check that the input accurately lists all private keys on this system'
     end
   else
     passwordless_keys = input('private_key_files').select { |kf|

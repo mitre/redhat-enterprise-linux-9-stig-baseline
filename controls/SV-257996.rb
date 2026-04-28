@@ -60,7 +60,12 @@ $ sudo systemctl restart sshd.service'
   else
     describe 'The OpenSSH Server configuration' do
       it "has the correct #{setting} configuration" do
-        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Please ensure it set to '#{value}'."
+        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Ensure it is set to '#{value}'."
+      end
+
+      it "has the correct #{setting} runtime value" do
+        runtime_value = command('sshd -T').stdout.match(/^#{setting.downcase}\s+(\S+)/i)&.captures&.first
+        expect(runtime_value).to cmp(value), "The #{setting} runtime value is not correct. Ensure sshd -T resolves '#{setting}' to '#{value}'."
       end
     end
   end

@@ -47,7 +47,7 @@ Note: usbguard will need to be configured to allow authorized devices once it is
   peripherals_package = input('peripherals_package')
 
   describe package(peripherals_package) do
-    it "is expected to be installed. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+    it "is expected to be installed. \n\tConfigure the service to ensure your devices function as expected." do
       expect(subject.installed?).to be(true), "The #{peripherals_package} package is not installed"
     end
   end

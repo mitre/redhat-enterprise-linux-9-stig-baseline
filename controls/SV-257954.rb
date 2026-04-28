@@ -32,7 +32,14 @@ $ sudo dnf install libreswan'
   tag 'host'
   tag 'container'
 
-  describe package('libreswan') do
-    it { should be_installed }
+  if input('libreswan_required')
+    describe package('libreswan') do
+      it { should be_installed }
+    end
+  else
+    impact 0.0
+    describe 'N/A' do
+      skip 'If there is no operational need for Libreswan to be installed, this rule is not applicable.'
+    end
   end
 end

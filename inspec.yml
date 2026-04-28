@@ -895,7 +895,13 @@ inputs:
     description: Set to true if there is a documented requirement for the target system to use Kerberos auth
     type: Boolean
     value: false
-
+  
+    # SV-257954
+  - name: libreswan_required
+    description: Set to true if there is a documented requirement for the target system to have Libreswan installed
+    type: Boolean
+    value: false
+  
   # SV-257836
   - name: quagga_required
     description: Set to true if there is a documented requirement for the target system to use quagga

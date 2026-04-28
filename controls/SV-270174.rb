@@ -58,4 +58,17 @@ $ sudo dconf update)
   tag 'documentable'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+
+  only_if('Control not applicable within a container or when GDM is not installed', impact: 0.0) do
+    !virtualization.system.eql?('docker') && command('rpm -q gdm').exit_status.zero?
+  end
+
+  banner = command('gsettings get org.gnome.login-screen banner-message-text').stdout.strip.gsub(/\\n|'|"|\s+/, '')
+  expected_banner = input('banner_message_text_gui').gsub(/\s+/, '')
+
+  describe 'The GUI Login Banner' do
+    it 'is set to the standard banner and has the correct text' do
+      expect(banner).to eq(expected_banner), 'Banner does not match expected text'
+    end
+  end
 end

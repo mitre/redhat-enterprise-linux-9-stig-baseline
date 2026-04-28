@@ -35,10 +35,10 @@ $ sudo systemctl enable --now usbguard'
   peripherals_service = input('peripherals_service')
 
   describe service(peripherals_service) do
-    it "is expected to be running. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+    it "is expected to be running. \n\tConfigure the service to ensure your devices function as expected." do
       expect(subject.running?).to be(true), "The #{peripherals_service} service is not running"
     end
-    it "is expected to be enabled. \n\tPlease ensure to configure the service to ensure your devices function as expected." do
+    it "is expected to be enabled. \n\tConfigure the service to ensure your devices function as expected." do
       expect(subject.enabled?).to be(true), "The #{peripherals_service} service is not enabled"
     end
   end

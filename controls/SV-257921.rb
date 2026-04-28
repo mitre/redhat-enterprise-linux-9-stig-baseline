@@ -25,7 +25,7 @@ $ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' ! -group root 
 
   required_system_account_caveats = input('required_system_accounts').map { |acct| "-group #{acct}" }.join(' ')
 
-  failing_files = command("find -L #{input('system_libraries').join(' ')} ! #{required_system_account_caveats} -exec ls -d {} \\;").stdout.split("\n")
+  failing_files = command("find -L #{input('system_libraries').join(' ')} -type f -name '*.so*' ! #{required_system_account_caveats} -exec ls -d {} \\;").stdout.split("\n")
 
   describe 'System libraries' do
     it 'should be group-owned by root' do
