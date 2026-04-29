@@ -40,8 +40,15 @@ $ sudo systemctl restart sssd.service'
     !virtualization.system.eql?('docker')
   }
 
-  describe file('/etc/sssd/sssd.conf') do
-    it { should exist }
-    its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
+  if input('alternate_mfa_method') == ''
+    describe file('/etc/sssd/sssd.conf') do
+      it { should exist }
+      its('content') { should match(/^\s*\[certmap.*\]\s*$/) }
+    end
+  else
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
+    end
   end
 end
