@@ -48,7 +48,7 @@ server [ntp.server.name] iburst maxpoll 16'
   # Converts to array if only one value present
   time_sources = []
   time_sources = [chrony_conf.server].flatten if chrony_conf.server
-  time_sources += chrony_conf.pool if chrony_conf.pool
+  time_sources += [chrony_conf.pool].flatten if chrony_conf.pool
 
   # Get and map maxpoll values to an array
   unless time_sources.nil?
