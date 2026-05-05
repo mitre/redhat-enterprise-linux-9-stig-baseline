@@ -6,16 +6,21 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     name: Validate my profile
     runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
     env:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.lxd.yml
-      SAF_PIPELINE_SUBNET: ${{ secrets.SAF_PIPELINE_SUBNET }}
-      SAF_PIPELINE_SG: ${{ secrets.SAF_PIPELINE_SG }}
       PLATFORM: "rhel-9"
       LC_ALL: "en_US.UTF-8"
       LXD_VM_USERNAME: "rhel"
@@ -24,335 +29,137 @@ jobs:
         suite: ["vanilla", "hardened"]
       fail-fast: false
     steps:
-      - name: add needed packages
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install jq qemu-utils gdisk
-
-      - name: Install LXD
-        run: |
-          sudo snap install lxd
-          # Wait for LXD daemon to start
-          echo "Waiting for LXD daemon to start..."
-          sleep 15
-          # Initialize LXD with default settings
-          sudo lxd init --auto
-          # Add runner to lxd group
-          sudo usermod -a -G lxd runner
-          # Fix socket permissions for CI environment
-          sudo chmod 666 /var/snap/lxd/common/lxd/unix.socket
-
-          echo "Configuring LXD networking (lxdbr0 with IPv4 NAT, IPv6 disabled)"
-          # Ensure managed bridge exists and is configured for IPv4 NAT and DNS
-          sudo lxc network show lxdbr0 || true
-          sudo lxc network set lxdbr0 ipv4.address auto
-          sudo lxc network set lxdbr0 ipv4.nat true
-          sudo lxc network set lxdbr0 ipv6.address none || true
-          sudo lxc network set lxdbr0 ipv6.nat false || true
-          sudo lxc network set lxdbr0 dns.mode managed || true
-          sudo lxc network set lxdbr0 dns.domain lxd || true
-          sudo lxc network set lxdbr0 dns.nameservers 1.1.1.1,8.8.8.8 || true
-          # Make sure default profile attaches NIC to lxdbr0
-          sudo lxc profile device add default eth0 nic name=eth0 network=lxdbr0 || true
-
-          # Helpful sysctl in some CI hosts (usually already enabled by LXD rules)
-          sudo sysctl -w net.ipv4.ip_forward=1 || true
-          sudo sysctl -w net.ipv4.conf.all.forwarding=1 net.ipv4.conf.default.forwarding=1 || true
-
-          # Ensure NAT and forwarding rules for lxdbr0 on CI hosts with restrictive FORWARD policies
-          EXTIF=$(ip -4 route show default | awk '{print $5}' | head -n1)
-          SUBNET=$(ip -4 addr show dev lxdbr0 | awk '/inet /{print $2}')
-          echo "Ensuring iptables NAT and FORWARD rules for $SUBNET -> $EXTIF"
-          sudo iptables -t nat -C POSTROUTING -s "$SUBNET" -o "$EXTIF" -j MASQUERADE 2>/dev/null || sudo iptables -t nat -A POSTROUTING -s "$SUBNET" -o "$EXTIF" -j MASQUERADE
-          sudo iptables -C FORWARD -i lxdbr0 -o "$EXTIF" -j ACCEPT 2>/dev/null || sudo iptables -I FORWARD 1 -i lxdbr0 -o "$EXTIF" -j ACCEPT
-          sudo iptables -C FORWARD -i "$EXTIF" -o lxdbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || sudo iptables -I FORWARD 1 -i "$EXTIF" -o lxdbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-
-          # Some hosts default to DROP on FORWARD; set ACCEPT and enable bridge nf hooks
-          sudo modprobe br_netfilter || true
-          sudo sysctl -w net.bridge.bridge-nf-call-iptables=1 net.bridge.bridge-nf-call-ip6tables=1 || true
-          sudo iptables -P FORWARD ACCEPT || true
-
-          # Relax reverse path filtering that can drop forwarded replies in some clouds
-          sudo sysctl -w net.ipv4.conf.all.rp_filter=0 net.ipv4.conf.default.rp_filter=0 || true
-          sudo sysctl -w net.ipv4.conf.lxdbr0.rp_filter=0 || true
-          sudo sysctl -w net.ipv4.conf.$EXTIF.rp_filter=0 || true
-
-          # Test basic LXD functionality
-          sudo lxc list
+      - name: Install host packages
+        run: sudo apt-get update && sudo apt-get -y install jq qemu-utils gdisk
 
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
 
-      - name: Clone full repository so we can push
-        run: git fetch --prune --unshallow
+      - name: Install and configure LXD
+        run: sudo ./.github/scripts/setup-lxd.sh
 
       - name: Set short git commit SHA
-        id: vars
-        run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-
-      - name: Confirm git commit SHA output
-        run: echo ${{ env.COMMIT_SHORT_SHA }}
+        run: echo "COMMIT_SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@e5517072e87f198d9533967ae13d97c11b604005  # v1.99.0
         with:
           ruby-version: "3.1"
 
-      - name: Disable ri and rdoc
-        run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
+      - name: Install gems and vendor profile
+        run: |
+          bundle install
+          bundle exec cinc-auditor vendor . --overwrite
 
-      - name: Run Bundle Install
-        run: bundle install
-
-      - name: Installed Cinc-auditor
-        run: bundle exec cinc-auditor version
-
-      - name: Vendor the Profile
-        run: bundle exec cinc-auditor vendor . --overwrite
-
-      - name: Prepare SSH private key for Kitchen from secret
+      - name: Prepare SSH private key for Kitchen
+        env:
+          KITCHEN_SSH_PRIVATE_KEY: ${{ secrets.KITCHEN_SSH_PRIVATE_KEY }}
         run: |
           set -euo pipefail
           KEY="$RUNNER_TEMP/kitchen_key"
-          printf '%s\n' "${{ secrets.KITCHEN_SSH_PRIVATE_KEY }}" > "$KEY"
+          printf '%s\n' "$KITCHEN_SSH_PRIVATE_KEY" > "$KEY"
           chmod 600 "$KEY"
-          {
-            echo "KITCHEN_SSH_KEY=$KEY"
-          } >> "$GITHUB_ENV"
+          echo "KITCHEN_SSH_KEY=$KEY" >> "$GITHUB_ENV"
+
       - name: Download RHEL QCOW2 via Image Builder
+        env:
+          RH_SSO_CLIENT_ID: ${{ secrets.RH_SSO_CLIENT_ID }}
+          RH_SSO_CLIENT_SECRET: ${{ secrets.RH_SSO_CLIENT_SECRET }}
+          RH_COMPOSE_ID: ${{ secrets.RH_COMPOSE_ID }}
+        run: ./.github/scripts/fetch-rhel-image.sh
+
+      - name: Repackage QCOW2 with grown disk and fixed GPT for LXD
         run: |
           set -euo pipefail
-          TOKEN_URL="https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"
-          CLIENT_ID="${{ secrets.RH_SSO_CLIENT_ID }}"
-          CLIENT_SECRET="${{ secrets.RH_SSO_CLIENT_SECRET }}"
-          COMPOSE_ID="${{ secrets.RH_COMPOSE_ID }}"
-          OUTPUT_FILE="rhel-image.qcow2"
-          POLL_INTERVAL=15
-          API_URL="https://console.redhat.com/api/image-builder/v1/composes/${COMPOSE_ID}"
+          qemu-img convert -O raw rhel-image.qcow2 disk.raw
+          qemu-img resize disk.raw +16M
+          sgdisk -e disk.raw
+          qemu-img convert -O qcow2 disk.raw disk.qcow2
 
-          echo "Requesting access token..."
-          ACCESS_TOKEN="$(curl -sS -X POST "$TOKEN_URL" \
-            -d "grant_type=client_credentials" \
-            -d "client_id=$CLIENT_ID" \
-            -d "client_secret=$CLIENT_SECRET" | jq -r '.access_token')"
-
-          if [[ -z "$ACCESS_TOKEN" || "$ACCESS_TOKEN" == "null" ]]; then
-            echo "Error: Failed to obtain access token"
-            exit 1
-          fi
-
-          echo "Polling compose status for ID: $COMPOSE_ID..."
-          while true; do
-            RESPONSE="$(curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" "$API_URL")"
-            STATUS="$(printf '%s' "$RESPONSE" | jq -r '.image_status.status // empty' 2>/dev/null || true)"
-            echo "Current status: ${STATUS:-<unavailable>}"
-            case "$STATUS" in
-              success)
-                echo "Compose completed successfully."
-                break
-                ;;
-              failure)
-                echo "Error: Compose failed."
-                exit 1
-                ;;
-              *)
-                sleep "$POLL_INTERVAL"
-                ;;
-            esac
-          done
-
-          echo "Extracting QCOW2 download URL..."
-          QCOW2_URL="$(curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" "$API_URL" \
-            | jq -r '.image_status.upload_status.options.url // empty')"
-          if [[ -z "$QCOW2_URL" ]]; then
-            echo "Error: Download URL not found in response."
-            exit 1
-          fi
-
-          echo "Downloading image to $OUTPUT_FILE..."
-          curl -L -o "$OUTPUT_FILE" "$QCOW2_URL"
-          ls -lh "$OUTPUT_FILE"
-
-      - name: Convert QCOW2 to RAW, grow by +16MiB, and fix GPT backup header
+      - name: Import image into LXD
         run: |
           set -euo pipefail
-          INPUT_FILE="rhel-image.qcow2"
-          RAW_FILE="disk.raw"
-          echo "Converting $INPUT_FILE to raw $RAW_FILE..."
-          qemu-img convert -O raw "$INPUT_FILE" "$RAW_FILE"
-          echo "Growing $RAW_FILE by +16MiB to make room for GPT backup header..."
-          qemu-img resize "$RAW_FILE" +16M
-          echo "Fixing GPT backup header on $RAW_FILE..."
-          sgdisk -e "$RAW_FILE"
-          echo "Verifying GPT... (non-fatal)"
-          sgdisk -v "$RAW_FILE" || true
-          ls -lh "$RAW_FILE"
-
-      - name: Convert RAW back to QCOW2 for LXD import
-        run: |
-          set -euo pipefail
-          RAW_FILE="disk.raw"
-          QCOW2_FILE="disk.qcow2"
-          echo "Converting $RAW_FILE back to QCOW2 $QCOW2_FILE..."
-          qemu-img convert -O qcow2 "$RAW_FILE" "$QCOW2_FILE"
-          echo "Verifying new QCOW2..."
-          qemu-img info "$QCOW2_FILE"
-          ls -lh "$QCOW2_FILE"
-
-      - name: Create LXD VM metadata and import image alias
-        run: |
-          set -euo pipefail
-          ALIAS_NAME="rhel9-imagebuilder"
-          OUTPUT_FILE="disk.qcow2"
-
-          echo "Generating metadata.yaml for LXD VM image..."
-          EPOCH="$(date +%s)"
           cat > metadata.yaml <<EOF
           architecture: x86_64
-          creation_date: ${EPOCH}
+          creation_date: $(date +%s)
           properties:
             description: "RHEL 9 Image Builder QCOW2"
             os: "rhel"
             release: "9"
           type: virtual-machine
           EOF
-
           tar -cf metadata.tar metadata.yaml
-          echo "Importing image into LXD with alias ${ALIAS_NAME}..."
-          sudo lxc image import metadata.tar "$OUTPUT_FILE" --alias "$ALIAS_NAME"
-          echo "Available LXD images:"
-          sudo lxc image list
+          lxc image import metadata.tar disk.qcow2 --alias rhel9-imagebuilder
 
-      - name: Launch LXD VM
+      - name: Launch and wait for VM
         run: |
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
-
-          sudo lxc launch rhel9-imagebuilder "$NAME" --vm -c limits.memory=4GiB
-
-      - name: Wait for VM to be ready
-        run: |
-          echo "Waiting for VM to be fully initialized..."
-
-          # Debug: Check VM status
-          echo "=== VM Status ==="
-          NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
-          sudo lxc list
-          sudo lxc info $NAME
-
-          # We check for basic readiness instead of waiting for cloud-init completion
-          timeout=300
-          elapsed=0
-          while [ $elapsed -lt $timeout ]; do
-            # Debug: Show what we're checking
-            echo "=== Checking VM readiness (attempt $((elapsed/10 + 1))) ==="
-            
-            # Check if VM is running and we can execute commands
-            if sudo lxc list --format=csv | grep -q "$NAME.*RUNNING"; then
-              echo "VM is in RUNNING state"
-              break
-            else
-              echo "VM not in RUNNING state yet"
-            fi
-            
-            echo "Waiting for VM to be ready... ($elapsed/$timeout seconds)"
+          lxc launch rhel9-imagebuilder "$NAME" --vm -c limits.memory=4GiB
+          for i in $(seq 1 30); do
+            lxc list --format=csv | grep -q "$NAME.*RUNNING" && break
             sleep 10
-            elapsed=$((elapsed + 10))
           done
+          lxc list --format=csv | grep -q "$NAME.*RUNNING" || { echo "VM never reached RUNNING"; lxc info "$NAME"; exit 1; }
 
-          if [ $elapsed -ge $timeout ]; then
-            echo "=== TIMEOUT DEBUGGING ==="
-            echo "Final VM status:"
-            sudo lxc list
-            sudo lxc info $NAME
-            echo "Timeout waiting for VM to be ready"
-            exit 1
-          fi
-
-          echo "VM is ready for use!"
-
-      - name: Export VM IP for Kitchen (KITCHEN_HOST)
+      - name: Export VM IPv4 for Kitchen
         run: |
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
-
-          # Wait up to 120s for an IP address to appear and scan all interfaces, not just eth0
-          timeout=120
-          interval=5
-          ipv4=""
-          ipv6=""
-          elapsed=0
-          while [ $elapsed -lt $timeout ]; do
-            ipv4=$(sudo lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address' | head -n1 || true)
-            ipv6=$(sudo lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet6" and .scope=="global") | .address' | head -n1 || true)
-            if [ -n "$ipv4" ] || [ -n "$ipv6" ]; then
-              break
-            fi
-            echo "Waiting for VM IP... ($elapsed/$timeout seconds)"
-            sleep $interval
-            elapsed=$((elapsed + interval))
+          for i in $(seq 1 24); do
+            ipv4=$(lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address' | head -n1)
+            [ -n "$ipv4" ] && break
+            sleep 5
           done
-
-          if [ -n "$ipv4" ]; then
-            echo "Using IPv4 $ipv4 for KITCHEN_HOST"
-            echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
-          elif [ -n "$ipv6" ]; then
-            echo "Using IPv6 $ipv6 for KITCHEN_HOST"
-            echo "KITCHEN_HOST=$ipv6" >> "$GITHUB_ENV"
-          else
-            echo "Failed to discover a VM IP address"
-            sudo lxc list "$NAME"
-            sudo lxc info "$NAME" || true
-            exit 1
-          fi
+          [ -n "$ipv4" ] || { echo "No VM IPv4 found"; lxc info "$NAME"; exit 1; }
+          echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
 
       - name: Run kitchen test
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        continue-on-error: true
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }} || true
 
-      - name: Save our ${{ matrix.suite }} results summary
+      - name: Save results summary JSON
         continue-on-error: true
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
-      - name: Save Test Result JSON
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: actions/upload-artifact@v4
+      - name: Upload Test Result JSON
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
         with:
           name: ${{ env.PLATFORM }}_${{ matrix.suite }}.json
           path: spec/results/
 
-      - name: Upload ${{ matrix.suite }} to Heimdall
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
+      - name: Upload to Heimdall
         continue-on-error: true
+        env:
+          SAF_HEIMDALL_UPLOAD_KEY: ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" \
+            -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" \
+            -H "Authorization: Api-Key $SAF_HEIMDALL_UPLOAD_KEY" \
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
-      - name: Display our ${{ matrix.suite }} results summary
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Display results summary
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
 
       - name: Generate Markdown Summary
         continue-on-error: true
-        id: generate-summary
         run: |
-          cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
+          python markdown-summary.py < spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json \
+            > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
-      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Validate scan threshold
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
 
       - name: Cleanup SSH private key
         if: always()
-        run: |
-          rm -f "$RUNNER_TEMP/kitchen_key"
+        run: rm -f "$RUNNER_TEMP/kitchen_key"
