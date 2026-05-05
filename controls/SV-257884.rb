@@ -25,7 +25,7 @@ $ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' -perm /022 -ex
   tag 'host'
   tag 'container'
 
-  failing_files = command("find -L #{input('system_libraries').join(' ')} -perm /0022 -type f -exec ls -d {} \\;").stdout.split("\n")
+  failing_files = command("find -L #{input('system_libraries').join(' ')} -perm /0022 -name '*.so*' -type f -exec ls -d {} \\;").stdout.split("\n")
 
   describe 'System libraries' do
     it "should have mode '0755' or less permissive" do

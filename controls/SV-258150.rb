@@ -41,7 +41,7 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
   describe.one do
     describe command("grep  -hsv \"^#\" #{input('logging_conf_files').join(' ')} | grep ^cron") do

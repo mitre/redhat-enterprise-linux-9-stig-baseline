@@ -49,7 +49,7 @@ $ sudo systemctl restart rsyslog.service'
   tag 'container'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('is_log_aggregation_server') == true

@@ -23,7 +23,7 @@ If the "/var/tmp" file system is mounted without the "nodev" option, this is a f
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   path = '/var/tmp'

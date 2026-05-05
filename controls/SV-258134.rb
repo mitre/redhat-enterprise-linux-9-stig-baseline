@@ -1,6 +1,6 @@
 control 'SV-258134' do
   title 'RHEL 9 must have the AIDE package installed.'
-  desc '<path> [object Object]<#text> Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
+  desc 'Without verification of the security functions, security functions may not operate correctly, and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
 
 Selection lines in the aide.conf file determine which files and directories AIDE will monitor for changes. They follow this format:'
   desc 'check', 'Verify the file integrity tool is configured to verify ACLs.
@@ -82,7 +82,7 @@ AIDE found NO differences between database and filesystem. Looks okay!!
   file_integrity_tool = input('file_integrity_tool')
 
   only_if('Control not applicable within a container', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   if file_integrity_tool == 'aide'

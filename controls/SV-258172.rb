@@ -25,7 +25,7 @@ $ sudo chmod 0640 /etc/audit/auditd.conf'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   mode = input('expected_modes')['auditd_conf']

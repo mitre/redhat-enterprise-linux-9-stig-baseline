@@ -23,7 +23,7 @@ If the "/boot" file system does not have the "nodev" option set, this is a findi
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if file('/sys/firmware/efi').exist?

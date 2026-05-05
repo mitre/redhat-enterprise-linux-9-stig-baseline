@@ -1,7 +1,5 @@
 name: EC2 Ansible Lockdown Testing Matrix
 
-on: []
-
 jobs:
   validate:
     name: Validate my profile

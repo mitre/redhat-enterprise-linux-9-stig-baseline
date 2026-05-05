@@ -45,14 +45,10 @@ $ sudo systemctl restart sssd.service'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  if input('alternate_mfa_method').nil?
-    describe 'Manual Review' do
-      skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
-    end
-  else
+  if input('alternate_mfa_method').to_s.empty?
     sssd_conf_files = input('sssd_conf_files')
     sssd_conf_contents = ini({ command: "cat #{input('sssd_conf_files').join(' ')}" })
     sssd_certificate_verification = input('sssd_certificate_verification')
@@ -67,6 +63,11 @@ $ sudo systemctl restart sssd.service'
           expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
     end
   end
 end

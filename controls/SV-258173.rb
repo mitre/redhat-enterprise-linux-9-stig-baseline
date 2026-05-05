@@ -35,7 +35,7 @@ $ sudo grubby --update-kernel=ALL --args=audit_backlog_limit=8192'
   tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   expected_audit_backlog_limit = input('expected_audit_backlog_limit')

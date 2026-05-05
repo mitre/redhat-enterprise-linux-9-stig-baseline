@@ -1,7 +1,5 @@
 name: EC2 DISA Testing Matrix
 
-on: []
-
 jobs:
   validate:
     name: Validate my profile

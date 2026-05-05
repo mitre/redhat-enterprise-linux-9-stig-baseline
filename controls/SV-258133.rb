@@ -39,7 +39,7 @@ offline_credentials_expiration = 1'
   sssd_config = parse_config_file('/etc/sssd/sssd.conf')
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   describe.one do

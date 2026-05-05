@@ -27,7 +27,7 @@ $ sudo sed -i '/\!authenticate/ s/^/# /g' /etc/sudoers /etc/sudoers.d/*)
   tag 'container-conditional'
 
   only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !(%w[docker podman kubepods lxc].include?(virtualization.system) && !command('sudo').exist?)
   }
 
   describe sudoers(input('sudoers_config_files')) do

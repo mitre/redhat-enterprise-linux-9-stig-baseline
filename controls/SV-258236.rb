@@ -63,8 +63,8 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag nist: ['SC-13 b', 'MA-4 (6)']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+  only_if('This control is Not Applicable to containers or crypto policy is waived', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && !input(crypto_policy_waived)
   }
 
   crypto_policies_dir = '/etc/crypto-policies/back-ends'

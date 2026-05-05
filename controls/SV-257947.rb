@@ -23,7 +23,7 @@ cmdport 0'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !file('/etc/chrony.conf').exist?)
+    !(%w[docker podman kubepods lxc].include?(virtualization.system) && !file('/etc/chrony.conf').exist?)
   }
 
   chrony_conf = ntp_conf('/etc/chrony.conf')

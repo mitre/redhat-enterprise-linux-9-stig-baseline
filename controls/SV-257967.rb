@@ -44,7 +44,7 @@ $ sudo sysctl --system'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   parameter = 'net.ipv4.icmp_ignore_bogus_error_responses'

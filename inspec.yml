@@ -58,7 +58,7 @@ inputs:
       GSSAPIAuthentication: 'no'
       ClientAliveInterval: '600'
 
-  # SV-258123, SV-258132
+  # SV-257838, SV-258123, SV-258127, SV-258131, SV-258132
   - name: alternate_mfa_method
     description: Name of the MFA method in place on the system (leave blank if using the default SSSD, give the name if using an approved alternate method)
     type: String
@@ -1223,3 +1223,15 @@ inputs:
     description: Mount point for the EFI System Partition
     type: String
     value: '/boot/efi'
+  
+  # SV-258236
+  - name: crypto_policy_waived
+    description: There is an operational need to use a subpolicy that causes the links to the crypto backends to break and an exception has been made by the AO.
+    type: Boolean
+    value: false
+
+  # SV-272488
+  - name: alternate_audit_notification_system
+    description: There is another system/service to send audit failure notifications to the administrator/ISSO
+    type: String
+    value: ''

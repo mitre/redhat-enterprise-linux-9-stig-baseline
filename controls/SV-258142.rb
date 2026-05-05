@@ -23,7 +23,7 @@ $ sudo systemctl enable --now rsyslog'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   describe service('rsyslog') do

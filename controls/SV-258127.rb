@@ -33,7 +33,7 @@ $ sudo ssh-keygen -N [passphrase]'
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'N/A' do
       skip 'Control not applicable within a container'
@@ -46,6 +46,11 @@ $ sudo ssh-keygen -N [passphrase]'
   elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
     describe 'no files found' do
       skip 'No private key files given in the input were found on the system; check that the input accurately lists all private keys on this system'
+    end
+  elsif !input('alternate_mfa_method').to_s.empty?
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
     end
   else
     passwordless_keys = input('private_key_files').select { |kf|

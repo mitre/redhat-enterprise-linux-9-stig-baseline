@@ -42,7 +42,7 @@ $ sudo systemctl restart sshd.service'
 
   client_alive_count = input('sshd_client_alive_count_max')
 
-  if virtualization.system.eql?('docker') && !file('/etc/ssh/sshd_config').exist?
+  if %w[docker podman kubepods lxc].include?(virtualization.system) && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
     describe 'skip' do
       skip 'SSH configuration does not apply inside containers. This control is Not Applicable.'
