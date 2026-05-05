@@ -33,7 +33,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get -y install jq qemu-utils gdisk
 
       - name: Check out repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           persist-credentials: false
 
@@ -121,12 +121,12 @@ jobs:
 
       - name: Save results summary JSON
         continue-on-error: true
-        uses: mitre/saf_action@40f8aed2f77631c191fe86e01c2d3cdcd2d9675f  # v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
       - name: Upload Test Result JSON
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
         with:
           name: ${{ env.PLATFORM }}_${{ matrix.suite }}.json
           path: spec/results/
@@ -144,7 +144,7 @@ jobs:
             "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display results summary
-        uses: mitre/saf_action@40f8aed2f77631c191fe86e01c2d3cdcd2d9675f  # v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
 
@@ -156,7 +156,7 @@ jobs:
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Validate scan threshold
-        uses: mitre/saf_action@40f8aed2f77631c191fe86e01c2d3cdcd2d9675f  # v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
 

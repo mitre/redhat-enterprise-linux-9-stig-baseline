@@ -18,7 +18,6 @@ lxc network set lxdbr0 ipv4.address auto
 lxc network set lxdbr0 ipv4.nat true
 lxc network set lxdbr0 dns.mode managed
 lxc network set lxdbr0 dns.domain lxd
-lxc network set lxdbr0 dns.nameservers 1.1.1.1,8.8.8.8
 
 # GH runners ship with restrictive FORWARD policy and rp_filter; relax for lxdbr0
 sysctl -w net.ipv4.conf.all.forwarding=1 net.ipv4.conf.default.forwarding=1
