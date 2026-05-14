@@ -32,24 +32,6 @@ jobs:
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
 
-      - name: Diagnose rubygems.cinc.sh
-        run: |
-          echo "=== DNS ==="
-          nslookup rubygems.cinc.sh || true
-
-          echo "=== TCP/HTTPS ==="
-          curl -Iv --connect-timeout 15 https://rubygems.cinc.sh/ || true
-
-          echo "=== OpenSSL ==="
-          openssl s_client -connect rubygems.cinc.sh:443 -servername rubygems.cinc.sh </dev/null || true
-
-          echo "=== Bundler config ==="
-          bundle config list || true
-
-          echo "=== Source references ==="
-          grep -R "rubygems.cinc.sh" Gemfile Gemfile.lock .bundle/ ~/.bundle/ || true
-
-
       - name: Run Bundle Install
         run: bundle install
 
