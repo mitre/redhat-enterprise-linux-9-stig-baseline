@@ -39,7 +39,7 @@ $ sudo dnf -y reinstall openssh'
   openssh_present = package('openssh-server').installed?
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !openssh_present)
+    (!%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0) || openssh_present
   }
 
   describe file('/etc/ssh/sshd_config.d/50-redhat.conf') do

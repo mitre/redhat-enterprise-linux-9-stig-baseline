@@ -29,7 +29,7 @@ $ sudo systemctl restart sshd.service'
   tag 'host'
   tag 'container-conditional'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !file('/etc/ssh/sshd_config').exist?
+  if (%w[docker podman kubepods lxc].include?(virtualization.system) || command('systemd-detect-virt --container').exit_status == 0) && !file('/etc/ssh/sshd_config').exist?
     impact 0.0
     describe 'Control not applicable - SSH is not installed within containerized RHEL' do
       skip 'Control not applicable - SSH is not installed within containerized RHEL'
