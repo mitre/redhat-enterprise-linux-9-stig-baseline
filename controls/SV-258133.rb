@@ -39,7 +39,7 @@ offline_credentials_expiration = 1'
   sssd_config = parse_config_file('/etc/sssd/sssd.conf')
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   describe.one do

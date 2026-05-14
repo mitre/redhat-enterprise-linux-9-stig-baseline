@@ -29,7 +29,7 @@ $ sudo chown -R root /etc/ssh/sshd_config /etc/ssh/sshd_config.d'
   tag 'container-conditional'
 
   only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
-    !(%w[docker podman kubepods lxc].include?(virtualization.system) && !directory('/etc/ssh').exist?)
+    !(%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !directory('/etc/ssh').exist?)
   }
 
   describe file('/etc/ssh/sshd_config') do

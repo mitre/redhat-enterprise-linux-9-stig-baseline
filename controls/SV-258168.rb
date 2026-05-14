@@ -27,7 +27,7 @@ The audit daemon must be restarted for the changes to take effect.'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   freq = input('audit_flush_threshold')

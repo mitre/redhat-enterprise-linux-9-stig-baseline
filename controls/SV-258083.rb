@@ -27,7 +27,7 @@ $ sudo dnf install sudo'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !(%w[docker podman kubepods lxc].include?(virtualization.system) && !file('/etc/ssh/sshd_config').exist?)
+    !(%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !file('/etc/ssh/sshd_config').exist?)
   }
 
   describe package('sudo') do

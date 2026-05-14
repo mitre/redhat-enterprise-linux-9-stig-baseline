@@ -32,7 +32,7 @@ $ sudo dnf reinstall openssh-server'
   openssh_present = package('openssh-server').installed?
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(%w[docker podman kubepods lxc].include?(virtualization.system) && !openssh_present)
+    !(%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !openssh_present)
   }
 
   if input('allow_container_openssh_server') == false

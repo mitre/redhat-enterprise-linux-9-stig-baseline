@@ -29,7 +29,7 @@ If AIDE is installed, ensure the "sha512" rule is present on all uncommented fil
   file_integrity_tool = input('file_integrity_tool')
 
   only_if('Control not applicable within a container', impact: 0.0) do
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   end
 
   if file_integrity_tool == 'aide'

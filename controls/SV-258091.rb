@@ -35,7 +35,7 @@ retry = 3'
   tag 'host'
 
   only_if('This control is Not Applicable for containers', impact: 0.0) do
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   end
 
   describe 'System pwquality setting' do

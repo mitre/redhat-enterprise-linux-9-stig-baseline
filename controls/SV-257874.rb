@@ -21,7 +21,7 @@ If the "/var/log/audit" file system is mounted without the "noexec" option, this
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   path = '/var/log/audit'

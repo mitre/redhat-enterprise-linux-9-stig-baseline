@@ -60,7 +60,7 @@ $ sudo dconf update)
   tag nist: ['AC-8 a']
 
   only_if('Control not applicable within a container or when GDM is not installed', impact: 0.0) do
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('rpm -q gdm').exit_status.zero?
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && command('rpm -q gdm').exit_status.zero?
   end
 
   banner = command('gsettings get org.gnome.login-screen banner-message-text').stdout.strip.gsub(/\\n|'|"|\s+/, '')

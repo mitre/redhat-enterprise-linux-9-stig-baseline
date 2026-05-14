@@ -56,7 +56,7 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   banner_file = file('/etc/issue')

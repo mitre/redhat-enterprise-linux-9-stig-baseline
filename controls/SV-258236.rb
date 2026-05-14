@@ -64,7 +64,7 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag 'host'
 
   only_if('This control is Not Applicable to containers or crypto policy is waived', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && !input(crypto_policy_waived)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0 && !input('crypto_policy_waived')
   }
 
   crypto_policies_dir = '/etc/crypto-policies/back-ends'

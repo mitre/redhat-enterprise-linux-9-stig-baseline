@@ -46,7 +46,7 @@ $ sudo sysctl --system'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   parameter = 'net.ipv4.icmp_echo_ignore_broadcasts'

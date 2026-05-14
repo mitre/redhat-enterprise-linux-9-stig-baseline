@@ -34,7 +34,7 @@ include "/etc/crypto-policies/back-ends/bind.config";'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
   only_if('This control is Not Applicable since bind is not installed', impact: 0.0) {
     package('bind').installed?

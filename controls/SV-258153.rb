@@ -29,7 +29,7 @@ If availability has been determined to be more important, and this decision is d
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   disk_error_action = input('disk_error_action').map(&:upcase)

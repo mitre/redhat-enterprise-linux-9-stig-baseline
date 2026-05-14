@@ -38,7 +38,7 @@ Reboot the system for the changes to take effect.'
   tag nist: ['AC-17 (2)', 'MA-4 c', 'SC-8', 'SC-13 b']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if %w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
     impact 0.0
     describe 'Control not applicable in a container' do
       skip 'The host OS controls the FIPS mode settings. The host OS should also be scanned with the applicable OS validation profile.'

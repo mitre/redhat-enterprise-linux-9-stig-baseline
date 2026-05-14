@@ -50,7 +50,7 @@ $ sudo restorecon -R -v /var/log/faillock'
   tag nist: ['AC-7 a', 'AC-7 b']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if %w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
     impact 0.0
     describe 'Control not applicable in a container' do
       skip 'SELinux controls Not Applicable in a container'

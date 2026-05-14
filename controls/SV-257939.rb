@@ -28,7 +28,7 @@ Establish rate-limiting rules based on organization-defined types of DoS attacks
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   describe parse_config_file('/etc/firewalld/firewalld.conf') do

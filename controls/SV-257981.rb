@@ -32,7 +32,7 @@ Banner /etc/issue'
   tag 'container-conditional'
 
   only_if('Control not applicable - SSH is not installed within containerized RHEL', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) || file('/etc/ssh/sshd_config').exist?
+    (!%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0) || file('/etc/ssh/sshd_config').exist?
   }
 
   # When Banner is commented, not found, disabled, or the specified file does not exist, this is a finding.

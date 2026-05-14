@@ -36,7 +36,7 @@ GRUB_CMDLINE_LINUX="page_poison=1"'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
   }
 
   grub_stdout = command('grubby --info=ALL').stdout
