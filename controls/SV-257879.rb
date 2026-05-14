@@ -71,7 +71,7 @@ To encrypt an entire partition, dedicate a partition for encryption in the parti
 
   # TODO: This should really have a resource
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+  if %w[docker podman kubepods lxc].include?(virtualization.system) || command('systemd-detect-virt --container').exit_status == 0
     impact 0.0
     describe_and_skip('Disk Encryption and Data At Rest Implementation is handled on the Container Host')
   elsif input('data_at_rest_exempt')
