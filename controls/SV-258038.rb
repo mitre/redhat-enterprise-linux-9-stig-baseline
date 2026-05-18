@@ -33,7 +33,7 @@ Note: Enabling and starting usbguard without properly configuring it for an indi
   tag 'host'
 
   only_if('This control is Not Applicable to containers or virtualized environments', impact: 0.0) {
-    (!%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0) || !virtualization.role.eql?('guest')
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || !virtualization.role.eql?('guest')
   }
 
   peripherals_package = input('peripherals_package')

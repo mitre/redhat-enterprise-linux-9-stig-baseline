@@ -27,7 +27,7 @@ blacklist usb-storage'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
   if input('usb_storage_required') == true
     describe kernel_module('usb_storage') do

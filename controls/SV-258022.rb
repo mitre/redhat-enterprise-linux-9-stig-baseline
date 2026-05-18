@@ -42,7 +42,7 @@ $ sudo dconf update'
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if package('gnome-desktop3').installed?

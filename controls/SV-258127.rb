@@ -33,7 +33,7 @@ $ sudo ssh-keygen -N [passphrase]'
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system) || command('systemd-detect-virt --container').exit_status == 0
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'N/A' do
       skip 'Control not applicable within a container'

@@ -82,7 +82,7 @@ AIDE found NO differences between database and filesystem. Looks okay!!
   file_integrity_tool = input('file_integrity_tool')
 
   only_if('Control not applicable within a container', impact: 0.0) do
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   if file_integrity_tool == 'aide'

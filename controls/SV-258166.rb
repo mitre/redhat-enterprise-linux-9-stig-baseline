@@ -32,7 +32,7 @@ $ sudo chown root /var/log/audit'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
   log_dir = auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')
   describe directory(log_dir) do

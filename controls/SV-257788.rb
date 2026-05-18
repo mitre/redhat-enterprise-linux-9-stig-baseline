@@ -25,7 +25,7 @@ $ sudo grubby --update-kernel=ALL --remove-args="systemd.confirm_spawn"'
   tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   grubby = command('grubby --info=ALL').stdout

@@ -27,7 +27,7 @@ $ sudo find /etc/sudoers /etc/sudoers.d -type f -exec sed -i '/NOPASSWD/ s/^/# /
   tag 'container-conditional'
 
   only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
-    (!%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0) || command('sudo').exist?
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || command('sudo').exist?
   }
 
   # TODO: figure out why this .where throws an exception if we don't explicitly filter out nils via 'tags.nil?'

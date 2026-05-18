@@ -29,7 +29,7 @@ $ sudo systemctl enable --now usbguard'
   tag 'host'
 
   only_if('This requirement does not apply to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   peripherals_service = input('peripherals_service')

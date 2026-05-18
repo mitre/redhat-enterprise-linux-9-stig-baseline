@@ -28,7 +28,7 @@ $ sudo systemctl enable --now firewalld'
   tag nist: ['AC-17 (1)', 'CM-6 b', 'CM-7 b']
 
   only_if('This requirment is Not Applicable in the container, the container management platform manages the firewall service', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('external_firewall')

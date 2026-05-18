@@ -31,7 +31,7 @@ If there is no evidence that the transfer of the audit logs being offloaded to a
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('alternative_logging_method') == ''

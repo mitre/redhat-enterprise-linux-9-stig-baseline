@@ -43,7 +43,7 @@ If there is no evidence of integrity protection, this is a finding.'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   audit_tools = %w[/usr/sbin/auditctl

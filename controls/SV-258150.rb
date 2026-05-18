@@ -41,7 +41,7 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
   describe.one do
     describe command("grep  -hsv \"^#\" #{input('logging_conf_files').join(' ')} | grep ^cron") do

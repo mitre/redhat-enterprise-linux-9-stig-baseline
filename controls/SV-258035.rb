@@ -41,7 +41,7 @@ Note: usbguard will need to be configured to allow authorized devices once it is
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   peripherals_package = input('peripherals_package')

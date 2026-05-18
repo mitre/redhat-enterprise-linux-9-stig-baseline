@@ -25,7 +25,7 @@ Note: This control is not applicable to vfat file systems.)
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   boot_efi_path = input('boot_efi_mountpoint')

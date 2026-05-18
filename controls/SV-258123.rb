@@ -45,7 +45,7 @@ $ sudo systemctl restart sssd.service'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && command('systemd-detect-virt --container').exit_status != 0
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('alternate_mfa_method').to_s.empty?
