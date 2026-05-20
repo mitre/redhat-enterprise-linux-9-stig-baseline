@@ -29,7 +29,7 @@ $ sudo dnf install postfix'
   tag nist: ['AC-2 (1)']
 
   only_if('Alternate system for audit notifications exist, this control is not applicable', impact: 0.0) {
-    input('alternate_audit_notification_system') == ''
+    !input('alt_audit_notification_system')
   }
 
   describe package('postfix') do

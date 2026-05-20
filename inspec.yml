@@ -1231,7 +1231,7 @@ inputs:
     value: false
 
   # SV-272488
-  - name: alternate_audit_notification_system
+  - name: alt_audit_notification_system
     description: There is another system/service to send audit failure notifications to the administrator/ISSO
-    type: String
-    value: ''
+    type: Boolean
+    value: false
