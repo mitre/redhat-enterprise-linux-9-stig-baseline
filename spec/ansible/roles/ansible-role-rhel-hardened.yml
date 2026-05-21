@@ -9,7 +9,7 @@
   become: yes
   vars:
     rhel9stig_bootloader_password_hash: "changethispassword"
-    rhel9stig_aide_db_recreate: false # task does not properly parse 'database=file:@@{DBDIR}/aide.db.gz'
+    rhel9stig_use_aide: false # task does not properly parse 'database=file:@@{DBDIR}/aide.db.gz'
     system_is_ec2: true
     rhel_09_251040: false # task is busted as of release 1.1.0
     rhel_09_652025: false # task is busted as of release 1.1.0
