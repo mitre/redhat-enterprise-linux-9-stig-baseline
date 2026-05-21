@@ -151,7 +151,7 @@ jobs:
       - name: Generate Markdown Summary
         continue-on-error: true
         run: |
-          python markdown-summary.py < spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json \
+          python markdown-summary.py < spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
             > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 

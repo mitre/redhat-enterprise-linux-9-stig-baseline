@@ -1,7 +1,7 @@
 roles:
   - name: rhel9STIG
     src: https://github.com/ansible-lockdown/RHEL9-STIG
-    version: 1.0.0
+    version: 2.4.1
 
 collections:
   - name: community.general
