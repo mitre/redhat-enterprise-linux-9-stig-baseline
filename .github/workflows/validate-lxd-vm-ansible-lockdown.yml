@@ -121,7 +121,7 @@ jobs:
 
       - name: Save results summary JSON
         continue-on-error: true
-        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
+        uses: mitre/saf_action@v1.5.2
         with:
           command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
