@@ -123,7 +123,7 @@ jobs:
         continue-on-error: true
         uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
-          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
+          command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
       - name: Upload Test Result JSON
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
