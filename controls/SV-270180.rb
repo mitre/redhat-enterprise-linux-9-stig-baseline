@@ -8,9 +8,7 @@ User home directories/folders may contain information of a sensitive nature. Non
 
 RHEL 9 ships with many optional packages. One such package is a file access policy daemon called "fapolicyd". "fapolicyd" is a userspace daemon that determines access rights to files based on attributes of the process and file. It can be used to either block list or allow list processes or file access.
 
-Proceed with caution with enforcing the use of this daemon. Improper configuration may render the system nonfunctional. The "fapolicyd" API is not namespace aware and can cause issues when launching or running containers.
-
-'
+Proceed with caution with enforcing the use of this daemon. Improper configuration may render the system nonfunctional. The "fapolicyd" API is not namespace aware and can cause issues when launching or running containers.'
   desc 'check', 'Verify the RHEL 9 "fapolicyd" employs a deny-all, permit-by-exception policy.
 
 Check that "fapolicyd" is in enforcement mode with the following command:

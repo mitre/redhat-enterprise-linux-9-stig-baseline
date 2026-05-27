@@ -7,7 +7,7 @@ Audit records can be generated from various components within the information sy
 When a user logs on, the auid is set to the uid of the account being authenticated. Daemons are not user sessions and have the loginuid set to -1. The auid representation is an unsigned 32-bit integer, which equals 4294967295. The audit system interprets -1, 4294967295, and "unset" in the same way.
 
 The system call rules are loaded into a matching engine that intercepts each system call made by all programs on the system. Therefore, it is very important to use system call rules only when absolutely necessary since these affect performance. The more rules, the bigger the performance hit. The performance can be helped, however, by combining system calls into one rule whenever possible.'
-  desc 'check', %q(Verify that RHEL 9 is configured to audit successful/unsuccessful attempts to use the "truncate", "ftruncate", "creat", "open", "openat", and "open_by_handle_at" system calls with the following command:
+  desc 'check', %q(Verify RHEL 9 is configured to audit successful/unsuccessful attempts to use the "truncate", "ftruncate", "creat", "open", "openat", and "open_by_handle_at" system calls with the following command:
 
 $ sudo auditctl -l | grep 'open\b\|openat\|open_by_handle_at\|truncate\|creat'
 
@@ -37,7 +37,7 @@ $ sudo augenrules --load'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000064-GPOS-00033', 'SRG-OS-000458-GPOS-00203', 'SRG-OS-000461-GPOS-00205']
   tag gid: 'V-258188'
-  tag rid: 'SV-258188r1045349_rule'
+  tag rid: 'SV-258188r1155605_rule'
   tag stig_id: 'RHEL-09-654070'
   tag fix_id: 'F-61853r1045348_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
@@ -47,7 +47,7 @@ $ sudo augenrules --load'
   audit_syscalls = ['truncate', 'ftruncate', 'creat', 'open', 'openat', 'open_by_handle_at']
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   describe 'Syscall' do

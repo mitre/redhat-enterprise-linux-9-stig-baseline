@@ -5,7 +5,7 @@ control 'SV-258218' do
 
 $ sudo auditctl -l | grep /etc/sudoers.d
 
--w /etc/sudoers.d -p wa -k actions
+-w /etc/sudoers.d/ -p wa -k identity
 
 If the command does not return a line, or the line is commented out, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to generate audit records for all account creations, modifications, disabling, and termination events that affect "/etc/sudoers.d/".
@@ -22,7 +22,7 @@ $ sudo augenrules --load'
   tag gtitle: 'SRG-OS-000004-GPOS-00004'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000004-GPOS-00004', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000304-GPOS-00121', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000470-GPOS-00214', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000239-GPOS-00089', 'SRG-OS-000240-GPOS-00090', 'SRG-OS-000241-GPOS-00091', 'SRG-OS-000303-GPOS-00120', 'CCI-002884', 'SRG-OS-000466-GPOS-00210', 'SRG-OS-000476-GPOS-00221']
   tag gid: 'V-258218'
-  tag rid: 'SV-258218r1045439_rule'
+  tag rid: 'SV-258218r1101981_rule'
   tag stig_id: 'RHEL-09-654220'
   tag fix_id: 'F-61883r1045438_fix'
   tag cci: ['CCI-000169', 'CCI-000018', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-001403', 'CCI-001404', 'CCI-001405', 'CCI-002130', 'CCI-002132', 'CCI-002884', 'CCI-000015']
@@ -30,7 +30,7 @@ $ sudo augenrules --load'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   audit_command = '/etc/sudoers.d'

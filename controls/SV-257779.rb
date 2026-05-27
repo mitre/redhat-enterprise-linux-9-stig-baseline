@@ -56,7 +56,7 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   banner_file = file('/etc/issue')

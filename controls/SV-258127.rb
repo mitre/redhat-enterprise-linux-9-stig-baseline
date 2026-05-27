@@ -7,29 +7,33 @@ The cornerstone of the PKI is the private key used to encrypt or digitally sign 
 If the private key is stolen, this will lead to the compromise of the authentication and nonrepudiation gained through PKI because the attacker can use the private key to digitally sign documents and pretend to be the authorized user.
 
 Both the holders of a digital certificate and the issuing authority must protect the computers, storage devices, or whatever they use to keep the private keys.'
-  desc 'check', 'Verify the SSH private key files have a passcode.
+  desc 'check', 'Note: If the system administrator demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
+
+Verify the SSH private key files have a passcode.
 
 For each private key stored on the system, use the following command:
 
 $ sudo ssh-keygen -y -f /path/to/file
 
-If the contents of the key are displayed, this is a finding.'
-  desc 'fix', 'Create a new private and public key pair that utilizes a passcode with the
-following command:
+The expected output is a password prompt:
+ "Enter passphrase:"
 
-    $ sudo ssh-keygen -n [passphrase]'
+If the password prompt is not displayed, and the contents of the key are displayed, this is a finding.'
+  desc 'fix', 'Create a new private and public key pair that utilizes a passcode with the following command:
+
+$ sudo ssh-keygen -N [passphrase]'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000067-GPOS-00035'
   tag gid: 'V-258127'
-  tag rid: 'SV-258127r958450_rule'
+  tag rid: 'SV-258127r1155648_rule'
   tag stig_id: 'RHEL-09-611190'
-  tag fix_id: 'F-61792r926367_fix'
+  tag fix_id: 'F-61792r1155647_fix'
   tag cci: ['CCI-000186']
   tag nist: ['IA-5 (2) (b)', 'IA-5 (2) (a) (1)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'N/A' do
       skip 'Control not applicable within a container'
@@ -41,7 +45,12 @@ following command:
     end
   elsif input('private_key_files').map { |kf| file(kf).exist? }.uniq.first == false
     describe 'no files found' do
-      skip 'No private key files given in the input were found on the system; please check the input accurately lists all private keys on this system'
+      skip 'No private key files given in the input were found on the system; check that the input accurately lists all private keys on this system'
+    end
+  elsif !input('alternate_mfa_method').to_s.empty?
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
     end
   else
     passwordless_keys = input('private_key_files').select { |kf|

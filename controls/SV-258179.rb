@@ -32,7 +32,7 @@ $ sudo augenrules --load'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000458-GPOS-00203', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000474-GPOS-00219', 'SRG-OS-000466-GPOS-00210', 'SRG-OS-000064-GPOS-00033']
   tag gid: 'V-258179'
-  tag rid: 'SV-258179r1069366_rule'
+  tag rid: 'SV-258179r1155601_rule'
   tag stig_id: 'RHEL-09-654025'
   tag fix_id: 'F-61844r1045321_fix'
   tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
@@ -42,7 +42,7 @@ $ sudo augenrules --load'
   audit_syscalls = ['setxattr', 'fsetxattr', 'lsetxattr', 'removexattr', 'fremovexattr', 'lremovexattr']
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   describe 'Syscall' do

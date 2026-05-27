@@ -29,7 +29,7 @@ include /etc/crypto-policies/back-ends/libreswan.config'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   expected_value = input('approved_crypto_backend')

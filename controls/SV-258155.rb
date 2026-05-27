@@ -42,7 +42,7 @@ records, a new partition with sufficient space will need be to be created.'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   audit_log_dir = command("dirname #{auditd_conf.log_file}").stdout.strip

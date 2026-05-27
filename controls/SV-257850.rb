@@ -27,7 +27,7 @@ If the "/home" file system is mounted without the "nodev" option, this is a find
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   interactive_users = passwd.where {

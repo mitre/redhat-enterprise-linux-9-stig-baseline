@@ -30,7 +30,7 @@ Confirm password:'
   tag check_id: 'C-61528r1044835_chk'
   tag severity: 'medium'
   tag gid: 'V-257787'
-  tag rid: 'SV-257787r1044836_rule'
+  tag rid: 'SV-257787r1137691_rule'
   tag stig_id: 'RHEL-09-212010'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
   tag fix_id: 'F-61452r925347_fix'
@@ -40,7 +40,7 @@ Confirm password:'
   tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   grubfile = input('grub_conf_path')

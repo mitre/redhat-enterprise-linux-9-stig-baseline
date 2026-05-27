@@ -5,13 +5,13 @@ control 'SV-258123' do
 Multifactor solutions that require devices separate from information systems gaining access include, for example, hardware tokens providing time-based or challenge-response authenticators and smart cards such as the U.S. Government Personal Identity Verification (PIV) card and the DOD CAC.
 
 RHEL 9 includes multiple options for configuring certificate status checking, but for this requirement focuses on the System Security Services Daemon (SSSD). By default, SSSD performs Online Certificate Status Protocol (OCSP) checking and certificate verification using a sha256 digest function.'
-  desc 'check', 'Note: If the system administrator (SA) demonstrates the use of an approved alternate multifactor authentication method, this requirement is Not Applicable.
+  desc 'check', 'Note: If the system administrator (SA) demonstrates the use of an approved alternate multifactor authentication method, this requirement is not applicable.
 
 Verify the operating system implements Online Certificate Status Protocol (OCSP) and is using the proper digest value on the system with the following command:
 
-$ sudo grep -ir certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/ | grep -v "^#"
+$ sudo grep -sir certificate_verification /etc/sssd/sssd.conf /etc/sssd/conf.d/ | grep -v "^#"
 
-certificate_verification = ocsp_dgst=sha512
+/etc/sssd/conf.d/certificate_verification:certificate_verification = ocsp_dgst=sha512
 
 If the certificate_verification line is missing from the [sssd] section, or is missing "ocsp_dgst=sha512", ask the administrator to indicate what type of multifactor authentication is being used and how the system implements certificate status checking.
 
@@ -37,7 +37,7 @@ $ sudo systemctl restart sssd.service'
   tag gtitle: 'SRG-OS-000375-GPOS-00160'
   tag satisfies: ['SRG-OS-000375-GPOS-00160', 'SRG-OS-000377-GPOS-00162']
   tag gid: 'V-258123'
-  tag rid: 'SV-258123r1045248_rule'
+  tag rid: 'SV-258123r1134923_rule'
   tag stig_id: 'RHEL-09-611170'
   tag fix_id: 'F-61788r926355_fix'
   tag cci: ['CCI-001948', 'CCI-001954', 'CCI-004046']
@@ -45,14 +45,10 @@ $ sudo systemctl restart sssd.service'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  if input('alternate_mfa_method').nil?
-    describe 'Manual Review' do
-      skip "Alternate MFA method selected:\t\nConsult with ISSO to determine that alternate MFA method is approved; manually review system to ensure alternate MFA method is functioning"
-    end
-  else
+  if input('alternate_mfa_method').to_s.empty?
     sssd_conf_files = input('sssd_conf_files')
     sssd_conf_contents = ini({ command: "cat #{input('sssd_conf_files').join(' ')}" })
     sssd_certificate_verification = input('sssd_certificate_verification')
@@ -67,6 +63,11 @@ $ sudo systemctl restart sssd.service'
           expect(sssd_conf_contents.sssd.certificate_verification).to eq(sssd_certificate_verification)
         end
       end
+    end
+  else
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative MFA method; this control is Not Applicable.'
     end
   end
 end

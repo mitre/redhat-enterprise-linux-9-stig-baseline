@@ -7,7 +7,7 @@ Obtain the list of available package security updates from Red Hat. The URL for 
 
 Check that the available package security updates have been installed on the system with the following command:
 
-$ dnf history list | more
+$ sudo dnf history list | more
 
     ID | Command line | Date and time | Action(s) | Altered
 -------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $ sudo dnf update'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257778'
-  tag rid: 'SV-257778r991589_rule'
+  tag rid: 'SV-257778r1134892_rule'
   tag stig_id: 'RHEL-09-211015'
   tag fix_id: 'F-61443r925320_fix'
   tag cci: ['CCI-000366']

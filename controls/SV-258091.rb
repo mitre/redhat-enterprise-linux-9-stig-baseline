@@ -35,7 +35,7 @@ retry = 3'
   tag 'host'
 
   only_if('This control is Not Applicable for containers', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   describe 'System pwquality setting' do

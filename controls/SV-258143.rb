@@ -3,40 +3,27 @@ control 'SV-258143' do
   desc "Unintentionally running a rsyslog server accepting remote messages puts the system at increased risk. Malicious rsyslog messages sent to the server could exploit vulnerabilities in the server software itself, could introduce misleading information into the system's logs, or could fill the system's storage leading to a denial of service.
 
 If the system is intended to be a log aggregation server, its use must be documented with the information system security officer (ISSO)."
-  desc 'check', %q(Verify that RHEL 9 is not configured to receive remote logs using rsyslog with the following commands:
+  desc 'check', "Note: If the system administrator can demonstrate that another tool (e.g., SPLUNK) is being used to manage log off-load and aggregation in lieu of rsyslog, this check is not applicable.
 
-$ grep -i modload /etc/rsyslog.conf /etc/rsyslog.d/*
+Verify RHEL 9 is not configured to receive remote logs using rsyslog with the following commands:
 
-$ModLoad imtcp
-$ModLoad imrelp
-$ModLoad imudp
+$ ss -tulnp | grep rsyslog
 
-$ grep -i 'load="imtcp"' /etc/rsyslog.conf /etc/rsyslog.d/*
+If no output is returned, rsyslog is not listening for remote messages, and is compliant.
 
-$ grep -i 'load="imrelp"' /etc/rsyslog.conf /etc/rsyslog.d/*
+If output appears, check for configured ports (514 is the default for syslog).
 
-$ grep -i serverrun /etc/rsyslog.conf /etc/rsyslog.d/*
+Check for remote logging configuration in rsyslog by examining the rsyslog configuration files:
 
-$InputTCPServerRun 514
-$InputRELPServerRun 514
-$InputUDPServerRun 514
+$ sudo grep -E 'InputTCPServerRun | UDPServerRun | RELPServerRun | imtcp | imudp | imrelp' /etc/rsyslog.conf /etc/rsyslog.d/*
 
-$ grep -i 'port="\S*"' /etc/rsyslog.conf /etc/rsyslog.d/*
-
-/etc/rsyslog.conf:#input(type="imudp" port="514")
-/etc/rsyslog.conf:#input(type="imtcp" port="514")
-/etc/rsyslog.conf:#Target="remote_host" Port="XXX" Protocol="tcp"
-
-If any uncommented lines are returned by the commands, rsyslog is configured to receive remote messages, and this is a finding.
-
-Note: An error about no files or directories from the above commands may be returned. This is not a finding.
-
-If any modules are being loaded in the "/etc/rsyslog.conf" file or in the "/etc/rsyslog.d" subdirectories, ask to see the documentation for the system being used for log aggregation.
-
-If the documentation does not exist or does not specify the server as a log aggregation system, this is a finding.)
+If this command returns uncommented lines enabling network listeners, the system is accepting remote logs.  If this system is not documented and authorized as a log aggregation server, this is a finding."
   desc 'fix', 'Configure RHEL 9 to not receive remote logs using rsyslog.
 
 Remove the lines in /etc/rsyslog.conf and any files in the /etc/rsyslog.d directory that match any of the following:
+InputTCPServerRun
+UDPServerRun
+RELPServerRun
 module(load="imtcp")
 module(load="imudp")
 module(load="imrelp")
@@ -48,13 +35,13 @@ The rsyslog daemon must be restarted for the changes to take effect:
 
 $ sudo systemctl restart rsyslog.service'
   impact 0.5
-  tag check_id: 'C-61884r1045281_chk'
+  tag check_id: 'C-61884r1155669_chk'
   tag severity: 'medium'
   tag gid: 'V-258143'
-  tag rid: 'SV-258143r1045283_rule'
+  tag rid: 'SV-258143r1155671_rule'
   tag stig_id: 'RHEL-09-652025'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag fix_id: 'F-61808r1045282_fix'
+  tag fix_id: 'F-61808r1155670_fix'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
@@ -62,7 +49,7 @@ $ sudo systemctl restart rsyslog.service'
   tag 'container'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('is_log_aggregation_server') == true

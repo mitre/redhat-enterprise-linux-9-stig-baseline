@@ -36,7 +36,7 @@ Note: Manual changes to the listed file may be overwritten by the "authselect" p
   describe 'The system should be configureed' do
     subject { command("grep -i nullok #{file_list}") }
     it 'to not allow null passwords' do
-      expect(subject.stdout.strip).to be_empty, "The system is configured to allow null passwords. Please remove any instances of the `nullok` option from auth files: \n\t- #{bad_entries.join("\n\t- ")}"
+      expect(subject.stdout.strip).to be_empty, "The system is configured to allow null passwords. Remove any instances of the `nullok` option from auth files: \n\t- #{bad_entries.join("\n\t- ")}"
     end
   end
 end

@@ -5,7 +5,7 @@ control 'SV-258017' do
 
 Verify RHEL 9 disables ability of the user to override the graphical user interface autorun setting.
 
-Determine which profile the system database is using with the following command:
+Check that the autorun setting is set to prevent user modification with the following command:
 
 $ gsettings writable org.gnome.desktop.media-handling autorun-never
 
@@ -22,10 +22,10 @@ Then update the dconf system databases:
 
 $ sudo dconf update'
   impact 0.5
-  tag check_id: 'C-61758r1045087_chk'
+  tag check_id: 'C-61758r1155687_chk'
   tag severity: 'medium'
   tag gid: 'V-258017'
-  tag rid: 'SV-258017r1045088_rule'
+  tag rid: 'SV-258017r1155688_rule'
   tag stig_id: 'RHEL-09-271035'
   tag gtitle: 'SRG-OS-000114-GPOS-00059'
   tag fix_id: 'F-61682r926037_fix'
@@ -36,7 +36,7 @@ $ sudo dconf update'
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   no_gui = command('ls /usr/share/xsessions/*').stderr.match?(/No such file or directory/)

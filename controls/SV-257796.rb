@@ -38,7 +38,7 @@ GRUB_CMDLINE_LINUX="audit=1"'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   grub_stdout = command('grubby --info=ALL').stdout

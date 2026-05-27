@@ -2,12 +2,15 @@ control 'SV-257777' do
   title 'RHEL 9 must be a vendor-supported release.'
   desc 'An operating system release is considered "supported" if the vendor continues to provide security patches for the product. With an unsupported release, it will not be possible to resolve security issues discovered in the system software.
 
-Red Hat offers the Extended Update Support (EUS) add-on to a Red Hat Enterprise Linux subscription, for a fee, for those customers who wish to standardize on a specific minor release for an extended period.'
-  desc 'check', 'Verify that the version or RHEL 9 is vendor supported with the following command:
+End Of Life dates for Red Hat Linux 9 releases are as follows:
+Current end of Full Support for Red Hat Linux 9 is 31 May 2027.
+Current end of Maintenance Support for Red Hat Linux 9 is 31 May 3032.
+Current end of Extended Life Cycle Support (ELS) for Red Hat Linux 9 is 31 May 2035.'
+  desc 'check', 'Verify the version or RHEL 9 is vendor supported with the following command:
 
 $ cat /etc/redhat-release
 
-Red Hat Enterprise Linux release 9.2 (Plow)
+Red Hat Enterprise Linux release 9.6 (Plow)
 
 If the installed version of RHEL 9 is not supported, this is a finding.'
   desc 'fix', 'Upgrade to a supported version of RHEL 9.'
@@ -15,7 +18,7 @@ If the installed version of RHEL 9 is not supported, this is a finding.'
   tag severity: 'high'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257777'
-  tag rid: 'SV-257777r991589_rule'
+  tag rid: 'SV-257777r1155676_rule'
   tag stig_id: 'RHEL-09-211010'
   tag fix_id: 'F-61442r925317_fix'
   tag cci: ['CCI-000366']

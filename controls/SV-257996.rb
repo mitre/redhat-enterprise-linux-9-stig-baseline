@@ -9,7 +9,13 @@ RHEL 9 utilizes /etc/ssh/sshd_config for configurations of OpenSSH. Within the s
 
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*clientaliveinterval'
 
-ClientAliveInterval 600
+/etc/ssh/sshd_config.d/ClientAliveInterval.conf:ClientAliveInterval 600
+
+Verify the runtime value of "ClientAliveInterval" with the following command:
+
+$ sudo sshd -T | grep -i clientaliveinterval
+
+clientaliveinterval 600
 
 If "ClientAliveInterval" does not exist, does not have a value of "600" or less in "/etc/ssh/sshd_config", or is commented out, this is a finding.)
   desc 'fix', 'Note: This setting must be applied in conjunction with RHEL-09-255095 to function correctly.
@@ -28,7 +34,7 @@ $ sudo systemctl restart sshd.service'
   tag gtitle: 'SRG-OS-000126-GPOS-00066'
   tag satisfies: ['SRG-OS-000163-GPOS-00072', 'SRG-OS-000126-GPOS-00066', 'SRG-OS-000279-GPOS-00109', 'SRG-OS-000395-GPOS-00175']
   tag gid: 'V-257996'
-  tag rid: 'SV-257996r1045055_rule'
+  tag rid: 'SV-257996r1134915_rule'
   tag stig_id: 'RHEL-09-255100'
   tag fix_id: 'F-61661r1045054_fix'
   tag cci: ['CCI-001133', 'CCI-000879', 'CCI-002361', 'CCI-002891']
@@ -42,7 +48,7 @@ $ sudo systemctl restart sshd.service'
   openssh_present = package('openssh-server').installed?
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !openssh_present)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || openssh_present
   }
 
   if input('allow_container_openssh_server') == false
@@ -54,7 +60,12 @@ $ sudo systemctl restart sshd.service'
   else
     describe 'The OpenSSH Server configuration' do
       it "has the correct #{setting} configuration" do
-        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Please ensure it set to '#{value}'."
+        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Ensure it is set to '#{value}'."
+      end
+
+      it "has the correct #{setting} runtime value" do
+        runtime_value = command('sshd -T').stdout.match(/^#{setting.downcase}\s+(\S+)/i)&.captures&.first
+        expect(runtime_value).to cmp(value), "The #{setting} runtime value is not correct. Ensure sshd -T resolves '#{setting}' to '#{value}'."
       end
     end
   end

@@ -30,7 +30,7 @@ Add the following line to the bottom of the /etc/audit/rules.d/audit.rules file:
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   expected_panic_value = input('expected_panic_value')

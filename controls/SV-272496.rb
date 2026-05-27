@@ -7,14 +7,12 @@ This requirement applies to operating systems performing security function verif
 Preventing nonprivileged users from executing privileged functions mitigates the risk that unauthorized individuals or processes may gain unnecessary access to information or privileges.
 
 Privileged functions include, for example, establishing accounts, performing system integrity checks, or administering cryptographic key management activities. Nonprivileged users are individuals who do not possess appropriate authorizations. Circumventing intrusion detection and prevention mechanisms or malicious code protection mechanisms are examples of privileged functions that require protection from nonprivileged users.'
-  desc 'check', 'Verify that RHEL 9 elevates the SELinux context when an administrator calls the sudo command with the following command:
+  desc 'check', 'Verify RHEL 9 elevates the SELinux context when an administrator calls the sudo command with the following command:
 
 This command must be run as root:
 
 # grep -r sysadm_r /etc/sudoers /etc/sudoers.d
 %{designated_group_or_user_name} ALL=(ALL) TYPE=sysadm_t ROLE=sysadm_r ALL
-
-If conflicting results are returned, this is a finding.
 
 If a designated sudoers administrator group or account(s) is not configured to elevate the SELinux type and role to "sysadm_t" and "sysadm_r" with the use of the sudo command, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to elevate the SELinux context when an administrator calls the sudo command.
@@ -32,10 +30,10 @@ Remove any configurations that conflict with the above from the following locati
 /etc/sudoers
 /etc/sudoers.d/'
   impact 0.5
-  tag check_id: 'C-76549r1069439_chk'
+  tag check_id: 'C-76549r1155581_chk'
   tag severity: 'medium'
   tag gid: 'V-272496'
-  tag rid: 'SV-272496r1082184_rule'
+  tag rid: 'SV-272496r1155582_rule'
   tag stig_id: 'RHEL-09-431016'
   tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag fix_id: 'F-76453r1082183_fix'
@@ -45,7 +43,7 @@ Remove any configurations that conflict with the above from the following locati
   tag nist: ['AC-6 (10)']
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   output = command('grep -r sysadm_r /etc/sudoers /etc/sudoers.d').stdout.strip

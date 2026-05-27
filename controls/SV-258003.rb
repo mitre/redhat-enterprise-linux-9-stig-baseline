@@ -35,7 +35,7 @@ $ sudo systemctl restart sshd.service'
   gssapi_authentication = input('sshd_config_values')
   value = gssapi_authentication[setting]
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     describe 'In a container Environment' do
       if package('openssh-server').installed?
         it 'the OpenSSH Server should be installed only when allowed in a container environment' do
@@ -50,7 +50,7 @@ $ sudo systemctl restart sshd.service'
   else
     describe 'The OpenSSH Server configuration' do
       it "has the correct #{setting} configuration" do
-        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Please ensure it set to '#{value}'."
+        expect(sshd_config.params[setting.downcase]).to cmp(value), "The #{setting} setting in the SSHD config is not correct. Ensure it is set to '#{value}'."
       end
     end
   end
