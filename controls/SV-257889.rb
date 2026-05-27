@@ -29,7 +29,7 @@ $ sudo chmod 0740 /home/wadea/.<INIT_FILE>'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   ignore_shells = input('non_interactive_shells').join('|')

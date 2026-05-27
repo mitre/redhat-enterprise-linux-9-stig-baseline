@@ -1,7 +1,7 @@
 control 'SV-257789' do
   title 'RHEL 9 must require a unique superusers name upon booting into single-user and maintenance modes.'
   desc 'Having a nondefault grub superuser username makes password-guessing attacks less effective.'
-  desc 'check', 'Verify the boot loader superuser account has been set with the following command:
+  desc 'check', 'Verify the RHEL 9 boot loader superuser account has been set with the following command:
 
 $ sudo grep -A1 "superusers" /etc/grub2.cfg
 
@@ -21,26 +21,26 @@ export superusers
 
 Once the superuser account has been added, update the grub.cfg file by running:
 
-Regenerate the GRUB configuration:
-$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+In RHEL 9.0, 9.1 and 9.2:
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
-Reboot the system:
-$ sudo reboot'
+In RHEL 9.3 and later:
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg --update-bls-cmdline'
   impact 0.7
-  tag check_id: 'C-61530r1044839_chk'
+  tag check_id: 'C-61530r1134893_chk'
   tag severity: 'high'
   tag gid: 'V-257789'
-  tag rid: 'SV-257789r1069356_rule'
+  tag rid: 'SV-257789r1137691_rule'
   tag stig_id: 'RHEL-09-212020'
   tag gtitle: 'SRG-OS-000080-GPOS-00048'
-  tag fix_id: 'F-61454r1069355_fix'
+  tag fix_id: 'F-61454r1134894_fix'
   tag 'documentable'
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
   tag 'host'
 
   only_if('Control not applicable within a container without sudo enabled', impact: 0.0) do
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   end
 
   grubfile = file(input('grub_conf_path'))

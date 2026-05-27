@@ -1,18 +1,21 @@
 control 'SV-258052' do
   title 'All RHEL 9 local interactive user home directories defined in the /etc/passwd file must exist.'
   desc 'If a local interactive user has a home directory defined that does not exist, the user may be given access to the / directory as the current working directory upon logon. This could create a denial of service because the user would not be able to access their logon configuration files, and it may give them visibility to system files they normally would not be able to access.'
-  desc 'check', "Verify the assigned home directories of all interactive users on the system exist with the following command:
+  desc 'check', %q(Verify the assigned home directories of all interactive users on the system exist with the following command:
 
 $ sudo pwck -r
 
-user 'mailnull': directory 'var/spool/mqueue' does not exist
+The output should not return any interactive (human) users.
 
-The output should not return any interactive users.
+Ask the system administrator (SA) if any users found without home directories are local interactive users.
+If the SA is unable to provide a response, check for users with a user identifier (UID) of 1000 or greater with the following command:
 
-If users home directory does not exist, this is a finding."
+$ awk -F: '($3>=1000)&&($1!="nobody"){print $1 ":" $3}' /etc/passwd
+
+If any interactive users do not have a home directory assigned, this is a finding.)
   desc 'fix', 'Create home directories to all local interactive users that currently do not have a home directory assigned. Use the following commands to create the user home directory assigned in "/etc/ passwd":
 
-Note: The example will be for the user wadea, who has a home directory of "/home/wadea", a user identifier (UID) of "wadea", and a Group Identifier (GID) of "users assigned" in "/etc/passwd".
+Note: The example will be for the user wadea, who has a home directory of "/home/wadea", a user identifier (UID) of "wadea", and a group identifier (GID) of "users assigned" in "/etc/passwd".
 
 $ sudo mkdir /home/wadea
 $ sudo chown wadea /home/wadea
@@ -22,15 +25,15 @@ $ sudo chmod 0750 /home/wadea'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258052'
-  tag rid: 'SV-258052r991589_rule'
+  tag rid: 'SV-258052r1155588_rule'
   tag stig_id: 'RHEL-09-411065'
-  tag fix_id: 'F-61717r926142_fix'
+  tag fix_id: 'F-61717r1155587_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   exempt_home_users = input('exempt_home_users')

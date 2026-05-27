@@ -35,7 +35,7 @@ Defaults !runaspw'
   tag 'host'
 
   only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || command('sudo').exist?
   }
 
   settings = sudoers(input('sudoers_config_files').join(' ')).settings['Defaults']

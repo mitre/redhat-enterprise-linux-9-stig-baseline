@@ -1,13 +1,13 @@
 control 'SV-258087' do
   title 'RHEL 9 must restrict privilege elevation to authorized personnel.'
   desc 'If the "sudoers" file is not configured correctly, any user defined on the system can initiate privileged actions on the target system.'
-  desc 'check', 'Verify RHEL 9 restricts privilege elevation to authorized personnel with the following command:
+  desc 'check', "Verify RHEL 9 restricts privilege elevation to authorized personnel with the following command:
 
-$ sudo grep -riw ALL /etc/sudoers /etc/sudoers.d/
+$ sudo grep -iwR 'ALL' /etc/sudoers /etc/sudoers.d/ | grep -v '#'
 
 If the either of the following entries are returned, this is a finding:
 ALL     ALL=(ALL) ALL
-ALL     ALL=(ALL:ALL) ALL'
+ALL     ALL=(ALL:ALL) ALL"
   desc 'fix', 'Remove the following entries from the /etc/sudoers file or configuration file under /etc/sudoers.d/:
 
 ALL     ALL=(ALL) ALL
@@ -16,7 +16,7 @@ ALL     ALL=(ALL:ALL) ALL'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-258087'
-  tag rid: 'SV-258087r1045177_rule'
+  tag rid: 'SV-258087r1102071_rule'
   tag stig_id: 'RHEL-09-432030'
   tag fix_id: 'F-61752r926247_fix'
   tag cci: ['CCI-000366']
@@ -24,7 +24,7 @@ ALL     ALL=(ALL:ALL) ALL'
   tag 'host'
 
   only_if('This control is Not Applicable to containers without sudo installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !command('sudo').exist?)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || command('sudo').exist?
   }
 
   bad_sudoers_rules = sudoers(input('sudoers_config_files').join(' ')).rules.where {

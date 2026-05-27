@@ -34,7 +34,7 @@ $ sudo systemctl restart sshd.service'
   tag 'container-conditional'
 
   only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || directory('/etc/ssh').exist?
   }
 
   ssh_host_key_dirs = input('ssh_host_key_dirs').join(' ')

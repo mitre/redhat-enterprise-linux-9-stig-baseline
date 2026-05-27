@@ -6,46 +6,49 @@ This requirement generally applies to the design of an information technology pr
 
 There may be shared resources with configurable protections (e.g., files in storage) that may be assessed on specific information system components.
 
-Restricting access to the kernel message buffer limits access to only root. This prevents attackers from gaining additional system information as a nonprivileged user.'
-  desc 'check', %q(Verify RHEL 9 is configured to restrict access to the kernel message buffer with the following commands:
+Restricting access to the kernel message buffer limits access to only root. This prevents attackers from gaining additional system information as a nonprivileged user.
 
-Check the status of the kernel.dmesg_restrict kernel parameter.
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 is configured to restrict access to the kernel message buffer.
+
+Check the status of the "kernel.dmesg_restrict" kernel parameter with the following command:
 
 $ sudo sysctl kernel.dmesg_restrict
-
 kernel.dmesg_restrict = 1
 
-If "kernel.dmesg_restrict" is not set to "1" or is missing, this is a finding.
-
-Check that the configuration files are present to enable this kernel parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F kernel.dmesg_restrict | tail -1
-
-kernel.dmesg_restrict = 1
-
-If "kernel.dmesg_restrict" is not set to "1" or is missing, this is a finding.)
+If "kernel.dmesg_restrict" is not set to "1" or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to restrict access to the kernel message buffer.
 
-Add or edit the following line in a system configuration file, in the "/etc/sysctl.d/" directory:
+Create a drop-in if it does not already exist:
 
+$ sudo vi /etc/sysctl.d/99-dmesg_restrict.conf
+
+Add the following to the file:
 kernel.dmesg_restrict = 1
 
-Load settings from all system configuration files with the following command:
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000132-GPOS-00067'
   tag gid: 'V-257797'
-  tag rid: 'SV-257797r958514_rule'
+  tag rid: 'SV-257797r1155691_rule'
   tag stig_id: 'RHEL-09-213010'
-  tag fix_id: 'F-61462r925377_fix'
+  tag fix_id: 'F-61462r1155690_fix'
   tag cci: ['CCI-001090', 'CCI-001082']
   tag nist: ['SC-4', 'SC-2']
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   parameter = 'kernel.dmesg_restrict'

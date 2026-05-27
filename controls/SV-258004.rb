@@ -30,7 +30,7 @@ $ sudo systemctl restart sshd.service'
   tag 'container-conditional'
 
   only_if('This control is Not Applicable to containers without SSH installed', impact: 0.0) {
-    !(virtualization.system.eql?('docker') && !directory('/etc/ssh').exist?)
+    !%w[docker podman kubepods lxc].include?(virtualization.system) || directory('/etc/ssh').exist?
   }
 
   use_kerberos = input('kerberos_required') ? 'yes' : 'no'

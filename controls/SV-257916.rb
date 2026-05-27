@@ -7,7 +7,7 @@ The structure and content of error messages must be carefully considered by the 
 
 $ stat -c "%U %n" /var/log/messages
 
-root /var/log
+root /var/log/messages
 
 If "/var/log/messages" does not have an owner of "root", this is a finding.'
   desc 'fix', 'Change the owner of the "/var/log/messages" file to "root" by running the following command:
@@ -17,7 +17,7 @@ $ sudo chown root /var/log/messages'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-257916'
-  tag rid: 'SV-257916r1044973_rule'
+  tag rid: 'SV-257916r1101916_rule'
   tag stig_id: 'RHEL-09-232180'
   tag fix_id: 'F-61581r925734_fix'
   tag cci: ['CCI-001314']
@@ -25,7 +25,7 @@ $ sudo chown root /var/log/messages'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   describe.one do

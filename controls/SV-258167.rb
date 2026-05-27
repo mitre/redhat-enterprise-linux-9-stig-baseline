@@ -7,7 +7,7 @@ The structure and content of error messages must be carefully considered by the 
 
 Determine where the audit logs are stored with the following command:
 
-$ sudo grep -iw log_file /etc/audit/auditd.conf
+$ sudo grep "^log_file" /etc/audit/auditd.conf
 
 log_file = /var/log/audit/audit.log
 
@@ -15,7 +15,7 @@ Using the location of the audit log file, determine the mode of each audit log w
 
 $ sudo find /var/log/audit/ -type f -exec stat -c '%a %n' {} \;
 
-rw-------. 2 root root 237923 Jun 11 11:56 /var/log/audit/audit.log
+600 /var/log/audit/audit.log
 
 If the audit logs have a mode more permissive than "0600", this is a finding.)
   desc 'fix', 'Configure the audit logs to have a mode of "0600" with the following command:
@@ -42,7 +42,7 @@ $ sudo chmod 0400 $log_file.*'
   tag gtitle: 'SRG-OS-000057-GPOS-00027'
   tag satisfies: ['SRG-OS-000057-GPOS-00027', 'SRG-OS-000058-GPOS-00028', 'SRG-OS-000059-GPOS-00029', 'SRG-OS-000206-GPOS-00084']
   tag gid: 'V-258167'
-  tag rid: 'SV-258167r1045306_rule'
+  tag rid: 'SV-258167r1155630_rule'
   tag stig_id: 'RHEL-09-653090'
   tag fix_id: 'F-61832r1045305_fix'
   tag cci: ['CCI-000162', 'CCI-000163', 'CCI-000164', 'CCI-001314']
@@ -50,7 +50,7 @@ $ sudo chmod 0400 $log_file.*'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   log_file = auditd_conf('/etc/audit/auditd.conf').log_file

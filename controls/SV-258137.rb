@@ -9,7 +9,7 @@ It is not uncommon for attackers to replace the audit tools or inject code into 
 To address this risk, audit tools must be cryptographically signed to provide the capability to identify when the audit tools have been modified, manipulated, or replaced. An example is a checksum hash of the file or files.'
   desc 'check', 'Check that AIDE is properly configured to protect the integrity of the audit tools with the following command:
 
-$ sudo grep /usr/bin/au /etc/aide.conf
+$ sudo grep /usr/sbin/au /etc/aide.conf
 
 /usr/sbin/auditctl p+i+n+u+g+s+b+acl+xattrs+sha512
 /usr/sbin/auditd p+i+n+u+g+s+b+acl+xattrs+sha512
@@ -35,7 +35,7 @@ If there is no evidence of integrity protection, this is a finding.'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000256-GPOS-00097'
   tag gid: 'V-258137'
-  tag rid: 'SV-258137r1045272_rule'
+  tag rid: 'SV-258137r1102081_rule'
   tag stig_id: 'RHEL-09-651025'
   tag fix_id: 'F-61802r943020_fix'
   tag cci: ['CCI-001496', 'CCI-001493', 'CCI-001494', 'CCI-001495']
@@ -43,7 +43,7 @@ If there is no evidence of integrity protection, this is a finding.'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   audit_tools = %w[/usr/sbin/auditctl

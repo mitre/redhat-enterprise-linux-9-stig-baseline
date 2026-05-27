@@ -12,7 +12,9 @@ $ sudo find /etc/audit/rules.d/ /etc/audit/audit.rules /etc/audit/auditd.conf -t
 
 600 /etc/audit/rules.d/audit.rules
 640 /etc/audit/audit.rules
-640 /etc/audit/auditd.conf'
+640 /etc/audit/auditd.conf
+
+If the audit configuration files have a mode more permissive than those shown, this is a finding.'
   desc 'fix', 'Configure the files in directory "/etc/audit/rules.d/" and the
 "/etc/audit/auditd.conf" file to have a mode of "0640" with the following
 commands:
@@ -24,7 +26,7 @@ commands:
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000063-GPOS-00032'
   tag gid: 'V-258171'
-  tag rid: 'SV-258171r1045308_rule'
+  tag rid: 'SV-258171r1134934_rule'
   tag stig_id: 'RHEL-09-653110'
   tag fix_id: 'F-61836r926499_fix'
   tag cci: ['CCI-000171']
@@ -32,7 +34,7 @@ commands:
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   rules_files = bash('ls -d /etc/audit/rules.d/*.rules').stdout.strip.split.append('/etc/audit/auditd.conf')

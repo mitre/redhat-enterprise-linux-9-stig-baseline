@@ -29,7 +29,7 @@ max_log_file_action = ROTATE'
   # TODO: should probably make all audit conf inputs into one hash for ease of use
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   max_log_file_action = input('max_log_file_action').upcase

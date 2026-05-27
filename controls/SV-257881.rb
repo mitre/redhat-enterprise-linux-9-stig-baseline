@@ -3,19 +3,20 @@ control 'SV-257881' do
   desc 'The "nodev" mount option causes the system to not interpret character or block special devices. Executing character or block special devices from untrusted file systems increases the opportunity for nonprivileged users to attain unauthorized administrative access.
 
 The only legitimate location for device files is the "/dev" directory located on the root partition, with the exception of chroot jails if implemented.'
-  desc 'check', %q(Verify all non-root local partitions are mounted with the "nodev" option
-with the following command:
+  desc 'check', %q(Note: This control is not applicable to vfat file systems.
 
-    $ sudo mount | grep '^/dev\S* on /\S' | grep --invert-match 'nodev'
+Verify all non-root local partitions are mounted with the "nodev" option with the following command:
 
-    If any output is produced, this is a finding.)
+$ sudo mount | grep '^/dev\S* on /\S' | grep --invert-match 'nodev'
+
+If any output is produced, this is a finding.)
   desc 'fix', 'Configure the "/etc/fstab" to use the "nodev" option on all
 non-root local partitions.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257881'
-  tag rid: 'SV-257881r991589_rule'
+  tag rid: 'SV-257881r1155663_rule'
   tag stig_id: 'RHEL-09-231200'
   tag fix_id: 'F-61546r925629_fix'
   tag cci: ['CCI-000366']
@@ -29,7 +30,7 @@ non-root local partitions.'
   option = 'nodev'
 
   mount_stdout = command('mount').stdout.lines
-  failing_mount_points = mount_stdout.select { |mp| mp.match(%r{^/dev\S*\s+on\s+/\S}) }.reject { |mp| mp.match(/\(.*#{option}.*\)/) }
+  failing_mount_points = mount_stdout.select { |mp| mp.match(%r{^/dev\S*\s+on\s+/\S}) }.reject { |mp| mp.include?(' type vfat ') }.reject { |mp| mp.match(/\(.*#{option}.*\)/) }
 
   describe "All mounted devices outside of '/dev' directory" do
     it "should be mounted with the '#{option}' option" do

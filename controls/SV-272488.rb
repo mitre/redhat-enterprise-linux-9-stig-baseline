@@ -1,9 +1,9 @@
 control 'SV-272488' do
   title 'RHEL 9 must have the Postfix package installed.'
-  desc 'Postfix is a free, open-source mail transfer agent (MTA) that sends and receives emails. It is a server-side application that can be used to set up a local mail server, create a null-client mail relay, use a Postfix server as a destination for multiple domains, or choose an LDAP directory instead of files for lookups. Postfix supports protocols such as LDAP, SMTP AUTH (SASL), and TLS. It uses the Simple Mail Transfer Protocol (SMTP) to transfer emails between servers.
+  desc 'Postfix is a free, open-source mail transfer agent (MTA) that sends and receives emails. It is a server-side application that can be used to set up a local mail server, create a null-client mail relay, use a Postfix server as a destination for multiple domains, or choose an LDAP directory instead of files for lookups. Postfix supports protocols such as LDAP, SMTP AUTH (SASL), and TLS. It uses the Simple Mail Transfer Protocol (SMTP) to transfer emails between servers.'
+  desc 'check', 'Note: If the admin can demonstrate that there is another system/service to send audit failure notifications to the administrator/ISSO, this control is not applicable.
 
-'
-  desc 'check', 'Verify that RHEL 9 has the Postfix package installed with the following command:
+Verify RHEL 9 has the Postfix package installed with the following command:
 
 $ sudo dnf list --installed postfix
 
@@ -16,10 +16,10 @@ If the "postfix" package is not installed, this is a finding.'
 
 $ sudo dnf install postfix'
   impact 0.5
-  tag check_id: 'C-76542r1082176_chk'
+  tag check_id: 'C-76542r1155664_chk'
   tag severity: 'medium'
   tag gid: 'V-272488'
-  tag rid: 'SV-272488r1082178_rule'
+  tag rid: 'SV-272488r1155665_rule'
   tag stig_id: 'RHEL-09-215101'
   tag gtitle: 'SRG-OS-000304-GPOS-00121'
   tag fix_id: 'F-76447r1082177_fix'
@@ -27,6 +27,10 @@ $ sudo dnf install postfix'
   tag 'documentable'
   tag cci: ['CCI-000015']
   tag nist: ['AC-2 (1)']
+
+  only_if('Alternate system for audit notifications exist, this control is not applicable', impact: 0.0) {
+    !input('alt_audit_notification_system')
+  }
 
   describe package('postfix') do
     it { should be_installed }

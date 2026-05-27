@@ -1,48 +1,50 @@
 control 'SV-257974' do
   title 'RHEL 9 must not enable IPv6 packet forwarding unless the system is a router.'
-  desc 'IP forwarding permits the kernel to forward packets from one network interface to another. The ability to forward packets between two networks is only appropriate for systems acting as routers.'
-  desc 'check', %q(Verify RHEL 9 is not performing IPv6 packet forwarding, unless the system is a router.
+  desc 'Routing protocol daemons are typically used on routers to exchange network topology information with other routers. If this software is used when not required, system network information may be unnecessarily transmitted across the network.
+
+The sysctl --system command will load settings from all system configuration files. All configuration files are sorted by their filename in lexicographical order, regardless of the directories in which they reside. If multiple files specify the same option, the entry in the file with the lexicographically latest name will take precedence. Files are read from directories in the following list from top to bottom. Once a file of a given filename is loaded, any file of the same name in subsequent directories is ignored.
+
+/etc/sysctl.d/*.conf
+/run/sysctl.d/*.conf
+/usr/local/lib/sysctl.d/*.conf
+/usr/lib/sysctl.d/*.conf
+/lib/sysctl.d/*.conf
+/etc/sysctl.conf'
+  desc 'check', 'Verify RHEL 9 is not performing IPv6 packet forwarding, unless the system is a router.
 
 Note: If IPv6 is disabled on the system, this requirement is Not Applicable.
 
-Check that IPv6 forwarding is disabled using the following commands:
+Check the value of the "net.ipv6.conf.all.forwarding" variable with the following command:
 
 $ sudo sysctl net.ipv6.conf.all.forwarding
-
 net.ipv6.conf.all.forwarding = 0
 
-If the IPv6 forwarding value is not "0" and is not documented with the information system security officer (ISSO) as an operational requirement, this is a finding.
-
-Check that the configuration files are present to enable this network parameter.
-
-$ sudo /usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F net.ipv6.conf.all.forwarding | tail -1
-
-net.ipv6.conf.all.forwarding = 0
-
-If "net.ipv6.conf.all.forwarding" is not set to "0" or is missing, this is a finding.)
+If "net.ipv6.conf.all.forwarding" is not set to "0" or is missing, this is a finding.'
   desc 'fix', 'Configure RHEL 9 to not allow IPv6 packet forwarding, unless the system is a router.
 
-Add or edit the following line in a single system configuration file, in the "/etc/sysctl.d/" directory:
+Create a configuration file if it does not already exist:
 
+$ sudo vi /etc/sysctl.d/ipv6_forwarding.conf
+
+Add the following line to the file:
 net.ipv6.conf.all.forwarding = 0
 
-Load settings from all system configuration files with the following command:
+Reload settings from all system configuration files with the following command:
 
 $ sudo sysctl --system'
   impact 0.5
-  ref 'DPMS Target Red Hat Enterprise Linux 9'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-257974'
-  tag rid: 'SV-257974r943005_rule'
+  tag rid: 'SV-257974r1155763_rule'
   tag stig_id: 'RHEL-09-254025'
-  tag fix_id: 'F-61639r925908_fix'
+  tag fix_id: 'F-61639r1155762_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   if input('packet_forwarding_enabled')

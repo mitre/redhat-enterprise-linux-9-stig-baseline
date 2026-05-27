@@ -4,7 +4,7 @@ control 'SV-257948' do
 redundant name servers are mandated. A failure in name resolution could lead to
 the failure of security functions requiring name resolution, which may include
 time synchronization, centralized authentication, and remote system logging.'
-  desc 'check', 'Note: If the system is running in a cloud platform and the cloud provider gives a single, highly available IP address for DNS configuration; this control is Not Applicable.
+  desc 'check', 'Note: If the system is running in a cloud platform and the cloud provider gives a single, highly available IP address for DNS configuration, this control is Not Applicable.
 
 Verify the name servers used by the system with the following command:
 

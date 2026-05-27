@@ -5,12 +5,13 @@ control 'SV-258236' do
 
 Verify that the configured policy matches the generated policy with the following command:
 
-$ sudo update-crypto-policies --check && echo PASS
+$ sudo update-crypto-policies --check
 
 The configured policy matches the generated policy
-PASS
 
-If the last line is not "PASS", this is a finding.
+If the returned message does not match the above, but instead matches the following, this is a finding:
+
+The configured policy does NOT match the generated policy
 
 List all of the crypto backends configured on the system with the following command:
 
@@ -31,7 +32,10 @@ lrwxrwxrwx. 1 root root  43 Nov 13 16:29 openssl.config -> /usr/share/crypto-pol
 lrwxrwxrwx. 1 root root  48 Nov 13 16:29 openssl_fips.config -> /usr/share/crypto-policies/FIPS/openssl_fips.txt
 
 If the paths do not point to the respective files under /usr/share/crypto-policies/FIPS path, this is a finding.
-Note: nss.config should not be hyperlinked.'
+
+Note: nss.config should not be symlinked.
+
+Note: If there is an operational need to use a subpolicy that causes the links to the crypto backends to break, this is a finding, and exceptions will need to be made by the authorizing official (AO) and documented with the information system security officer (ISSO).'
   desc 'fix', 'Configure RHEL 9 to correctly implement the systemwide cryptographic policies by reinstalling the crypto-policies package contents.
 
 Reinstall crypto-policies with the following command:
@@ -46,10 +50,10 @@ Setting system policy to FIPS
 
 Note: Systemwide crypto policies are applied on application startup. It is recommended to restart the system for the change of policies to fully take place.'
   impact 0.7
-  tag check_id: 'C-61977r1051251_chk'
+  tag check_id: 'C-61977r1101919_chk'
   tag severity: 'high'
   tag gid: 'V-258236'
-  tag rid: 'SV-258236r1051253_rule'
+  tag rid: 'SV-258236r1101920_rule'
   tag stig_id: 'RHEL-09-672020'
   tag gtitle: 'SRG-OS-000396-GPOS-00176'
   tag fix_id: 'F-61901r1051252_fix'
@@ -59,8 +63,8 @@ Note: Systemwide crypto policies are applied on application startup. It is recom
   tag nist: ['SC-13 b', 'MA-4 (6)']
   tag 'host'
 
-  only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+  only_if('This control is Not Applicable to containers or crypto policy is waived', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system) && !input('crypto_policy_waived')
   }
 
   crypto_policies_dir = '/etc/crypto-policies/back-ends'

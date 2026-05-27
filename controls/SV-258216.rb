@@ -18,10 +18,10 @@ To load the rules to the kernel immediately, use the following command:
 
 $ sudo augenrules --load'
   impact 0.5
-  tag check_id: 'C-61957r1045431_chk'
+  tag check_id: 'C-61957r1155612_chk'
   tag severity: 'medium'
   tag gid: 'V-258216'
-  tag rid: 'SV-258216r1045433_rule'
+  tag rid: 'SV-258216r1155613_rule'
   tag stig_id: 'RHEL-09-654210'
   tag gtitle: 'SRG-OS-000037-GPOS-00015'
   tag fix_id: 'F-61881r1045432_fix'
@@ -32,7 +32,7 @@ $ sudo augenrules --load'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !virtualization.system.eql?('docker')
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
   audit_syscalls = ['umount2']

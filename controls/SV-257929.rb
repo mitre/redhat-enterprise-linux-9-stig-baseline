@@ -21,7 +21,7 @@ $ chmod a+t [World-Writable Directory]'
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000138-GPOS-00069'
   tag gid: 'V-257929'
-  tag rid: 'SV-257929r958524_rule'
+  tag rid: 'SV-257929r1137695_rule'
   tag stig_id: 'RHEL-09-232245'
   tag fix_id: 'F-61594r925773_fix'
   tag cci: ['CCI-001090']
