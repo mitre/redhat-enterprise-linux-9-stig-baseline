@@ -24,6 +24,22 @@ module Inspec::Resources
       end
     EXAMPLE
 
+    CONTAINER_SYSTEMS = %w{
+      container-other
+      docker
+      kubepods
+      linux-vserver
+      lxc
+      lxc-libvirt
+      openvz
+      podman
+      pouch
+      proot
+      rkt
+      systemd-nspawn
+      wsl
+    }.freeze
+
     def initialize
       # TODO: no need for hashie here... in fact, no reason for a hash at all
       @virtualization_data = Hashie::Mash.new
@@ -52,6 +68,10 @@ module Inspec::Resources
 
     def physical_system?
       @virtualization_data[:physical]
+    end
+
+    def container_system?
+      @virtualization_data[:role] == "guest" && CONTAINER_SYSTEMS.include?(@virtualization_data[:system])
     end
 
     def params
@@ -297,9 +317,9 @@ module Inspec::Resources
       true
     end
 
-    # Detect containers via systemd-detect-virt --container
-    def detect_systemd_container
-      cmd = inspec.command("systemd-detect-virt --container")
+    # Detect virtualization via systemd-detect-virt
+    def detect_systemd_virt
+      cmd = inspec.command("systemd-detect-virt")
       return false unless cmd.exist?
       return false unless cmd.exit_status == 0
 
@@ -330,7 +350,7 @@ module Inspec::Resources
       return if detect_parallels
       return if detect_vmware
       return if detect_hyperv
-      return if detect_systemd_container
+      return if detect_systemd_virt
     end
 
     def windows_computer_system
