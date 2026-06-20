@@ -1,5 +1,5 @@
 # This file specifies the attributes for the configurable controls
-# used in the RHEL 7 DISA STIG.
+# used in the RHEL 9 DISA STIG.
 
 # Controls that are known to consistently have long run times can be disabled with this attribute
 disable_slow_controls: false
