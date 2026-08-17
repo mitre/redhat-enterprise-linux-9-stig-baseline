@@ -39,6 +39,7 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
   mounted_on_root = interactive_user_homedirs.select { |dir| dir == '/' }
   not_configured = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.configured? }
   option_not_set = interactive_user_homedirs.reject { |dir| etc_fstab.where { mount_point == dir }.mount_options.flatten.include?(option) }
+  configured_without_option = option_not_set - not_configured
 
   describe 'All interactive user home directories' do
     it "should not be mounted under root ('/')" do
@@ -47,10 +48,8 @@ If the "/home" file system is mounted without the "noexec" option, this is a fin
     it 'should be configured in /etc/fstab' do
       expect(not_configured).to be_empty, "Unconfigured home directories:\n\t- #{not_configured.join("\n\t- ")}"
     end
-    if (option_not_set - not_configured).nil?
-      it "should have the '#{option}' mount option set" do
-        expect(option_not_set - not_configured).to be_empty, "Mounted home directories without '#{option}' set:\n\t- #{not_configured.join("\n\t- ")}"
-      end
+    it "should have the '#{option}' mount option set" do
+      expect(configured_without_option).to be_empty, "Mounted home directories without '#{option}' set:\n\t- #{configured_without_option.join("\n\t- ")}"
     end
   end
 end

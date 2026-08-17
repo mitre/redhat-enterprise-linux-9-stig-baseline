@@ -49,15 +49,17 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg --update-bls-cmdline'
     it { should exist }
   end
 
-  superusers_account = grubfile.content.match(/set superusers="(?<superusers_account>\w+)"/)
+  if grubfile.exist?
+    superusers_account = grubfile.content.to_s.match(/set superusers="(?<superusers_account>\w+)"/)
 
-  describe 'The GRUB superuser' do
-    it "should be set in the GRUB config file ('#{grubfile}')" do
-      expect(superusers_account).to_not be_nil, "No superuser account set in '#{grubfile}'"
-    end
-    unless superusers_account.nil?
-      it 'should not contain easily guessable usernames' do
-        expect(input('disallowed_grub_superusers')).to_not include(superusers_account[:superusers_account]), "Superuser account is set to easily guessable username '#{superusers_account[:superusers_account]}'"
+    describe 'The GRUB superuser' do
+      it "should be set in the GRUB config file ('#{grubfile}')" do
+        expect(superusers_account).to_not be_nil, "No superuser account set in '#{grubfile}'"
+      end
+      unless superusers_account.nil?
+        it 'should not contain easily guessable usernames' do
+          expect(input('disallowed_grub_superusers')).to_not include(superusers_account[:superusers_account]), "Superuser account is set to easily guessable username '#{superusers_account[:superusers_account]}'"
+        end
       end
     end
   end
