@@ -57,6 +57,11 @@ $ sudo systemctl restart rsyslog.service'
     describe 'N/A' do
       skip 'This control is NA because the system is a log aggregation server.'
     end
+  elsif input('alternative_logging_method') != ''
+    impact 0.0
+    describe 'N/A' do
+      skip 'The system is using an approved alternative logging method; this control is Not Applicable.'
+    end
   else
     rsyslog_config_files = input('logging_conf_files').join(' ')
     active_rsyslog_config = command("grep -hsv '^[[:space:]]*#' #{rsyslog_config_files}").stdout

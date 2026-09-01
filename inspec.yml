@@ -836,7 +836,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257838, SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162
+  # SV-257838, SV-258140, SV-258141, SV-258143, SV-258146, SV-258147, SV-258149, SV-258150, SV-258156, SV-258162
   - name: alternative_logging_method
     description: Alternative tool for logging (instead of auditd and other built-in OS logging features) - leave blank if using default OS tools
     type: String

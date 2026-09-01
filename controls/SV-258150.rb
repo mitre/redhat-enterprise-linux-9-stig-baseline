@@ -44,23 +44,29 @@ following line to "/etc/rsyslog.conf" or a configuration file in the
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  rsyslog_config_files = input('logging_conf_files').join(' ')
-  active_rsyslog_config = command("grep -hsv '^[[:space:]]*#' #{rsyslog_config_files}").stdout
-  legacy_cron_rule = %r{^\s*cron\.\*\s+/var/log/cron\s*$}i
-  rainer_cron_rule = %r{^\s*cron\.\*\s+action\((?=[^)]*\btype\s*=\s*"omfile")(?=[^)]*\bfile\s*=\s*"/var/log/cron")[^)]*\)\s*$}i
-  legacy_messages_rule = %r{^\s*\*\.info;mail\.none;authpriv\.none;cron\.none\s+/var/log/messages\s*$}i
-  rainer_messages_rule = %r{^\s*\*\.info;mail\.none;authpriv\.none;cron\.none\s+action\((?=[^)]*\btype\s*=\s*"omfile")(?=[^)]*\bfile\s*=\s*"/var/log/messages")[^)]*\)\s*$}i
+  if input('alternative_logging_method') == ''
+    rsyslog_config_files = input('logging_conf_files').join(' ')
+    active_rsyslog_config = command("grep -hsv '^[[:space:]]*#' #{rsyslog_config_files}").stdout
+    legacy_cron_rule = %r{^\s*cron\.\*\s+/var/log/cron\s*$}i
+    rainer_cron_rule = %r{^\s*cron\.\*\s+action\((?=[^)]*\btype\s*=\s*"omfile")(?=[^)]*\bfile\s*=\s*"/var/log/cron")[^)]*\)\s*$}i
+    legacy_messages_rule = %r{^\s*\*\.info;mail\.none;authpriv\.none;cron\.none\s+/var/log/messages\s*$}i
+    rainer_messages_rule = %r{^\s*\*\.info;mail\.none;authpriv\.none;cron\.none\s+action\((?=[^)]*\btype\s*=\s*"omfile")(?=[^)]*\bfile\s*=\s*"/var/log/messages")[^)]*\)\s*$}i
 
-  describe.one do
-    describe 'Rsyslog cron logging configuration' do
-      it 'logs cron events to /var/log/cron' do
-        expect(active_rsyslog_config).to match(Regexp.union(legacy_cron_rule, rainer_cron_rule)), "No active cron logging rule found in #{rsyslog_config_files}"
+    describe.one do
+      describe 'Rsyslog cron logging configuration' do
+        it 'logs cron events to /var/log/cron' do
+          expect(active_rsyslog_config).to match(Regexp.union(legacy_cron_rule, rainer_cron_rule)), "No active cron logging rule found in #{rsyslog_config_files}"
+        end
+      end
+      describe 'Rsyslog all-facility logging configuration' do
+        it 'logs all non-cron facilities to /var/log/messages' do
+          expect(active_rsyslog_config).to match(Regexp.union(legacy_messages_rule, rainer_messages_rule)), "No active /var/log/messages rule found in #{rsyslog_config_files}"
+        end
       end
     end
-    describe 'Rsyslog all-facility logging configuration' do
-      it 'logs all non-cron facilities to /var/log/messages' do
-        expect(active_rsyslog_config).to match(Regexp.union(legacy_messages_rule, rainer_messages_rule)), "No active /var/log/messages rule found in #{rsyslog_config_files}"
-      end
+  else
+    describe 'manual check' do
+      skip 'Manual check required. Ask the administrator to indicate how logging is done for this system.'
     end
   end
 end
