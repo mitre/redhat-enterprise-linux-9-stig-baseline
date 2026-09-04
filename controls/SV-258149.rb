@@ -41,8 +41,15 @@ If there is no evidence that the audit logs are being off-loaded to another syst
   }
 
   if input('alternative_logging_method') == ''
-    describe command("grep -i 'type=\"omfwd\"' #{input('logging_conf_files').join(' ')}") do
-      its('stdout') { should match(/^.*:\s*#\s*action\(\s*type\s*=\s*"omfwd"/i) }
+    rsyslog_config_files = input('logging_conf_files').join(' ')
+    active_rsyslog_config = command("grep -hsv '^[[:space:]]*#' #{rsyslog_config_files}").stdout
+    legacy_tcp_forwarding = active_rsyslog_config.match?(/@@\S+/)
+    rainer_tcp_forwarding = active_rsyslog_config.match?(/action\(\s*(?=[^)]*\btype\s*=\s*"omfwd")(?=[^)]*\bprotocol\s*=\s*"tcp")(?=[^)]*\btarget\s*=\s*"[^"]+")[^)]*\)/i)
+
+    describe 'Rsyslog audit record forwarding' do
+      it 'forwards audit records over TCP to a remote system' do
+        expect(legacy_tcp_forwarding || rainer_tcp_forwarding).to be(true), "No active TCP forwarding rule found in #{rsyslog_config_files}"
+      end
     end
   else
     describe 'manual check' do

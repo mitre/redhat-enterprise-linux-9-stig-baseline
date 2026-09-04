@@ -34,8 +34,25 @@ $ sudo chown root /var/log/audit'
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
-  log_dir = auditd_conf('/etc/audit/auditd.conf').log_file.split('/')[0..-2].join('/')
-  describe directory(log_dir) do
-    its('owner') { should eq 'root' }
+
+  auditd_conf_file = file('/etc/audit/auditd.conf')
+
+  if auditd_conf_file.exist?
+    audit_log_file = auditd_conf(auditd_conf_file.path).log_file
+
+    if audit_log_file.to_s.empty?
+      describe 'auditd log_file setting' do
+        subject { audit_log_file.to_s }
+        it { should_not be_empty }
+      end
+    else
+      describe directory(File.dirname(audit_log_file)) do
+        its('owner') { should eq 'root' }
+      end
+    end
+  else
+    describe auditd_conf_file do
+      it { should exist }
+    end
   end
 end

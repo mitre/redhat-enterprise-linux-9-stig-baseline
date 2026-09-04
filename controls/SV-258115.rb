@@ -42,8 +42,8 @@ minclass = 4'
       expect(setting_value.length).to eq(1), "#{setting} is commented or set more than once in pwquality.conf"
     end
 
-    it "does not set `#{setting}` to more than #{value}" do
-      expect(setting_value.first.to_i).to be <= value.to_i, "#{setting} is set to a value greater than #{value} in pwquality.conf"
+    it "sets `#{setting}` to at least #{value}" do
+      expect(setting_value.first.to_i).to be >= value.to_i, "#{setting} is set to a value less than #{value} in pwquality.conf"
     end
   end
 end

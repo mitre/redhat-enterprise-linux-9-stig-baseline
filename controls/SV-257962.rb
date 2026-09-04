@@ -47,7 +47,8 @@ $ sudo sysctl --system'
 
   parameter = 'net.ipv4.conf.all.rp_filter'
   value = 1
-  regexp = /^\s*#{parameter}\s*=\s*#{value}\s*$/
+  regexp = /^\s*-?#{Regexp.escape(parameter)}\s*=\s*#{value}\s*$/
+  exclusion_regexp = /^\s*-#{Regexp.escape(parameter)}\s*$/
 
   if input('ipv4_enabled') == false
     impact 0.0
@@ -62,16 +63,14 @@ $ sudo sysctl --system'
     search_results = command("/usr/lib/systemd/systemd-sysctl --cat-config | egrep -v '^(#|;)' | grep -F #{parameter}").stdout.strip.split("\n")
 
     correct_result = search_results.any? { |line| line.match(regexp) }
-    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) }
+    incorrect_results = search_results.map(&:strip).reject { |line| line.match(regexp) || line.match(exclusion_regexp) }
 
     describe 'Kernel config files' do
       it "should configure '#{parameter}'" do
         expect(correct_result).to eq(true), 'No config file was found that correctly sets this action'
       end
-      unless incorrect_results.nil?
-        it 'should not have incorrect or conflicting setting(s) in the config files' do
-          expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
-        end
+      it 'should not have incorrect or conflicting setting(s) in the config files' do
+        expect(incorrect_results).to be_empty, "Incorrect or conflicting setting(s) found:\n\t- #{incorrect_results.join("\n\t- ")}"
       end
     end
   end

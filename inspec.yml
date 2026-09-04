@@ -64,7 +64,7 @@ inputs:
     type: String
     value: ''
 
-  # SV-258122, SV-258123
+  # SV-258122, SV-258123, SV-258132
   - name: sssd_conf_files
     description: File and directory globs to check for SSSD configuration
     type: Array
@@ -836,7 +836,7 @@ inputs:
     type: Boolean
     value: false
 
-  # SV-257838, SV-258140, SV-258141, SV-258146, SV-258147, SV-258149, SV-258156, SV-258162
+  # SV-257838, SV-258140, SV-258141, SV-258143, SV-258146, SV-258147, SV-258149, SV-258150, SV-258156, SV-258162
   - name: alternative_logging_method
     description: Alternative tool for logging (instead of auditd and other built-in OS logging features) - leave blank if using default OS tools
     type: String
@@ -959,7 +959,7 @@ inputs:
       '/usr/sbin/semanage'            : 'privileged-unix-update',
       '/usr/sbin/setfiles'            : 'privileged-unix-update',
       '/usr/sbin/userhelper'          : 'privileged-unix-update',
-      '/usr/sbin/setsebool'           : 'privileged-unix-update',
+      '/usr/sbin/setsebool'           : 'privileged',
       '/usr/sbin/unix_chkpwd'         : 'privileged-unix-update',
       '/usr/libexec/openssh/ssh-keysign' : 'privileged-ssh',
       '/usr/bin/setfacl'              : 'perm_mod',
@@ -1054,7 +1054,7 @@ inputs:
   - name: password_hash_rounds
     description: Number of rounds for hashing passwords
     type: Numeric
-    value: 10000
+    value: 100000
 
   # SV-258227
   - name: expected_panic_value

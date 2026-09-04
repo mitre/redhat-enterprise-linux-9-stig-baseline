@@ -40,8 +40,8 @@ ocredit = -1'
       expect(setting_value.length).to eq(1), "#{setting} is commented or set more than once in pwquality.conf"
     end
 
-    it "does not set `#{setting}` to a positive value" do
-      expect(setting_value.first.to_i).to be <= 0, "#{setting} is set to a positive value in pwquality.conf"
+    it "sets `#{setting}` to a negative value" do
+      expect(setting_value.first.to_i).to be < 0, "#{setting} is not set to a negative value in pwquality.conf"
     end
   end
 end
