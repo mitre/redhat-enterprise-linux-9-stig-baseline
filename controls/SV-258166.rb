@@ -32,7 +32,7 @@ $ sudo chown root /var/log/audit'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   auditd_conf_file = file('/etc/audit/auditd.conf')

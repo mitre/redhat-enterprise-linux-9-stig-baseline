@@ -32,7 +32,7 @@ Defaults timestamp_timeout=0'
   tag 'container-conditional'
 
   only_if('This requirement is Not Applicable in a container with no sudo installed', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) || command('sudo').exist?
+    !virtualization.container_system? || command('sudo').exist?
   }
 
   setting = 'timestamp_timeout'
