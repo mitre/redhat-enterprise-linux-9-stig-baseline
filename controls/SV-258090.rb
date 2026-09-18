@@ -31,7 +31,7 @@ $ systemctl enable --now fapolicyd'
   tag nist: ['CM-7 (2)', 'CM-7 (5) (b)']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if virtualization.container_system?
     impact 0.0
     describe 'This requirement is Not Applicable in the container' do
       skip 'This requirement is Not Applicable in the container'
