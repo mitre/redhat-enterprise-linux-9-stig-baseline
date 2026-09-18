@@ -37,7 +37,7 @@ $ sudo systemctl restart sssd.service'
   tag 'host'
 
   only_if('This control is Not Applicable to containers, when smart-card authentication is disabled, or when an approved alternate multifactor authentication method is configured.', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) && input('smart_card_enabled') && input('alternate_mfa_method') == ''
+    !virtualization.container_system? && input('smart_card_enabled') && input('alternate_mfa_method') == ''
   }
 
   sssd_conf_files = input('sssd_conf_files')

@@ -29,7 +29,7 @@ If availability has been determined to be more important, and this decision is d
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   disk_error_action = input('disk_error_action').map(&:upcase)

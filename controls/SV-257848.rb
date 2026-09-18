@@ -22,7 +22,7 @@ If a separate entry for "/var/tmp" is not in use, this is a finding.'
   tag 'host'
 
   only_if('This requirement is Not Applicable in the container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   describe mount('/var/tmp') do
