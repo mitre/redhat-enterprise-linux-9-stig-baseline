@@ -15,7 +15,7 @@ supports:
 depends:
   - name: inspec-profile-resources
     git: https://github.com/mitre/inspec-profile-resources.git
-    ref: ab70bdd7462ebfb4882247749ed93616bf96c7ec
+    ref: dba0308406baa84b2b8171dd9e7c02287fbe2a4d
 
 ### INPUTS ###
 # Inputs are variables that can be referenced by any control in the profile,
