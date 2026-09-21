@@ -2,6 +2,8 @@ AllCops:
   NewCops: enable
   Exclude:
   - "libraries/**/*"
+  # InSpec dependencies carry their own lint rules and are checked upstream.
+  - "vendor/**/*"
 
 Layout/LineLength:
   Max: 1500
