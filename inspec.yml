@@ -12,6 +12,11 @@ supports:
   - platform-family: redhat
     release: 9.*
 
+depends:
+  - name: inspec-profile-resources
+    git: https://github.com/mitre/inspec-profile-resources.git
+    ref: b0bd642c8ff7a9b70dab0815ae5de39196c84ba2
+
 ### INPUTS ###
 # Inputs are variables that can be referenced by any control in the profile,
 # and are defined and given a default value in this file.
