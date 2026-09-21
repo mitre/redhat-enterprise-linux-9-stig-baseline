@@ -30,7 +30,7 @@ $ sudo dnf reinstall openssh-server'
   tag 'container-conditional'
 
   openssh_present = package('openssh-server').installed?
-  container_environment = %w[docker podman kubepods lxc].include?(virtualization.system)
+  container_environment = virtualization.container_system?
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
     !container_environment || openssh_present

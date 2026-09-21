@@ -31,7 +31,7 @@ AutomaticLoginEnable=false'
   tag 'host'
 
   only_if('This requirement is Not Applicable inside a container, the containers host manages the containers filesystems') {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   custom_conf = '/etc/gdm/custom.conf'

@@ -25,7 +25,7 @@ $ sudo chmod 755 [DIRECTORY]'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   mode_for_libs = input('mode_for_libs')

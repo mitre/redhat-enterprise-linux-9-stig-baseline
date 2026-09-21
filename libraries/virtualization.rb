@@ -24,6 +24,22 @@ module Inspec::Resources
       end
     EXAMPLE
 
+    CONTAINER_SYSTEMS = %w{
+      container-other
+      docker
+      kubepods
+      linux-vserver
+      lxc
+      lxc-libvirt
+      openvz
+      podman
+      pouch
+      proot
+      rkt
+      systemd-nspawn
+      wsl
+    }.freeze
+
     def initialize
       # TODO: no need for hashie here... in fact, no reason for a hash at all
       @virtualization_data = Hashie::Mash.new
@@ -52,6 +68,10 @@ module Inspec::Resources
 
     def physical_system?
       @virtualization_data[:physical]
+    end
+
+    def container_system?
+      @virtualization_data[:role] == "guest" && CONTAINER_SYSTEMS.include?(@virtualization_data[:system])
     end
 
     def params

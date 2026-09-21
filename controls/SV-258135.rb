@@ -51,7 +51,7 @@ $ sudo more /etc/cron.daily/aide
   file_integrity_tool = input('file_integrity_tool')
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   describe package(file_integrity_tool) do

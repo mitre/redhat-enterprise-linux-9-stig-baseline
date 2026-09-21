@@ -25,7 +25,7 @@ $ sudo chown root /boot/grub2/grub.cfg'
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   grubfile = input('grub_conf_path')

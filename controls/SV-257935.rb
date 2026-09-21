@@ -31,7 +31,7 @@ $ sudo dnf install firewalld'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   alternate_firewall_tool = input('alternate_firewall_tool')
