@@ -12,4 +12,4 @@ permissions:
 jobs:
   build:
     name: Build Profile Archive
-    uses: mitre/inspec-profile-workflows/.github/workflows/build.yml@df0ccf9fbac9c45c951aee4e33d5734894007950
+    uses: mitre/inspec-profile-workflows/.github/workflows/build.yml@4cf2d1cfd4aca2072eb9bf849a363b76792c0693

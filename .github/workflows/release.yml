@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: write
       actions: read
-    uses: mitre/inspec-profile-workflows/.github/workflows/release.yml@df0ccf9fbac9c45c951aee4e33d5734894007950
+    uses: mitre/inspec-profile-workflows/.github/workflows/release.yml@4cf2d1cfd4aca2072eb9bf849a363b76792c0693
     with:
       build-run-id: ${{ inputs.build-run-id }}
       build-workflow: build.yml
