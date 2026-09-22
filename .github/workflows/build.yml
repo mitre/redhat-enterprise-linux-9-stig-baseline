@@ -1,0 +1,15 @@
+name: Build Profile Archive
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Profile Archive
+    uses: mitre/inspec-profile-workflows/.github/workflows/build.yml@64511f94449af6803dba42c091f1da7340b83a5a
