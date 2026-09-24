@@ -4,7 +4,7 @@ maintainer: MITRE SAF Team
 copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for RHEL9"
-version: 2.7.1
+version: 2.7.2
 # NOTE: for testing with test-kitchen, put back to ">= 6.0" when finished
 inspec_version: ">= 5.0"
 
@@ -15,7 +15,7 @@ supports:
 depends:
   - name: inspec-profile-resources
     git: https://github.com/mitre/inspec-profile-resources.git
-    ref: b0bd642c8ff7a9b70dab0815ae5de39196c84ba2
+    ref: cbfb11c210cd914c69ec8caaa2bfaf0d7c45037f
 
 ### INPUTS ###
 # Inputs are variables that can be referenced by any control in the profile,
